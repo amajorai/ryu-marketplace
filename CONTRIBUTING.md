@@ -1,22 +1,29 @@
 # Contributing a plugin to the Ryu marketplace
 
-Getting listed is a pull request. No account, no gatekeeper API — just edit one JSON file.
+Two ways to get listed:
+
+- **In-app Publish (no GitHub needed):** in Ryu, open your agent / workflow / app and hit
+  **Publish**. Ryu's backend packages it and submits it for review; on approval the backend
+  commits the entry to this repo for you. Best for non-developers.
+- **Pull request (this guide):** edit one JSON file and open a PR. Best for developers who
+  host their plugin in their own repo.
 
 ## 1. Build your plugin
 
-Your plugin lives in **your own** public git repo, with a `plugin.json` (and optionally a
-`.claude-plugin/marketplace.json` if you want to host your own marketplace too). Scaffold one
-with `bunx create-ryu-app`, or follow the Ryu SDK docs.
+Your plugin lives in **your own** public git repo, with a `plugin.json` (and optionally its own
+`marketplace.json` if you want to host a marketplace too). Scaffold one with
+`bunx create-ryu-app`, or follow the Ryu SDK docs.
 
 ## 2. Add an entry
 
 Fork this repo and add one object to the `plugins` array in
-[`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json):
+[`.ryu-plugin/marketplace.json`](./.ryu-plugin/marketplace.json):
 
 ```jsonc
 {
-  "id": "com.you.my-plugin",          // reverse-DNS, globally unique
-  "name": "My Plugin",
+  "name": "my-plugin",                 // kebab-case, no spaces — the identity
+  "displayName": "My Plugin",          // pretty name shown in the UI
+  "id": "com.you.my-plugin",           // optional Ryu extension (stable reverse-DNS)
   "version": "1.0.0",
   "tagline": "One line, under ~40 chars",
   "description": "What it does, who it's for.",
@@ -32,16 +39,18 @@ Fork this repo and add one object to the `plugins` array in
 }
 ```
 
-Keep entries **alphabetical by `id`** within the array.
+- **`name`** must be kebab-case and unique within this marketplace. It is also the skill
+  namespace prefix. Keep entries **alphabetical by `name`**.
+- **`displayName`** is the pretty label; **`id`** (optional) is a stable reverse-DNS id.
 
 ## 3. Assets (optional)
 
-Put an icon and screenshots either in your own repo (link via raw URLs, as above) or under
-`plugins/<id>/` in this repo:
+Put an icon and screenshots either in your own repo (raw URLs, as above) or under
+`plugins/<name>/` in this repo:
 
 ```
-plugins/com.you.my-plugin/icon.png
-plugins/com.you.my-plugin/screenshots/1.png
+plugins/my-plugin/icon.png
+plugins/my-plugin/screenshots/1.png
 ```
 
 - **icon**: 512×512 PNG, transparent background preferred.
@@ -56,5 +65,6 @@ catalog.
 ## Rules
 
 - No secrets, no telemetry-by-default, no obfuscated code.
+- All URLs must be `http(s)` — a `javascript:`/`data:` URL is rejected.
 - `capabilities` must reflect what the plugin actually does (they map to permission grants).
 - Malware, scrapers that violate ToS, and impersonation get rejected.

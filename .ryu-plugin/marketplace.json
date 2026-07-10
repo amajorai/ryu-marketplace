@@ -1,14 +1,19 @@
 {
-  "name": "ryu-marketplace",
+  "name": "ryu",
+  "owner": {
+    "name": "Ryu",
+    "url": "https://github.com/amajorai/ryu"
+  },
   "metadata": {
-    "description": "The official Ryu marketplace: curated agents, apps, skills, tools, and MCP servers. Submit yours via a pull request.",
+    "description": "The official Ryu marketplace: curated agents, apps, skills, tools, and MCP servers. Submit yours via a pull request or the in-app publish flow.",
     "version": "1",
     "homepage": "https://github.com/amajorai/ryu-marketplace"
   },
   "plugins": [
     {
+      "name": "ghost",
+      "displayName": "Ghost",
       "id": "io.ryu.ghost",
-      "name": "Ghost",
       "version": "1.0.0",
       "tagline": "Desktop automation for any app",
       "description": "Desktop automation: 29 screen perception and input control tools. Snapshot the screen, reference elements by @eN, click/type/scroll, and record then replay recipes. Windows-first.",
@@ -20,8 +25,9 @@
       "capabilities": ["Interactive", "Read"]
     },
     {
+      "name": "shadow",
+      "displayName": "Shadow",
       "id": "io.ryu.shadow",
-      "name": "Shadow",
       "version": "1.0.0",
       "tagline": "Screen and audio capture with memory",
       "description": "Screen and audio capture, OCR, proactive engine, semantic memory and search, timeline keyframes, and meeting capture/detection.",
@@ -33,8 +39,9 @@
       "capabilities": ["Read"]
     },
     {
+      "name": "spider",
+      "displayName": "Spider",
       "id": "io.ryu.spider",
-      "name": "Spider",
       "version": "1.0.0",
       "tagline": "High-performance web crawler and scraper",
       "description": "High-performance web crawler and scraper for pulling content off the web into an agent's context.",
@@ -46,8 +53,9 @@
       "capabilities": ["Web scraping"]
     },
     {
+      "name": "exa",
+      "displayName": "Exa",
       "id": "io.ryu.exa",
-      "name": "Exa",
       "version": "1.0.0",
       "tagline": "Neural web search",
       "description": "Neural search: find any content on the web. Requires EXA_API_KEY.",
@@ -65,8 +73,9 @@
       }
     },
     {
+      "name": "headroom",
+      "displayName": "Headroom",
       "id": "io.ryu.headroom",
-      "name": "Headroom",
       "version": "1.0.0",
       "tagline": "Context compression, 60-95% fewer tokens",
       "description": "Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens with reversible retrieval. Requires headroom-ai[mcp].",
@@ -79,8 +88,9 @@
       "homepage": "https://github.com/chopratejas/headroom"
     },
     {
+      "name": "checklist",
+      "displayName": "Checklist",
       "id": "io.ryu.checklist",
-      "name": "Checklist",
       "version": "1.0.0",
       "tagline": "Interactive checklist widget",
       "description": "Interactive checklist widget: tick off, edit inline, and approve items directly in chat.",
@@ -92,8 +102,9 @@
       "capabilities": ["Interactive"]
     },
     {
+      "name": "smart-intake-form",
+      "displayName": "Smart Intake Form",
       "id": "io.ryu.smart-intake-form",
-      "name": "Smart Intake Form",
       "version": "1.0.0",
       "tagline": "Pre-filled intake form widget",
       "description": "Pre-filled intake form widget with native pickers and validation.",
@@ -104,8 +115,9 @@
       "keywords": ["app", "widget", "forms"]
     },
     {
+      "name": "data-grid-explorer",
+      "displayName": "Data Grid Explorer",
       "id": "io.ryu.data-grid-explorer",
-      "name": "Data Grid Explorer",
       "version": "1.0.0",
       "tagline": "Sortable, filterable data grid widget",
       "description": "Sortable, filterable, virtualized data grid widget; full rows stay out of model context.",
@@ -117,8 +129,9 @@
       "capabilities": ["Interactive"]
     },
     {
+      "name": "chart-studio",
+      "displayName": "Chart Studio",
       "id": "io.ryu.chart-studio",
-      "name": "Chart Studio",
       "version": "1.0.0",
       "tagline": "Interactive chart widget",
       "description": "Interactive chart widget (line/bar/area/scatter) with legend toggles and brush select.",
@@ -130,8 +143,9 @@
       "capabilities": ["Interactive"]
     },
     {
+      "name": "decision-wizard",
+      "displayName": "Decision Wizard",
       "id": "io.ryu.decision-wizard",
-      "name": "Decision Wizard",
       "version": "1.0.0",
       "tagline": "Step-by-step decision flow widget",
       "description": "Step-by-step decision flow widget (quiz/weighted/compare) with a running tally.",
@@ -143,8 +157,9 @@
       "capabilities": ["Interactive"]
     },
     {
+      "name": "quest-board",
+      "displayName": "Quest Board",
       "id": "io.ryu.quest-board",
-      "name": "Quest Board",
       "version": "1.0.0",
       "tagline": "Kanban quest board widget",
       "description": "Kanban quest board widget backed by the quests subsystem.",
@@ -155,8 +170,9 @@
       "keywords": ["app", "widget", "quests"]
     },
     {
+      "name": "worktree-diff-review",
+      "displayName": "Worktree Diff Review",
       "id": "io.ryu.worktree-diff-review",
-      "name": "Worktree Diff Review",
       "version": "1.0.0",
       "tagline": "Per-hunk diff review widget",
       "description": "Per-file, per-hunk diff review widget backed by Core's git-native worktree/diff/apply.",
@@ -168,8 +184,9 @@
       "capabilities": ["Interactive"]
     },
     {
+      "name": "gateway-budget-dial",
+      "displayName": "Gateway Budget Dial",
       "id": "io.ryu.gateway-budget-dial",
-      "name": "Gateway Budget Dial",
       "version": "1.0.0",
       "tagline": "Radial spend-vs-limit budget meter",
       "description": "Radial spent-vs-limit budget meter widget; the literal Gateway moat surface.",

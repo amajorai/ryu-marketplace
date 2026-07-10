@@ -5,7 +5,17 @@
   "type": "object",
   "required": ["plugins"],
   "properties": {
-    "name": { "type": "string" },
+    "name": { "type": "string", "description": "Marketplace identity (kebab-case)" },
+    "owner": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "url": { "type": "string", "format": "uri" }
+      },
+      "required": ["name"],
+      "additionalProperties": true
+    },
     "metadata": {
       "type": "object",
       "properties": {
