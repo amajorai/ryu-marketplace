@@ -13,7 +13,6 @@
     {
       "name": "ghost",
       "displayName": "Ghost",
-      "id": "io.ryu.ghost",
       "version": "1.0.0",
       "tagline": "Desktop automation for any app",
       "description": "Desktop automation: 29 screen perception and input control tools. Snapshot the screen, reference elements by @eN, click/type/scroll, and record then replay recipes. Windows-first.",
@@ -27,7 +26,6 @@
     {
       "name": "shadow",
       "displayName": "Shadow",
-      "id": "io.ryu.shadow",
       "version": "1.0.0",
       "tagline": "Screen and audio capture with memory",
       "description": "Screen and audio capture, OCR, proactive engine, semantic memory and search, timeline keyframes, and meeting capture/detection.",
@@ -41,7 +39,6 @@
     {
       "name": "spider",
       "displayName": "Spider",
-      "id": "io.ryu.spider",
       "version": "1.0.0",
       "tagline": "High-performance web crawler and scraper",
       "description": "High-performance web crawler and scraper for pulling content off the web into an agent's context.",
@@ -55,7 +52,6 @@
     {
       "name": "exa",
       "displayName": "Exa",
-      "id": "io.ryu.exa",
       "version": "1.0.0",
       "tagline": "Neural web search",
       "description": "Neural search: find any content on the web. Requires EXA_API_KEY.",
@@ -75,7 +71,6 @@
     {
       "name": "headroom",
       "displayName": "Headroom",
-      "id": "io.ryu.headroom",
       "version": "1.0.0",
       "tagline": "Context compression, 60-95% fewer tokens",
       "description": "Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens with reversible retrieval. Requires headroom-ai[mcp].",
@@ -90,7 +85,6 @@
     {
       "name": "checklist",
       "displayName": "Checklist",
-      "id": "io.ryu.checklist",
       "version": "1.0.0",
       "tagline": "Interactive checklist widget",
       "description": "Interactive checklist widget: tick off, edit inline, and approve items directly in chat.",
@@ -104,7 +98,6 @@
     {
       "name": "smart-intake-form",
       "displayName": "Smart Intake Form",
-      "id": "io.ryu.smart-intake-form",
       "version": "1.0.0",
       "tagline": "Pre-filled intake form widget",
       "description": "Pre-filled intake form widget with native pickers and validation.",
@@ -117,7 +110,6 @@
     {
       "name": "data-grid-explorer",
       "displayName": "Data Grid Explorer",
-      "id": "io.ryu.data-grid-explorer",
       "version": "1.0.0",
       "tagline": "Sortable, filterable data grid widget",
       "description": "Sortable, filterable, virtualized data grid widget; full rows stay out of model context.",
@@ -131,7 +123,6 @@
     {
       "name": "chart-studio",
       "displayName": "Chart Studio",
-      "id": "io.ryu.chart-studio",
       "version": "1.0.0",
       "tagline": "Interactive chart widget",
       "description": "Interactive chart widget (line/bar/area/scatter) with legend toggles and brush select.",
@@ -145,7 +136,6 @@
     {
       "name": "decision-wizard",
       "displayName": "Decision Wizard",
-      "id": "io.ryu.decision-wizard",
       "version": "1.0.0",
       "tagline": "Step-by-step decision flow widget",
       "description": "Step-by-step decision flow widget (quiz/weighted/compare) with a running tally.",
@@ -159,7 +149,6 @@
     {
       "name": "quest-board",
       "displayName": "Quest Board",
-      "id": "io.ryu.quest-board",
       "version": "1.0.0",
       "tagline": "Kanban quest board widget",
       "description": "Kanban quest board widget backed by the quests subsystem.",
@@ -172,7 +161,6 @@
     {
       "name": "worktree-diff-review",
       "displayName": "Worktree Diff Review",
-      "id": "io.ryu.worktree-diff-review",
       "version": "1.0.0",
       "tagline": "Per-hunk diff review widget",
       "description": "Per-file, per-hunk diff review widget backed by Core's git-native worktree/diff/apply.",
@@ -186,7 +174,6 @@
     {
       "name": "gateway-budget-dial",
       "displayName": "Gateway Budget Dial",
-      "id": "io.ryu.gateway-budget-dial",
       "version": "1.0.0",
       "tagline": "Radial spend-vs-limit budget meter",
       "description": "Radial spent-vs-limit budget meter widget; the literal Gateway moat surface.",
