@@ -20,8 +20,14 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Automation",
-      "keywords": ["automation", "desktop"],
-      "capabilities": ["Interactive", "Read"]
+      "keywords": [
+        "automation",
+        "desktop"
+      ],
+      "capabilities": [
+        "Interactive",
+        "Read"
+      ]
     },
     {
       "name": "shadow",
@@ -33,8 +39,13 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Productivity",
-      "keywords": ["capture", "memory"],
-      "capabilities": ["Read"]
+      "keywords": [
+        "capture",
+        "memory"
+      ],
+      "capabilities": [
+        "Read"
+      ]
     },
     {
       "name": "spider",
@@ -46,8 +57,13 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Web",
-      "keywords": ["web", "scraping"],
-      "capabilities": ["Web scraping"]
+      "keywords": [
+        "web",
+        "scraping"
+      ],
+      "capabilities": [
+        "Web scraping"
+      ]
     },
     {
       "name": "exa",
@@ -59,8 +75,13 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Web",
-      "keywords": ["search", "web"],
-      "capabilities": ["Web search"],
+      "keywords": [
+        "search",
+        "web"
+      ],
+      "capabilities": [
+        "Web search"
+      ],
       "setup": {
         "title": "Exa API key",
         "description": "Set EXA_API_KEY to enable neural web search.",
@@ -78,8 +99,13 @@
       "builtin": false,
       "developer": "chopratejas",
       "category": "Developer Tools",
-      "keywords": ["context", "compression"],
-      "capabilities": ["Read"],
+      "keywords": [
+        "context",
+        "compression"
+      ],
+      "capabilities": [
+        "Read"
+      ],
       "homepage": "https://github.com/chopratejas/headroom"
     },
     {
@@ -92,8 +118,14 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Widgets",
-      "keywords": ["app", "widget", "productivity"],
-      "capabilities": ["Interactive"]
+      "keywords": [
+        "app",
+        "widget",
+        "productivity"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
     },
     {
       "name": "smart-intake-form",
@@ -105,7 +137,11 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Widgets",
-      "keywords": ["app", "widget", "forms"]
+      "keywords": [
+        "app",
+        "widget",
+        "forms"
+      ]
     },
     {
       "name": "data-grid-explorer",
@@ -117,8 +153,14 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Widgets",
-      "keywords": ["app", "widget", "data"],
-      "capabilities": ["Interactive"]
+      "keywords": [
+        "app",
+        "widget",
+        "data"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
     },
     {
       "name": "chart-studio",
@@ -130,8 +172,14 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Widgets",
-      "keywords": ["app", "widget", "charts"],
-      "capabilities": ["Interactive"]
+      "keywords": [
+        "app",
+        "widget",
+        "charts"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
     },
     {
       "name": "decision-wizard",
@@ -143,8 +191,14 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Widgets",
-      "keywords": ["app", "widget", "decisions"],
-      "capabilities": ["Interactive"]
+      "keywords": [
+        "app",
+        "widget",
+        "decisions"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
     },
     {
       "name": "quest-board",
@@ -156,7 +210,11 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Widgets",
-      "keywords": ["app", "widget", "quests"]
+      "keywords": [
+        "app",
+        "widget",
+        "quests"
+      ]
     },
     {
       "name": "worktree-diff-review",
@@ -168,8 +226,14 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Widgets",
-      "keywords": ["app", "widget", "git"],
-      "capabilities": ["Interactive"]
+      "keywords": [
+        "app",
+        "widget",
+        "git"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
     },
     {
       "name": "gateway-budget-dial",
@@ -181,7 +245,437 @@
       "builtin": true,
       "developer": "Ryu",
       "category": "Widgets",
-      "keywords": ["app", "widget", "gateway"]
+      "keywords": [
+        "app",
+        "widget",
+        "gateway"
+      ]
+    },
+    {
+      "name": "quests",
+      "displayName": "Quests",
+      "version": "1.0.0",
+      "tagline": "Auto-detecting todos as a quest board",
+      "description": "Quests: auto-detecting todos surfaced from your chats and activity, tracked as a lightweight quest board with progress and completion.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "quests",
+        "todos",
+        "tasks"
+      ],
+      "capabilities": [
+        "Interactive",
+        "Read"
+      ]
+    },
+    {
+      "name": "monitors",
+      "displayName": "Monitors",
+      "version": "1.0.0",
+      "tagline": "Watch prices, stock, keywords, and uptime",
+      "description": "Website monitors: price, stock, keyword, content, and uptime watches with cross-device notification fan-out.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Automation",
+      "keywords": [
+        "monitors",
+        "web",
+        "alerts"
+      ],
+      "capabilities": [
+        "Read",
+        "Interactive"
+      ]
+    },
+    {
+      "name": "meetings",
+      "displayName": "Meetings",
+      "version": "1.0.0",
+      "tagline": "Record, transcribe, and AI-note meetings",
+      "description": "Meeting notes: record then live transcript then AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "meetings",
+        "transcription",
+        "notes"
+      ],
+      "capabilities": [
+        "Read",
+        "Interactive"
+      ]
+    },
+    {
+      "name": "teams",
+      "displayName": "Teams",
+      "version": "1.0.0",
+      "tagline": "Address a group of agents as one",
+      "description": "Teams: named groups of agents you can address as one. Governance shell over the in-crate teams store (agent-id membership only); no documents, no external dependencies.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "teams",
+        "agents",
+        "groups"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "research",
+      "displayName": "Research",
+      "version": "1.0.0",
+      "tagline": "Deep multi-step web research runs",
+      "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "research",
+        "web",
+        "reports"
+      ],
+      "capabilities": [
+        "Read",
+        "Interactive"
+      ]
+    },
+    {
+      "name": "recipes",
+      "displayName": "Recipes",
+      "version": "1.0.0",
+      "tagline": "Record and replay desktop-automation recipes",
+      "description": "Desktop-automation recipes: record then save then replay UI action sequences. Backed by Ghost's RecipeStore, so it declares Ghost as a dependency and the graph refuses to disable Ghost out from under it.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Automation",
+      "keywords": [
+        "recipes",
+        "automation",
+        "desktop"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "clips",
+      "displayName": "Clips",
+      "version": "1.0.0",
+      "tagline": "Capture and browse screen clips",
+      "description": "Clips: capture and browse screen/timeline clips. A Core-to-Shadow proxy that depends on the Shadow capture app for its recordings.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "clips",
+        "capture",
+        "screen"
+      ],
+      "capabilities": [
+        "Read"
+      ]
+    },
+    {
+      "name": "mail",
+      "displayName": "Mail",
+      "version": "1.0.0",
+      "tagline": "Email inboxes for your agents",
+      "description": "Agent Inboxes — email as a service for agents. Runs the out-of-process ryu-mail sidecar; Core proxies /api/mail/* to it. Its sandboxed companion is a per-node mail client (list inboxes, read messages, compose/send, create an inbox) driving /api/mail/* via the mail:crud bridge capability.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Communication",
+      "keywords": [
+        "mail",
+        "email",
+        "inbox"
+      ],
+      "capabilities": [
+        "Interactive",
+        "Read"
+      ]
+    },
+    {
+      "name": "finetune",
+      "displayName": "Fine-tuning",
+      "version": "1.0.0",
+      "tagline": "Fine-tune models with LoRA/QLoRA",
+      "description": "Fine-tuning: launch and track LoRA/QLoRA training runs on the Core-managed Unsloth sidecar, with output models saved locally under your Ryu data directory.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Developer Tools",
+      "keywords": [
+        "finetune",
+        "training",
+        "lora"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "learning",
+      "displayName": "Learning",
+      "version": "1.0.0",
+      "tagline": "Turn chats and runs into reusable skills",
+      "description": "Learning loop: turn chats and runs into reusable skills, gated by the approval Inbox, with an experience log of what was learned.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "learning",
+        "skills",
+        "memory"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "approvals",
+      "displayName": "Approvals",
+      "version": "1.0.0",
+      "tagline": "Human-in-the-loop approval inbox",
+      "description": "Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait for your accept or reject before they take effect.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "approvals",
+        "inbox",
+        "hitl"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "activity",
+      "displayName": "Activity",
+      "version": "1.0.0",
+      "tagline": "One unified feed of everything on this node",
+      "description": "The unified activity feed: everything happening on this node — monitor alerts, finished tasks, runs, approvals, meetings, and notes — newest first, grouped by day.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "activity",
+        "feed",
+        "notifications"
+      ],
+      "capabilities": [
+        "Read"
+      ]
+    },
+    {
+      "name": "calendar",
+      "displayName": "Calendar",
+      "version": "1.0.0",
+      "tagline": "Scheduled agent and workflow runs",
+      "description": "The scheduled-runs calendar: every agent and workflow scheduled job projected onto Month, Week, Day, and Agenda views, with a New automation dialog that schedules an agent.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "calendar",
+        "schedule",
+        "automation"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "webhooks",
+      "displayName": "Webhooks",
+      "version": "1.0.0",
+      "tagline": "Inbound webhook endpoint registry",
+      "description": "Inbound webhook endpoint registry: resolved public URLs, secret presence, last-delivery times, and the ingress backend status.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Developer Tools",
+      "keywords": [
+        "webhooks",
+        "ingress",
+        "integrations"
+      ],
+      "capabilities": [
+        "Interactive",
+        "Read"
+      ]
+    },
+    {
+      "name": "browser",
+      "displayName": "Browser",
+      "version": "1.0.0",
+      "tagline": "Real-Chromium browser control for agents",
+      "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated browser.control capability: list/open/navigate tabs, screenshot, read titles, and (privileged) evaluate JS in a tab. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Automation",
+      "keywords": [
+        "browser",
+        "chromium",
+        "web"
+      ],
+      "capabilities": [
+        "Interactive",
+        "Read"
+      ]
+    },
+    {
+      "name": "voice",
+      "displayName": "Voice",
+      "version": "1.0.0",
+      "tagline": "Speech-to-text and text-to-speech",
+      "description": "Voice data path: speech-to-text transcription (whisper.cpp) and text-to-speech (OuteTTS plus the universal Ryu TTS sidecar), plus the installable TTS model catalog. Governance shell over the in-crate voice module.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "voice",
+        "stt",
+        "tts"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "timeline",
+      "displayName": "Timeline",
+      "version": "1.0.0",
+      "tagline": "Replay your screen activity on a scrubber",
+      "description": "The activity replay timeline: a CapCut-style scrubber over Shadow's captured screen/input/window/audio lanes with a keyframe preview, a Dayflow work journal, and jump-to-moment focus.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "timeline",
+        "replay",
+        "screen"
+      ],
+      "capabilities": [
+        "Read"
+      ]
+    },
+    {
+      "name": "skill-editor",
+      "displayName": "Skill Editor",
+      "version": "1.0.0",
+      "tagline": "Author your own Agent Skills (SKILL.md)",
+      "description": "Author a user-owned Agent Skill (SKILL.md): front-matter fields (name / description / allowed tools / always-on), a markdown body editor, debounced autosave, and server-backed undoable version history.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Developer Tools",
+      "keywords": [
+        "skills",
+        "editor",
+        "authoring"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "canvas",
+      "displayName": "Canvas",
+      "version": "1.0.0",
+      "tagline": "AI-native infinite canvas",
+      "description": "Canvas: an AI-native infinite canvas backed by a Space — generate and arrange images, text, and shapes, with media generation, transcription, and agent hooks wired in.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "canvas",
+        "images",
+        "design"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "whiteboard",
+      "displayName": "Whiteboard",
+      "version": "1.0.0",
+      "tagline": "Collaborative agent whiteboard",
+      "description": "Whiteboard: a Space-backed collaborative whiteboard for sketching shapes and diagrams and handing them to a side-model for reasoning.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "whiteboard",
+        "diagrams",
+        "collaboration"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "workflows",
+      "displayName": "Workflows",
+      "version": "1.0.0",
+      "tagline": "DAG automation with a natural-language builder",
+      "description": "Workflows: petgraph DAG automation with triggers, durable execution, and a natural-language workflow builder.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Automation",
+      "keywords": [
+        "workflows",
+        "automation",
+        "dag"
+      ],
+      "capabilities": [
+        "Interactive"
+      ]
+    },
+    {
+      "name": "dashboards",
+      "displayName": "Dashboards",
+      "version": "1.0.0",
+      "tagline": "Composable live widget boards",
+      "description": "Dashboards: composable widget boards that assemble live views over monitors, meetings, quests, and other Core surfaces via soft HTTP loopback. A governance shell — the impl stays in-crate.",
+      "source": "builtin",
+      "builtin": true,
+      "developer": "Ryu",
+      "category": "Productivity",
+      "keywords": [
+        "dashboards",
+        "widgets",
+        "boards"
+      ],
+      "capabilities": [
+        "Read",
+        "Interactive"
+      ]
     }
   ]
 }
