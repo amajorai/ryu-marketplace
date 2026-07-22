@@ -16,7 +16,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:ghost",
-      "icon_dither": {
+      "iconDither": {
         "from": "purple",
         "direction": "up"
       },
@@ -41,7 +41,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:camera",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -65,7 +65,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:globe",
-      "icon_dither": {
+      "iconDither": {
         "from": "green",
         "direction": "up"
       },
@@ -89,7 +89,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:search",
-      "icon_dither": {
+      "iconDither": {
         "from": "orange",
         "direction": "up"
       },
@@ -119,7 +119,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:archive",
-      "icon_dither": {
+      "iconDither": {
         "from": "pink",
         "direction": "up"
       },
@@ -144,7 +144,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:list-checks",
-      "icon_dither": {
+      "iconDither": {
         "from": "green",
         "direction": "up"
       },
@@ -169,7 +169,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:clipboard-pen",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -191,7 +191,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:table",
-      "icon_dither": {
+      "iconDither": {
         "from": "orange",
         "direction": "up"
       },
@@ -216,7 +216,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:line-chart",
-      "icon_dither": {
+      "iconDither": {
         "from": "pink",
         "direction": "up"
       },
@@ -241,7 +241,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:workflow",
-      "icon_dither": {
+      "iconDither": {
         "from": "purple",
         "direction": "up"
       },
@@ -266,7 +266,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:square-kanban",
-      "icon_dither": {
+      "iconDither": {
         "from": "red",
         "direction": "up"
       },
@@ -288,7 +288,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:git-compare",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -313,7 +313,7 @@
       "version": "1.0.0",
       "type": "plugin",
       "icon": "lucide:gauge",
-      "icon_dither": {
+      "iconDither": {
         "from": "orange",
         "direction": "up"
       },
@@ -336,7 +336,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:list-todo",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -363,7 +363,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:activity",
-      "icon_dither": {
+      "iconDither": {
         "from": "orange",
         "direction": "up"
       },
@@ -390,7 +390,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:audio-lines",
-      "icon_dither": {
+      "iconDither": {
         "from": "purple",
         "direction": "up"
       },
@@ -417,7 +417,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:users",
-      "icon_dither": {
+      "iconDither": {
         "from": "green",
         "direction": "up"
       },
@@ -443,7 +443,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:microscope",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -470,7 +470,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:book-open",
-      "icon_dither": {
+      "iconDither": {
         "from": "orange",
         "direction": "up"
       },
@@ -496,7 +496,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:clapperboard",
-      "icon_dither": {
+      "iconDither": {
         "from": "red",
         "direction": "up"
       },
@@ -522,7 +522,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:mail",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -549,7 +549,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:sliders-horizontal",
-      "icon_dither": {
+      "iconDither": {
         "from": "purple",
         "direction": "up"
       },
@@ -575,7 +575,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:graduation-cap",
-      "icon_dither": {
+      "iconDither": {
         "from": "green",
         "direction": "up"
       },
@@ -601,7 +601,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:check-check",
-      "icon_dither": {
+      "iconDither": {
         "from": "green",
         "direction": "up"
       },
@@ -627,7 +627,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:rss",
-      "icon_dither": {
+      "iconDither": {
         "from": "orange",
         "direction": "up"
       },
@@ -653,7 +653,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:calendar",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -679,7 +679,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:webhook",
-      "icon_dither": {
+      "iconDither": {
         "from": "purple",
         "direction": "up"
       },
@@ -706,7 +706,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:app-window",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -733,7 +733,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:mic",
-      "icon_dither": {
+      "iconDither": {
         "from": "pink",
         "direction": "up"
       },
@@ -759,7 +759,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:film",
-      "icon_dither": {
+      "iconDither": {
         "from": "orange",
         "direction": "up"
       },
@@ -785,7 +785,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:file-pen",
-      "icon_dither": {
+      "iconDither": {
         "from": "green",
         "direction": "up"
       },
@@ -811,7 +811,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:palette",
-      "icon_dither": {
+      "iconDither": {
         "from": "purple",
         "direction": "up"
       },
@@ -837,7 +837,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:pencil-ruler",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
@@ -863,7 +863,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:workflow",
-      "icon_dither": {
+      "iconDither": {
         "from": "orange",
         "direction": "up"
       },
@@ -889,7 +889,7 @@
       "type": "app",
       "hasCompanion": true,
       "icon": "lucide:layout-dashboard",
-      "icon_dither": {
+      "iconDither": {
         "from": "blue",
         "direction": "up"
       },
