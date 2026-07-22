@@ -65,8 +65,22 @@
           ]
         },
         "category": { "type": "string" },
+        "type": { "enum": ["app", "plugin"], "description": "App (ships a Companion UI surface, or bundles other apps) vs plugin (tools/agents/channels/policies). Preferred over deriving app-ness from a Companion runnable." },
+        "hasCompanion": { "type": "boolean", "description": "True when this item ships a Companion UI surface (i.e. an app). Sets type=app when `type` is omitted." },
+        "bundles": { "type": "array", "items": { "type": "string" }, "description": "Ids of separate plugins this item ships as a logical bundle (installed/uninstalled together). Rendered as \"Includes these apps\"." },
         "keywords": { "type": "array", "items": { "type": "string" } },
         "capabilities": { "type": "array", "items": { "type": "string" } },
+        "icon": { "type": "string", "description": "Icon-primitive glyph id: an Iconify `prefix:name` (e.g. `lucide:ghost`) or a bare Hugeicons name. Distinct from `iconUrl` (a raster logo)." },
+        "icon_dither": {
+          "type": "object",
+          "description": "Dithered-gradient background painted behind the icon glyph on the card. `from` is a palette colour name (green|blue|purple|pink|orange|red|grey) or a hue number; `to` defaults to transparent; `direction` is up|down|left|right.",
+          "properties": {
+            "from": { "description": "Palette colour name or hue number" },
+            "to": { "description": "Second colour, or \"transparent\" (default)" },
+            "direction": { "enum": ["up", "down", "left", "right"] }
+          },
+          "additionalProperties": true
+        },
         "iconUrl": { "type": "string", "format": "uri" },
         "screenshots": { "type": "array", "items": { "type": "string", "format": "uri" }, "maxItems": 8 },
         "examplePrompts": { "type": "array", "items": { "type": "string" }, "maxItems": 8 },
