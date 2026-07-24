@@ -1,13 +1,30 @@
 # Ryu Marketplace
 
-Declarative, UI-less Ryu plugins — one directory per plugin under
-`plugins/`. Each `plugins/<name>/plugin.json` is the source-of-truth
-tool manifest.
+The catalog for **Ryu apps and plugins**.
+
+- `.ryu-plugin/marketplace.json` — the generated index. It lists **both**
+  tiers: `type: "app"` (apps-store apps, which ship from their own
+  `amajorai/ryu-<app>` satellite repos) and `type: "plugin"` (declarative,
+  UI-less plugins, whose source is carried here).
+- `plugins/<name>/plugin.json` — the source-of-truth manifest for each
+  first-party plugin. A declarative plugin IS its manifest.
+- `schema/marketplace.schema.json` — the index schema.
 
 This tree is a ONE-WAY mirror generated from the private monorepo by
-`tools/mirror-plugins.sh`; do not edit it here (changes are overwritten).
+`tools/mirror-plugins.sh`; do not edit it here (changes are overwritten —
+edit the generator instead).
 
-## Plugins
+## Third-party listings (GitHub topic discovery)
+
+Third-party apps and plugins are discovered automatically from GitHub
+topics — add **`ryu-app`** or **`ryu-plugin`** to your repository and it
+becomes discoverable in the Ryu marketplace (desktop + web).
+
+> Listings discovered by topic are **not reviewed** by Ryu. Install at
+> your own discretion — read the manifest, check what permission grants
+> it requests, and prefer repos you can audit.
+
+## First-party plugins (18)
 
 - [`advisor`](./plugins/advisor/) — see [plugins/advisor/README.md](./plugins/advisor/README.md)
 - [`agentbrowser`](./plugins/agentbrowser/) — see [plugins/agentbrowser/README.md](./plugins/agentbrowser/README.md)
