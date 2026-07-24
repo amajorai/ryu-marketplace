@@ -16,7 +16,7 @@ import { dirname, join } from "node:path";
 import test from "node:test";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const manifestPath = join(here, "plugin.json");
+const manifestPath = join(here, "manifest.json");
 const fixturePath = join(
   here,
   "..",
@@ -26,12 +26,12 @@ const fixturePath = join(
   "src",
   "plugin_manifest",
   "fixtures",
-  "rtk.plugin.json"
+  "rtk.manifest.json"
 );
 
 const rawManifest = readFileSync(manifestPath, "utf8");
 
-test("plugin.json is valid JSON and parses", () => {
+test("manifest.json is valid JSON and parses", () => {
   const parsed = JSON.parse(rawManifest);
   assert.equal(typeof parsed, "object");
   assert.notEqual(parsed, null);
@@ -193,6 +193,6 @@ test("manifest is byte-identical to the Core fixture (registration seam)", () =>
   assert.equal(
     rawManifest,
     fixtureRaw,
-    "plugins-store/rtk/plugin.json must byte-match apps/core/.../fixtures/rtk.plugin.json"
+    "plugins-store/rtk/manifest.json must byte-match apps/core/.../fixtures/rtk.manifest.json"
   );
 });

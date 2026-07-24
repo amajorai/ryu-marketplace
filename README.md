@@ -6,7 +6,7 @@ The catalog for **Ryu apps and plugins**.
   tiers: `type: "app"` (apps-store apps, which ship from their own
   `amajorai/ryu-<app>` satellite repos) and `type: "plugin"` (declarative,
   UI-less plugins, whose source is carried here).
-- `plugins/<name>/plugin.json` — the source-of-truth manifest for each
+- `plugins/<name>/manifest.json` — the source-of-truth manifest for each
   first-party plugin. A declarative plugin IS its manifest.
 - `schema/marketplace.schema.json` — the index schema.
 

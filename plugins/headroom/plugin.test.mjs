@@ -19,7 +19,7 @@ import { dirname, join } from 'node:path';
 import { test } from 'node:test';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, 'plugin.json');
+const MANIFEST_PATH = join(HERE, 'manifest.json');
 // plugins-store/headroom -> repo root -> Core fixture.
 const FIXTURE_PATH = join(
   HERE,
@@ -30,12 +30,12 @@ const FIXTURE_PATH = join(
   'src',
   'plugin_manifest',
   'fixtures',
-  'headroom.plugin.json'
+  'headroom.manifest.json'
 );
 
 const RAW = readFileSync(MANIFEST_PATH, 'utf8');
 
-test('plugin.json is valid, parseable JSON', () => {
+test('manifest.json is valid, parseable JSON', () => {
   assert.doesNotThrow(() => JSON.parse(RAW));
   const m = JSON.parse(RAW);
   assert.equal(typeof m, 'object');
@@ -153,5 +153,5 @@ test('co-located manifest is byte-identical to the Core fixture', () => {
   // AGENTS.md byte-identical rule: the built-in registration copy in Core must
   // match this satellite manifest exactly.
   const fixture = readFileSync(FIXTURE_PATH, 'utf8');
-  assert.equal(RAW, fixture, 'plugin.json equals Core fixture byte-for-byte');
+  assert.equal(RAW, fixture, 'manifest.json equals Core fixture byte-for-byte');
 });

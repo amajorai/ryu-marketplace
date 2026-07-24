@@ -7,7 +7,7 @@
 // build_hook_program). This test extracts that exact string and RUNS it against a
 // realistic mock ctx + a stub host that mirrors Core's facade contract, asserting
 // the returned directive and the storage side effects match the hook's logic.
-// It never edits plugin.json.
+// It never edits manifest.json.
 
 import assert from "node:assert/strict";
 import { readFileSync, existsSync } from "node:fs";
@@ -16,7 +16,7 @@ import { dirname, join } from "node:path";
 import test from "node:test";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, "plugin.json");
+const MANIFEST_PATH = join(HERE, "manifest.json");
 const JUDGE_PREF_KEY = "goal-judge-model";
 
 const raw = readFileSync(MANIFEST_PATH, "utf8");
@@ -87,7 +87,7 @@ function makeHost(sideModelReply, seed = {}) {
 
 // ── Manifest / contract ──────────────────────────────────────────────────────
 
-test("plugin.json is valid JSON with id/name/version", () => {
+test("manifest.json is valid JSON with id/name/version", () => {
   const m = JSON.parse(raw);
   assert.equal(typeof m, "object");
   assert.equal(m.id, "goal");
@@ -146,7 +146,7 @@ test("Core fixture (when present) is byte-identical to this manifest", () => {
     "src",
     "plugin_manifest",
     "fixtures",
-    "goal.plugin.json"
+    "goal.manifest.json"
   );
   if (!existsSync(fixture)) {
     return; // standalone satellite tree — nothing to compare against

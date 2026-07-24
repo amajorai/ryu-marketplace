@@ -5,7 +5,7 @@
 // (`npx -y agentbrowser`) and has no inline turn_hooks, so there is no
 // executable hook code to run. The strongest honest coverage is therefore
 // structural validation of the manifest contract Core relies on:
-//   - plugin.json parses as valid JSON
+//   - manifest.json parses as valid JSON
 //   - required identity fields (id / name / version) are well-formed
 //   - the mcp_servers command spec is well-formed (command + args)
 //   - permission_grants line up with the declared MCP server id
@@ -18,16 +18,16 @@ import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, "plugin.json");
+const MANIFEST_PATH = join(HERE, "manifest.json");
 
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
 const SEMVER = /^\d+\.\d+\.\d+/;
 
-test("plugin.json is valid JSON and parses", () => {
+test("manifest.json is valid JSON and parses", () => {
   let parsed;
   assert.doesNotThrow(() => {
     parsed = JSON.parse(RAW);
-  }, "plugin.json must be parseable JSON");
+  }, "manifest.json must be parseable JSON");
   assert.equal(typeof parsed, "object");
   assert.notEqual(parsed, null);
 });

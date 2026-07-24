@@ -18,7 +18,7 @@ import { dirname, join } from "node:path";
 import test from "node:test";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const manifestPath = join(here, "plugin.json");
+const manifestPath = join(here, "manifest.json");
 const fixturePath = join(
   here,
   "..",
@@ -28,12 +28,12 @@ const fixturePath = join(
   "src",
   "plugin_manifest",
   "fixtures",
-  "ghost.plugin.json"
+  "ghost.manifest.json"
 );
 
 const rawManifest = readFileSync(manifestPath, "utf8");
 
-test("plugin.json is valid JSON and parses to an object", () => {
+test("manifest.json is valid JSON and parses to an object", () => {
   const parsed = JSON.parse(rawManifest);
   assert.equal(typeof parsed, "object");
   assert.notEqual(parsed, null);
@@ -129,6 +129,6 @@ test("manifest is byte-identical to the Core fixture (registration seam)", () =>
   assert.equal(
     rawManifest,
     fixtureRaw,
-    "plugins-store/ghost/plugin.json must byte-match apps/core/.../fixtures/ghost.plugin.json"
+    "plugins-store/ghost/manifest.json must byte-match apps/core/.../fixtures/ghost.manifest.json"
   );
 });

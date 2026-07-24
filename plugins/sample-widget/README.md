@@ -6,7 +6,7 @@ your own. It shows the smallest thing that works end-to-end:
 - a tiny local **MCP server** (`server.mjs`, Node, zero dependencies) that
   - exposes one **render tool** returning structured data, and
   - serves the widget HTML as an **MCP resource**;
-- a **manifest** (`plugin.json`) that binds the tool to the widget and holds the
+- a **manifest** (`manifest.json`) that binds the tool to the widget and holds the
   `widget:render` consent grant;
 - a **self-contained skybridge widget** (`sample.html`) that reads the tool output
   and renders a greeting + an interactive counter.
@@ -122,20 +122,20 @@ You should see the tool (with its `_meta.outputTemplate`) and the HTML come back
 
 | File | Role |
 | --- | --- |
-| `plugin.json` | Manifest: mcp_servers + contributes.widgets + `widget:render`. |
+| `manifest.json` | Manifest: mcp_servers + contributes.widgets + `widget:render`. |
 | `server.mjs` | Zero-dep stdio MCP server: render tool + widget resource. |
 | `sample.html` | Self-contained skybridge widget UI. |
 
 ## Gotchas when you fork this
 
 - **Change the `id`.** This template's manifest is also compiled into Core as a
-  built-in fixture (`apps/core/src/plugin_manifest/fixtures/sample-widget.plugin.json`).
+  built-in fixture (`apps/core/src/plugin_manifest/fixtures/sample-widget.manifest.json`).
   If you drop a copy into `~/.ryu/plugins/` **keeping `id: "sample-widget"`**, the
   loader treats it as a **duplicate id** and skips your copy. Pick your own id
   (reverse-domain-ish is conventional, e.g. `com.acme.checklist`).
 - **Spawn cwd / the `node server.mjs` path.** `args: ["server.mjs"]` is relative;
   Core spawns the server from the installed plugin directory, so `server.mjs`
-  resolves next to `plugin.json`. `server.mjs` reads `sample.html` relative to
+  resolves next to `manifest.json`. `server.mjs` reads `sample.html` relative to
   itself (via `import.meta.url`), not the cwd, so it is robust regardless.
 - **`isError` results emit no widget.** Return `isError: false` (the default) with
   `structuredContent`; an error result is delivered as text only.

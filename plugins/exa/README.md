@@ -2,7 +2,7 @@
 
 Neural and keyword web search for Ryu agents, powered by the
 [Exa API](https://exa.ai). Ships as a fully declarative plugin — two `http`
-tool-defs in `plugin.json`, no Core Rust.
+tool-defs in `manifest.json`, no Core Rust.
 
 ## Tools
 

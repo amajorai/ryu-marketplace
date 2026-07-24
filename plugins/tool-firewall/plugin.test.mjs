@@ -8,8 +8,8 @@
 // tool-firewall is an INLINE-HOOK plugin: its behavior lives entirely in the
 // `contributes.turn_hooks[].code` JS strings. So the test does two things:
 //
-//   1. Manifest validation — the plugin.json is byte-identical to the Core
-//      fixture (apps/core/src/plugin_manifest/fixtures/tool-firewall.plugin.json)
+//   1. Manifest validation — the manifest.json is byte-identical to the Core
+//      fixture (apps/core/src/plugin_manifest/fixtures/tool-firewall.manifest.json)
 //      and must stay well-formed: valid JSON, id/name/version, and a
 //      turn_hooks contribution whose entries are well-shaped.
 //
@@ -30,7 +30,7 @@ import { dirname, join } from "node:path";
 import { test } from "node:test";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, "plugin.json");
+const MANIFEST_PATH = join(HERE, "manifest.json");
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
 
 // Parse once; a throw here fails the whole suite (which is the point).
@@ -81,7 +81,7 @@ function getHook(id) {
 // Manifest shape
 // ─────────────────────────────────────────────────────────────────────────────
 
-test("plugin.json is valid JSON with id/name/version", () => {
+test("manifest.json is valid JSON with id/name/version", () => {
   // JSON.parse above already proved it parses; assert the round-trip is stable.
   assert.deepEqual(JSON.parse(RAW), manifest);
   assert.equal(manifest.id, "com.ryuhq.tool-firewall");

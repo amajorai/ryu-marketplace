@@ -10,7 +10,7 @@ Two ways to get listed:
 
 ## 1. Build your plugin
 
-Your plugin lives in **your own** public git repo, with a `plugin.json` (and optionally its own
+Your plugin lives in **your own** public git repo, with a `manifest.json` (and optionally its own
 `marketplace.json` if you want to host a marketplace too). Scaffold one with
 `bunx create-ryu-app`, or follow the Ryu SDK docs.
 

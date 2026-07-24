@@ -3,7 +3,7 @@
 // Sample Widget — a minimal, dependency-free stdio MCP server (TEMPLATE)
 // =============================================================================
 //
-// This is HALF of a Ryu widget plugin. The other half is `plugin.json` (the
+// This is HALF of a Ryu widget plugin. The other half is `manifest.json` (the
 // consent/promotion gate) + `sample.html` (the widget UI). See README.md.
 //
 // What Core needs from this server, and where each piece is implemented below:
@@ -37,7 +37,7 @@ import { dirname, join } from "node:path";
 import { createInterface } from "node:readline";
 
 // The widget slug (the `<slug>` in `ui://widget/<slug>.html`). Keep this in sync
-// with the `uri` in plugin.json's contributes.widgets and with sample.html.
+// with the `uri` in manifest.json's contributes.widgets and with sample.html.
 const WIDGET_URI = "ui://widget/sample.html";
 const WIDGET_MIME = "text/html+skybridge"; // the skybridge dialect Core expects.
 
@@ -53,7 +53,7 @@ const WIDGET_HTML = readFileSync(join(HERE, "sample.html"), "utf8");
 
 // The single render tool. Its NAME is "render"; joined with the mcp_servers key
 // ("sample_widget") Core forms the runtime tool_id "sample_widget__render", which
-// is exactly what plugin.json's contributes.widgets[].tool_id must equal.
+// is exactly what manifest.json's contributes.widgets[].tool_id must equal.
 const TOOLS = [
 	{
 		name: "render",
@@ -74,7 +74,7 @@ const TOOLS = [
 		// `ryu/*` are the primary aliases if you prefer to be explicit.
 		_meta: {
 			// REQUIRED — points at the resource this server serves below. This is
-			// what makes `render` a *widget* tool. Must match plugin.json's uri.
+			// what makes `render` a *widget* tool. Must match manifest.json's uri.
 			"openai/outputTemplate": WIDGET_URI,
 			// Lets the mounted widget call THIS server's widget-accessible tools back
 			// over the MessagePort (see sample.html's "refresh from server" button).

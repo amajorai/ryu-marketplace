@@ -4,7 +4,7 @@
 //   node --test plugins-store/advisor/plugin.test.mjs
 //
 // Advisor is an INLINE-HOOK plugin: it ships a `post_assistant_turn` turn hook
-// whose behaviour lives entirely in a JS string inside plugin.json. So this test
+// whose behaviour lives entirely in a JS string inside manifest.json. So this test
 // does two things:
 //   1. Manifest contract — the http tool runnable + contributes are well-formed.
 //   2. Live hook execution — it EXTRACTS contributes.turn_hooks[0].code and runs
@@ -14,18 +14,18 @@
 //      function body whose top-level `return` yields the directive).
 
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import test from 'node:test';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, 'plugin.json');
+const MANIFEST_PATH = join(HERE, 'manifest.json');
 const RAW = readFileSync(MANIFEST_PATH, 'utf8');
 
 // ── 1. Manifest is valid JSON with the core identity fields ────────────────────
 
-test('plugin.json is valid JSON and parses', () => {
+test('manifest.json is valid JSON and parses', () => {
   const m = JSON.parse(RAW);
   assert.equal(typeof m, 'object');
   assert.notEqual(m, null);
@@ -273,7 +273,7 @@ test('hook: null advice from side model → kind:none', async () => {
 // fixture. In the standalone satellite repo the fixture doesn't exist, so this
 // check is skipped there rather than failing.
 
-test('plugin.json is byte-identical to the Core fixture (skipped if absent)', () => {
+test('manifest.json is byte-identical to the Core fixture (skipped if absent)', () => {
   const fixture = join(
     HERE,
     '..',
@@ -283,13 +283,14 @@ test('plugin.json is byte-identical to the Core fixture (skipped if absent)', ()
     'src',
     'plugin_manifest',
     'fixtures',
-    'advisor.plugin.json'
+    'advisor.manifest.json'
   );
-  let fixtureRaw;
-  try {
-    fixtureRaw = readFileSync(fixture, 'utf8');
-  } catch {
-    return; // satellite tree: no Core fixture to compare against.
+  // Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
+  // fixtures directory is here and only the file name is wrong — otherwise a
+  // broken path silently skips instead of catching real drift.
+  if (!existsSync(dirname(fixture))) {
+    return;
   }
+  const fixtureRaw = readFileSync(fixture, 'utf8');
   assert.equal(RAW, fixtureRaw, 'manifest must stay byte-identical to the Core fixture');
 });

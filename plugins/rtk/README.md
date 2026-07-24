@@ -5,7 +5,7 @@ Token-compress noisy dev-command output for Ryu agents, powered by the
 `rtk git status`, `rtk cargo test`) and returns a token-compressed version of its
 output — 60–90% fewer tokens — so an agent spends far less context on noisy tool
 output. Ships as a fully declarative plugin — one `command` tool-def in
-`plugin.json`, no Core Rust.
+`manifest.json`, no Core Rust.
 
 ## Tools
 

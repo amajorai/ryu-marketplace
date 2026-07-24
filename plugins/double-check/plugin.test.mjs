@@ -6,7 +6,7 @@
 // an injected `ctx` and a `host` facade (see apps/core/src/plugin_host/mod.rs,
 // build_hook_program). This test extracts that exact string and RUNS it against a
 // realistic mock ctx + a stub host.sideModel, asserting the returned directive
-// matches the hook's logic. It never edits plugin.json.
+// matches the hook's logic. It never edits manifest.json.
 
 import assert from "node:assert/strict";
 import { readFileSync, existsSync } from "node:fs";
@@ -15,7 +15,7 @@ import { dirname, join } from "node:path";
 import test from "node:test";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, "plugin.json");
+const MANIFEST_PATH = join(HERE, "manifest.json");
 const FLAG = "io.ryu.double-check";
 
 const raw = readFileSync(MANIFEST_PATH, "utf8");
@@ -60,7 +60,7 @@ function makeHost(reply) {
   };
 }
 
-test("plugin.json is valid JSON with id/name/version", () => {
+test("manifest.json is valid JSON with id/name/version", () => {
   const m = JSON.parse(raw);
   assert.equal(typeof m, "object");
   assert.equal(m.id, "double-check");
@@ -109,7 +109,7 @@ test("Core fixture (when present) is byte-identical to this manifest", () => {
     "src",
     "plugin_manifest",
     "fixtures",
-    "double-check.plugin.json"
+    "double-check.manifest.json"
   );
   if (!existsSync(fixture)) {
     return; // standalone satellite tree — nothing to compare against

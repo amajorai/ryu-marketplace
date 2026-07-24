@@ -10,16 +10,16 @@
 // Core fixture registration seam. See notes in the task report.
 
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const manifestPath = join(here, "plugin.json");
+const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 
-test("plugin.json is valid parseable JSON", () => {
+test("manifest.json is valid parseable JSON", () => {
   assert.doesNotThrow(() => JSON.parse(raw));
 });
 
@@ -164,18 +164,18 @@ test("manifest declares no executable hook / mcp / sidecar surface", () => {
 test("manifest is byte-identical to the Core fixture (registration seam)", () => {
   const fixturePath = resolve(
     here,
-    "../../apps/core/src/plugin_manifest/fixtures/sample.plugin.json"
+    "../../apps/core/src/plugin_manifest/fixtures/sample.manifest.json"
   );
-  let fixture;
-  try {
-    fixture = readFileSync(fixturePath);
-  } catch {
-    // Satellite tree ships without apps/core; skip rather than fail there.
+  // Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
+  // fixtures directory is here and only the file name is wrong — otherwise a
+  // broken path silently skips instead of catching real drift.
+  if (!existsSync(dirname(fixturePath))) {
     return;
   }
+  const fixture = readFileSync(fixturePath);
   assert.deepEqual(
     readFileSync(manifestPath),
     fixture,
-    "plugin.json drifted from the Core fixture — they must be byte-identical"
+    "manifest.json drifted from the Core fixture — they must be byte-identical"
   );
 });

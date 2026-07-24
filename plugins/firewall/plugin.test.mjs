@@ -28,10 +28,10 @@ import { dirname, join } from 'node:path';
 import test from 'node:test';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, 'plugin.json');
+const MANIFEST_PATH = join(HERE, 'manifest.json');
 const RAW = readFileSync(MANIFEST_PATH, 'utf8');
 
-test('plugin.json is valid JSON and parses', () => {
+test('manifest.json is valid JSON and parses', () => {
   const manifest = JSON.parse(RAW);
   assert.equal(typeof manifest, 'object');
   assert.notEqual(manifest, null);
@@ -137,11 +137,11 @@ test('manifest is byte-identical to the built-in Core fixture', () => {
     'src',
     'plugin_manifest',
     'fixtures',
-    'firewall.plugin.json'
+    'firewall.manifest.json'
   );
   if (!existsSync(fixture)) {
     return; // satellite checkout: nothing to compare against
   }
   const fixtureRaw = readFileSync(fixture, 'utf8');
-  assert.equal(RAW, fixtureRaw, 'plugin.json must byte-match Core fixture');
+  assert.equal(RAW, fixtureRaw, 'manifest.json must byte-match Core fixture');
 });

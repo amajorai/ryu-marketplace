@@ -17,7 +17,7 @@ import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const manifestPath = join(here, "plugin.json");
+const manifestPath = join(here, "manifest.json");
 const fixturePath = join(
   here,
   "..",
@@ -27,12 +27,12 @@ const fixturePath = join(
   "src",
   "plugin_manifest",
   "fixtures",
-  "spider.plugin.json"
+  "spider.manifest.json"
 );
 
 const raw = readFileSync(manifestPath, "utf8");
 
-test("plugin.json is valid JSON and parses", () => {
+test("manifest.json is valid JSON and parses", () => {
   assert.doesNotThrow(() => JSON.parse(raw));
 });
 

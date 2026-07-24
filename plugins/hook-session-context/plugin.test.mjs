@@ -11,13 +11,13 @@
 // then assert the returned directive matches the hook's logic.
 
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import test from "node:test";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const manifestPath = join(here, "plugin.json");
+const manifestPath = join(here, "manifest.json");
 const rawManifest = readFileSync(manifestPath, "utf8");
 
 // Valid HookDirective kinds Core's serde enum accepts
@@ -79,7 +79,7 @@ async function runHook(code, ctx, host) {
 
 // ── Manifest shape (ALWAYS) ────────────────────────────────────────────────
 
-test("plugin.json is valid JSON and re-serializes stably", () => {
+test("manifest.json is valid JSON and re-serializes stably", () => {
 	const m = manifest();
 	assert.equal(typeof m, "object");
 	assert.ok(m !== null);
@@ -141,7 +141,7 @@ test("contributes exactly one well-formed turn hook", () => {
 
 // ── Byte-identity with the Core fixture (only when Core tree is present) ────
 
-test("plugin.json is byte-identical to the Core fixture when present", () => {
+test("manifest.json is byte-identical to the Core fixture when present", () => {
 	// Satellites ship without apps/core, so this is a best-effort guard: only
 	// asserts when the monorepo fixture is reachable.
 	const fixturePath = join(
@@ -153,18 +153,19 @@ test("plugin.json is byte-identical to the Core fixture when present", () => {
 		"src",
 		"plugin_manifest",
 		"fixtures",
-		"hook-session-context.plugin.json"
+		"hook-session-context.manifest.json"
 	);
-	let fixture;
-	try {
-		fixture = readFileSync(fixturePath, "utf8");
-	} catch {
-		return; // Core tree absent (satellite build): nothing to compare.
+	// Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
+	// fixtures directory is here and only the file name is wrong — otherwise a
+	// broken path silently skips instead of catching real drift.
+	if (!existsSync(dirname(fixturePath))) {
+		return;
 	}
+	const fixture = readFileSync(fixturePath, "utf8");
 	assert.equal(
 		rawManifest,
 		fixture,
-		"plugin.json and the Core fixture must be byte-identical"
+		"manifest.json and the Core fixture must be byte-identical"
 	);
 });
 

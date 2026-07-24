@@ -2,7 +2,7 @@
 
 Web crawling and content extraction for Ryu agents, powered by the
 [Spider](https://spider.cloud) crawler (`spider-rs/spider`). Ships as a fully
-declarative plugin — one `command` tool-def in `plugin.json`, no Core Rust.
+declarative plugin — one `command` tool-def in `manifest.json`, no Core Rust.
 
 ## Tools
 

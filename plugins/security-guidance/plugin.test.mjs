@@ -16,7 +16,7 @@ import { dirname, join } from "node:path";
 import { test } from "node:test";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, "plugin.json");
+const MANIFEST_PATH = join(HERE, "manifest.json");
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
 
 const FLAG = "io.ryu.security-guidance";
@@ -76,7 +76,7 @@ const asstMsg = (content) => ({ role: "assistant", content });
 // ALWAYS: manifest shape / contract validation
 // ---------------------------------------------------------------------------
 
-test("plugin.json is valid JSON and has id/name/version", () => {
+test("manifest.json is valid JSON and has id/name/version", () => {
   const m = JSON.parse(RAW);
   assert.equal(m.id, "security-guidance");
   assert.equal(typeof m.name, "string");
