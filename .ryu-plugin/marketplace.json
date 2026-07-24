@@ -1,913 +1,154 @@
 {
   "name": "ryu",
   "owner": {
-    "name": "Ryu",
-    "url": "https://github.com/amajorai/ryu"
+    "name": "amajorai",
+    "url": "https://github.com/amajorai"
   },
   "metadata": {
-    "description": "The official Ryu marketplace: curated agents, apps, skills, tools, and MCP servers. Submit yours via a pull request or the in-app publish flow.",
-    "version": "1",
+    "description": "The official Ryu plugin marketplace — declarative, UI-less tools.",
+    "version": "1.0.0",
     "homepage": "https://github.com/amajorai/ryu-marketplace"
   },
   "plugins": [
     {
+      "name": "advisor",
+      "displayName": "Advisor",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true,
+      "description": "Consult a stronger reviewer model for a second opinion — as an auto-review turn hook (toggle / `/advisor`) and as the model-callable `advisor__consult` tool, a declarative HTTP tool routed through Core's `/api/advisor/consult` bridge."
+    },
+    {
+      "name": "agentbrowser",
+      "displayName": "Agent Browser",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "double-check",
+      "displayName": "Double Check",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "exa",
+      "displayName": "Exa Search",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Neural web search for agents",
+      "description": "Neural and keyword web search via the Exa API (https://exa.ai), exposed as two declarative HTTP tools: search and find-similar. Requires a BYOK Exa API key.",
+      "category": "Search"
+    },
+    {
+      "name": "firewall",
+      "displayName": "Gateway Firewall",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
       "name": "ghost",
       "displayName": "Ghost",
       "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:ghost",
-      "iconDither": {
-        "from": "purple",
-        "direction": "up"
-      },
-      "tagline": "Desktop automation for any app",
-      "description": "Desktop automation: 29 screen perception and input control tools. Snapshot the screen, reference elements by @eN, click/type/scroll, and record then replay recipes. Windows-first.",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "goal",
+      "displayName": "Goal",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "headroom",
+      "displayName": "Headroom Compression",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "hook-observers",
+      "displayName": "Hook Observers",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "hook-session-context",
+      "displayName": "Session Context",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "proof",
+      "displayName": "Proof of Work",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "rtk",
+      "displayName": "RTK (Rust Token Killer)",
+      "version": "1.0.0",
       "source": "builtin",
       "builtin": true,
-      "developer": "Ryu",
-      "category": "Automation",
-      "keywords": [
-        "automation",
-        "desktop"
-      ],
-      "capabilities": [
-        "Interactive",
-        "Read"
-      ]
+      "tagline": "Token-compress noisy dev-command output for agents",
+      "description": "Run a dev command through RTK (Rust Token Killer) and get a token-compressed version of its output (60-90% fewer tokens), exposed as a declarative `command` tool that shells out to the locally-installed `rtk` binary. BYO — no API key.",
+      "category": "Developer Tools"
+    },
+    {
+      "name": "sample",
+      "displayName": "Research Assistant",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "sample-widget",
+      "displayName": "Sample Widget",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true,
+      "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget__render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin."
+    },
+    {
+      "name": "security-guidance",
+      "displayName": "Security Guidance",
+      "version": "1.0.0",
+      "source": "builtin",
+      "builtin": true
     },
     {
       "name": "shadow",
       "displayName": "Shadow",
       "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:camera",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Screen and audio capture with memory",
-      "description": "Screen and audio capture, OCR, proactive engine, semantic memory and search, timeline keyframes, and meeting capture/detection.",
       "source": "builtin",
       "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "capture",
-        "memory"
-      ],
-      "capabilities": [
-        "Read"
-      ]
+      "tagline": "Recall what you have seen and done",
+      "description": "Search everything Shadow has captured (screen text, audio transcripts, input) and summarize recent activity. Exposed as declarative HTTP tools that reach the device-local Shadow sidecar through Core's authenticated `/api/shadow/*` proxy (which injects Shadow's bearer token).",
+      "category": "Search"
     },
     {
       "name": "spider",
       "displayName": "Spider",
       "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:globe",
-      "iconDither": {
-        "from": "green",
-        "direction": "up"
-      },
-      "tagline": "High-performance web crawler and scraper",
-      "description": "High-performance web crawler and scraper for pulling content off the web into an agent's context.",
       "source": "builtin",
       "builtin": true,
-      "developer": "Ryu",
-      "category": "Web",
-      "keywords": [
-        "web",
-        "scraping"
-      ],
-      "capabilities": [
-        "Web scraping"
-      ]
+      "tagline": "Crawl and extract web pages for agents",
+      "description": "High-performance web crawling and content extraction via the Spider CLI (https://spider.cloud), exposed as a declarative `command` tool that shells out to the locally-installed `spider` binary. No API key.",
+      "category": "Search"
     },
     {
-      "name": "exa",
-      "displayName": "Exa",
+      "name": "tool-firewall",
+      "displayName": "Tool Firewall",
       "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:search",
-      "iconDither": {
-        "from": "orange",
-        "direction": "up"
-      },
-      "tagline": "Neural web search",
-      "description": "Neural search: find any content on the web. Requires EXA_API_KEY.",
       "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Web",
-      "keywords": [
-        "search",
-        "web"
-      ],
-      "capabilities": [
-        "Web search"
-      ],
-      "setup": {
-        "title": "Exa API key",
-        "description": "Set EXA_API_KEY to enable neural web search.",
-        "actionLabel": "Get a key",
-        "actionUrl": "https://exa.ai"
-      }
-    },
-    {
-      "name": "headroom",
-      "displayName": "Headroom",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:archive",
-      "iconDither": {
-        "from": "pink",
-        "direction": "up"
-      },
-      "tagline": "Context compression, 60-95% fewer tokens",
-      "description": "Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens with reversible retrieval. Requires headroom-ai[mcp].",
-      "source": "https://raw.githubusercontent.com/amajorai/ryu/main/packages/headroom/ryu.json",
-      "builtin": false,
-      "developer": "chopratejas",
-      "category": "Developer Tools",
-      "keywords": [
-        "context",
-        "compression"
-      ],
-      "capabilities": [
-        "Read"
-      ],
-      "homepage": "https://github.com/chopratejas/headroom"
-    },
-    {
-      "name": "checklist",
-      "displayName": "Checklist",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:list-checks",
-      "iconDither": {
-        "from": "green",
-        "direction": "up"
-      },
-      "tagline": "Interactive checklist widget",
-      "description": "Interactive checklist widget: tick off, edit inline, and approve items directly in chat.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Widgets",
-      "keywords": [
-        "app",
-        "widget",
-        "productivity"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "smart-intake-form",
-      "displayName": "Smart Intake Form",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:clipboard-pen",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Pre-filled intake form widget",
-      "description": "Pre-filled intake form widget with native pickers and validation.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Widgets",
-      "keywords": [
-        "app",
-        "widget",
-        "forms"
-      ]
-    },
-    {
-      "name": "data-grid-explorer",
-      "displayName": "Data Grid Explorer",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:table",
-      "iconDither": {
-        "from": "orange",
-        "direction": "up"
-      },
-      "tagline": "Sortable, filterable data grid widget",
-      "description": "Sortable, filterable, virtualized data grid widget; full rows stay out of model context.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Widgets",
-      "keywords": [
-        "app",
-        "widget",
-        "data"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "chart-studio",
-      "displayName": "Chart Studio",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:line-chart",
-      "iconDither": {
-        "from": "pink",
-        "direction": "up"
-      },
-      "tagline": "Interactive chart widget",
-      "description": "Interactive chart widget (line/bar/area/scatter) with legend toggles and brush select.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Widgets",
-      "keywords": [
-        "app",
-        "widget",
-        "charts"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "decision-wizard",
-      "displayName": "Decision Wizard",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:workflow",
-      "iconDither": {
-        "from": "purple",
-        "direction": "up"
-      },
-      "tagline": "Step-by-step decision flow widget",
-      "description": "Step-by-step decision flow widget (quiz/weighted/compare) with a running tally.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Widgets",
-      "keywords": [
-        "app",
-        "widget",
-        "decisions"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "quest-board",
-      "displayName": "Quest Board",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:square-kanban",
-      "iconDither": {
-        "from": "red",
-        "direction": "up"
-      },
-      "tagline": "Kanban quest board widget",
-      "description": "Kanban quest board widget backed by the quests subsystem.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Widgets",
-      "keywords": [
-        "app",
-        "widget",
-        "quests"
-      ]
-    },
-    {
-      "name": "worktree-diff-review",
-      "displayName": "Worktree Diff Review",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:git-compare",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Per-hunk diff review widget",
-      "description": "Per-file, per-hunk diff review widget backed by Core's git-native worktree/diff/apply.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Widgets",
-      "keywords": [
-        "app",
-        "widget",
-        "git"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "gateway-budget-dial",
-      "displayName": "Gateway Budget Dial",
-      "version": "1.0.0",
-      "type": "plugin",
-      "icon": "lucide:gauge",
-      "iconDither": {
-        "from": "orange",
-        "direction": "up"
-      },
-      "tagline": "Radial spend-vs-limit budget meter",
-      "description": "Radial spent-vs-limit budget meter widget; the literal Gateway moat surface.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Widgets",
-      "keywords": [
-        "app",
-        "widget",
-        "gateway"
-      ]
-    },
-    {
-      "name": "quests",
-      "displayName": "Quests",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:list-todo",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Auto-detecting todos as a quest board",
-      "description": "Quests: auto-detecting todos surfaced from your chats and activity, tracked as a lightweight quest board with progress and completion.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "quests",
-        "todos",
-        "tasks"
-      ],
-      "capabilities": [
-        "Interactive",
-        "Read"
-      ]
-    },
-    {
-      "name": "monitors",
-      "displayName": "Monitors",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:activity",
-      "iconDither": {
-        "from": "orange",
-        "direction": "up"
-      },
-      "tagline": "Watch prices, stock, keywords, and uptime",
-      "description": "Website monitors: price, stock, keyword, content, and uptime watches with cross-device notification fan-out.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Automation",
-      "keywords": [
-        "monitors",
-        "web",
-        "alerts"
-      ],
-      "capabilities": [
-        "Read",
-        "Interactive"
-      ]
-    },
-    {
-      "name": "meetings",
-      "displayName": "Meetings",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:audio-lines",
-      "iconDither": {
-        "from": "purple",
-        "direction": "up"
-      },
-      "tagline": "Record, transcribe, and AI-note meetings",
-      "description": "Meeting notes: record then live transcript then AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "meetings",
-        "transcription",
-        "notes"
-      ],
-      "capabilities": [
-        "Read",
-        "Interactive"
-      ]
-    },
-    {
-      "name": "teams",
-      "displayName": "Teams",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:users",
-      "iconDither": {
-        "from": "green",
-        "direction": "up"
-      },
-      "tagline": "Address a group of agents as one",
-      "description": "Teams: named groups of agents you can address as one. Governance shell over the in-crate teams store (agent-id membership only); no documents, no external dependencies.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "teams",
-        "agents",
-        "groups"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "research",
-      "displayName": "Research",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:microscope",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Deep multi-step web research runs",
-      "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "research",
-        "web",
-        "reports"
-      ],
-      "capabilities": [
-        "Read",
-        "Interactive"
-      ]
-    },
-    {
-      "name": "recipes",
-      "displayName": "Recipes",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:book-open",
-      "iconDither": {
-        "from": "orange",
-        "direction": "up"
-      },
-      "tagline": "Record and replay desktop-automation recipes",
-      "description": "Desktop-automation recipes: record then save then replay UI action sequences. Backed by Ghost's RecipeStore, so it declares Ghost as a dependency and the graph refuses to disable Ghost out from under it.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Automation",
-      "keywords": [
-        "recipes",
-        "automation",
-        "desktop"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "clips",
-      "displayName": "Clips",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:clapperboard",
-      "iconDither": {
-        "from": "red",
-        "direction": "up"
-      },
-      "tagline": "Capture and browse screen clips",
-      "description": "Clips: capture and browse screen/timeline clips. A Core-to-Shadow proxy that depends on the Shadow capture app for its recordings.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "clips",
-        "capture",
-        "screen"
-      ],
-      "capabilities": [
-        "Read"
-      ]
-    },
-    {
-      "name": "mail",
-      "displayName": "Mail",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:mail",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Email inboxes for your agents",
-      "description": "Agent Inboxes \u00e2\u20ac\u201d email as a service for agents. Runs the out-of-process ryu-mail sidecar; Core proxies /api/mail/* to it. Its sandboxed companion is a per-node mail client (list inboxes, read messages, compose/send, create an inbox) driving /api/mail/* via the mail:crud bridge capability.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Communication",
-      "keywords": [
-        "mail",
-        "email",
-        "inbox"
-      ],
-      "capabilities": [
-        "Interactive",
-        "Read"
-      ]
-    },
-    {
-      "name": "finetune",
-      "displayName": "Fine-tuning",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:sliders-horizontal",
-      "iconDither": {
-        "from": "purple",
-        "direction": "up"
-      },
-      "tagline": "Fine-tune models with LoRA/QLoRA",
-      "description": "Fine-tuning: launch and track LoRA/QLoRA training runs on the Core-managed Unsloth sidecar, with output models saved locally under your Ryu data directory.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Developer Tools",
-      "keywords": [
-        "finetune",
-        "training",
-        "lora"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "learning",
-      "displayName": "Learning",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:graduation-cap",
-      "iconDither": {
-        "from": "green",
-        "direction": "up"
-      },
-      "tagline": "Turn chats and runs into reusable skills",
-      "description": "Learning loop: turn chats and runs into reusable skills, gated by the approval Inbox, with an experience log of what was learned.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "learning",
-        "skills",
-        "memory"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "approvals",
-      "displayName": "Approvals",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:check-check",
-      "iconDither": {
-        "from": "green",
-        "direction": "up"
-      },
-      "tagline": "Human-in-the-loop approval inbox",
-      "description": "Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait for your accept or reject before they take effect.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "approvals",
-        "inbox",
-        "hitl"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "activity",
-      "displayName": "Activity",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:rss",
-      "iconDither": {
-        "from": "orange",
-        "direction": "up"
-      },
-      "tagline": "One unified feed of everything on this node",
-      "description": "The unified activity feed: everything happening on this node \u00e2\u20ac\u201d monitor alerts, finished tasks, runs, approvals, meetings, and notes \u00e2\u20ac\u201d newest first, grouped by day.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "activity",
-        "feed",
-        "notifications"
-      ],
-      "capabilities": [
-        "Read"
-      ]
-    },
-    {
-      "name": "calendar",
-      "displayName": "Calendar",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:calendar",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Scheduled agent and workflow runs",
-      "description": "The scheduled-runs calendar: every agent and workflow scheduled job projected onto Month, Week, Day, and Agenda views, with a New automation dialog that schedules an agent.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "calendar",
-        "schedule",
-        "automation"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "webhooks",
-      "displayName": "Webhooks",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:webhook",
-      "iconDither": {
-        "from": "purple",
-        "direction": "up"
-      },
-      "tagline": "Inbound webhook endpoint registry",
-      "description": "Inbound webhook endpoint registry: resolved public URLs, secret presence, last-delivery times, and the ingress backend status.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Developer Tools",
-      "keywords": [
-        "webhooks",
-        "ingress",
-        "integrations"
-      ],
-      "capabilities": [
-        "Interactive",
-        "Read"
-      ]
-    },
-    {
-      "name": "browser",
-      "displayName": "Browser",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:app-window",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Real-Chromium browser control for agents",
-      "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated browser.control capability: list/open/navigate tabs, screenshot, read titles, and (privileged) evaluate JS in a tab. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Automation",
-      "keywords": [
-        "browser",
-        "chromium",
-        "web"
-      ],
-      "capabilities": [
-        "Interactive",
-        "Read"
-      ]
-    },
-    {
-      "name": "voice",
-      "displayName": "Voice",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:mic",
-      "iconDither": {
-        "from": "pink",
-        "direction": "up"
-      },
-      "tagline": "Speech-to-text and text-to-speech",
-      "description": "Voice data path: speech-to-text transcription (whisper.cpp) and text-to-speech (OuteTTS plus the universal Ryu TTS sidecar), plus the installable TTS model catalog. Governance shell over the in-crate voice module.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "voice",
-        "stt",
-        "tts"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "timeline",
-      "displayName": "Timeline",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:film",
-      "iconDither": {
-        "from": "orange",
-        "direction": "up"
-      },
-      "tagline": "Replay your screen activity on a scrubber",
-      "description": "The activity replay timeline: a CapCut-style scrubber over Shadow's captured screen/input/window/audio lanes with a keyframe preview, a Dayflow work journal, and jump-to-moment focus.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "timeline",
-        "replay",
-        "screen"
-      ],
-      "capabilities": [
-        "Read"
-      ]
-    },
-    {
-      "name": "skill-editor",
-      "displayName": "Skill Editor",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:file-pen",
-      "iconDither": {
-        "from": "green",
-        "direction": "up"
-      },
-      "tagline": "Author your own Agent Skills (SKILL.md)",
-      "description": "Author a user-owned Agent Skill (SKILL.md): front-matter fields (name / description / allowed tools / always-on), a markdown body editor, debounced autosave, and server-backed undoable version history.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Developer Tools",
-      "keywords": [
-        "skills",
-        "editor",
-        "authoring"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "canvas",
-      "displayName": "Canvas",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:palette",
-      "iconDither": {
-        "from": "purple",
-        "direction": "up"
-      },
-      "tagline": "AI-native infinite canvas",
-      "description": "Canvas: an AI-native infinite canvas backed by a Space \u00e2\u20ac\u201d generate and arrange images, text, and shapes, with media generation, transcription, and agent hooks wired in.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "canvas",
-        "images",
-        "design"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "whiteboard",
-      "displayName": "Whiteboard",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:pencil-ruler",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Collaborative agent whiteboard",
-      "description": "Whiteboard: a Space-backed collaborative whiteboard for sketching shapes and diagrams and handing them to a side-model for reasoning.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "whiteboard",
-        "diagrams",
-        "collaboration"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "workflows",
-      "displayName": "Workflows",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:workflow",
-      "iconDither": {
-        "from": "orange",
-        "direction": "up"
-      },
-      "tagline": "DAG automation with a natural-language builder",
-      "description": "Workflows: petgraph DAG automation with triggers, durable execution, and a natural-language workflow builder.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Automation",
-      "keywords": [
-        "workflows",
-        "automation",
-        "dag"
-      ],
-      "capabilities": [
-        "Interactive"
-      ]
-    },
-    {
-      "name": "dashboards",
-      "displayName": "Dashboards",
-      "version": "1.0.0",
-      "type": "app",
-      "hasCompanion": true,
-      "icon": "lucide:layout-dashboard",
-      "iconDither": {
-        "from": "blue",
-        "direction": "up"
-      },
-      "tagline": "Composable live widget boards",
-      "description": "Dashboards: composable widget boards that assemble live views over monitors, meetings, quests, and other Core surfaces via soft HTTP loopback. A governance shell \u00e2\u20ac\u201d the impl stays in-crate.",
-      "source": "builtin",
-      "builtin": true,
-      "developer": "Ryu",
-      "category": "Productivity",
-      "keywords": [
-        "dashboards",
-        "widgets",
-        "boards"
-      ],
-      "capabilities": [
-        "Read",
-        "Interactive"
-      ]
+      "builtin": true
     }
   ]
 }

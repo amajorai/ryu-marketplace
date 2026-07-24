@@ -1,0 +1,35 @@
+{
+  "id": "headroom",
+  "name": "Headroom Compression",
+  "version": "1.0.0",
+  "runnables": [
+    {
+      "id": "policy-headroom-compression",
+      "name": "Gateway egress compression (headroom)",
+      "kind": "policy",
+      "config": {
+        "policy_type": "compression",
+        "definition": {
+          "service": "headroom",
+          "url": "http://127.0.0.1:8787",
+          "timeout_ms": 4000,
+          "min_messages": 4
+        }
+      }
+    }
+  ],
+  "sidecars": [
+    {
+      "name": "headroom",
+      "process": {
+        "kind": "local",
+        "command": "headroom",
+        "command_env": "RYU_HEADROOM_BIN",
+        "args": ["proxy", "--host", "127.0.0.1", "--port", "8787"]
+      },
+      "port": 8787,
+      "health_path": "/health"
+    }
+  ],
+  "permission_grants": []
+}
