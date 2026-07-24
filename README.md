@@ -1,28 +1,29 @@
 # Ryu Marketplace
 
-Declarative, UI-less Ryu plugins — one directory per plugin. Each
-`<name>/plugin.json` is the source-of-truth tool manifest.
+Declarative, UI-less Ryu plugins — one directory per plugin under
+`plugins/`. Each `plugins/<name>/plugin.json` is the source-of-truth
+tool manifest.
 
 This tree is a ONE-WAY mirror generated from the private monorepo by
 `tools/mirror-plugins.sh`; do not edit it here (changes are overwritten).
 
 ## Plugins
 
-- [`advisor`](./advisor/) — see [advisor/README.md](./advisor/README.md)
-- [`agentbrowser`](./agentbrowser/) — see [agentbrowser/README.md](./agentbrowser/README.md)
-- [`double-check`](./double-check/) — see [double-check/README.md](./double-check/README.md)
-- [`exa`](./exa/) — see [exa/README.md](./exa/README.md)
-- [`firewall`](./firewall/) — see [firewall/README.md](./firewall/README.md)
-- [`ghost`](./ghost/) — see [ghost/README.md](./ghost/README.md)
-- [`goal`](./goal/) — see [goal/README.md](./goal/README.md)
-- [`headroom`](./headroom/) — see [headroom/README.md](./headroom/README.md)
-- [`hook-observers`](./hook-observers/) — see [hook-observers/README.md](./hook-observers/README.md)
-- [`hook-session-context`](./hook-session-context/) — see [hook-session-context/README.md](./hook-session-context/README.md)
-- [`proof`](./proof/) — see [proof/README.md](./proof/README.md)
-- [`rtk`](./rtk/) — see [rtk/README.md](./rtk/README.md)
-- [`sample-widget`](./sample-widget/) — see [sample-widget/README.md](./sample-widget/README.md)
-- [`sample`](./sample/) — see [sample/README.md](./sample/README.md)
-- [`security-guidance`](./security-guidance/) — see [security-guidance/README.md](./security-guidance/README.md)
-- [`shadow`](./shadow/) — see [shadow/README.md](./shadow/README.md)
-- [`spider`](./spider/) — see [spider/README.md](./spider/README.md)
-- [`tool-firewall`](./tool-firewall/) — see [tool-firewall/README.md](./tool-firewall/README.md)
+- [`advisor`](./plugins/advisor/) — see [plugins/advisor/README.md](./plugins/advisor/README.md)
+- [`agentbrowser`](./plugins/agentbrowser/) — see [plugins/agentbrowser/README.md](./plugins/agentbrowser/README.md)
+- [`double-check`](./plugins/double-check/) — see [plugins/double-check/README.md](./plugins/double-check/README.md)
+- [`exa`](./plugins/exa/) — see [plugins/exa/README.md](./plugins/exa/README.md)
+- [`firewall`](./plugins/firewall/) — see [plugins/firewall/README.md](./plugins/firewall/README.md)
+- [`ghost`](./plugins/ghost/) — see [plugins/ghost/README.md](./plugins/ghost/README.md)
+- [`goal`](./plugins/goal/) — see [plugins/goal/README.md](./plugins/goal/README.md)
+- [`headroom`](./plugins/headroom/) — see [plugins/headroom/README.md](./plugins/headroom/README.md)
+- [`hook-observers`](./plugins/hook-observers/) — see [plugins/hook-observers/README.md](./plugins/hook-observers/README.md)
+- [`hook-session-context`](./plugins/hook-session-context/) — see [plugins/hook-session-context/README.md](./plugins/hook-session-context/README.md)
+- [`proof`](./plugins/proof/) — see [plugins/proof/README.md](./plugins/proof/README.md)
+- [`rtk`](./plugins/rtk/) — see [plugins/rtk/README.md](./plugins/rtk/README.md)
+- [`sample-widget`](./plugins/sample-widget/) — see [plugins/sample-widget/README.md](./plugins/sample-widget/README.md)
+- [`sample`](./plugins/sample/) — see [plugins/sample/README.md](./plugins/sample/README.md)
+- [`security-guidance`](./plugins/security-guidance/) — see [plugins/security-guidance/README.md](./plugins/security-guidance/README.md)
+- [`shadow`](./plugins/shadow/) — see [plugins/shadow/README.md](./plugins/shadow/README.md)
+- [`spider`](./plugins/spider/) — see [plugins/spider/README.md](./plugins/spider/README.md)
+- [`tool-firewall`](./plugins/tool-firewall/) — see [plugins/tool-firewall/README.md](./plugins/tool-firewall/README.md)
