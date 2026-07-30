@@ -17,15 +17,35 @@ text). `find_similar` also accepts `num_results`.
 
 ## BYOK auth
 
-Exa requires an API key. Set `RYU_EXA_API_KEY` to your key; it is sent as the
-`Authorization: Bearer …` header (named via `header_params`).
+Exa requires an API key, named once in `manifest.json` as
+`"secret_headers": {"Authorization": "Bearer env:RYU_EXA_API_KEY"}`. Core resolves
+that `env:` token server-side, so the key never reaches the model, never appears in
+a tool argument, and is excluded from the audit trail.
 
-> **Note (auth injection):** the declarative `http` tool backend today sources
-> header *values* from call arguments only — it has no env→header seam, so the
-> `Authorization` header is not yet populated from `RYU_EXA_API_KEY`. Wiring
-> this requires a small generic env→header injection in Core's
-> `tool_exec::run_http_tool` (recommended follow-up; do **not** expose the key
-> as a model-supplied argument). Until then the tool will 401.
+There are two ways to supply it, and they are checked in this order. The second
+requires a Core that ships the `secret` settings-field type and the encrypted
+plugin-secret store; on an older build that field renders as a plain text input and
+the value it writes is never read back.
+
+1. **The process environment.** Export `RYU_EXA_API_KEY` in whatever launches Core
+   (service unit, shell profile). An operator who configures a deployment this way
+   expects `env | grep` to explain the running process, so this source wins.
+2. **The settings UI.** Enable this plugin and open its **Exa Search** settings tab
+   — the `Exa API key` field writes to the encrypted per-plugin secret store under
+   that same name. Use this when you have *not* otherwise configured the key; it is
+   the fallback, never an override of an exported variable.
+
+The settings field is declared in `contributes.settings_tabs` with
+`"type": "secret"` and `"pref_key": "RYU_EXA_API_KEY"` — the pref key **is** the env
+var name, which is what makes the store reachable by the same `env:` token with no
+second grammar. The tab is `"scope": "node"` because the credential belongs to
+this node, not to a person: it is stored once in Core's encrypted secret store and
+used by every caller on the node. (Scope chooses which settings dialog the tab appears
+in; a `secret` field does not write a preference at all, so scope does not affect where
+the value lands.)
+
+Both tools are `fail_open`, so with no key configured they degrade rather than error
+and `web.search` falls through to whichever other provider you select.
 
 ## Migration from the built-in Rust tool
 

@@ -11,10 +11,10 @@
 // then assert the returned directive matches the hook's logic.
 
 import assert from "node:assert/strict";
-import { readFileSync, existsSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
@@ -240,7 +240,11 @@ test("hook is deterministic in shape across varied ctx / does not touch host", a
 		h1
 	);
 	assert.equal(d1.kind, "inject");
-	assert.equal(h1.calls.sideModel.length, 0, "hook must not call host.sideModel");
+	assert.equal(
+		h1.calls.sideModel.length,
+		0,
+		"hook must not call host.sideModel"
+	);
 
 	// Missing conversation_id (global dispatch path): still yields inject.
 	const h2 = mockHost();

@@ -25,9 +25,9 @@
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
+import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -43,38 +43,38 @@ const manifest = JSON.parse(RAW);
  * Returns the parsed directive value (or undefined if the hook returned nothing).
  */
 async function runHook(code, ctx, host = makeHost()) {
-  // Mirror build_hook_program: the body is spliced into an async IIFE with
-  // `ctx` and `host` in lexical scope, and we capture its return value.
-  // eslint-disable-next-line no-new-func
-  const fn = new Function(
-    "ctx",
-    "host",
-    "console",
-    `return (async () => {\n${code}\n})();`
-  );
-  return await fn(ctx, host, { log() {} });
+	// Mirror build_hook_program: the body is spliced into an async IIFE with
+	// `ctx` and `host` in lexical scope, and we capture its return value.
+	// eslint-disable-next-line no-new-func
+	const fn = new Function(
+		"ctx",
+		"host",
+		"console",
+		`return (async () => {\n${code}\n})();`
+	);
+	return await fn(ctx, host, { log() {} });
 }
 
 /** A host facade whose sideModel returns a canned string (tool-firewall never
  * uses it, but the real substrate always provides one, so we mirror it). */
 function makeHost(sideModelReply = "CANNED_SIDE_MODEL_REPLY") {
-  return {
-    sideModel: async () => sideModelReply,
-    runAgent: async () => sideModelReply,
-    storage: {
-      get: async () => null,
-      set: async () => true,
-      delete: async () => true,
-      keys: async () => [],
-    },
-    log() {},
-  };
+	return {
+		sideModel: async () => sideModelReply,
+		runAgent: async () => sideModelReply,
+		storage: {
+			get: async () => null,
+			set: async () => true,
+			delete: async () => true,
+			keys: async () => [],
+		},
+		log() {},
+	};
 }
 
 function getHook(id) {
-  const hook = manifest.contributes.turn_hooks.find((h) => h.id === id);
-  assert.ok(hook, `expected a turn_hook with id "${id}"`);
-  return hook;
+	const hook = manifest.contributes.turn_hooks.find((h) => h.id === id);
+	assert.ok(hook, `expected a turn_hook with id "${id}"`);
+	return hook;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -82,41 +82,41 @@ function getHook(id) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 test("manifest.json is valid JSON with id/name/version", () => {
-  // JSON.parse above already proved it parses; assert the round-trip is stable.
-  assert.deepEqual(JSON.parse(RAW), manifest);
-  assert.equal(manifest.id, "com.ryuhq.tool-firewall");
-  assert.equal(typeof manifest.name, "string");
-  assert.ok(manifest.name.length > 0);
-  assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+	// JSON.parse above already proved it parses; assert the round-trip is stable.
+	assert.deepEqual(JSON.parse(RAW), manifest);
+	assert.equal(manifest.id, "com.ryuhq.tool-firewall");
+	assert.equal(typeof manifest.name, "string");
+	assert.ok(manifest.name.length > 0);
+	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
 });
 
 test("declares no runnables / permission_grants (pure inline-hook plugin)", () => {
-  // tool-firewall is a policy hook: it needs no sidecar and no capabilities.
-  assert.deepEqual(manifest.runnables, []);
-  assert.deepEqual(manifest.permission_grants, []);
-  assert.deepEqual(manifest.activation_events, ["*"]);
+	// tool-firewall is a policy hook: it needs no sidecar and no capabilities.
+	assert.deepEqual(manifest.runnables, []);
+	assert.deepEqual(manifest.permission_grants, []);
+	assert.deepEqual(manifest.activation_events, ["*"]);
 });
 
 test("contributes.turn_hooks are well-formed", () => {
-  const hooks = manifest.contributes.turn_hooks;
-  assert.ok(Array.isArray(hooks));
-  assert.equal(hooks.length, 2);
-  const phases = new Set();
-  for (const h of hooks) {
-    assert.equal(typeof h.id, "string");
-    assert.ok(h.id.length > 0);
-    assert.ok(
-      h.on === "pre_tool_use" || h.on === "post_tool_use",
-      `unexpected hook phase: ${h.on}`
-    );
-    // Firewall matches every tool.
-    assert.deepEqual(h.match, { tools: ["*"] });
-    assert.equal(typeof h.code, "string");
-    assert.ok(h.code.length > 0);
-    phases.add(h.on);
-  }
-  // Exactly one pre + one post.
-  assert.deepEqual([...phases].sort(), ["post_tool_use", "pre_tool_use"]);
+	const hooks = manifest.contributes.turn_hooks;
+	assert.ok(Array.isArray(hooks));
+	assert.equal(hooks.length, 2);
+	const phases = new Set();
+	for (const h of hooks) {
+		assert.equal(typeof h.id, "string");
+		assert.ok(h.id.length > 0);
+		assert.ok(
+			h.on === "pre_tool_use" || h.on === "post_tool_use",
+			`unexpected hook phase: ${h.on}`
+		);
+		// Firewall matches every tool.
+		assert.deepEqual(h.match, { tools: ["*"] });
+		assert.equal(typeof h.code, "string");
+		assert.ok(h.code.length > 0);
+		phases.add(h.on);
+	}
+	// Exactly one pre + one post.
+	assert.deepEqual([...phases].sort(), ["post_tool_use", "pre_tool_use"]);
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -124,69 +124,69 @@ test("contributes.turn_hooks are well-formed", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 test("pre hook DENIES a destructive `rm -rf` command", async () => {
-  const hook = getHook("tool-firewall.pre");
-  const ctx = {
-    conversation_id: "conv-1",
-    tool_name: "shell",
-    tool_input: { command: "rm -rf /" },
-    flags: {},
-    transcript: [],
-  };
-  const out = await runHook(hook.code, ctx);
-  assert.equal(out.kind, "deny");
-  assert.equal(typeof out.reason, "string");
-  // Reason names the tool and the policy.
-  assert.match(out.reason, /shell/);
-  assert.match(out.reason, /tool-firewall/);
+	const hook = getHook("tool-firewall.pre");
+	const ctx = {
+		conversation_id: "conv-1",
+		tool_name: "shell",
+		tool_input: { command: "rm -rf /" },
+		flags: {},
+		transcript: [],
+	};
+	const out = await runHook(hook.code, ctx);
+	assert.equal(out.kind, "deny");
+	assert.equal(typeof out.reason, "string");
+	// Reason names the tool and the policy.
+	assert.match(out.reason, /shell/);
+	assert.match(out.reason, /tool-firewall/);
 });
 
 test("pre hook DENIES a `DROP TABLE` (case-insensitive) SQL payload", async () => {
-  const hook = getHook("tool-firewall.pre");
-  const ctx = {
-    tool_name: "postgres.query",
-    tool_input: { sql: "drop table users;" }, // lowercase → regex has /i
-    flags: {},
-    transcript: [],
-  };
-  const out = await runHook(hook.code, ctx);
-  assert.equal(out.kind, "deny");
-  assert.match(out.reason, /postgres\.query/);
+	const hook = getHook("tool-firewall.pre");
+	const ctx = {
+		tool_name: "postgres.query",
+		tool_input: { sql: "drop table users;" }, // lowercase → regex has /i
+		flags: {},
+		transcript: [],
+	};
+	const out = await runHook(hook.code, ctx);
+	assert.equal(out.kind, "deny");
+	assert.match(out.reason, /postgres\.query/);
 });
 
 test("pre hook DENIES `mkfs`", async () => {
-  const hook = getHook("tool-firewall.pre");
-  const out = await runHook(hook.code, {
-    tool_name: "shell",
-    tool_input: { command: "mkfs.ext4 /dev/sda1" },
-  });
-  assert.equal(out.kind, "deny");
+	const hook = getHook("tool-firewall.pre");
+	const out = await runHook(hook.code, {
+		tool_name: "shell",
+		tool_input: { command: "mkfs.ext4 /dev/sda1" },
+	});
+	assert.equal(out.kind, "deny");
 });
 
 test("pre hook ALLOWS a benign command → {kind:'none'}", async () => {
-  const hook = getHook("tool-firewall.pre");
-  const out = await runHook(hook.code, {
-    tool_name: "shell",
-    tool_input: { command: "ls -la /tmp" },
-  });
-  assert.deepEqual(out, { kind: "none" });
+	const hook = getHook("tool-firewall.pre");
+	const out = await runHook(hook.code, {
+		tool_name: "shell",
+		tool_input: { command: "ls -la /tmp" },
+	});
+	assert.deepEqual(out, { kind: "none" });
 });
 
 test("pre hook ALLOWS when tool_input is missing (no crash, {kind:'none'})", async () => {
-  // ctx.tool_input undefined → JSON.stringify({}) → no match.
-  const hook = getHook("tool-firewall.pre");
-  const out = await runHook(hook.code, { tool_name: "noop" });
-  assert.deepEqual(out, { kind: "none" });
+	// ctx.tool_input undefined → JSON.stringify({}) → no match.
+	const hook = getHook("tool-firewall.pre");
+	const out = await runHook(hook.code, { tool_name: "noop" });
+	assert.deepEqual(out, { kind: "none" });
 });
 
 test("pre hook does NOT deny a substring that isn't the danger token", async () => {
-  // "performbefore" contains "form" etc. but none of the danger patterns;
-  // and "rm" without "-rf" must NOT trip (regex requires `rm\s+-rf`).
-  const hook = getHook("tool-firewall.pre");
-  const out = await runHook(hook.code, {
-    tool_name: "shell",
-    tool_input: { command: "rm file.txt && npm run format" },
-  });
-  assert.deepEqual(out, { kind: "none" });
+	// "performbefore" contains "form" etc. but none of the danger patterns;
+	// and "rm" without "-rf" must NOT trip (regex requires `rm\s+-rf`).
+	const hook = getHook("tool-firewall.pre");
+	const out = await runHook(hook.code, {
+		tool_name: "shell",
+		tool_input: { command: "rm file.txt && npm run format" },
+	});
+	assert.deepEqual(out, { kind: "none" });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -194,40 +194,40 @@ test("pre hook does NOT deny a substring that isn't the danger token", async () 
 // ─────────────────────────────────────────────────────────────────────────────
 
 test("post hook returns a NOTE naming the tool and echoing (truncated) output", async () => {
-  const hook = getHook("tool-firewall.post");
-  const ctx = {
-    tool_name: "shell",
-    tool_output: { stdout: "hello world", code: 0 },
-  };
-  const out = await runHook(hook.code, ctx);
-  assert.equal(out.kind, "note");
-  assert.match(out.text, /^tool-firewall observed shell -> /);
-  // The serialized output appears in the note.
-  assert.match(out.text, /hello world/);
+	const hook = getHook("tool-firewall.post");
+	const ctx = {
+		tool_name: "shell",
+		tool_output: { stdout: "hello world", code: 0 },
+	};
+	const out = await runHook(hook.code, ctx);
+	assert.equal(out.kind, "note");
+	assert.match(out.text, /^tool-firewall observed shell -> /);
+	// The serialized output appears in the note.
+	assert.match(out.text, /hello world/);
 });
 
 test("post hook TRUNCATES long output to 80 chars of the serialized payload", async () => {
-  const hook = getHook("tool-firewall.post");
-  const big = "x".repeat(500);
-  const ctx = { tool_name: "shell", tool_output: { blob: big } };
-  const out = await runHook(hook.code, ctx);
-  assert.equal(out.kind, "note");
-  // Prefix "tool-firewall observed shell -> " + at most 80 chars of payload.
-  const PREFIX = "tool-firewall observed shell -> ";
-  assert.ok(out.text.startsWith(PREFIX));
-  const payload = out.text.slice(PREFIX.length);
-  assert.ok(
-    payload.length <= 80,
-    `payload slice should be <= 80 chars, got ${payload.length}`
-  );
+	const hook = getHook("tool-firewall.post");
+	const big = "x".repeat(500);
+	const ctx = { tool_name: "shell", tool_output: { blob: big } };
+	const out = await runHook(hook.code, ctx);
+	assert.equal(out.kind, "note");
+	// Prefix "tool-firewall observed shell -> " + at most 80 chars of payload.
+	const PREFIX = "tool-firewall observed shell -> ";
+	assert.ok(out.text.startsWith(PREFIX));
+	const payload = out.text.slice(PREFIX.length);
+	assert.ok(
+		payload.length <= 80,
+		`payload slice should be <= 80 chars, got ${payload.length}`
+	);
 });
 
 test("post hook handles a missing tool_name (uses '?') and null output", async () => {
-  const hook = getHook("tool-firewall.post");
-  const out = await runHook(hook.code, {}); // no tool_name, no tool_output
-  assert.equal(out.kind, "note");
-  // "?" fallback for the name and "null" for the serialized output.
-  assert.match(out.text, /^tool-firewall observed \? -> null/);
+	const hook = getHook("tool-firewall.post");
+	const out = await runHook(hook.code, {}); // no tool_name, no tool_output
+	assert.equal(out.kind, "note");
+	// "?" fallback for the name and "null" for the serialized output.
+	assert.match(out.text, /^tool-firewall observed \? -> null/);
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -235,18 +235,28 @@ test("post hook handles a missing tool_name (uses '?') and null output", async (
 // ─────────────────────────────────────────────────────────────────────────────
 
 test("every kind the hooks can return is a valid HookDirective kind", async () => {
-  const valid = new Set(["none", "note", "continue", "replace", "inject", "deny"]);
-  const pre = getHook("tool-firewall.pre").code;
-  const post = getHook("tool-firewall.post").code;
+	const valid = new Set([
+		"none",
+		"note",
+		"continue",
+		"replace",
+		"inject",
+		"deny",
+	]);
+	const pre = getHook("tool-firewall.pre").code;
+	const post = getHook("tool-firewall.post").code;
 
-  const denied = await runHook(pre, {
-    tool_name: "t",
-    tool_input: { c: "rm -rf /" },
-  });
-  const allowed = await runHook(pre, { tool_name: "t", tool_input: { c: "ok" } });
-  const noted = await runHook(post, { tool_name: "t", tool_output: 1 });
+	const denied = await runHook(pre, {
+		tool_name: "t",
+		tool_input: { c: "rm -rf /" },
+	});
+	const allowed = await runHook(pre, {
+		tool_name: "t",
+		tool_input: { c: "ok" },
+	});
+	const noted = await runHook(post, { tool_name: "t", tool_output: 1 });
 
-  for (const d of [denied, allowed, noted]) {
-    assert.ok(valid.has(d.kind), `unexpected directive kind: ${d.kind}`);
-  }
+	for (const d of [denied, allowed, noted]) {
+		assert.ok(valid.has(d.kind), `unexpected directive kind: ${d.kind}`);
+	}
 });

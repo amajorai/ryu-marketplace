@@ -34,7 +34,15 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "tagline": "A second real browser for the browser.control layer",
+      "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, so selecting it re-points the stable `browser__*` tools at agent-browser without changing what agents call. Launched via `npx agent-browser mcp`; needs Node on PATH.",
+      "category": "Automation",
+      "keywords": [
+        "browser",
+        "automation",
+        "web"
+      ]
     },
     {
       "name": "approvals",
@@ -46,6 +54,21 @@
       "description": "Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait for your accept or reject before they take effect."
     },
     {
+      "name": "brave",
+      "displayName": "Brave Search",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Search an index nobody else syndicates",
+      "description": "Independent web search via the Brave Search API (https://brave.com/search/api/), exposed as one declarative HTTP tool. Provides the swappable `web.search` layer, so selecting it in the layer picker re-points the stable `web__search` tool at Brave's own crawled index without changing what agents call. Brave is search-only: it deliberately declares neither `web.extract` nor `web.crawl`. Requires a BYOK Brave Search API key.",
+      "category": "Search",
+      "keywords": [
+        "search",
+        "web"
+      ]
+    },
+    {
       "name": "browser",
       "displayName": "Browser",
       "version": "1.0.0",
@@ -53,8 +76,25 @@
       "source": "builtin",
       "builtin": true,
       "tagline": "Real-Chromium browser control for agents",
-      "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated `browser.control` capability: list/open/navigate tabs, screenshot, read titles, and (privileged) evaluate JS in a tab. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
+      "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated `browser.control` capability: list/open/navigate tabs, screenshot, read titles, take an accessibility snapshot with stable element refs, and drive the page with synthetic click/type/scroll input. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
       "category": "Automation"
+    },
+    {
+      "name": "bytebot",
+      "displayName": "Bytebot Desktop",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Swap computer control onto a Bytebot desktop",
+      "description": "Drives a Bytebot desktop (https://github.com/bytebot-ai/bytebot) through `bytebotd`, its local HTTP daemon, as the SECOND provider of the swappable `computer.control` layer — the first thing that makes that layer actually swappable rather than merely marked selectable. READ THIS BEFORE SELECTING IT: bytebotd drives the desktop IT runs on, which in the shipped Bytebot product is a containerized Linux desktop, NOT the machine running Ryu. Selecting it re-points `computer__capture` / `computer__click` / `computer__type` / `computer__key` / `computer__scroll` away from your own screen (`ghost`, the declared default) and onto that desktop — the same remote-target relationship `browser.control` already has between the local Chromium sidecar and a hosted browser. It serves FIVE of the six canonical verbs: `computer__focus_app` is deliberately NOT bound, because bytebotd's `application` action takes a closed seven-value enum (firefox, 1password, thunderbird, vscode, terminal, desktop, directory) while the canonical verb takes a free-form app name, so any other name would be a schema-legal call that 400s. The app switch is still reachable natively as `bytebot__application`, whose own schema carries that enum so an illegal call cannot be composed. Requires no API key — bytebotd ships with no authentication at all, which is also why this plugin only ever addresses it over loopback. SECURITY, read before enabling: bytebotd ships with NO authentication — no auth middleware, permissive CORS — and this plugin reaches it at the fixed loopback port 9990. Its egress grant is `tool:http-egress:127.0.0.1`, which is HOST-scoped, not port-scoped: approving it grants reach to any service on loopback, not just bytebotd. Only enable this on a machine where you accept that an unauthenticated desktop-control daemon is running and reachable. TARGET: bytebotd drives the desktop IT runs on — in the shipped Bytebot product that is a containerized Linux desktop, NOT the machine running Ryu — so selecting this instead of `ghost` does not give you another way to drive your own computer.",
+      "category": "Automation",
+      "keywords": [
+        "automation",
+        "desktop",
+        "computer-use",
+        "bytebot"
+      ]
     },
     {
       "name": "calendar",
@@ -70,6 +110,14 @@
       "displayName": "Canvas",
       "version": "1.0.0",
       "type": "app",
+      "source": "builtin",
+      "builtin": true
+    },
+    {
+      "name": "chat-title",
+      "displayName": "Chat Title",
+      "version": "1.0.0",
+      "type": "plugin",
       "source": "builtin",
       "builtin": true
     },
@@ -92,6 +140,36 @@
       "description": "Dashboards: composable widget boards that assemble live views over monitors, meetings, quests, and other Core surfaces via soft HTTP loopback. Declares the out-of-process ryu-dashboards sidecar (kind:local) that owns the store + refresh loop + /api/dashboards/* surface, served to the desktop through the generic ext-proxy public_mount. Started eagerly (not lazy) so the kernel hardware device-dashboard renderer + nudge loop can reach it at boot / on a device poll before any desktop has opened Home. The dashboard_builder MCP runnable + the hardware render seam reach it over loopback via dashboards_client."
     },
     {
+      "name": "dictation",
+      "displayName": "Dictation",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "description": "System-wide dictation and agent-ask via the Island companion: speak anywhere to type a transcript, or ask an agent and paste the answer into the focused app."
+    },
+    {
+      "name": "docling",
+      "displayName": "Docling",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Layout-aware parsing, tables that survive chunking",
+      "description": "Document parsing via IBM's MIT-licensed Docling — the highest-fidelity `document.parse` backend. Where a text extractor hands a model a stream of characters, Docling runs real layout analysis: a page-segmentation model finds the reading order, a table-structure model rebuilds merged cells and spanning headers, and the result is exported as markdown whose headings, lists and tables mirror the document's actual structure. That is what makes a multi-column paper or a financial statement survive chunking instead of interleaving into nonsense. The cost is weight: the first parse downloads its models (hundreds of MB) and can take minutes, and every parse after that is CPU-bound inference rather than a string copy. Everything runs locally — Docling explicitly supports air-gapped operation once the models are cached — and no document ever leaves the node. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
+      "category": "Knowledge",
+      "keywords": [
+        "document",
+        "parse",
+        "pdf",
+        "docx",
+        "tables",
+        "layout",
+        "ocr",
+        "extraction"
+      ]
+    },
+    {
       "name": "double-check",
       "displayName": "Double Check",
       "version": "1.0.0",
@@ -108,7 +186,11 @@
       "builtin": true,
       "tagline": "Neural web search for agents",
       "description": "Neural and keyword web search via the Exa API (https://exa.ai), exposed as two declarative HTTP tools: search and find-similar. Requires a BYOK Exa API key.",
-      "category": "Search"
+      "category": "Search",
+      "keywords": [
+        "search",
+        "web"
+      ]
     },
     {
       "name": "finetune",
@@ -117,6 +199,23 @@
       "type": "app",
       "source": "builtin",
       "builtin": true
+    },
+    {
+      "name": "firecrawl",
+      "displayName": "Firecrawl",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Search and scrape the web for agents",
+      "description": "Web search and page scraping via the Firecrawl v2 API (https://firecrawl.dev), exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web__search` / `web__extract` tools at Firecrawl without changing what agents call. Requires a BYOK Firecrawl API key.",
+      "category": "Search",
+      "keywords": [
+        "search",
+        "web",
+        "extract",
+        "scrape"
+      ]
     },
     {
       "name": "firewall",
@@ -132,7 +231,12 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "description": "Desktop automation: 29 screen perception and input control tools. Windows-first.",
+      "keywords": [
+        "automation",
+        "desktop"
+      ]
     },
     {
       "name": "goal",
@@ -148,7 +252,12 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "description": "Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens, reversible retrieval. Requires headroom-ai[mcp].",
+      "keywords": [
+        "context",
+        "compression"
+      ]
     },
     {
       "name": "healing",
@@ -158,6 +267,24 @@
       "source": "builtin",
       "builtin": true,
       "description": "Self-healing: failed runs are diagnosed by a Gateway side-model and proposed fixes are delivered to the approvals inbox for human review before they apply."
+    },
+    {
+      "name": "honcho",
+      "displayName": "Honcho",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "A standing synthesis of the user, not a list of facts",
+      "description": "Give the swappable `memory` layer a provider that MODELS the user instead of only storing rows, via Honcho (https://honcho.dev) — the Plastic Labs identity layer Hermes uses for exactly this. Honcho watches the messages you hand it and derives a per-peer REPRESENTATION; its Dialectic endpoint (`POST /v3/workspaces/{workspace_id}/peers/{peer_id}/chat`) then answers a natural-language question about that peer with its own synthesis. That is what the canonical `memory__context` verb has always promised and no shipped provider served, so this is the first plugin to make the kernel's `context` bridge (`memory.provider-context`) do anything at all. Honcho here serves TWO verbs: `memory__context` (the Dialectic synthesis) and `memory__search` (`POST .../peers/{peer_id}/search`, documented as \"Search a Peer's messages\" — conversation text, not the conclusions Honcho derives from it, which matters because the `prefetch` bridge is on by default and will start injecting message excerpts each turn). It also binds the two WRITE verbs, `memory__sync` and `memory__store`, through an adapter. Honcho's only documented write is `POST /v3/workspaces/{workspace_id}/sessions/{session_id}/messages`, whose `messages[]` items each require a `peer_id` — a NESTED position the declarative `arg_template` cannot reach, because a template substitutes only from CALLER arguments and never sees a resolved `pref:`. That is why both verbs went unbound and why `memory.mirror-builtin` (default ON) was inert. An adapter receives those `pref:` values already resolved, so the per-install peer lands inside `messages[]` without hardcoding one bucket for every install. The session and both peers are caller-named and created on first write, so nothing has to be set up by hand; Ryu's own replies are written as a SEPARATE peer, since attributing an assistant turn to your peer would poison the representation Honcho derives about you. `memory__forget` stays unbound: Honcho documents no message-delete endpoint, which no adapter can invent. The built-in store's own `memorystore__save` tool and this node's per-turn memory write are kernel and untouched. Every call is scoped to one workspace and one peer, both set per install in the settings tab — a hardcoded pair would put every install in one shared bucket. Requires a BYOK Honcho API key.",
+      "category": "Knowledge",
+      "keywords": [
+        "memory",
+        "context",
+        "identity",
+        "dialectic",
+        "honcho"
+      ]
     },
     {
       "name": "hook-observers",
@@ -196,6 +323,26 @@
       "category": "Communication"
     },
     {
+      "name": "markitdown",
+      "displayName": "MarkItDown",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Pure-pip document parsing, no native toolchain",
+      "description": "Document parsing via Microsoft's MIT-licensed MarkItDown library — the default `document.parse` backend, and the one that works on a machine where the user installed nothing on purpose. `pip install 'markitdown[all]'` is a pure-Python install of a few tens of megabytes: no ONNX runtime, no layout-detection model download, no GPU, and no `brew`/`apt` packages to chase. It covers the formats people actually attach — PDF, DOCX, PPTX, XLSX/XLS, HTML, CSV, JSON, XML, EPUB, Outlook .msg, Jupyter notebooks, and ZIP archives expanded member-by-member — and it emits markdown natively rather than a flat text dump, so headings stay headings and spreadsheet tables stay tables. The tradeoffs are honest ones: no OCR (a scanned PDF comes back empty and the job says so), no legacy binary `.doc`/`.ppt`, and no element-level structure for a consumer that wants to chunk on document structure. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
+      "category": "Knowledge",
+      "keywords": [
+        "document",
+        "parse",
+        "pdf",
+        "docx",
+        "xlsx",
+        "markdown",
+        "extraction"
+      ]
+    },
+    {
       "name": "meetings",
       "displayName": "Meetings",
       "version": "1.0.0",
@@ -203,6 +350,44 @@
       "source": "builtin",
       "builtin": true,
       "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable."
+    },
+    {
+      "name": "mem0",
+      "displayName": "Mem0",
+      "version": "1.1.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Recall and record in an existing Mem0 project inside Ryu",
+      "description": "Read and write a hosted Mem0 memory project (https://mem0.ai) through the Mem0 Platform REST API, exposed as three declarative HTTP tools. The SECOND provider of the swappable `memory` layer — the built-in store stays the default and keeps running alongside it — so selecting Mem0 re-points the stable `memory__search` / `memory__store` / `memory__sync` / `memory__forget` tools at your Mem0 project without changing what agents call, and turns on the kernel bridges that fold Mem0 into every turn's recall and echo this node's writes out to it. The one canonical verb Mem0 does NOT serve is `memory__context`: Mem0 publishes no standing-summary endpoint, and forcing the verb onto its get-all would dump raw facts at system rank under a label promising a synthesis. The two WRITE verbs both post to `POST /v3/memories/add/`, which is ASYNCHRONOUS — it answers `{message, status: \"PENDING\", event_id}` and never a fact id — so `memory__store` returns an accepted-for-processing envelope, not the id of the fact it created, and nothing may chain `memory__forget` onto its result. That is fine for the way both verbs are used: the kernel `mirror` and `sync` bridges are fire-and-forget and never read the response. The two verbs differ in ONE documented field: `store` sends `infer: false` because the caller has already decided the fact and Mem0 should keep the text as-is, while `sync` hands over a raw turn with Mem0's default inference on and lets Mem0 mine it. Note the entity id lives in two different places in Mem0's own API — nested inside `filters` for search, top-level for add — and both are pinned from the same `mem0.user-id` preference. Requires a BYOK Mem0 API key.",
+      "category": "Knowledge",
+      "keywords": [
+        "memory",
+        "recall",
+        "facts",
+        "mem0"
+      ]
+    },
+    {
+      "name": "mineru",
+      "displayName": "MinerU",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Scientific and scanned PDFs, formulas to LaTeX",
+      "description": "Document parsing via MinerU (opendatalab) — the highest-fidelity `document.parse` backend, and the heaviest. Built for scientific and scanned PDFs: it runs layout detection to reconstruct true reading order across multi-column pages, converts formulas to LaTeX, converts tables to HTML, and OCRs scanned pages, so a physics paper comes back as markdown a model can actually follow instead of two columns interleaved line by line. The cost is real: MinerU wants Python 3.10-3.13, 16 GB of RAM (32 GB recommended), about 20 GB of disk for its model set, and a 4 GB-VRAM GPU for the pipeline backend (8 GB for the VLM backends) to be quick — a CPU-only host works through the `pipeline` backend but parses take minutes. Models download on first use. MinerU ships as a CLI, so each parse is a supervised subprocess with a hard wall-clock kill: a timed-out or cancelled parse takes its whole process group with it rather than leaving a multi-gigabyte orphan. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
+      "category": "Knowledge",
+      "keywords": [
+        "document",
+        "parse",
+        "pdf",
+        "ocr",
+        "latex",
+        "tables",
+        "layout",
+        "extraction"
+      ]
     },
     {
       "name": "monitors",
@@ -215,7 +400,7 @@
     },
     {
       "name": "predict",
-      "displayName": "Predictive Typing",
+      "displayName": "Autocomplete",
       "version": "1.0.0",
       "type": "app",
       "source": "builtin",
@@ -285,12 +470,45 @@
       "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget__render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin."
     },
     {
+      "name": "scrapling",
+      "displayName": "Scrapling",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Anti-bot page extraction, no API key",
+      "description": "Adaptive web-page extraction via the Scrapling MCP server (https://scrapling.readthedocs.io), a BYO local install. Provides the swappable `web.extract` layer as a THIRD provider alongside the local `spider` CLI and the hosted BYOK services, so selecting it re-points the stable `web__extract` tool at a fetcher that impersonates a real browser TLS fingerprint. No API key. Requires `pip install \"scrapling[ai]\"` and the `scrapling` binary on PATH; until then the MCP server does not start and the layer falls back to whichever other provider you select. Deliberately provides NO `web.crawl`: neither the MCP server nor the CLI follows links — only Scrapling's Python `Spider` class crawls, and it is not reachable over MCP.",
+      "category": "Search",
+      "keywords": [
+        "web",
+        "scraping",
+        "extract"
+      ]
+    },
+    {
       "name": "security-guidance",
       "displayName": "Security Guidance",
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
       "builtin": true
+    },
+    {
+      "name": "serper",
+      "displayName": "Serper",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Google's real results, as JSON, in a second",
+      "description": "Google's own search results as JSON via the Serper API (https://serper.dev), plus single-page scraping, exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web__search` / `web__extract` tools at Serper without changing what agents call. Serper is a paid, credit-metered API with a free allowance; requires a BYOK Serper API key.",
+      "category": "Search",
+      "keywords": [
+        "search",
+        "web",
+        "google",
+        "scrape"
+      ]
     },
     {
       "name": "shadow",
@@ -301,7 +519,11 @@
       "builtin": true,
       "tagline": "Recall what you have seen and done",
       "description": "Search everything Shadow has captured (screen text, audio transcripts, input) and summarize recent activity. Exposed as declarative HTTP tools that reach the device-local Shadow sidecar through Core's authenticated `/api/shadow/*` proxy (which injects Shadow's bearer token).",
-      "category": "Search"
+      "category": "Search",
+      "keywords": [
+        "capture",
+        "memory"
+      ]
     },
     {
       "name": "simulator",
@@ -332,7 +554,43 @@
       "builtin": true,
       "tagline": "Crawl and extract web pages for agents",
       "description": "High-performance web crawling and content extraction via the Spider CLI (https://spider.cloud), exposed as a declarative `command` tool that shells out to the locally-installed `spider` binary. No API key.",
-      "category": "Search"
+      "category": "Search",
+      "keywords": [
+        "web",
+        "scraping"
+      ]
+    },
+    {
+      "name": "spidercloud",
+      "displayName": "Spider Cloud",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Hosted site crawling, no local binary",
+      "description": "Hosted multi-page web crawling via the Spider Cloud API (https://spider.cloud), exposed as one declarative HTTP tool. Provides the swappable `web.crawl` layer as a SECOND provider alongside the local `spider` CLI, so selecting it re-points the stable `web__crawl` tool at a hosted crawler that needs no local binary. The crawl is synchronous — `run_in_background` defaults to false and one request returns every fetched page's content, so there is no job id to poll. The canonical `depth` argument is deliberately DROPPED: Spider Cloud documents `depth: 0` as \"no limit will be applied\", the exact inverse of the canonical contract's \"0 = the start page only\". Requires a BYOK Spider Cloud API key.",
+      "category": "Search",
+      "keywords": [
+        "web",
+        "crawl",
+        "scraping"
+      ]
+    },
+    {
+      "name": "tavily",
+      "displayName": "Tavily Search",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Agent-tuned web search and extraction",
+      "description": "Search-and-extract for agents via the Tavily API (https://tavily.com), exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web__search` / `web__extract` tools at Tavily without changing what agents call. Requires a BYOK Tavily API key.",
+      "category": "Search",
+      "keywords": [
+        "search",
+        "web",
+        "extract"
+      ]
     },
     {
       "name": "teams",
@@ -359,6 +617,25 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true
+    },
+    {
+      "name": "unstructured",
+      "displayName": "Unstructured",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Sixty formats, element-typed output",
+      "description": "Document parsing via the Apache-2.0 Unstructured library — the broadest-coverage `document.parse` backend, reading roughly sixty formats (PDF, the whole Office family including the legacy binary .doc/.ppt/.xls, email, EPUB, HTML, spreadsheets, and OCR over scanned images). Its distinguishing output is element-level: every fragment comes back typed (Title, NarrativeText, ListItem, Table, CodeSnippet, PageBreak), so the sidecar can emit markdown that preserves document structure instead of a flat text dump — headings stay headings and tables stay tables through chunking. The cost is install weight: `unstructured[all-docs]` is a 1-2 GB Python install, and the native tools it shells out to (poppler, tesseract, libreoffice, pandoc) are NOT pip-installable and must be present on the host. The sidecar detects each missing tool and reports it by name through the job's `error`/`missing_dependencies` fields rather than failing as an empty document. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
+      "category": "Knowledge",
+      "keywords": [
+        "document",
+        "parse",
+        "pdf",
+        "docx",
+        "ocr",
+        "extraction"
+      ]
     },
     {
       "name": "voice",

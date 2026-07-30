@@ -13,122 +13,134 @@
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const fixturePath = join(
-  here,
-  "..",
-  "..",
-  "apps",
-  "core",
-  "src",
-  "plugin_manifest",
-  "fixtures",
-  "ghost.manifest.json"
+	here,
+	"..",
+	"..",
+	"apps",
+	"core",
+	"src",
+	"plugin_manifest",
+	"fixtures",
+	"ghost.manifest.json"
 );
 
 const rawManifest = readFileSync(manifestPath, "utf8");
 
 test("manifest.json is valid JSON and parses to an object", () => {
-  const parsed = JSON.parse(rawManifest);
-  assert.equal(typeof parsed, "object");
-  assert.notEqual(parsed, null);
+	const parsed = JSON.parse(rawManifest);
+	assert.equal(typeof parsed, "object");
+	assert.notEqual(parsed, null);
 });
 
 const manifest = JSON.parse(rawManifest);
 
 test("has required top-level id/name/version", () => {
-  assert.equal(manifest.id, "ghost");
-  assert.equal(typeof manifest.name, "string");
-  assert.equal(manifest.name, "Ghost");
-  assert.ok(manifest.name.length > 0);
-  // version is present and semver-shaped
-  assert.equal(typeof manifest.version, "string");
-  assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+	assert.equal(manifest.id, "ghost");
+	assert.equal(typeof manifest.name, "string");
+	assert.equal(manifest.name, "Ghost");
+	assert.ok(manifest.name.length > 0);
+	// version is present and semver-shaped
+	assert.equal(typeof manifest.version, "string");
+	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
 });
 
 test("runnables is present and empty (all capability ships via the MCP server)", () => {
-  assert.ok(Array.isArray(manifest.runnables));
-  assert.equal(manifest.runnables.length, 0);
+	assert.ok(Array.isArray(manifest.runnables));
+	assert.equal(manifest.runnables.length, 0);
 });
 
 test("declares exactly one mcp server, keyed `ghost`", () => {
-  assert.equal(typeof manifest.mcp_servers, "object");
-  assert.notEqual(manifest.mcp_servers, null);
-  const keys = Object.keys(manifest.mcp_servers);
-  assert.deepEqual(keys, ["ghost"]);
+	assert.equal(typeof manifest.mcp_servers, "object");
+	assert.notEqual(manifest.mcp_servers, null);
+	const keys = Object.keys(manifest.mcp_servers);
+	assert.deepEqual(keys, ["ghost"]);
 });
 
 test("the ghost mcp server spec is well-formed (stdio command + env override + args)", () => {
-  const server = manifest.mcp_servers.ghost;
-  assert.equal(typeof server, "object");
+	const server = manifest.mcp_servers.ghost;
+	assert.equal(typeof server, "object");
 
-  // Launches the `ghost` binary over stdio (no url => stdio transport).
-  assert.equal(server.command, "ghost");
-  assert.equal(server.url, undefined, "stdio server must not carry a url");
+	// Launches the `ghost` binary over stdio (no url => stdio transport).
+	assert.equal(server.command, "ghost");
+	assert.equal(server.url, undefined, "stdio server must not carry a url");
 
-  // Env var lets Core point at an overridden binary path (RYU_<APP>_BIN seam).
-  assert.equal(server.command_env, "RYU_GHOST_BIN");
-  assert.match(server.command_env, /^RYU_[A-Z0-9_]+_BIN$/);
+	// Env var lets Core point at an overridden binary path (RYU_<APP>_BIN seam).
+	assert.equal(server.command_env, "RYU_GHOST_BIN");
+	assert.match(server.command_env, /^RYU_[A-Z0-9_]+_BIN$/);
 
-  // Args launch MCP mode: `ghost mcp`.
-  assert.ok(Array.isArray(server.args));
-  assert.deepEqual(server.args, ["mcp"]);
-  for (const arg of server.args) {
-    assert.equal(typeof arg, "string");
-  }
+	// Args launch MCP mode: `ghost mcp`.
+	assert.ok(Array.isArray(server.args));
+	assert.deepEqual(server.args, ["mcp"]);
+	for (const arg of server.args) {
+		assert.equal(typeof arg, "string");
+	}
 
-  // Human-facing description present and non-empty.
-  assert.equal(typeof server.description, "string");
-  assert.ok(server.description.length > 0);
+	// Human-facing description present and non-empty.
+	assert.equal(typeof server.description, "string");
+	assert.ok(server.description.length > 0);
 });
 
 test("permission_grants gate the mcp server and match its id", () => {
-  assert.ok(Array.isArray(manifest.permission_grants));
-  assert.ok(
-    manifest.permission_grants.includes("mcp:ghost"),
-    "must grant mcp:ghost"
-  );
-  for (const grant of manifest.permission_grants) {
-    assert.equal(typeof grant, "string");
-  }
-  // Every `mcp:<id>` grant must name a declared mcp server, and every declared
-  // server must be covered by a grant — the two sides cannot drift.
-  const serverIds = new Set(Object.keys(manifest.mcp_servers));
-  const grantedMcpIds = new Set(
-    manifest.permission_grants
-      .filter((g) => g.startsWith("mcp:"))
-      .map((g) => g.slice("mcp:".length))
-  );
-  for (const id of serverIds) {
-    assert.ok(grantedMcpIds.has(id), `server "${id}" has a matching mcp grant`);
-  }
-  for (const id of grantedMcpIds) {
-    assert.ok(serverIds.has(id), `grant mcp:${id} names a declared server`);
-  }
+	assert.ok(Array.isArray(manifest.permission_grants));
+	assert.ok(
+		manifest.permission_grants.includes("mcp:ghost"),
+		"must grant mcp:ghost"
+	);
+	for (const grant of manifest.permission_grants) {
+		assert.equal(typeof grant, "string");
+	}
+	// Every `mcp:<id>` grant must name a declared mcp server, and every declared
+	// server must be covered by a grant — the two sides cannot drift.
+	const serverIds = new Set(Object.keys(manifest.mcp_servers));
+	const grantedMcpIds = new Set(
+		manifest.permission_grants
+			.filter((g) => g.startsWith("mcp:"))
+			.map((g) => g.slice("mcp:".length))
+	);
+	for (const id of serverIds) {
+		assert.ok(grantedMcpIds.has(id), `server "${id}" has a matching mcp grant`);
+	}
+	for (const id of grantedMcpIds) {
+		assert.ok(serverIds.has(id), `grant mcp:${id} names a declared server`);
+	}
 });
 
 test("this plugin declares NO turn_hooks / http-tool / command-tool / secret_headers", () => {
-  // Guards the classification: ghost is a pure MCP-server plugin. If any of
-  // these ever appear, this test file's coverage is no longer sufficient and
-  // must grow (e.g. execute inline hook JS, or assert http/secret_headers).
-  const contributes = manifest.contributes ?? {};
-  assert.equal(contributes.turn_hooks, undefined);
-  assert.equal(manifest.runnables.length, 0, "no command/http-tool runnables");
-  // No server in the manifest is an http-tool or carries secret headers.
-  const raw = rawManifest;
-  assert.ok(!raw.includes("secret_headers"), "no secret_headers anywhere");
+	// Guards the classification: ghost is a pure MCP-server plugin. If any of
+	// these ever appear, this test file's coverage is no longer sufficient and
+	// must grow (e.g. execute inline hook JS, or assert http/secret_headers).
+	const contributes = manifest.contributes ?? {};
+	assert.equal(contributes.turn_hooks, undefined);
+	assert.equal(manifest.runnables.length, 0, "no command/http-tool runnables");
+	// No server in the manifest is an http-tool or carries secret headers.
+	const raw = rawManifest;
+	assert.ok(!raw.includes("secret_headers"), "no secret_headers anywhere");
+});
+
+test("declares that it drives THIS machine", () => {
+	// The counterpart to bytebot's `remote-desktop`. ghost types on the keyboard of
+	// the machine Ryu is running on, and the layer picker can only say so — and only
+	// distinguish the two providers of computer.control — if this is declared
+	// structurally rather than left to the description prose.
+	const entry = (manifest.provides ?? []).find(
+		(p) => p.capability === "computer.control"
+	);
+	assert.ok(entry, "must provide computer.control");
+	assert.equal(entry.target, "local-machine");
 });
 
 test("manifest is byte-identical to the Core fixture (registration seam)", () => {
-  const fixtureRaw = readFileSync(fixturePath, "utf8");
-  assert.equal(
-    rawManifest,
-    fixtureRaw,
-    "plugins-store/ghost/manifest.json must byte-match apps/core/.../fixtures/ghost.manifest.json"
-  );
+	const fixtureRaw = readFileSync(fixturePath, "utf8");
+	assert.equal(
+		rawManifest,
+		fixtureRaw,
+		"plugins-store/ghost/manifest.json must byte-match apps/core/.../fixtures/ghost.manifest.json"
+	);
 });

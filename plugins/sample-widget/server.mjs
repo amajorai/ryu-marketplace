@@ -32,9 +32,9 @@
 // =============================================================================
 
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { createInterface } from "node:readline";
+import { fileURLToPath } from "node:url";
 
 // The widget slug (the `<slug>` in `ui://widget/<slug>.html`). Keep this in sync
 // with the `uri` in manifest.json's contributes.widgets and with sample.html.
@@ -64,7 +64,7 @@ const TOOLS = [
 			properties: {
 				name: {
 					type: "string",
-					description: "Who to greet. Defaults to \"world\".",
+					description: 'Who to greet. Defaults to "world".',
 				},
 			},
 			additionalProperties: false,
@@ -122,7 +122,12 @@ function callTool(params) {
 	};
 	return {
 		// Plain-text fallback (shown if the widget itself doesn't render).
-		content: [{ type: "text", text: `${structuredContent.greeting} (open the widget to interact)` }],
+		content: [
+			{
+				type: "text",
+				text: `${structuredContent.greeting} (open the widget to interact)`,
+			},
+		],
 		// The widget's data channel → window.openai.toolOutput.
 		structuredContent,
 	};
@@ -191,12 +196,20 @@ rl.on("line", (line) => {
 	}
 	try {
 		const result = handleRequest(msg.method, msg.params);
-		if (result && result.__methodNotFound) {
-			send({ jsonrpc: "2.0", id: msg.id, error: { code: -32601, message: `method not found: ${msg.method}` } });
+		if (result?.__methodNotFound) {
+			send({
+				jsonrpc: "2.0",
+				id: msg.id,
+				error: { code: -32_601, message: `method not found: ${msg.method}` },
+			});
 			return;
 		}
 		send({ jsonrpc: "2.0", id: msg.id, result });
 	} catch (err) {
-		send({ jsonrpc: "2.0", id: msg.id, error: { code: -32000, message: String(err?.message ?? err) } });
+		send({
+			jsonrpc: "2.0",
+			id: msg.id,
+			error: { code: -32_000, message: String(err?.message ?? err) },
+		});
 	}
 });
