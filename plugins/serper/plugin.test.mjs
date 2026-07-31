@@ -25,7 +25,7 @@
 
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -127,7 +127,10 @@ test("permission_grants gate egress to exactly the hosts the tools call", () => 
 	// And nothing granted that no tool calls — a grant wider than the surface.
 	for (const grant of manifest.permission_grants) {
 		const host = grant.replace("tool:http-egress:", "");
-		assert.ok(hosts.has(host), `granted egress to ${host}, which no tool calls`);
+		assert.ok(
+			hosts.has(host),
+			`granted egress to ${host}, which no tool calls`
+		);
 	}
 });
 
@@ -175,7 +178,10 @@ test("every declared argument is a real Serper request-body field", () => {
 	for (const [slug, allowed] of Object.entries(bodyFields)) {
 		const cfg = bySlug.get(slug).config;
 		for (const name of Object.keys(cfg.input_schema.properties)) {
-			assert.ok(allowed.has(name), `'${slug}': '${name}' is not a Serper field`);
+			assert.ok(
+				allowed.has(name),
+				`'${slug}': '${name}' is not a Serper field`
+			);
 		}
 		// `body_defaults` go on the wire too and are never validated against the
 		// schema, so they need the same check.
@@ -323,7 +329,12 @@ test("extract drops `format` and maps the single scraped record", () => {
 	// The canonical `url` is NOT renamed: Serper's field is also called `url`, and
 	// an unmapped canonical argument passes through under its own name.
 	assert.equal(binding.args.url, undefined);
-	assert.ok(Object.hasOwn(bySlug.get(binding.tool).config.input_schema.properties, "url"));
+	assert.ok(
+		Object.hasOwn(
+			bySlug.get(binding.tool).config.input_schema.properties,
+			"url"
+		)
+	);
 	// NO `results` path, on purpose: a scrape answers with one record, not an
 	// array, and the contract reads an absent path as "the response itself is the
 	// record". The tradeoff to keep in view — do not "fix" this by inventing a
@@ -374,7 +385,11 @@ test("the settings field pref_key IS the env var the tools reference", () => {
 			)
 		)
 	);
-	assert.equal(envVars.size, 1, "tools disagree on which env var holds the key");
+	assert.equal(
+		envVars.size,
+		1,
+		"tools disagree on which env var holds the key"
+	);
 	assert.equal(field.pref_key, [...envVars][0]);
 	assert.equal(field.pref_key, "RYU_SERPER_API_KEY");
 });
@@ -424,20 +439,35 @@ test("the secret field declares no bounds, default, or options", () => {
 	assert.notEqual(field.required, true);
 });
 
-test("manifest is byte-identical to the Core fixture (registration seam)", () => {
-	const fixturePath = resolve(
-		here,
-		"../../apps/core/src/plugin_manifest/fixtures/serper.manifest.json"
-	);
-	// Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
-	// fixtures directory is here and only the file name is wrong — otherwise a
-	// broken path silently skips instead of catching real drift.
-	if (!existsSync(dirname(fixturePath))) {
-		return;
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
 	}
-	assert.deepEqual(
-		readFileSync(manifestPath),
-		readFileSync(fixturePath),
-		"manifest.json drifted from the Core fixture — they must be byte-identical"
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
+		"plugin_manifest",
+		"fixtures",
+		"serper.manifest.json"
+	);
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/serper/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });

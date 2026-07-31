@@ -10,7 +10,7 @@
 
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -18,11 +18,39 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(here, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
+
 test("manifest.json is valid parseable JSON", () => {
 	assert.doesNotThrow(() => JSON.parse(raw));
 });
 
-const manifest = JSON.parse(raw);
+const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "honcho");
@@ -85,16 +113,13 @@ test("both tools target api.honcho.dev over https on the documented v3 paths", (
 		assert.ok(u.pathname.startsWith("/v3/"), `${u.pathname} is not a v3 path`);
 		paths.add(u.pathname);
 	}
-	assert.deepEqual(
-		[...paths].sort(),
-		[
-			"/v3/workspaces/%7Bworkspace_id%7D/peers",
-			"/v3/workspaces/%7Bworkspace_id%7D/peers/%7Bpeer_id%7D/chat",
-			"/v3/workspaces/%7Bworkspace_id%7D/peers/%7Bpeer_id%7D/search",
-			"/v3/workspaces/%7Bworkspace_id%7D/sessions",
-			"/v3/workspaces/%7Bworkspace_id%7D/sessions/%7Bsession_id%7D/messages",
-		]
-	);
+	assert.deepEqual([...paths].sort(), [
+		"/v3/workspaces/%7Bworkspace_id%7D/peers",
+		"/v3/workspaces/%7Bworkspace_id%7D/peers/%7Bpeer_id%7D/chat",
+		"/v3/workspaces/%7Bworkspace_id%7D/peers/%7Bpeer_id%7D/search",
+		"/v3/workspaces/%7Bworkspace_id%7D/sessions",
+		"/v3/workspaces/%7Bworkspace_id%7D/sessions/%7Bsession_id%7D/messages",
+	]);
 });
 
 test("both tools are fail_open and unwrap the upstream body", () => {
@@ -360,7 +385,11 @@ test("no verb declares an arg_clamp", () => {
 	// narrows, and a no-op clamp reads like a real constraint to the next editor.
 	for (const p of provides) {
 		for (const [verb, binding] of Object.entries(p.tools)) {
-			assert.equal(binding.arg_clamp, undefined, `${verb} declares a no-op arg_clamp`);
+			assert.equal(
+				binding.arg_clamp,
+				undefined,
+				`${verb} declares a no-op arg_clamp`
+			);
 		}
 	}
 });
@@ -444,16 +473,13 @@ test("every pref: token referenced by a binding has a settings field", () => {
 			}
 		}
 	}
-	assert.deepEqual(
-		[...referenced].sort(),
-		[
-			"honcho.assistant-peer-id",
-			"honcho.peer-id",
-			"honcho.reasoning-level",
-			"honcho.session-id",
-			"honcho.workspace-id",
-		]
-	);
+	assert.deepEqual([...referenced].sort(), [
+		"honcho.assistant-peer-id",
+		"honcho.peer-id",
+		"honcho.reasoning-level",
+		"honcho.session-id",
+		"honcho.workspace-id",
+	]);
 	for (const key of referenced) {
 		assert.ok(byPrefKey.has(key), `no settings field writes ${key}`);
 	}
@@ -465,7 +491,11 @@ test("the secret field pref_key IS the env var the tools reference", () => {
 			(r) => /env:(\w+)/.exec(r.config.secret_headers.Authorization)[1]
 		)
 	);
-	assert.equal(envVars.size, 1, "tools disagree on which env var holds the key");
+	assert.equal(
+		envVars.size,
+		1,
+		"tools disagree on which env var holds the key"
+	);
 	const [envVar] = [...envVars];
 	assert.equal(envVar, "RYU_HONCHO_API_KEY");
 	const field = byPrefKey.get(envVar);
@@ -520,8 +550,9 @@ test("workspace and peer are required text fields with no baked-in default", () 
 test("the reasoning-level select agrees with the documented enum and the body default", () => {
 	const field = byPrefKey.get("honcho.reasoning-level");
 	assert.equal(field.type, "select");
-	const documented = bySlug.get("honcho__chat").config.input_schema.properties
-		.reasoning_level.enum;
+	const documented =
+		bySlug.get("honcho__chat").config.input_schema.properties.reasoning_level
+			.enum;
 	assert.deepEqual(
 		field.options.map((o) => o.value),
 		documented
@@ -535,19 +566,35 @@ test("the reasoning-level select agrees with the documented enum and the body de
 	);
 });
 
-test("manifest is byte-identical to the Core fixture (registration seam)", () => {
-	const fixturePath = resolve(
-		here,
-		"../../apps/core/src/plugin_manifest/fixtures/honcho.manifest.json"
-	);
-	// Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
-	// fixtures directory is here and only the file name is wrong.
-	if (!existsSync(dirname(fixturePath))) {
-		return;
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
 	}
-	assert.deepEqual(
-		readFileSync(manifestPath),
-		readFileSync(fixturePath),
-		"manifest.json drifted from the Core fixture — they must be byte-identical"
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
+		"plugin_manifest",
+		"fixtures",
+		"honcho.manifest.json"
+	);
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/honcho/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });

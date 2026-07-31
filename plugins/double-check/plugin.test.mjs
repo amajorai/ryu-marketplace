@@ -20,6 +20,34 @@ const FLAG = "io.ryu.double-check";
 
 const raw = readFileSync(MANIFEST_PATH, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(HERE, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
+
 // Core wraps the hook body in an async IIFE where a bare `return` reports the
 // directive as the program's final value. AsyncFunction(body) reproduces that:
 // the body runs as an async function taking (ctx, host) and its `return` is the
@@ -61,7 +89,7 @@ function makeHost(reply) {
 }
 
 test("manifest.json is valid JSON with id/name/version", () => {
-	const m = JSON.parse(raw);
+	const m = parseManifest();
 	assert.equal(typeof m, "object");
 	assert.equal(m.id, "double-check");
 	assert.equal(typeof m.name, "string");
@@ -70,7 +98,7 @@ test("manifest.json is valid JSON with id/name/version", () => {
 });
 
 test("declared contributes fields are well-formed", () => {
-	const m = JSON.parse(raw);
+	const m = parseManifest();
 
 	// grant required to reach host.sideModel
 	assert.ok(
@@ -97,32 +125,41 @@ test("declared contributes fields are well-formed", () => {
 	assert.ok(hook.code.includes("host.sideModel"));
 });
 
-test("Core fixture (when present) is byte-identical to this manifest", () => {
-	// Soft check: the satellite repo ships this file alone, so the fixture only
-	// exists in the monorepo. When it does, enforce the byte-identity invariant.
-	const fixture = join(
-		HERE,
-		"..",
-		"..",
-		"apps",
-		"core",
-		"src",
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
+	}
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
 		"plugin_manifest",
 		"fixtures",
 		"double-check.manifest.json"
 	);
-	if (!existsSync(fixture)) {
-		return; // standalone satellite tree — nothing to compare against
-	}
-	assert.equal(
-		readFileSync(fixture, "utf8"),
-		raw,
-		"Core fixture and plugins-store manifest must be byte-identical"
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/double-check/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });
 
 test("hook returns {kind:'none'} when the flag is off", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost("Looks correct.");
 
 	// flag absent entirely
@@ -135,7 +172,7 @@ test("hook returns {kind:'none'} when the flag is off", async () => {
 });
 
 test("hook returns {kind:'none'} when there is no assistant turn to review", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost("Looks correct.");
 	const ctx = makeCtx({
 		transcript: [{ role: "user", content: "hello?" }],
@@ -145,7 +182,7 @@ test("hook returns {kind:'none'} when there is no assistant turn to review", asy
 });
 
 test("hook calls sideModel with the right args and returns a note", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost("The answer is wrong: 2 + 2 = 4.");
 	const directive = await run(makeCtx(), host);
 
@@ -170,7 +207,7 @@ test("hook calls sideModel with the right args and returns a note", async () => 
 });
 
 test("hook uses the newest assistant + user turns (reverse scan)", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost("note");
 	const ctx = makeCtx({
 		transcript: [
@@ -188,7 +225,7 @@ test("hook uses the newest assistant + user turns (reverse scan)", async () => {
 });
 
 test("empty / whitespace-only review degrades to {kind:'none'}", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 
 	assert.deepEqual(await run(makeCtx(), makeHost("")), { kind: "none" });
 	assert.deepEqual(await run(makeCtx(), makeHost("   \n\t ")), {
@@ -199,7 +236,7 @@ test("empty / whitespace-only review degrades to {kind:'none'}", async () => {
 });
 
 test("note text is trimmed", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const directive = await run(makeCtx(), makeHost("   Looks correct.   "));
 	assert.deepEqual(directive, { kind: "note", text: "Looks correct." });
 });

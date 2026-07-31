@@ -15,7 +15,7 @@
 
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -23,11 +23,39 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(here, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
+
 test("manifest.json is valid parseable JSON", () => {
 	assert.doesNotThrow(() => JSON.parse(raw));
 });
 
-const manifest = JSON.parse(raw);
+const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "firecrawl");
@@ -97,7 +125,11 @@ test("both tools target the api.firecrawl.dev host over https, on /v2", () => {
 		// The version prefix is part of the verified contract: /v1 and /v2 differ in
 		// both request and response shape (v2 search nests results under `data.web`),
 		// so a silent downgrade would break the response mapping below.
-		assert.match(u.pathname, /^\/v2\//, `${r.config.slug} is not a /v2 endpoint`);
+		assert.match(
+			u.pathname,
+			/^\/v2\//,
+			`${r.config.slug} is not a /v2 endpoint`
+		);
 	}
 });
 
@@ -318,7 +350,8 @@ test("search does not map Firecrawl's rank `position` onto `score`", () => {
 	// what exa and tavily emit. Firecrawl emits `position`, a 1-based rank where
 	// LOWER is better. Mapping one onto the other inverts the ordering semantics
 	// across a provider swap, so `position` is deliberately left in `raw`.
-	const fields = byCapability.get("web.search").tools.web__search.response.fields;
+	const fields =
+		byCapability.get("web.search").tools.web__search.response.fields;
 	assert.equal(fields.score, undefined);
 	for (const source of Object.values(fields)) {
 		assert.notEqual(source, "position");
@@ -424,7 +457,11 @@ test("the settings field pref_key IS the env var the tools reference", () => {
 			(r) => /env:(\w+)/.exec(r.config.secret_headers.Authorization)[1]
 		)
 	);
-	assert.equal(envVars.size, 1, "tools disagree on which env var holds the key");
+	assert.equal(
+		envVars.size,
+		1,
+		"tools disagree on which env var holds the key"
+	);
 	assert.equal(field.pref_key, [...envVars][0]);
 });
 
@@ -433,10 +470,11 @@ test("one key powers EVERY capability firecrawl provides", () => {
 	// settings field is correct — a second sharing the pref_key is rejected at load.
 	const field = manifest.contributes.settings_tabs[0].fields[0];
 	const capabilities = manifest.provides.map((p) => p.capability);
-	assert.deepEqual(
-		[...capabilities].sort(),
-		["web.crawl", "web.extract", "web.search"]
-	);
+	assert.deepEqual([...capabilities].sort(), [
+		"web.crawl",
+		"web.extract",
+		"web.search",
+	]);
 	assert.equal(field.pref_key, "RYU_FIRECRAWL_API_KEY");
 });
 
@@ -472,20 +510,35 @@ test("the secret field declares no bounds, default, or options", () => {
 	assert.notEqual(field.required, true);
 });
 
-test("manifest is byte-identical to the Core fixture (registration seam)", () => {
-	const fixturePath = resolve(
-		here,
-		"../../apps/core/src/plugin_manifest/fixtures/firecrawl.manifest.json"
-	);
-	// Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
-	// fixtures directory is here and only the file name is wrong — otherwise a
-	// broken path silently skips instead of catching real drift.
-	if (!existsSync(dirname(fixturePath))) {
-		return;
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
 	}
-	assert.deepEqual(
-		readFileSync(manifestPath),
-		readFileSync(fixturePath),
-		"manifest.json drifted from the Core fixture — they must be byte-identical"
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
+		"plugin_manifest",
+		"fixtures",
+		"firecrawl.manifest.json"
+	);
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/firecrawl/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });

@@ -10,17 +10,17 @@
       {
         "id": "observers.subagent-stop",
         "on": "subagent_stop",
-        "code": "return { kind: 'note', text: 'subagent ' + ((ctx.event && ctx.event.id) || '?') + ' finished: ' + (ctx.output || '').slice(0, 60) };"
+        "code_file": "hooks/subagent-stop.js"
       },
       {
         "id": "observers.session-end",
         "on": "session_end",
-        "code": "const n = ctx.transcript ? ctx.transcript.length : 0; return { kind: 'note', text: 'session ' + (ctx.conversation_id || '?') + ' ended with ' + n + ' messages' };"
+        "code_file": "hooks/session-end.js"
       },
       {
         "id": "observers.notification",
         "on": "notification",
-        "code": "return { kind: 'note', text: 'notification: ' + ((ctx.event && ctx.event.title) || '?') };"
+        "code_file": "hooks/notification.js"
       }
     ]
   }

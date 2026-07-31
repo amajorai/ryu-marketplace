@@ -23,15 +23,43 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(HERE, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(RAW));
+
 // ── 1. Manifest is valid JSON with the core identity fields ────────────────────
 
 test("manifest.json is valid JSON and parses", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	assert.equal(typeof m, "object");
 	assert.notEqual(m, null);
 });
 
-const manifest = JSON.parse(RAW);
+const manifest = parseManifest();
 
 test("has id / name / version", () => {
 	assert.equal(manifest.id, "com.ryuhq.advisor");
@@ -293,28 +321,35 @@ test("hook: null advice from side model → kind:none", async () => {
 // fixture. In the standalone satellite repo the fixture doesn't exist, so this
 // check is skipped there rather than failing.
 
-test("manifest.json is byte-identical to the Core fixture (skipped if absent)", () => {
-	const fixture = join(
-		HERE,
-		"..",
-		"..",
-		"apps",
-		"core",
-		"src",
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
+	}
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
 		"plugin_manifest",
 		"fixtures",
 		"advisor.manifest.json"
 	);
-	// Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
-	// fixtures directory is here and only the file name is wrong — otherwise a
-	// broken path silently skips instead of catching real drift.
-	if (!existsSync(dirname(fixture))) {
-		return;
-	}
-	const fixtureRaw = readFileSync(fixture, "utf8");
-	assert.equal(
-		RAW,
-		fixtureRaw,
-		"manifest must stay byte-identical to the Core fixture"
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/advisor/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });

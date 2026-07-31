@@ -24,13 +24,41 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(HERE, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(RAW));
+
 // ── Manifest / contract validation (ALWAYS) ─────────────────────────────────
 
 test("manifest.json is valid JSON and parses", () => {
 	assert.doesNotThrow(() => JSON.parse(RAW));
 });
 
-const manifest = JSON.parse(RAW);
+const manifest = parseManifest();
 
 test("manifest has required id/name/version", () => {
 	assert.equal(manifest.id, "com.ryuhq.hook-observers");

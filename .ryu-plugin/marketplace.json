@@ -647,6 +647,15 @@
       "description": "Voice data path: speech-to-text transcription (whisper.cpp) and text-to-speech (OuteTTS + the universal Ryu TTS sidecar), plus the installable TTS model catalog. Governance shell over the in-crate voice module."
     },
     {
+      "name": "warmup",
+      "displayName": "Warmup",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "description": "Starts your subscription agents' rolling usage windows on your own schedule: a one-word ping to each subscription agent, on its cheapest model, at the times of day you choose (05:00 / 10:00 / 15:00 / 20:00 by default) — so a window is already open when you sit down to work."
+    },
+    {
       "name": "webhooks",
       "displayName": "Webhooks",
       "version": "1.0.0",

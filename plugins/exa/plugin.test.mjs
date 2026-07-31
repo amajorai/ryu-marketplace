@@ -9,7 +9,7 @@
 
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -17,11 +17,39 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(here, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
+
 test("manifest.json is valid parseable JSON", () => {
 	assert.doesNotThrow(() => JSON.parse(raw));
 });
 
-const manifest = JSON.parse(raw);
+const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "exa");
@@ -198,7 +226,11 @@ test("the settings field pref_key IS the env var the tools reference", () => {
 			.filter((r) => r.config.secret_headers)
 			.map((r) => /env:(\w+)/.exec(r.config.secret_headers.Authorization)[1])
 	);
-	assert.equal(envVars.size, 1, "tools disagree on which env var holds the key");
+	assert.equal(
+		envVars.size,
+		1,
+		"tools disagree on which env var holds the key"
+	);
 	assert.equal(field.pref_key, [...envVars][0]);
 });
 
@@ -234,22 +266,34 @@ test("the secret field declares no bounds, default, or options", () => {
 	assert.notEqual(field.required, true);
 });
 
-test("manifest is byte-identical to the Core fixture (registration seam)", () => {
-	const fixturePath = resolve(
-		here,
-		"../../apps/core/src/plugin_manifest/fixtures/exa.manifest.json"
-	);
-	// Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
-	// fixtures directory is here and only the file name is wrong — otherwise a
-	// broken path silently skips instead of catching real drift.
-	if (!existsSync(dirname(fixturePath))) {
-		return;
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
 	}
-	const fixture = readFileSync(fixturePath);
-	assert.deepEqual(
-		readFileSync(manifestPath),
-		fixture,
-		"manifest.json drifted from the Core fixture — they must be byte-identical"
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
+		"plugin_manifest",
+		"fixtures",
+		"exa.manifest.json"
+	);
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes('include_str!("../../../../plugins-store/exa/manifest.json")'),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });
 
@@ -279,8 +323,8 @@ test("the fallback fires ONLY on a missing key, not on any failure", () => {
 	// `fail_open` turns 401/403 into {available:false,...}, which IS the no-key
 	// signal. Retrying on anything else would double every request during an
 	// outage or a rate-limit, and would mask a broken key behind free-tier results.
-	const code = (manifest.provides.find((p) => p.capability === "web.search")
-		.tools.web__search.adapter.code);
+	const code = manifest.provides.find((p) => p.capability === "web.search")
+		.tools.web__search.adapter.code;
 	assert.match(code, /keyed\.available === false/);
 	assert.match(code, /return \{ raw: keyed \};/);
 });
@@ -291,8 +335,8 @@ test("the free endpoint is called with the Accept header it requires", () => {
 	const free = bySlug.get("exa__free_search").config;
 	assert.deepEqual(free.header_params, ["Accept"]);
 	assert.ok(free.input_schema.required.includes("Accept"));
-	const code = (manifest.provides.find((p) => p.capability === "web.search")
-		.tools.web__search.adapter.code);
+	const code = manifest.provides.find((p) => p.capability === "web.search")
+		.tools.web__search.adapter.code;
 	assert.match(code, /Accept: "application\/json, text\/event-stream"/);
 	// The endpoint accepts a STATELESS tools/call: no initialize, no session id.
 	assert.match(code, /method: "tools\/call"/);
@@ -303,8 +347,8 @@ test("the adapter parses the SSE frame the endpoint actually returns", () => {
 	// The reply is `event: message\ndata: {json}` with Content-Type
 	// text/event-stream, so the http tool hands back a STRING, not JSON. Records
 	// inside the payload text are separated by a `---` line.
-	const code = (manifest.provides.find((p) => p.capability === "web.search")
-		.tools.web__search.adapter.code);
+	const code = manifest.provides.find((p) => p.capability === "web.search")
+		.tools.web__search.adapter.code;
 	assert.match(code, /typeof free !== "string"/);
 	assert.match(code, /startsWith\("data: "\)/);
 	assert.match(code, /split\(\/\\n-\{3,\}\\n\/\)/);

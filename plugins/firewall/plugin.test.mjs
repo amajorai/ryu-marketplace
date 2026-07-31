@@ -125,23 +125,35 @@ test("does NOT declare tool/server surfaces (pure policy plugin)", () => {
 	assert.equal(manifest.secret_headers, undefined);
 });
 
-test("manifest is byte-identical to the built-in Core fixture", () => {
-	// AGENTS.md: the ONE legitimate Core copy is a byte-identical fixture.
-	// Skipped automatically in the standalone satellite tree (no apps/core there).
-	const fixture = join(
-		HERE,
-		"..",
-		"..",
-		"apps",
-		"core",
-		"src",
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
+	}
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
 		"plugin_manifest",
 		"fixtures",
 		"firewall.manifest.json"
 	);
-	if (!existsSync(fixture)) {
-		return; // satellite checkout: nothing to compare against
-	}
-	const fixtureRaw = readFileSync(fixture, "utf8");
-	assert.equal(RAW, fixtureRaw, "manifest.json must byte-match Core fixture");
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/firewall/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
+	);
 });

@@ -19,6 +19,34 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(HERE, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(RAW));
+
 const FLAG = "io.ryu.security-guidance";
 
 // AsyncFunction constructor — the hook body uses top-level `await` + `return`.
@@ -77,7 +105,7 @@ const asstMsg = (content) => ({ role: "assistant", content });
 // ---------------------------------------------------------------------------
 
 test("manifest.json is valid JSON and has id/name/version", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	assert.equal(m.id, "security-guidance");
 	assert.equal(typeof m.name, "string");
 	assert.ok(m.name.length > 0);
@@ -85,7 +113,7 @@ test("manifest.json is valid JSON and has id/name/version", () => {
 });
 
 test("permission_grants declares hook:side-model (needed for host.sideModel)", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	assert.ok(
 		Array.isArray(m.permission_grants) &&
 			m.permission_grants.includes("hook:side-model"),
@@ -94,7 +122,7 @@ test("permission_grants declares hook:side-model (needed for host.sideModel)", (
 });
 
 test("contributes composer_controls / settings_tabs / slash_commands are well-formed", () => {
-	const c = JSON.parse(RAW).contributes;
+	const c = parseManifest().contributes;
 
 	const toggle = c.composer_controls[0];
 	assert.equal(toggle.type, "toggle");
@@ -117,7 +145,7 @@ test("contributes composer_controls / settings_tabs / slash_commands are well-fo
 });
 
 test("turn_hook is a post_assistant_turn hook matching the flag + /security command", () => {
-	const hook = JSON.parse(RAW).contributes.turn_hooks[0];
+	const hook = parseManifest().contributes.turn_hooks[0];
 	assert.equal(hook.on, "post_assistant_turn");
 	assert.equal(hook.match.flag, FLAG);
 	assert.deepEqual(hook.match.commands, ["/security"]);
@@ -126,7 +154,7 @@ test("turn_hook is a post_assistant_turn hook matching the flag + /security comm
 });
 
 test("hook code passes model_pref_key (swappable model, never hardcoded)", () => {
-	const hook = JSON.parse(RAW).contributes.turn_hooks[0];
+	const hook = parseManifest().contributes.turn_hooks[0];
 	assert.match(hook.code, /model_pref_key:\s*['"]security-review-model['"]/);
 	// Sanity: no hardcoded model id like "gpt-4"/"claude-..." in the sideModel call.
 	assert.doesNotMatch(hook.code, /model:\s*['"](gpt|claude|o\d|gemini)/i);
@@ -137,7 +165,7 @@ test("hook code passes model_pref_key (swappable model, never hardcoded)", () =>
 // ---------------------------------------------------------------------------
 
 test("returns {kind:'none'} when flag off and no /security force", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: false },
 		transcript: [userMsg("hi"), asstMsg("child_process.execSync('ls')")],
@@ -153,7 +181,7 @@ test("returns {kind:'none'} when flag off and no /security force", async () => {
 });
 
 test("returns {kind:'none'} when toggled on but last assistant message is empty", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: true },
 		transcript: [userMsg("hi"), asstMsg("   ")],
@@ -164,7 +192,7 @@ test("returns {kind:'none'} when toggled on but last assistant message is empty"
 });
 
 test("toggled on: pattern hit surfaces even when LLM says 'Looks secure.'", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: true },
 		transcript: [
@@ -194,7 +222,7 @@ test("toggled on: pattern hit surfaces even when LLM says 'Looks secure.'", asyn
 });
 
 test("forced via /security acts even when the flag is off", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: false },
 		transcript: [
@@ -210,7 +238,7 @@ test("forced via /security acts even when the flag is off", async () => {
 });
 
 test("clean code + 'Looks secure.' → {kind:'none'} (no note when nothing found)", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: true },
 		transcript: [
@@ -224,7 +252,7 @@ test("clean code + 'Looks secure.' → {kind:'none'} (no note when nothing found
 });
 
 test("LLM review text is surfaced under 'LLM security review:'", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: true },
 		transcript: [
@@ -241,7 +269,7 @@ test("LLM review text is surfaced under 'LLM security review:'", async () => {
 });
 
 test("a 'looks good'/'looks fine' style reply is treated as clean and filtered", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: true },
 		transcript: [userMsg("simple fn"), asstMsg("function noop() {}")],
@@ -252,7 +280,7 @@ test("a 'looks good'/'looks fine' style reply is treated as clean and filtered",
 });
 
 test("sideModel throwing is caught, logged, and does not crash the hook", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: true },
 		transcript: [
@@ -275,7 +303,7 @@ test("sideModel throwing is caught, logged, and does not crash the hook", async 
 });
 
 test("multiple distinct patterns each produce a bullet warning", async () => {
-	const run = loadHook(JSON.parse(RAW));
+	const run = loadHook(parseManifest());
 	const ctx = makeCtx({
 		flags: { [FLAG]: true },
 		transcript: [

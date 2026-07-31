@@ -19,7 +19,7 @@
 
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -354,7 +354,13 @@ test("template placeholders name only canonical arguments of their verb", () => 
 	// A typo (`{contents}`) is silent: the placeholder never resolves, the field is
 	// dropped, and Mem0 gets a message with no content.
 	const canonical = {
-		memory__store: ["content", "scope", "category", "importance", "when_to_use"],
+		memory__store: [
+			"content",
+			"scope",
+			"category",
+			"importance",
+			"when_to_use",
+		],
 		memory__sync: ["content", "role"],
 	};
 	for (const [verb, allowed] of Object.entries(canonical)) {
@@ -449,8 +455,14 @@ test("the entity id sits where Mem0 documents it on EACH endpoint", () => {
 	assert.deepEqual(memoryTools.memory__search.arg_defaults, {
 		filters: { user_id: "pref:mem0.user-id" },
 	});
-	assert.equal(memoryTools.memory__store.arg_defaults.user_id, "pref:mem0.user-id");
-	assert.equal(memoryTools.memory__sync.arg_defaults.user_id, "pref:mem0.user-id");
+	assert.equal(
+		memoryTools.memory__store.arg_defaults.user_id,
+		"pref:mem0.user-id"
+	);
+	assert.equal(
+		memoryTools.memory__sync.arg_defaults.user_id,
+		"pref:mem0.user-id"
+	);
 	for (const verb of ["memory__store", "memory__sync"]) {
 		assert.equal(
 			memoryTools[verb].arg_defaults.filters,
@@ -466,7 +478,10 @@ test("every entity id is a pref: token, never a literal bucket", () => {
 	// agents and sessions; a wildcard is not a "positively-scoped entity ID" in Mem0's
 	// own 400 wording.
 	const tokens = prefTokens(memoryTools);
-	assert.ok(tokens.length >= 3, "expected an entity token on search, store and sync");
+	assert.ok(
+		tokens.length >= 3,
+		"expected an entity token on search, store and sync"
+	);
 	for (const token of tokens) {
 		assert.match(token, /^pref:/);
 	}
@@ -496,7 +511,11 @@ test("no dead arg_clamp is declared on any verb", () => {
 	// allows (Brave's count maxes at 20); declaring one that never narrows anything is
 	// noise that reads as a real constraint.
 	for (const [verb, binding] of Object.entries(memoryTools)) {
-		assert.equal(binding.arg_clamp, undefined, `${verb} declares a dead arg_clamp`);
+		assert.equal(
+			binding.arg_clamp,
+			undefined,
+			`${verb} declares a dead arg_clamp`
+		);
 	}
 });
 
@@ -535,7 +554,11 @@ test("the settings field pref_key IS the env var the tools reference", () => {
 			(r) => /env:(\w+)/.exec(r.config.secret_headers.Authorization)[1]
 		)
 	);
-	assert.equal(envVars.size, 1, "tools disagree on which env var holds the key");
+	assert.equal(
+		envVars.size,
+		1,
+		"tools disagree on which env var holds the key"
+	);
 	assert.equal(envVars.has("RYU_MEM0_API_KEY"), true);
 	assert.equal(field.pref_key, [...envVars][0]);
 });
@@ -574,21 +597,36 @@ test("the secret field declares no bounds, default, or options", () => {
 	assert.notEqual(field.required, true);
 });
 
-test("manifest is byte-identical to the Core fixture (registration seam)", () => {
-	const fixturePath = resolve(
-		here,
-		"../../apps/core/src/plugin_manifest/fixtures/mem0.manifest.json"
-	);
-	// Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
-	// fixtures directory is here and only the file name is wrong — otherwise a broken
-	// path silently skips instead of catching real drift.
-	if (!existsSync(dirname(fixturePath))) {
-		return;
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
 	}
-	assert.deepEqual(
-		readFileSync(manifestPath),
-		readFileSync(fixturePath),
-		"manifest.json drifted from the Core fixture — they must be byte-identical"
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
+		"plugin_manifest",
+		"fixtures",
+		"mem0.manifest.json"
+	);
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/mem0/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });
 
@@ -598,9 +636,14 @@ test("every pref: token in every binding has a settings field that writes it", (
 	// the "returns nothing forever" bug this replaced, with nothing failing. Walked
 	// over ALL bindings at ANY depth, because the entity id is nested under `filters`
 	// on search and top-level on the two write verbs.
-	const fields = manifest.contributes.settings_tabs.flatMap((t) => t.fields ?? []);
+	const fields = manifest.contributes.settings_tabs.flatMap(
+		(t) => t.fields ?? []
+	);
 	const tokens = prefTokens(memoryTools);
-	assert.ok(tokens.length > 0, "no pref: token found — has the seam been removed?");
+	assert.ok(
+		tokens.length > 0,
+		"no pref: token found — has the seam been removed?"
+	);
 	for (const token of tokens) {
 		const key = token.slice("pref:".length);
 		const field = fields.find((f) => f.pref_key === key);
@@ -608,7 +651,11 @@ test("every pref: token in every binding has a settings field that writes it", (
 			field,
 			`no settings field writes '${key}', so the token can never resolve`
 		);
-		assert.notEqual(field.type, "secret", "an entity id is config, not a credential");
+		assert.notEqual(
+			field.type,
+			"secret",
+			"an entity id is config, not a credential"
+		);
 	}
 });
 

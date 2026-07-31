@@ -13,7 +13,7 @@
 // manifest stays byte-identical to the built-in Core fixture.
 
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
@@ -21,18 +21,6 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 // plugins-store/headroom -> repo root -> Core fixture.
-const FIXTURE_PATH = join(
-	HERE,
-	"..",
-	"..",
-	"apps",
-	"core",
-	"src",
-	"plugin_manifest",
-	"fixtures",
-	"headroom.manifest.json"
-);
-
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
 
 test("manifest.json is valid, parseable JSON", () => {
@@ -153,9 +141,35 @@ test("port is consistent across sidecar.port, sidecar args, and policy url", () 
 	assert.equal(urlPort, port, "policy url port matches sidecar port");
 });
 
-test("co-located manifest is byte-identical to the Core fixture", () => {
-	// AGENTS.md byte-identical rule: the built-in registration copy in Core must
-	// match this satellite manifest exactly.
-	const fixture = readFileSync(FIXTURE_PATH, "utf8");
-	assert.equal(RAW, fixture, "manifest.json equals Core fixture byte-for-byte");
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
+	}
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
+		"plugin_manifest",
+		"fixtures",
+		"headroom.manifest.json"
+	);
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/headroom/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
+	);
 });

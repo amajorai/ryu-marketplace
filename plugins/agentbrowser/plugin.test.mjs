@@ -28,19 +28,48 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
+
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(HERE, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(RAW));
+
 const SEMVER = /^\d+\.\d+\.\d+/;
 
 test("manifest.json is valid JSON and parses", () => {
 	let parsed;
 	assert.doesNotThrow(() => {
-		parsed = JSON.parse(RAW);
+		parsed = parseManifest();
 	}, "manifest.json must be parseable JSON");
 	assert.equal(typeof parsed, "object");
 	assert.notEqual(parsed, null);
 });
 
 test("required identity fields are present and well-formed", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 
 	assert.equal(typeof m.id, "string");
 	assert.ok(m.id.length > 0, "id must be non-empty");
@@ -54,12 +83,12 @@ test("required identity fields are present and well-formed", () => {
 });
 
 test("runnables is an array (empty for this MCP-only plugin)", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	assert.ok(Array.isArray(m.runnables), "runnables must be an array");
 });
 
 test("mcp_servers.agentbrowser is a well-formed command spec", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 
 	assert.equal(typeof m.mcp_servers, "object");
 	assert.notEqual(m.mcp_servers, null);
@@ -89,7 +118,7 @@ test("mcp_servers.agentbrowser is a well-formed command spec", () => {
 });
 
 test("permission_grants reference the declared MCP server", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 
 	assert.ok(
 		Array.isArray(m.permission_grants),
@@ -139,7 +168,7 @@ const REAL_MCP_TOOLS = new Set([
 ]);
 
 test("serves EVERY canonical browser verb, so the layer is really swappable", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	const entry = (m.provides ?? []).find(
 		(p) => p.capability === "browser.control"
 	);
@@ -154,7 +183,7 @@ test("serves EVERY canonical browser verb, so the layer is really swappable", ()
 });
 
 test("every verb binds a tool the MCP server actually exposes", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	const entry = m.provides.find((p) => p.capability === "browser.control");
 	for (const [verb, binding] of Object.entries(entry.tools)) {
 		const prefix = "agentbrowser__";
@@ -179,14 +208,19 @@ test("every verb binds a tool the MCP server actually exposes", () => {
 });
 
 test("verbs agent-browser cannot express in ONE call are adapted, not faked", () => {
-	const m = JSON.parse(RAW);
-	const tools = m.provides.find((p) => p.capability === "browser.control").tools;
+	const m = parseManifest();
+	const tools = m.provides.find(
+		(p) => p.capability === "browser.control"
+	).tools;
 
 	// `submit` means "press Enter after typing" — a second call. And the canonical
 	// verb REPLACES the field's contents, which agent-browser's type only does
 	// with `clear`.
 	const type = tools.browser__type;
-	assert.ok(type.adapter, "browser__type needs an adapter for submit + replace");
+	assert.ok(
+		type.adapter,
+		"browser__type needs an adapter for submit + replace"
+	);
 	assert.match(type.adapter.code, /clear:\s*true/);
 	assert.deepEqual(type.adapter.tools, ["agentbrowser__agent_browser_press"]);
 
@@ -202,7 +236,7 @@ test("verbs agent-browser cannot express in ONE call are adapted, not faked", ()
 });
 
 test("shipping adapter code is grant-gated", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	const entry = m.provides.find((p) => p.capability === "browser.control");
 	const shipsCode = Object.values(entry.tools).some((b) => b.adapter);
 	assert.equal(shipsCode, true);
@@ -212,7 +246,7 @@ test("shipping adapter code is grant-gated", () => {
 });
 
 test("the provider is selectable and claims no default", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	const entry = m.provides.find((p) => p.capability === "browser.control");
 	// Selectability requires UNANIMITY across a capability's providers: if any one
 	// omits it the capability resolves to nothing at all and the whole layer stops
@@ -222,7 +256,7 @@ test("the provider is selectable and claims no default", () => {
 });
 
 test("no inline turn_hooks are declared (nothing to execute)", () => {
-	const m = JSON.parse(RAW);
+	const m = parseManifest();
 	const hooks = m.contributes?.turn_hooks;
 	// agentbrowser contributes no turn hooks; if this ever changes, this test
 	// fails loudly so a maintainer adds executable-hook coverage.

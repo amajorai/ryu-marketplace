@@ -20,6 +20,34 @@ const MANIFEST_PATH = join(HERE, "manifest.json");
 
 const raw = readFileSync(MANIFEST_PATH, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(HERE, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
+
 // Core wraps the hook body in an async IIFE where a bare `return` reports the
 // directive as the program's final value. AsyncFunction(body) reproduces that:
 // the body runs as an async function taking (ctx, host) and its `return` is the
@@ -84,7 +112,7 @@ function makeHost({ verdict = "", seed } = {}) {
 // ── Manifest / contract shape ────────────────────────────────────────────────
 
 test("manifest.json is valid JSON with id/name/version", () => {
-	const m = JSON.parse(raw);
+	const m = parseManifest();
 	assert.equal(typeof m, "object");
 	assert.equal(m.id, "proof");
 	assert.equal(typeof m.name, "string");
@@ -93,7 +121,7 @@ test("manifest.json is valid JSON with id/name/version", () => {
 });
 
 test("declared contributes fields are well-formed", () => {
-	const m = JSON.parse(raw);
+	const m = parseManifest();
 
 	// grants required to reach host.runAgent + host.storage
 	assert.ok(
@@ -132,34 +160,43 @@ test("declared contributes fields are well-formed", () => {
 	);
 });
 
-test("Core fixture (when present) is byte-identical to this manifest", () => {
-	// Soft check: the satellite repo ships this file alone, so the fixture only
-	// exists in the monorepo. When it does, enforce the byte-identity invariant.
-	const fixture = join(
-		HERE,
-		"..",
-		"..",
-		"apps",
-		"core",
-		"src",
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
+	}
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
 		"plugin_manifest",
 		"fixtures",
 		"proof.manifest.json"
 	);
-	if (!existsSync(fixture)) {
-		return; // standalone satellite tree — nothing to compare against
-	}
-	assert.equal(
-		readFileSync(fixture, "utf8"),
-		raw,
-		"Core fixture and plugins-store manifest must be byte-identical"
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/proof/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });
 
 // ── Hook state machine ───────────────────────────────────────────────────────
 
 test("returns {kind:'none'} when there is no conversation_id", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost();
 	assert.deepEqual(await run(makeCtx({ conversation_id: null }), host), {
 		kind: "none",
@@ -168,7 +205,7 @@ test("returns {kind:'none'} when there is no conversation_id", async () => {
 });
 
 test("'/proof clear' deletes stored goal and notes it cleared", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost({
 		seed: { condition: "x", status: "active", turns: 3 },
 	});
@@ -184,7 +221,7 @@ test("'/proof clear' deletes stored goal and notes it cleared", async () => {
 });
 
 test("'/proof stop' also clears the goal", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost({
 		seed: { condition: "x", status: "active", turns: 1 },
 	});
@@ -199,7 +236,7 @@ test("'/proof stop' also clears the goal", async () => {
 });
 
 test("'/proof <condition>' stores an active goal and continues", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost();
 	const ctx = makeCtx({
 		transcript: [
@@ -226,14 +263,14 @@ test("'/proof <condition>' stores an active goal and continues", async () => {
 });
 
 test("plain turn with no stored goal is a no-op", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost();
 	assert.deepEqual(await run(makeCtx(), host), { kind: "none" });
 	assert.equal(host.runAgentCalls.length, 0);
 });
 
 test("active goal + VERIFIED:yes → confirmed note, goal cleared", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const verdict =
 		"I ran the suite and read the output.\nVERIFIED: yes - all 1298 tests pass";
 	const host = makeHost({
@@ -283,7 +320,7 @@ test("active goal + VERIFIED:yes → confirmed note, goal cleared", async () => 
 });
 
 test("active goal + VERIFIED:no → continue with report, turns incremented, goal kept", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const verdict =
 		"I read src/x.rs and the function is still a stub.\nVERIFIED: no - the fix is not implemented";
 	const host = makeHost({
@@ -308,7 +345,7 @@ test("active goal + VERIFIED:no → continue with report, turns incremented, goa
 });
 
 test("goal stops after 12 verification rounds without running the verifier", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost({
 		verdict: "VERIFIED: yes - should never be consulted",
 		seed: { condition: "x", status: "active", turns: 12 },
@@ -327,14 +364,14 @@ test("goal stops after 12 verification rounds without running the verifier", asy
 });
 
 test("corrupt stored state degrades to {kind:'none'}", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost({ seed: "}{ not json" });
 	assert.deepEqual(await run(makeCtx(), host), { kind: "none" });
 	assert.equal(host.runAgentCalls.length, 0);
 });
 
 test("empty '/proof ' condition does not create a goal", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost();
 	const ctx = makeCtx({
 		transcript: [{ role: "user", content: "/proof    " }],

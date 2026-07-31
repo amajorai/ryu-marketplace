@@ -20,6 +20,34 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const rawManifest = readFileSync(manifestPath, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(here, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(rawManifest));
+
 // Valid HookDirective kinds Core's serde enum accepts
 // (apps/core/src/plugin_host/mod.rs `enum HookDirective`).
 const VALID_KINDS = new Set(["none", "note", "continue", "replace", "inject"]);
@@ -30,7 +58,7 @@ const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
 
 /** Parse the manifest fresh for each test (cheap, avoids shared mutation). */
 function manifest() {
-	return JSON.parse(rawManifest);
+	return parseManifest();
 }
 
 /** A realistic mock hook ctx mirroring Core's `HookContext` serde shape. */
@@ -141,31 +169,36 @@ test("contributes exactly one well-formed turn hook", () => {
 
 // ── Byte-identity with the Core fixture (only when Core tree is present) ────
 
-test("manifest.json is byte-identical to the Core fixture when present", () => {
-	// Satellites ship without apps/core, so this is a best-effort guard: only
-	// asserts when the monorepo fixture is reachable.
-	const fixturePath = join(
-		here,
-		"..",
-		"..",
-		"apps",
-		"core",
-		"src",
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
+	}
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
 		"plugin_manifest",
 		"fixtures",
 		"hook-session-context.manifest.json"
 	);
-	// Skip on the SATELLITE tree (no apps/core at all), but fail loudly if the
-	// fixtures directory is here and only the file name is wrong — otherwise a
-	// broken path silently skips instead of catching real drift.
-	if (!existsSync(dirname(fixturePath))) {
-		return;
-	}
-	const fixture = readFileSync(fixturePath, "utf8");
-	assert.equal(
-		rawManifest,
-		fixture,
-		"manifest.json and the Core fixture must be byte-identical"
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/hook-session-context/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });
 

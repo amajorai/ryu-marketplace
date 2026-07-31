@@ -12,25 +12,13 @@
 // registration seam that must never drift).
 
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
-const fixturePath = join(
-	here,
-	"..",
-	"..",
-	"apps",
-	"core",
-	"src",
-	"plugin_manifest",
-	"fixtures",
-	"ghost.manifest.json"
-);
-
 const rawManifest = readFileSync(manifestPath, "utf8");
 
 test("manifest.json is valid JSON and parses to an object", () => {
@@ -136,11 +124,35 @@ test("declares that it drives THIS machine", () => {
 	assert.equal(entry.target, "local-machine");
 });
 
-test("manifest is byte-identical to the Core fixture (registration seam)", () => {
-	const fixtureRaw = readFileSync(fixturePath, "utf8");
-	assert.equal(
-		rawManifest,
-		fixtureRaw,
-		"plugins-store/ghost/manifest.json must byte-match apps/core/.../fixtures/ghost.manifest.json"
+test("manifest is the only copy and Core compiles it in (registration seam)", () => {
+	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	if (!existsSync(coreSrc)) {
+		return; // satellite tree: no apps/core here at all
+	}
+
+	// There is no fixture COPY any more. Core `include_str!`s this manifest straight
+	// from its package home, so a resurrected copy is a dead-edit trap: the fixture
+	// would WIN for any include_str! still pointing at fixtures/, and edits made here
+	// would silently go nowhere. Core asserts this across all packages; repeating it
+	// per plugin is what makes a failure name the plugin that regressed.
+	const stale = join(
+		coreSrc,
+		"plugin_manifest",
+		"fixtures",
+		"ghost.manifest.json"
+	);
+	assert.ok(
+		!existsSync(stale),
+		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
+	);
+
+	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// Registration seam: forgetting the include_str! leaves every other guard passing
+	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
+	assert.ok(
+		mod.includes(
+			'include_str!("../../../../plugins-store/ghost/manifest.json")'
+		),
+		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });

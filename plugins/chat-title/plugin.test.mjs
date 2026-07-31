@@ -11,6 +11,34 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 const raw = readFileSync(MANIFEST_PATH, "utf8");
 
+// ── code_file hydration ───────────────────────────────────────────────────────
+// This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
+// and references them from the manifest by `code_file`. Core resolves those into
+// the inline `code` string at parse time (`PluginManifest::hydrate_code_files`),
+// so every consumer — including the sandbox — only ever sees `code`. Mirror that
+// here, or the assertions below would read an empty body and silently pass.
+function hydrateCodeFiles(m) {
+	const read = (rel) => readFileSync(join(HERE, rel), "utf8");
+	for (const hook of m.contributes?.turn_hooks ?? []) {
+		if (hook.code_file) {
+			hook.code = read(hook.code_file);
+			hook.code_file = undefined;
+		}
+	}
+	for (const entry of m.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = read(binding.adapter.code_file);
+				binding.adapter.code_file = undefined;
+			}
+		}
+	}
+	return m;
+}
+
+/** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
+const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
+
 const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
 
 function loadHookRunner(manifest) {
@@ -63,14 +91,14 @@ function makeHost({ prefs = {}, titleReply = "Centering a div" } = {}) {
 }
 
 test("manifest.json is valid JSON with id/name/version", () => {
-	const m = JSON.parse(raw);
+	const m = parseManifest();
 	assert.equal(m.id, "chat-title");
 	assert.equal(typeof m.name, "string");
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });
 
 test("declares required grants and settings", () => {
-	const m = JSON.parse(raw);
+	const m = parseManifest();
 	for (const g of [
 		"hook:side-model",
 		"conversation:set-title",
@@ -87,7 +115,7 @@ test("declares required grants and settings", () => {
 });
 
 test("skips when disabled", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost({ prefs: { "auto-title-enabled": "false" } });
 	const out = await run(makeCtx(5), host);
 	assert.deepEqual(out, { kind: "none" });
@@ -96,7 +124,7 @@ test("skips when disabled", async () => {
 });
 
 test("skips mid-interval turns (default every 5)", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost();
 	const out = await run(makeCtx(3), host);
 	assert.deepEqual(out, { kind: "none" });
@@ -104,7 +132,7 @@ test("skips mid-interval turns (default every 5)", async () => {
 });
 
 test("renames on the 5th assistant turn by default", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost();
 	const out = await run(makeCtx(5), host);
 	assert.deepEqual(out, { kind: "none" });
@@ -116,7 +144,7 @@ test("renames on the 5th assistant turn by default", async () => {
 });
 
 test("every-n=1 renames every turn", async () => {
-	const run = loadHookRunner(JSON.parse(raw));
+	const run = loadHookRunner(parseManifest());
 	const host = makeHost({ prefs: { "auto-title-every-n": "1" } });
 	const out = await run(makeCtx(1), host);
 	assert.deepEqual(out, { kind: "none" });
