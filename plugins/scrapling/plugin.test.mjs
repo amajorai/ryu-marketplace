@@ -66,7 +66,7 @@ test("manifest.json is valid parseable JSON", () => {
 const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
-	assert.equal(manifest.id, "scrapling");
+	assert.equal(manifest.id, "@ryu/scrapling");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
@@ -346,7 +346,7 @@ test("the plugin is Core-tier but NOT default-on", () => {
 	const section = (name) =>
 		src.slice(src.indexOf(`${name}: &[&str] = &[`)).split("];")[0];
 	assert.ok(
-		section("CORE_PLUGINS").includes('"scrapling"'),
+		section("CORE_PLUGINS").includes('"@ryu/scrapling"'),
 		"scrapling must be Core-tier or its MCP server is never registered"
 	);
 	assert.ok(

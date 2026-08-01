@@ -121,15 +121,18 @@ test("has non-empty string id / name / version", () => {
 		assert.equal(typeof m[key], "string", `${key} must be a string`);
 		assert.ok(m[key].length > 0, `${key} must be non-empty`);
 	}
-	assert.equal(m.id, "com.ryuhq.session-context");
+	assert.equal(m.id, "@ryu/session-context");
 	assert.equal(m.name, "Session Context");
 	// Semver-ish version.
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });
 
-test("id is reverse-domain form", () => {
+test("id is scoped form", () => {
 	const m = manifest();
-	assert.match(m.id, /^[a-z0-9]+(\.[a-z0-9-]+)+$/);
+	// Ids moved from reverse-DNS (`com.ryuhq.x`) to npm-style scopes (`@ryu/x`).
+	// The legacy flat/dotted form stays VALID in Core (an alias map keeps old ids
+	// resolving forever), but every first-party manifest is scoped.
+	assert.match(m.id, /^@[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*$/);
 });
 
 test("declares no runnables / grants and activates on '*'", () => {
@@ -269,7 +272,7 @@ test("hook is deterministic in shape across varied ctx / does not touch host", a
 	const h1 = mockHost();
 	const d1 = await runHook(
 		code,
-		mockCtx({ transcript: [], flags: { "com.ryuhq.session-context": true } }),
+		mockCtx({ transcript: [], flags: { "@ryu/session-context": true } }),
 		h1
 	);
 	assert.equal(d1.kind, "inject");

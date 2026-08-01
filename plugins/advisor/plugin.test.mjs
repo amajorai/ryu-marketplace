@@ -62,7 +62,7 @@ test("manifest.json is valid JSON and parses", () => {
 const manifest = parseManifest();
 
 test("has id / name / version", () => {
-	assert.equal(manifest.id, "com.ryuhq.advisor");
+	assert.equal(manifest.id, "@ryu/advisor");
 	assert.equal(manifest.name, "Advisor");
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
 });
@@ -128,7 +128,7 @@ test("advisor__consult input_schema requires `question`", () => {
 
 // ── 3. contributes surfaces are well-formed ────────────────────────────────────
 
-const FLAG = "com.ryuhq.advisor";
+const FLAG = "@ryu/advisor";
 
 test("composer toggle / slash command / settings tab wire the same flag + key", () => {
 	const c = manifest.contributes;

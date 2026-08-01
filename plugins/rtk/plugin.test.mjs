@@ -28,7 +28,7 @@ test("manifest.json is valid JSON and parses", () => {
 const manifest = JSON.parse(rawManifest);
 
 test("has required top-level id/name/version", () => {
-	assert.equal(manifest.id, "rtk");
+	assert.equal(manifest.id, "@ryu/rtk");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	// version is present and semver-shaped

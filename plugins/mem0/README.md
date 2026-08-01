@@ -61,10 +61,10 @@ and the `memory` layer falls back to whichever other provider you select.
 | `memory`   | `memory__sync`   | `mem0__add`    | Mem0's default inference on — it mines the turn |
 | `memory`   | `memory__forget` | `mem0__delete` | |
 
-Before this plugin, `memory` had exactly one provider (`com.ryu.memory`), which made the
+Before this plugin, `memory` had exactly one provider (`@ryu/memory`), which made the
 layer un-swappable and left the four kernel bridges in `apps/core/src/memory_provider.rs`
 unreachable — each opens with `if !is_external().await { return }`, and "external" means
-"not `com.ryu.memory`".
+"not `@ryu/memory`".
 
 Selecting Mem0 now fires **three of those four bridges**:
 
@@ -81,7 +81,7 @@ Selecting Mem0 now fires **three of those four bridges**:
 The entry declares `"selectable": true` and claims **no** `"default"`. Selectability
 needs unanimity — if any provider of a capability omits the flag, the capability has two
 candidates and no way to choose, so it resolves to nothing and the layer silently stops
-serving. `com.ryu.memory` declares both `selectable` and `default`, so the built-in stays
+serving. `@ryu/memory` declares both `selectable` and `default`, so the built-in stays
 the zero-config pick and Mem0 becomes available to select.
 
 Select a provider in the desktop node selector's Layers section, or via

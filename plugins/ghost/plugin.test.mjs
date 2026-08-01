@@ -30,7 +30,7 @@ test("manifest.json is valid JSON and parses to an object", () => {
 const manifest = JSON.parse(rawManifest);
 
 test("has required top-level id/name/version", () => {
-	assert.equal(manifest.id, "ghost");
+	assert.equal(manifest.id, "@ryu/ghost");
 	assert.equal(typeof manifest.name, "string");
 	assert.equal(manifest.name, "Ghost");
 	assert.ok(manifest.name.length > 0);

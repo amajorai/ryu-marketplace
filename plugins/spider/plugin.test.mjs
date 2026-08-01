@@ -27,7 +27,7 @@ test("manifest.json is valid JSON and parses", () => {
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
-	assert.equal(manifest.id, "spider");
+	assert.equal(manifest.id, "@ryu/spider");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	assert.equal(typeof manifest.version, "string");

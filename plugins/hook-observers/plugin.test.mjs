@@ -61,7 +61,7 @@ test("manifest.json is valid JSON and parses", () => {
 const manifest = parseManifest();
 
 test("manifest has required id/name/version", () => {
-	assert.equal(manifest.id, "com.ryuhq.hook-observers");
+	assert.equal(manifest.id, "@ryu/hook-observers");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	// Semver-ish version.
@@ -72,7 +72,7 @@ test("manifest declares contributes.turn_hooks (well-formed)", () => {
 	assert.ok(manifest.contributes, "expected contributes");
 	const hooks = manifest.contributes.turn_hooks;
 	assert.ok(Array.isArray(hooks), "turn_hooks must be an array");
-	assert.equal(hooks.length, 3);
+	assert.equal(hooks.length, 5);
 
 	const validPhases = new Set([
 		"post_assistant_turn",
@@ -84,12 +84,29 @@ test("manifest declares contributes.turn_hooks (well-formed)", () => {
 		"subagent_stop",
 		"session_end",
 		"notification",
+		// Kernel lifecycle phases fired by Core's own subsystems (the workflow
+		// executor), not by any app.
+		"workflow_run_started",
+		"workflow_run_finished",
+		"workflow_run_failed",
 	]);
+
+	/** An APP event — a phase some installed app declares in its manifest
+	 *  `contributes.hook_events`, always namespaced `<plugin id>#<event name>`.
+	 *  Validated by SHAPE rather than against a list: which app events exist depends
+	 *  on which apps are installed, so no fixed set could be right here. The
+	 *  mandatory `/` is also what makes an app event unable to collide with one of
+	 *  the bare-word Core phases above. */
+	const isAppEvent = (on) =>
+		/^(?:@[a-zA-Z0-9][a-zA-Z0-9._-]*\/)?[a-zA-Z0-9][a-zA-Z0-9._-]*#[a-z0-9][a-z0-9._-]*$/.test(on);
 
 	for (const hook of hooks) {
 		assert.equal(typeof hook.id, "string");
 		assert.ok(hook.id.length > 0, "hook id must be non-empty");
-		assert.ok(validPhases.has(hook.on), `unknown phase: ${hook.on}`);
+		assert.ok(
+			validPhases.has(hook.on) || isAppEvent(hook.on),
+			`unknown phase: ${hook.on}`
+		);
 		assert.equal(typeof hook.code, "string");
 		assert.ok(
 			hook.code.includes("return"),

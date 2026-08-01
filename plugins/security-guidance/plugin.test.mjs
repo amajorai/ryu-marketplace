@@ -106,7 +106,7 @@ const asstMsg = (content) => ({ role: "assistant", content });
 
 test("manifest.json is valid JSON and has id/name/version", () => {
 	const m = parseManifest();
-	assert.equal(m.id, "security-guidance");
+	assert.equal(m.id, "@ryu/security-guidance");
 	assert.equal(typeof m.name, "string");
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);

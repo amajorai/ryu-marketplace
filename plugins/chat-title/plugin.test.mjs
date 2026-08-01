@@ -92,7 +92,7 @@ function makeHost({ prefs = {}, titleReply = "Centering a div" } = {}) {
 
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
-	assert.equal(m.id, "chat-title");
+	assert.equal(m.id, "@ryu/chat-title");
 	assert.equal(typeof m.name, "string");
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });

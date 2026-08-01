@@ -53,7 +53,7 @@ test("manifest.json is valid parseable JSON", () => {
 const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
-	assert.equal(manifest.id, "honcho");
+	assert.equal(manifest.id, "@ryu/honcho");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
@@ -236,10 +236,10 @@ test("memory is selectable and claims no default", () => {
 	// Selectability requires UNANIMITY across all providers of a capability: if any
 	// one omits it, the capability resolves to nothing at all.
 	assert.equal(entry.selectable, true);
-	// `com.ryu.memory` is the declared default and must stay the zero-config pick.
+	// `@ryu/memory` is the declared default and must stay the zero-config pick.
 	assert.ok(
 		entry.default === undefined || entry.default === false,
-		"memory must not claim default — com.ryu.memory owns it"
+		"memory must not claim default — @ryu/memory owns it"
 	);
 });
 

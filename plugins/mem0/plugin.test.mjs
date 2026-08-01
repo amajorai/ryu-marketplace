@@ -4,7 +4,7 @@
 // `mem0` is a declarative HTTP-tool plugin AND the second provider of the `memory`
 // capability — the one that makes that layer swappable at all, and the one that makes
 // `apps/core/src/memory_provider.rs`'s kernel bridges reachable (each opens with
-// `if !is_external().await { return }`, where "external" means "not com.ryu.memory").
+// `if !is_external().await { return }`, where "external" means "not @ryu/memory").
 // These tests therefore cover both the usual manifest contract and the verb-binding
 // contract, since a typo in a verb key is otherwise silent — the layer just stops
 // serving that verb.
@@ -34,7 +34,7 @@ test("manifest.json is valid parseable JSON", () => {
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
-	assert.equal(manifest.id, "mem0");
+	assert.equal(manifest.id, "@ryu/mem0");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
@@ -225,14 +225,14 @@ test("the provides entry is selectable and claims no default", () => {
 	const entry = byCapability.get("memory");
 	// Selectability requires UNANIMITY across all providers of a capability: if any
 	// one omits it, the capability resolves to nothing at all. mem0 is the SECOND
-	// provider of `memory` (com.ryu.memory is the first), so this flag is what keeps
+	// provider of `memory` (@ryu/memory is the first), so this flag is what keeps
 	// the layer serving anything once mem0 ships.
 	assert.equal(entry.selectable, true, "memory must be selectable");
-	// `com.ryu.memory` is the declared default for `memory`; exactly one provider per
+	// `@ryu/memory` is the declared default for `memory`; exactly one provider per
 	// capability may claim it, and the built-in stays the zero-config pick.
 	assert.ok(
 		entry.default === undefined || entry.default === false,
-		"memory must not claim default — com.ryu.memory owns it"
+		"memory must not claim default — @ryu/memory owns it"
 	);
 });
 

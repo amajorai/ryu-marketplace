@@ -118,7 +118,7 @@ function getHook(id) {
 test("manifest.json is valid JSON with id/name/version", () => {
 	// JSON.parse above already proved it parses; assert the round-trip is stable.
 	assert.deepEqual(parseManifest(), manifest);
-	assert.equal(manifest.id, "com.ryuhq.tool-firewall");
+	assert.equal(manifest.id, "@ryu/tool-firewall");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);

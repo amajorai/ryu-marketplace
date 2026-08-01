@@ -73,7 +73,7 @@ test("required identity fields are present and well-formed", () => {
 
 	assert.equal(typeof m.id, "string");
 	assert.ok(m.id.length > 0, "id must be non-empty");
-	assert.equal(m.id, "agentbrowser");
+	assert.equal(m.id, "@ryu/agentbrowser");
 
 	assert.equal(typeof m.name, "string");
 	assert.ok(m.name.length > 0, "name must be non-empty");
@@ -250,7 +250,7 @@ test("the provider is selectable and claims no default", () => {
 	const entry = m.provides.find((p) => p.capability === "browser.control");
 	// Selectability requires UNANIMITY across a capability's providers: if any one
 	// omits it the capability resolves to nothing at all and the whole layer stops
-	// serving. com.ryu.browser is the other provider and the declared default.
+	// serving. @ryu/browser is the other provider and the declared default.
 	assert.equal(entry.selectable, true);
 	assert.ok(entry.default === undefined || entry.default === false);
 });

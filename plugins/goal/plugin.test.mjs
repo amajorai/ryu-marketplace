@@ -118,7 +118,7 @@ function makeHost(sideModelReply, seed = {}) {
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
 	assert.equal(typeof m, "object");
-	assert.equal(m.id, "goal");
+	assert.equal(m.id, "@ryu/goal");
 	assert.equal(typeof m.name, "string");
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);

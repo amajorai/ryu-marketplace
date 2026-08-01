@@ -32,7 +32,7 @@ test("manifest.json is valid, parseable JSON", () => {
 
 test("manifest carries required identity fields", () => {
 	const m = JSON.parse(RAW);
-	assert.equal(m.id, "headroom");
+	assert.equal(m.id, "@ryu/headroom");
 	assert.equal(typeof m.name, "string");
 	assert.ok(m.name.length > 0, "name is non-empty");
 	// Version must be a non-empty semver-ish string (Core rejects empty version).

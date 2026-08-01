@@ -32,7 +32,7 @@ test("manifest.json is valid parseable JSON", () => {
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
-	assert.equal(manifest.id, "bytebot");
+	assert.equal(manifest.id, "@ryu/bytebot");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);

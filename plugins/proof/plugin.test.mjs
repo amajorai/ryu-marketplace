@@ -114,7 +114,7 @@ function makeHost({ verdict = "", seed } = {}) {
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
 	assert.equal(typeof m, "object");
-	assert.equal(m.id, "proof");
+	assert.equal(m.id, "@ryu/proof");
 	assert.equal(typeof m.name, "string");
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);

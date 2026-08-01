@@ -58,7 +58,7 @@ test("manifest.json is valid parseable JSON", () => {
 const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
-	assert.equal(manifest.id, "firecrawl");
+	assert.equal(manifest.id, "@ryu/firecrawl");
 	assert.equal(typeof manifest.name, "string");
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);

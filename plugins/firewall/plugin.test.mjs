@@ -50,7 +50,7 @@ test("has required identity fields: id / name / version", () => {
 });
 
 test('id is exactly "firewall" (fixture registration key)', () => {
-	assert.equal(manifest.id, "firewall");
+	assert.equal(manifest.id, "@ryu/firewall");
 });
 
 test("declares a Ryu engine constraint", () => {

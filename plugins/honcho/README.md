@@ -144,7 +144,7 @@ is a UI default; it is not written to the preference store until the user saves,
 The entry declares `"selectable": true` and claims **no** `"default"`. Selectability needs
 unanimity — if any provider of a capability omits the flag, the capability has candidates
 and no way to choose, so it resolves to nothing and the layer silently stops serving.
-`com.ryu.memory` declares both `selectable` and `default`, so the built-in stays the
+`@ryu/memory` declares both `selectable` and `default`, so the built-in stays the
 zero-config pick and Honcho becomes available to select.
 
 Select a provider in the desktop node selector's Layers section, or via
@@ -154,7 +154,7 @@ Select a provider in the desktop node selector's Layers section, or via
 ### What selecting Honcho turns on
 
 `memory_provider.rs` has four kernel bridges, each opening with
-`if !is_external().await { return }`, where "external" means "not `com.ryu.memory`".
+`if !is_external().await { return }`, where "external" means "not `@ryu/memory`".
 Selecting Honcho makes **two** of them fire:
 
 - **`context`** → `memory__context`, at system-prompt assembly, gated by
