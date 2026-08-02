@@ -17,7 +17,14 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "The unified activity feed: everything happening on this node — monitor alerts, finished tasks, runs, approvals, meetings, and notes — newest first, grouped by day."
+      "description": "The unified activity feed: everything happening on this node — monitor alerts, finished tasks, runs, approvals, meetings, and notes — newest first, grouped by day.",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "advisor",
@@ -26,7 +33,16 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
-      "description": "Consult a stronger reviewer model for a second opinion — as an auto-review turn hook (toggle / `/advisor`) and as the model-callable `advisor__consult` tool, a declarative HTTP tool routed through Core's `/api/advisor/consult` bridge."
+      "description": "Consult a stronger reviewer model for a second opinion — as an auto-review turn hook (toggle / `/advisor`) and as the model-callable `advisor__consult` tool, a declarative HTTP tool routed through Core's `/api/advisor/consult` bridge.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "agentbrowser",
@@ -42,6 +58,15 @@
         "browser",
         "automation",
         "web"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -51,7 +76,14 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait for your accept or reject before they take effect."
+      "description": "Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait for your accept or reject before they take effect.",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "brave",
@@ -66,6 +98,15 @@
       "keywords": [
         "search",
         "web"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -77,7 +118,15 @@
       "builtin": true,
       "tagline": "Real-Chromium browser control for agents",
       "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated `browser.control` capability: list/open/navigate tabs, screenshot, read titles, take an accessibility snapshot with stable element refs, and drive the page with synthetic click/type/scroll input. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
-      "category": "Automation"
+      "category": "Automation",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "bytebot",
@@ -94,6 +143,15 @@
         "desktop",
         "computer-use",
         "bytebot"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -103,7 +161,14 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "The scheduled-runs calendar: every agent and workflow scheduled job projected onto Month, Week, Day, and Agenda views — past runs from history, upcoming runs from cron/interval — with a New automation dialog that schedules an agent."
+      "description": "The scheduled-runs calendar: every agent and workflow scheduled job projected onto Month, Week, Day, and Agenda views — past runs from history, upcoming runs from cron/interval — with a New automation dialog that schedules an agent.",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "canvas",
@@ -111,7 +176,14 @@
       "version": "1.0.0",
       "type": "app",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "chat-title",
@@ -119,7 +191,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "clips",
@@ -128,7 +209,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Clips: capture and browse screen/timeline clips. A Core→Shadow proxy that depends on the Shadow capture app for its recordings. Runs the out-of-process ryu-clips sidecar; Core proxies /api/clips/* to it. The Shadow record/browse surface is fully served out-of-process (the sidecar reads RYU_SHADOW_URL itself); URL/yt-dlp ingest and auto-file into the Clips Space require Core's kernel machinery and degrade cleanly in the standalone sidecar."
+      "description": "Clips: capture and browse screen/timeline clips. A Core→Shadow proxy that depends on the Shadow capture app for its recordings. Runs the out-of-process ryu-clips sidecar; Core proxies /api/clips/* to it. The Shadow record/browse surface is fully served out-of-process (the sidecar reads RYU_SHADOW_URL itself); URL/yt-dlp ingest and auto-file into the Clips Space require Core's kernel machinery and degrade cleanly in the standalone sidecar.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "dashboards",
@@ -137,7 +227,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Dashboards: composable widget boards that assemble live views over monitors, meetings, quests, and other Core surfaces via soft HTTP loopback. Declares the out-of-process ryu-dashboards sidecar (kind:local) that owns the store + refresh loop + /api/dashboards/* surface, served to the desktop through the generic ext-proxy public_mount. Started eagerly (not lazy) so the kernel hardware device-dashboard renderer + nudge loop can reach it at boot / on a device poll before any desktop has opened Home. The dashboard_builder MCP runnable + the hardware render seam reach it over loopback via dashboards_client."
+      "description": "Dashboards: composable widget boards that assemble live views over monitors, meetings, quests, and other Core surfaces via soft HTTP loopback. Declares the out-of-process ryu-dashboards sidecar (kind:local) that owns the store + refresh loop + /api/dashboards/* surface, served to the desktop through the generic ext-proxy public_mount. Started eagerly (not lazy) so the kernel hardware device-dashboard renderer + nudge loop can reach it at boot / on a device poll before any desktop has opened Home. The dashboard_builder MCP runnable + the hardware render seam reach it over loopback via dashboards_client.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "dictation",
@@ -146,7 +244,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "System-wide dictation and agent-ask via the Island companion: speak anywhere to type a transcript, or ask an agent and paste the answer into the focused app."
+      "description": "System-wide dictation and agent-ask via the Island companion: speak anywhere to type a transcript, or ask an agent and paste the answer into the focused app.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "docling",
@@ -167,6 +274,15 @@
         "layout",
         "ocr",
         "extraction"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -175,7 +291,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "exa",
@@ -190,6 +315,15 @@
       "keywords": [
         "search",
         "web"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -198,7 +332,15 @@
       "version": "1.0.0",
       "type": "app",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "firecrawl",
@@ -215,6 +357,15 @@
         "web",
         "extract",
         "scrape"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -223,7 +374,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "ghost",
@@ -236,6 +396,15 @@
       "keywords": [
         "automation",
         "desktop"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -244,7 +413,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "headroom",
@@ -257,6 +435,15 @@
       "keywords": [
         "context",
         "compression"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -266,7 +453,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Self-healing: failed runs are diagnosed by a Gateway side-model and proposed fixes are delivered to the approvals inbox for human review before they apply."
+      "description": "Self-healing: failed runs are diagnosed by a Gateway side-model and proposed fixes are delivered to the approvals inbox for human review before they apply.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "honcho",
@@ -284,6 +480,15 @@
         "identity",
         "dialectic",
         "honcho"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -292,7 +497,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "hook-session-context",
@@ -300,7 +514,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "learning",
@@ -309,7 +532,14 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Learning loop: turn chats and runs into reusable skills, gated by the approval Inbox, with an experience log of what was learned."
+      "description": "Learning loop: turn chats and runs into reusable skills, gated by the approval Inbox, with an experience log of what was learned.",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "mail",
@@ -320,7 +550,15 @@
       "builtin": true,
       "tagline": "Email inboxes for your agents",
       "description": "Agent Inboxes — email as a service for agents. Runs the out-of-process ryu-mail sidecar; Core proxies /api/mail/* to it. Its sandboxed companion is a per-node mail client (list inboxes, read messages, compose/send, create an inbox) driving /api/mail/* via the mail:crud bridge capability.",
-      "category": "Communication"
+      "category": "Communication",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "markitdown",
@@ -340,6 +578,15 @@
         "xlsx",
         "markdown",
         "extraction"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -349,7 +596,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable."
+      "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "mem0",
@@ -366,6 +621,15 @@
         "recall",
         "facts",
         "mem0"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -387,6 +651,15 @@
         "tables",
         "layout",
         "extraction"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -396,7 +669,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Website monitors: price, stock, keyword, content, and uptime watches with cross-device notification fan-out."
+      "description": "Website monitors: price, stock, keyword, content, and uptime watches with cross-device notification fan-out.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "predict",
@@ -404,7 +685,16 @@
       "version": "1.0.0",
       "type": "app",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "proof",
@@ -412,7 +702,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "quests",
@@ -421,7 +720,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Quests: auto-detecting todos surfaced from your chats and activity, tracked as a lightweight quest board with progress and completion."
+      "description": "Quests: auto-detecting todos surfaced from your chats and activity, tracked as a lightweight quest board with progress and completion.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "recipes",
@@ -430,7 +737,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Desktop-automation recipes: record → save → replay UI action sequences. Backed by Ghost's RecipeStore, so it declares Ghost as a dependency and the graph refuses to disable Ghost out from under it."
+      "description": "Desktop-automation recipes: record → save → replay UI action sequences. Backed by Ghost's RecipeStore, so it declares Ghost as a dependency and the graph refuses to disable Ghost out from under it.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "research",
@@ -439,7 +755,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports. Declares the out-of-process ryu-research sidecar (a thin Rust proxy that forwards /api/research/* to the Python autoresearch engine on :8087); Core reaches it via the generic ext-proxy loader."
+      "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports. Declares the out-of-process ryu-research sidecar (a thin Rust proxy that forwards /api/research/* to the Python autoresearch engine on :8087); Core reaches it via the generic ext-proxy loader.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "rtk",
@@ -450,7 +775,16 @@
       "builtin": true,
       "tagline": "Token-compress noisy dev-command output for agents",
       "description": "Run a dev command through RTK (Rust Token Killer) and get a token-compressed version of its output (60-90% fewer tokens), exposed as a declarative `command` tool that shells out to the locally-installed `rtk` binary. BYO — no API key.",
-      "category": "Developer Tools"
+      "category": "Developer Tools",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "sample",
@@ -458,7 +792,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "sample-widget",
@@ -467,7 +810,16 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
-      "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget__render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin."
+      "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget__render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "scrapling",
@@ -483,6 +835,15 @@
         "web",
         "scraping",
         "extract"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -491,7 +852,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "serper",
@@ -508,6 +878,15 @@
         "web",
         "google",
         "scrape"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -523,6 +902,15 @@
       "keywords": [
         "capture",
         "memory"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -534,7 +922,14 @@
       "builtin": true,
       "tagline": "iOS Simulator & Android Emulator control for agents",
       "description": "Drive iOS Simulators (macOS + Xcode) and Android Emulators from a workspace tab. Ryu runs the device-control toolchain (`simctl`, `adb`) as a local sidecar and exposes the grant-gated `simulator.control` capability: list/boot devices, install & launch apps, open deep links, screenshot, and (Android) tap/swipe/type. The desktop Simulator panel shows whichever platform the connected node supports.",
-      "category": "Automation"
+      "category": "Automation",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "skill-editor",
@@ -543,7 +938,14 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Author a user-owned Agent Skill (SKILL.md): front-matter fields (name / description / allowed tools / always-on), a markdown body editor, debounced autosave, and server-backed undoable version history."
+      "description": "Author a user-owned Agent Skill (SKILL.md): front-matter fields (name / description / allowed tools / always-on), a markdown body editor, debounced autosave, and server-backed undoable version history.",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "spider",
@@ -558,6 +960,15 @@
       "keywords": [
         "web",
         "scraping"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -574,6 +985,15 @@
         "web",
         "crawl",
         "scraping"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -590,6 +1010,15 @@
         "search",
         "web",
         "extract"
+      ],
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -599,7 +1028,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Teams: named groups of agents you can address as one. Governance shell over the in-crate teams store (agent-id membership only); no documents, no external dependencies. Runs the out-of-process ryu-teams sidecar; Core proxies /api/teams/* to it."
+      "description": "Teams: named groups of agents you can address as one. Governance shell over the in-crate teams store (agent-id membership only); no documents, no external dependencies. Runs the out-of-process ryu-teams sidecar; Core proxies /api/teams/* to it.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "timeline",
@@ -608,7 +1046,14 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "The activity replay timeline: a CapCut-style scrubber over Shadow's captured screen/input/window/audio lanes with a keyframe preview, a Dayflow work journal, and jump-to-moment focus."
+      "description": "The activity replay timeline: a CapCut-style scrubber over Shadow's captured screen/input/window/audio lanes with a keyframe preview, a Dayflow work journal, and jump-to-moment focus.",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "tool-firewall",
@@ -616,7 +1061,16 @@
       "version": "1.0.0",
       "type": "plugin",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "unstructured",
@@ -635,6 +1089,14 @@
         "docx",
         "ocr",
         "extraction"
+      ],
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
       ]
     },
     {
@@ -644,7 +1106,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Voice data path: speech-to-text transcription (whisper.cpp) and text-to-speech (OuteTTS + the universal Ryu TTS sidecar), plus the installable TTS model catalog. Governance shell over the in-crate voice module."
+      "description": "Voice data path: speech-to-text transcription (whisper.cpp) and text-to-speech (OuteTTS + the universal Ryu TTS sidecar), plus the installable TTS model catalog. Governance shell over the in-crate voice module.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "warmup",
@@ -653,7 +1124,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Starts your subscription agents' rolling usage windows on your own schedule: a one-word ping to each subscription agent, on its cheapest model, at the times of day you choose (05:00 / 10:00 / 15:00 / 20:00 by default) — so a window is already open when you sit down to work."
+      "description": "Starts your subscription agents' rolling usage windows on your own schedule: a one-word ping to each subscription agent, on its cheapest model, at the times of day you choose (05:00 / 10:00 / 15:00 / 20:00 by default) — so a window is already open when you sit down to work.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "webhooks",
@@ -662,7 +1141,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Inbound webhook endpoint registry: resolved public URLs, secret presence, last-delivery times, and the ingress backend status."
+      "description": "Inbound webhook endpoint registry: resolved public URLs, secret presence, last-delivery times, and the ingress backend status.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "whiteboard",
@@ -670,7 +1157,15 @@
       "version": "1.0.0",
       "type": "app",
       "source": "builtin",
-      "builtin": true
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     },
     {
       "name": "workflows",
@@ -679,7 +1174,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
-      "description": "Workflows: petgraph DAG automation with triggers, durable execution, and a natural-language workflow builder."
+      "description": "Workflows: petgraph DAG automation with triggers, durable execution, and a natural-language workflow builder.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ]
     }
   ]
 }
