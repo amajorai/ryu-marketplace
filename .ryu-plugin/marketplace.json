@@ -25,7 +25,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -47,7 +46,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -76,7 +74,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -96,7 +93,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -124,7 +120,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -147,7 +142,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -177,7 +171,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -197,7 +190,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -216,7 +208,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -237,7 +228,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -259,7 +249,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -280,7 +269,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -302,7 +290,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -336,7 +323,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -357,7 +343,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -385,7 +370,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -405,7 +389,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -435,7 +418,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -456,7 +438,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -482,7 +463,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -503,7 +483,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -529,7 +508,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -551,7 +529,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -582,7 +559,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -603,7 +579,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -624,7 +599,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -644,7 +618,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -667,7 +640,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -700,7 +672,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -721,7 +692,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -751,7 +721,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -785,7 +754,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -806,7 +774,68 @@
         "web",
         "cli"
       ],
-      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "pi-shell",
+      "displayName": "Background Bash",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "description": "Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a long-running command does not hold the turn open.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "pi-subagent",
+      "displayName": "Subagents",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "description": "Adds the Task tool to the managed Pi agent, so it can delegate a bounded, context-isolated job to a child agent.",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "plan-continue",
+      "displayName": "Plan Continue",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -827,7 +856,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -848,7 +876,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -869,7 +896,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -891,7 +917,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -913,7 +938,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -937,7 +961,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -958,7 +981,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -980,7 +1002,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1009,7 +1030,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1030,7 +1050,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1060,7 +1079,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1088,7 +1106,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1110,7 +1127,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1130,7 +1146,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1158,7 +1173,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1187,7 +1201,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1216,7 +1229,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1238,7 +1250,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1258,7 +1269,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1279,7 +1289,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1310,7 +1319,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1332,7 +1340,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1353,7 +1360,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1374,7 +1380,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1394,7 +1399,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1415,7 +1419,6 @@
         "web",
         "cli"
       ],
-      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
