@@ -25,7 +25,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "advisor",
@@ -44,7 +47,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "agentbrowser",
@@ -70,7 +76,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "approvals",
@@ -87,7 +96,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "brave",
@@ -112,7 +124,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "browser",
@@ -132,7 +147,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "bytebot",
@@ -159,7 +177,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "calendar",
@@ -176,7 +197,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "canvas",
@@ -192,7 +216,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "chat-title",
@@ -210,7 +237,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "clips",
@@ -229,7 +259,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "dashboards",
@@ -247,7 +280,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "dictation",
@@ -266,7 +302,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "docling",
@@ -297,7 +336,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "double-check",
@@ -315,7 +357,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "exa",
@@ -340,7 +385,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "finetune",
@@ -357,7 +405,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "firecrawl",
@@ -384,7 +435,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "firewall",
@@ -402,7 +456,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "ghost",
@@ -425,7 +482,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "goal",
@@ -443,7 +503,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "headroom",
@@ -466,7 +529,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "healing",
@@ -485,7 +551,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "honcho",
@@ -513,7 +582,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "hook-observers",
@@ -531,7 +603,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "hook-session-context",
@@ -549,7 +624,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "learning",
@@ -566,7 +644,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "mail",
@@ -586,7 +667,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "markitdown",
@@ -616,7 +700,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "meetings",
@@ -634,7 +721,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "mem0",
@@ -661,7 +751,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "mineru",
@@ -692,7 +785,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "monitors",
@@ -710,7 +806,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "predict",
@@ -728,7 +827,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "proof",
@@ -746,7 +848,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "quests",
@@ -764,7 +869,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "recipes",
@@ -783,7 +891,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "research",
@@ -802,7 +913,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "rtk",
@@ -823,7 +937,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "sample",
@@ -841,7 +958,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "sample-widget",
@@ -860,7 +980,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "scrapling",
@@ -886,7 +1009,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "security-guidance",
@@ -904,7 +1030,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "serper",
@@ -931,7 +1060,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "shadow",
@@ -956,7 +1088,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "simulator",
@@ -975,7 +1110,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "skill-editor",
@@ -992,7 +1130,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "spider",
@@ -1017,7 +1158,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "spidercloud",
@@ -1043,7 +1187,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "tavily",
@@ -1069,7 +1216,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "teams",
@@ -1088,7 +1238,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "timeline",
@@ -1105,7 +1258,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "tool-firewall",
@@ -1123,7 +1279,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "unstructured",
@@ -1151,7 +1310,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "voice",
@@ -1170,7 +1332,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "warmup",
@@ -1188,7 +1353,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "webhooks",
@@ -1206,7 +1374,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "whiteboard",
@@ -1223,7 +1394,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "workflows",
@@ -1241,7 +1415,10 @@
         "web",
         "cli"
       ],
-      "hidden": true
+      "hidden": true,
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     }
   ]
 }
