@@ -24,7 +24,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (31)
+## First-party plugins (32)
 
 - [`advisor`](./plugins/advisor/) — see [plugins/advisor/README.md](./plugins/advisor/README.md)
 - [`agentbrowser`](./plugins/agentbrowser/) — see [plugins/agentbrowser/README.md](./plugins/agentbrowser/README.md)
@@ -42,6 +42,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 - [`hook-observers`](./plugins/hook-observers/) — see [plugins/hook-observers/README.md](./plugins/hook-observers/README.md)
 - [`hook-session-context`](./plugins/hook-session-context/) — see [plugins/hook-session-context/README.md](./plugins/hook-session-context/README.md)
 - [`mem0`](./plugins/mem0/) — see [plugins/mem0/README.md](./plugins/mem0/README.md)
+- [`parallel`](./plugins/parallel/) — see [plugins/parallel/README.md](./plugins/parallel/README.md)
 - [`pi-shell`](./plugins/pi-shell/) — see [plugins/pi-shell/README.md](./plugins/pi-shell/README.md)
 - [`pi-subagent`](./plugins/pi-subagent/) — see [plugins/pi-subagent/README.md](./plugins/pi-subagent/README.md)
 - [`plan-continue`](./plugins/plan-continue/) — see [plugins/plan-continue/README.md](./plugins/plan-continue/README.md)

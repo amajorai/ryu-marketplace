@@ -18,6 +18,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "The unified activity feed: everything happening on this node — monitor alerts, finished tasks, runs, approvals, meetings, and notes — newest first, grouped by day.",
+      "category": "Productivity",
+      "icon": "activity-03",
+      "iconDither": {
+        "from": 210,
+        "to": 244,
+        "direction": "up"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -37,6 +44,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Consult a stronger reviewer model for a second opinion — as an auto-review turn hook (toggle / `/advisor`) and as the model-callable `advisor__consult` tool, a declarative HTTP tool routed through Core's `/api/advisor/consult` bridge.",
+      "category": "Research",
+      "icon": "bulb",
+      "iconDither": {
+        "from": 261,
+        "to": 295,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -59,12 +73,18 @@
       "builtin": true,
       "tagline": "A second real browser for the browser.control layer",
       "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, so selecting it re-points the stable `browser__*` tools at agent-browser without changing what agents call. Launched via `npx agent-browser mcp`; needs Node on PATH.",
-      "category": "Automation",
+      "category": "Browsers",
       "keywords": [
         "browser",
         "automation",
         "web"
       ],
+      "icon": "ai-browser",
+      "iconDither": {
+        "from": 3,
+        "to": 329,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -86,6 +106,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait for your accept or reject before they take effect.",
+      "category": "Security",
+      "icon": "shield-01",
+      "iconDither": {
+        "from": 312,
+        "to": 346,
+        "direction": "right"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -111,6 +138,12 @@
         "search",
         "web"
       ],
+      "icon": "svgl:brave",
+      "iconDither": {
+        "from": 300,
+        "to": 334,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -133,7 +166,13 @@
       "builtin": true,
       "tagline": "Real-Chromium browser control for agents",
       "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated `browser.control` capability: list/open/navigate tabs, screenshot, read titles, take an accessibility snapshot with stable element refs, and drive the page with synthetic click/type/scroll input. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
-      "category": "Automation",
+      "category": "Browsers",
+      "icon": "browser",
+      "iconDither": {
+        "from": 351,
+        "to": 317,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -162,6 +201,12 @@
         "computer-use",
         "bytebot"
       ],
+      "iconDither": {
+        "from": 237,
+        "to": 271,
+        "direction": "left"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/154629106?v=4",
       "surfaces": [
         "core",
         "desktop",
@@ -183,6 +228,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "The scheduled-runs calendar: every agent and workflow scheduled job projected onto Month, Week, Day, and Agenda views — past runs from history, upcoming runs from cron/interval — with a New automation dialog that schedules an agent.",
+      "category": "Productivity",
+      "icon": "calendar-04",
+      "iconDither": {
+        "from": 288,
+        "to": 322,
+        "direction": "up"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -201,6 +253,13 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "category": "Creative",
+      "icon": "ai-image",
+      "iconDither": {
+        "from": 225,
+        "to": 259,
+        "direction": "right"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -219,6 +278,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Productivity",
+      "icon": "bubble-chat-edit",
+      "iconDither": {
+        "from": 339,
+        "to": 13,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -240,6 +306,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Clips: capture and browse screen/timeline clips. A Core→Shadow proxy that depends on the Shadow capture app for its recordings. Runs the out-of-process ryu-clips sidecar; Core proxies /api/clips/* to it. The Shadow record/browse surface is fully served out-of-process (the sidecar reads RYU_SHADOW_URL itself); URL/yt-dlp ingest and auto-file into the Clips Space require Core's kernel machinery and degrade cleanly in the standalone sidecar.",
+      "category": "Media & Voice",
+      "icon": "film-01",
+      "iconDither": {
+        "from": 327,
+        "to": 1,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -261,6 +334,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Dashboards: composable widget boards that assemble live views over monitors, meetings, quests, and other Core surfaces via soft HTTP loopback. Declares the out-of-process ryu-dashboards sidecar (kind:local) that owns the store + refresh loop + /api/dashboards/* surface, served to the desktop through the generic ext-proxy public_mount. Started eagerly (not lazy) so the kernel hardware device-dashboard renderer + nudge loop can reach it at boot / on a device poll before any desktop has opened Home. The dashboard_builder MCP runnable + the hardware render seam reach it over loopback via dashboards_client.",
+      "category": "Productivity",
+      "icon": "dashboard-square-01",
+      "iconDither": {
+        "from": 264,
+        "to": 298,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -281,6 +361,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "System-wide dictation and agent-ask via the Island companion: speak anywhere to type a transcript, or ask an agent and paste the answer into the focused app.",
+      "category": "Media & Voice",
+      "icon": "voice",
+      "iconDither": {
+        "from": 6,
+        "to": 332,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -303,7 +390,7 @@
       "builtin": true,
       "tagline": "Layout-aware parsing, tables that survive chunking",
       "description": "Document parsing via IBM's MIT-licensed Docling — the highest-fidelity `document.parse` backend. Where a text extractor hands a model a stream of characters, Docling runs real layout analysis: a page-segmentation model finds the reading order, a table-structure model rebuilds merged cells and spanning headers, and the result is exported as markdown whose headings, lists and tables mirror the document's actual structure. That is what makes a multi-column paper or a financial statement survive chunking instead of interleaving into nonsense. The cost is weight: the first parse downloads its models (hundreds of MB) and can take minutes, and every parse after that is CPU-bound inference rather than a string copy. Everything runs locally — Docling explicitly supports air-gapped operation once the models are cached — and no document ever leaves the node. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
-      "category": "Knowledge",
+      "category": "Documents",
       "keywords": [
         "document",
         "parse",
@@ -314,6 +401,12 @@
         "ocr",
         "extraction"
       ],
+      "icon": "document-attachment",
+      "iconDither": {
+        "from": 303,
+        "to": 337,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -334,6 +427,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Security",
+      "icon": "tick-double-01",
+      "iconDither": {
+        "from": 276,
+        "to": 310,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -361,6 +461,12 @@
         "search",
         "web"
       ],
+      "iconDither": {
+        "from": 213,
+        "to": 247,
+        "direction": "down"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/77906174?v=4",
       "surfaces": [
         "core",
         "desktop",
@@ -381,6 +487,13 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "category": "Developer Tools",
+      "icon": "ai-brain-01",
+      "iconDither": {
+        "from": 240,
+        "to": 274,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -409,6 +522,12 @@
         "extract",
         "scrape"
       ],
+      "icon": "svgl:firecrawl|firecrawl-dark",
+      "iconDither": {
+        "from": 315,
+        "to": 349,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -429,6 +548,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Security",
+      "icon": "firewall",
+      "iconDither": {
+        "from": 252,
+        "to": 286,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -450,10 +576,17 @@
       "source": "builtin",
       "builtin": true,
       "description": "Desktop automation: 29 screen perception and input control tools. Windows-first.",
+      "category": "Automation",
       "keywords": [
         "automation",
         "desktop"
       ],
+      "icon": "cursor-01",
+      "iconDither": {
+        "from": 354,
+        "to": 320,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -474,6 +607,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Productivity",
+      "icon": "flag-03",
+      "iconDither": {
+        "from": 291,
+        "to": 325,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -495,10 +635,17 @@
       "source": "builtin",
       "builtin": true,
       "description": "Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens, reversible retrieval. Requires headroom-ai[mcp].",
+      "category": "Developer Tools",
       "keywords": [
         "context",
         "compression"
       ],
+      "icon": "arrow-shrink-02",
+      "iconDither": {
+        "from": 228,
+        "to": 262,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -520,6 +667,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Self-healing: failed runs are diagnosed by a Gateway side-model and proposed fixes are delivered to the approvals inbox for human review before they apply.",
+      "category": "Developer Tools",
+      "icon": "health",
+      "iconDither": {
+        "from": 270,
+        "to": 304,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -542,7 +696,7 @@
       "builtin": true,
       "tagline": "A standing synthesis of the user, not a list of facts",
       "description": "Give the swappable `memory` layer a provider that MODELS the user instead of only storing rows, via Honcho (https://honcho.dev) — the Plastic Labs identity layer Hermes uses for exactly this. Honcho watches the messages you hand it and derives a per-peer REPRESENTATION; its Dialectic endpoint (`POST /v3/workspaces/{workspace_id}/peers/{peer_id}/chat`) then answers a natural-language question about that peer with its own synthesis. That is what the canonical `memory__context` verb has always promised and no shipped provider served, so this is the first plugin to make the kernel's `context` bridge (`memory.provider-context`) do anything at all. Honcho here serves TWO verbs: `memory__context` (the Dialectic synthesis) and `memory__search` (`POST .../peers/{peer_id}/search`, documented as \"Search a Peer's messages\" — conversation text, not the conclusions Honcho derives from it, which matters because the `prefetch` bridge is on by default and will start injecting message excerpts each turn). It also binds the two WRITE verbs, `memory__sync` and `memory__store`, through an adapter. Honcho's only documented write is `POST /v3/workspaces/{workspace_id}/sessions/{session_id}/messages`, whose `messages[]` items each require a `peer_id` — a NESTED position the declarative `arg_template` cannot reach, because a template substitutes only from CALLER arguments and never sees a resolved `pref:`. That is why both verbs went unbound and why `memory.mirror-builtin` (default ON) was inert. An adapter receives those `pref:` values already resolved, so the per-install peer lands inside `messages[]` without hardcoding one bucket for every install. The session and both peers are caller-named and created on first write, so nothing has to be set up by hand; Ryu's own replies are written as a SEPARATE peer, since attributing an assistant turn to your peer would poison the representation Honcho derives about you. `memory__forget` stays unbound: Honcho documents no message-delete endpoint, which no adapter can invent. The built-in store's own `memorystore__save` tool and this node's per-turn memory write are kernel and untouched. Every call is scoped to one workspace and one peer, both set per install in the settings tab — a hardcoded pair would put every install in one shared bucket. Requires a BYOK Honcho API key.",
-      "category": "Knowledge",
+      "category": "Knowledge & Memory",
       "keywords": [
         "memory",
         "context",
@@ -550,6 +704,12 @@
         "dialectic",
         "honcho"
       ],
+      "iconDither": {
+        "from": 330,
+        "to": 4,
+        "direction": "up"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/123981229?v=4",
       "surfaces": [
         "core",
         "desktop",
@@ -570,6 +730,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Developer Tools",
+      "icon": "eye",
+      "iconDither": {
+        "from": 267,
+        "to": 301,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -590,6 +757,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Developer Tools",
+      "icon": "sticky-note-01",
+      "iconDither": {
+        "from": 359,
+        "to": 325,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -611,6 +785,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Learning loop: turn chats and runs into reusable skills, gated by the approval Inbox, with an experience log of what was learned.",
+      "category": "Knowledge & Memory",
+      "icon": "mortarboard-01",
+      "iconDither": {
+        "from": 342,
+        "to": 308,
+        "direction": "left"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -632,6 +813,12 @@
       "tagline": "Email inboxes for your agents",
       "description": "Agent Inboxes — email as a service for agents. Runs the out-of-process ryu-mail sidecar; Core proxies /api/mail/* to it. Its sandboxed companion is a per-node mail client (list inboxes, read messages, compose/send, create an inbox) driving /api/mail/* via the mail:crud bridge capability.",
       "category": "Communication",
+      "icon": "mail-01",
+      "iconDither": {
+        "from": 279,
+        "to": 313,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -653,7 +840,7 @@
       "builtin": true,
       "tagline": "Pure-pip document parsing, no native toolchain",
       "description": "Document parsing via Microsoft's MIT-licensed MarkItDown library — the default `document.parse` backend, and the one that works on a machine where the user installed nothing on purpose. `pip install 'markitdown[all]'` is a pure-Python install of a few tens of megabytes: no ONNX runtime, no layout-detection model download, no GPU, and no `brew`/`apt` packages to chase. It covers the formats people actually attach — PDF, DOCX, PPTX, XLSX/XLS, HTML, CSV, JSON, XML, EPUB, Outlook .msg, Jupyter notebooks, and ZIP archives expanded member-by-member — and it emits markdown natively rather than a flat text dump, so headings stay headings and spreadsheet tables stay tables. The tradeoffs are honest ones: no OCR (a scanned PDF comes back empty and the job says so), no legacy binary `.doc`/`.ppt`, and no element-level structure for a consumer that wants to chunk on document structure. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
-      "category": "Knowledge",
+      "category": "Documents",
       "keywords": [
         "document",
         "parse",
@@ -663,6 +850,12 @@
         "markdown",
         "extraction"
       ],
+      "icon": "text-align-left",
+      "iconDither": {
+        "from": 216,
+        "to": 250,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -684,6 +877,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable.",
+      "category": "Communication",
+      "icon": "mic-01",
+      "iconDither": {
+        "from": 318,
+        "to": 352,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -705,13 +905,19 @@
       "builtin": true,
       "tagline": "Recall and record in an existing Mem0 project inside Ryu",
       "description": "Read and write a hosted Mem0 memory project (https://mem0.ai) through the Mem0 Platform REST API, exposed as three declarative HTTP tools. The SECOND provider of the swappable `memory` layer — the built-in store stays the default and keeps running alongside it — so selecting Mem0 re-points the stable `memory__search` / `memory__store` / `memory__sync` / `memory__forget` tools at your Mem0 project without changing what agents call, and turns on the kernel bridges that fold Mem0 into every turn's recall and echo this node's writes out to it. The one canonical verb Mem0 does NOT serve is `memory__context`: Mem0 publishes no standing-summary endpoint, and forcing the verb onto its get-all would dump raw facts at system rank under a label promising a synthesis. The two WRITE verbs both post to `POST /v3/memories/add/`, which is ASYNCHRONOUS — it answers `{message, status: \"PENDING\", event_id}` and never a fact id — so `memory__store` returns an accepted-for-processing envelope, not the id of the fact it created, and nothing may chain `memory__forget` onto its result. That is fine for the way both verbs are used: the kernel `mirror` and `sync` bridges are fire-and-forget and never read the response. The two verbs differ in ONE documented field: `store` sends `infer: false` because the caller has already decided the fact and Mem0 should keep the text as-is, while `sync` hands over a raw turn with Mem0's default inference on and lets Mem0 mine it. Note the entity id lives in two different places in Mem0's own API — nested inside `filters` for search, top-level for add — and both are pinned from the same `mem0.user-id` preference. Requires a BYOK Mem0 API key.",
-      "category": "Knowledge",
+      "category": "Knowledge & Memory",
       "keywords": [
         "memory",
         "recall",
         "facts",
         "mem0"
       ],
+      "iconDither": {
+        "from": 9,
+        "to": 335,
+        "direction": "down"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/137054526?v=4",
       "surfaces": [
         "core",
         "desktop",
@@ -734,7 +940,7 @@
       "builtin": true,
       "tagline": "Scientific and scanned PDFs, formulas to LaTeX",
       "description": "Document parsing via MinerU (opendatalab) — the highest-fidelity `document.parse` backend, and the heaviest. Built for scientific and scanned PDFs: it runs layout detection to reconstruct true reading order across multi-column pages, converts formulas to LaTeX, converts tables to HTML, and OCRs scanned pages, so a physics paper comes back as markdown a model can actually follow instead of two columns interleaved line by line. The cost is real: MinerU wants Python 3.10-3.13, 16 GB of RAM (32 GB recommended), about 20 GB of disk for its model set, and a 4 GB-VRAM GPU for the pipeline backend (8 GB for the VLM backends) to be quick — a CPU-only host works through the `pipeline` backend but parses take minutes. Models download on first use. MinerU ships as a CLI, so each parse is a supervised subprocess with a hard wall-clock kill: a timed-out or cancelled parse takes its whole process group with it rather than leaving a multi-gigabyte orphan. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
-      "category": "Knowledge",
+      "category": "Documents",
       "keywords": [
         "document",
         "parse",
@@ -745,6 +951,12 @@
         "layout",
         "extraction"
       ],
+      "icon": "pdf-01",
+      "iconDither": {
+        "from": 255,
+        "to": 289,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -766,11 +978,53 @@
       "source": "builtin",
       "builtin": true,
       "description": "Website monitors: price, stock, keyword, content, and uptime watches with cross-device notification fan-out.",
+      "category": "Developer Tools",
+      "icon": "radar-01",
+      "iconDither": {
+        "from": 357,
+        "to": 323,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
         "island",
         "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "parallel",
+      "displayName": "Parallel Search",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Objective-driven web search built for agent loops",
+      "description": "Web search and content extraction via Parallel (https://parallel.ai), exposed as three declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web__search` / `web__extract` tools at Parallel without changing what agents call. Search works with NO key through Parallel's public Search MCP endpoint; a BYOK Parallel API key unlocks the higher-limit REST API and extraction.",
+      "category": "Search",
+      "keywords": [
+        "search",
+        "web",
+        "extract",
+        "mcp"
+      ],
+      "iconDither": {
+        "from": 168,
+        "to": 202,
+        "direction": "down"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/210743255?v=4",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
         "web",
         "cli"
       ],
@@ -786,6 +1040,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a long-running command does not hold the turn open.",
+      "category": "Developer Tools",
+      "icon": "computer-terminal-02",
+      "iconDither": {
+        "from": 196,
+        "to": 232,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -807,6 +1068,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Adds the Task tool to the managed Pi agent, so it can delegate a bounded, context-isolated job to a child agent.",
+      "category": "Automation",
+      "icon": "user-multiple-02",
+      "iconDither": {
+        "from": 12,
+        "to": 46,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -827,6 +1095,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Productivity",
+      "icon": "task-01",
+      "iconDither": {
+        "from": 198,
+        "to": 232,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -847,6 +1122,13 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "category": "Automation",
+      "icon": "ai-magic",
+      "iconDither": {
+        "from": 249,
+        "to": 283,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -867,6 +1149,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Security",
+      "icon": "stamp-01",
+      "iconDither": {
+        "from": 306,
+        "to": 340,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -888,6 +1177,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Quests: auto-detecting todos surfaced from your chats and activity, tracked as a lightweight quest board with progress and completion.",
+      "category": "Productivity",
+      "icon": "target-02",
+      "iconDither": {
+        "from": 294,
+        "to": 328,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -908,6 +1204,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Desktop-automation recipes: record → save → replay UI action sequences. Backed by Ghost's RecipeStore, so it declares Ghost as a dependency and the graph refuses to disable Ghost out from under it.",
+      "category": "Automation",
+      "icon": "repeat",
+      "iconDither": {
+        "from": 231,
+        "to": 265,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -929,6 +1232,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports. Declares the out-of-process ryu-research sidecar (a thin Rust proxy that forwards /api/research/* to the Python autoresearch engine on :8087); Core reaches it via the generic ext-proxy loader.",
+      "category": "Research",
+      "icon": "microscope",
+      "iconDither": {
+        "from": 333,
+        "to": 7,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -952,6 +1262,12 @@
       "tagline": "Token-compress noisy dev-command output for agents",
       "description": "Run a dev command through RTK (Rust Token Killer) and get a token-compressed version of its output (60-90% fewer tokens), exposed as a declarative `command` tool that shells out to the locally-installed `rtk` binary. BYO — no API key.",
       "category": "Developer Tools",
+      "icon": "computer-terminal-01",
+      "iconDither": {
+        "from": 345,
+        "to": 311,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -972,6 +1288,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Developer Tools",
+      "icon": "book-search",
+      "iconDither": {
+        "from": 243,
+        "to": 277,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -981,6 +1304,7 @@
         "web",
         "cli"
       ],
+      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -993,6 +1317,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget__render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
+      "category": "Developer Tools",
+      "icon": "puzzle",
+      "iconDither": {
+        "from": 282,
+        "to": 316,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1002,6 +1333,7 @@
         "web",
         "cli"
       ],
+      "hidden": true,
       "engines": {
         "ryu": ">=0.1.0"
       }
@@ -1021,6 +1353,12 @@
         "scraping",
         "extract"
       ],
+      "iconDither": {
+        "from": 219,
+        "to": 253,
+        "direction": "left"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/20604835?v=4",
       "surfaces": [
         "core",
         "desktop",
@@ -1041,6 +1379,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Security",
+      "icon": "shield-key",
+      "iconDither": {
+        "from": 320,
+        "to": 354,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1070,6 +1415,12 @@
         "google",
         "scrape"
       ],
+      "icon": "google",
+      "iconDither": {
+        "from": 257,
+        "to": 291,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1092,11 +1443,17 @@
       "builtin": true,
       "tagline": "Recall what you have seen and done",
       "description": "Search everything Shadow has captured (screen text, audio transcripts, input) and summarize recent activity. Exposed as declarative HTTP tools that reach the device-local Shadow sidecar through Core's authenticated `/api/shadow/*` proxy (which injects Shadow's bearer token).",
-      "category": "Search",
+      "category": "Knowledge & Memory",
       "keywords": [
         "capture",
         "memory"
       ],
+      "icon": "record",
+      "iconDither": {
+        "from": 296,
+        "to": 330,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1119,7 +1476,13 @@
       "builtin": true,
       "tagline": "iOS Simulator & Android Emulator control for agents",
       "description": "Drive iOS Simulators (macOS + Xcode) and Android Emulators from a workspace tab. Ryu runs the device-control toolchain (`simctl`, `adb`) as a local sidecar and exposes the grant-gated `simulator.control` capability: list/boot devices, install & launch apps, open deep links, screenshot, and (Android) tap/swipe/type. The desktop Simulator panel shows whichever platform the connected node supports.",
-      "category": "Automation",
+      "category": "Developer Tools",
+      "icon": "smart-phone-01",
+      "iconDither": {
+        "from": 11,
+        "to": 337,
+        "direction": "right"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -1139,6 +1502,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Author a user-owned Agent Skill (SKILL.md): front-matter fields (name / description / allowed tools / always-on), a markdown body editor, debounced autosave, and server-backed undoable version history.",
+      "category": "Developer Tools",
+      "icon": "sparkles",
+      "iconDither": {
+        "from": 308,
+        "to": 342,
+        "direction": "down"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -1164,6 +1534,12 @@
         "web",
         "scraping"
       ],
+      "iconDither": {
+        "from": 233,
+        "to": 267,
+        "direction": "up"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/112983871?v=4",
       "surfaces": [
         "core",
         "desktop",
@@ -1192,6 +1568,12 @@
         "crawl",
         "scraping"
       ],
+      "iconDither": {
+        "from": 335,
+        "to": 9,
+        "direction": "right"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/112983871?v=4",
       "surfaces": [
         "core",
         "desktop",
@@ -1220,6 +1602,12 @@
         "web",
         "extract"
       ],
+      "iconDither": {
+        "from": 272,
+        "to": 306,
+        "direction": "down"
+      },
+      "iconUrl": "https://avatars.githubusercontent.com/u/170207473?v=4",
       "surfaces": [
         "core",
         "desktop",
@@ -1241,6 +1629,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Teams: named groups of agents you can address as one. Governance shell over the in-crate teams store (agent-id membership only); no documents, no external dependencies. Runs the out-of-process ryu-teams sidecar; Core proxies /api/teams/* to it.",
+      "category": "Communication",
+      "icon": "user-group",
+      "iconDither": {
+        "from": 245,
+        "to": 279,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1262,6 +1657,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "The activity replay timeline: a CapCut-style scrubber over Shadow's captured screen/input/window/audio lanes with a keyframe preview, a Dayflow work journal, and jump-to-moment focus.",
+      "category": "Productivity",
+      "icon": "timeline",
+      "iconDither": {
+        "from": 347,
+        "to": 313,
+        "direction": "up"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -1280,6 +1682,13 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "category": "Security",
+      "icon": "shield-ban",
+      "iconDither": {
+        "from": 14,
+        "to": 340,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1302,7 +1711,7 @@
       "builtin": true,
       "tagline": "Sixty formats, element-typed output",
       "description": "Document parsing via the Apache-2.0 Unstructured library — the broadest-coverage `document.parse` backend, reading roughly sixty formats (PDF, the whole Office family including the legacy binary .doc/.ppt/.xls, email, EPUB, HTML, spreadsheets, and OCR over scanned images). Its distinguishing output is element-level: every fragment comes back typed (Title, NarrativeText, ListItem, Table, CodeSnippet, PageBreak), so the sidecar can emit markdown that preserves document structure instead of a flat text dump — headings stay headings and tables stay tables through chunking. The cost is install weight: `unstructured[all-docs]` is a 1-2 GB Python install, and the native tools it shells out to (poppler, tesseract, libreoffice, pandoc) are NOT pip-installable and must be present on the host. The sidecar detects each missing tool and reports it by name through the job's `error`/`missing_dependencies` fields rather than failing as an empty document. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
-      "category": "Knowledge",
+      "category": "Documents",
       "keywords": [
         "document",
         "parse",
@@ -1311,6 +1720,12 @@
         "ocr",
         "extraction"
       ],
+      "icon": "layers-01",
+      "iconDither": {
+        "from": 284,
+        "to": 318,
+        "direction": "right"
+      },
       "surfaces": [
         "desktop",
         "island",
@@ -1331,6 +1746,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Voice data path: speech-to-text transcription (whisper.cpp) and text-to-speech (OuteTTS + the universal Ryu TTS sidecar), plus the installable TTS model catalog. Governance shell over the in-crate voice module.",
+      "category": "Media & Voice",
+      "icon": "audio-wave-01",
+      "iconDither": {
+        "from": 221,
+        "to": 255,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1352,6 +1774,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Starts your subscription agents' rolling usage windows on your own schedule: a one-word ping to each subscription agent, on its cheapest model, at the times of day you choose (05:00 / 10:00 / 15:00 / 20:00 by default) — so a window is already open when you sit down to work.",
+      "category": "Automation",
+      "icon": "sun-03",
+      "iconDither": {
+        "from": 323,
+        "to": 357,
+        "direction": "left"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1372,6 +1801,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Inbound webhook endpoint registry: resolved public URLs, secret presence, last-delivery times, and the ingress backend status.",
+      "category": "Automation",
+      "icon": "webhook",
+      "iconDither": {
+        "from": 260,
+        "to": 294,
+        "direction": "up"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1391,6 +1827,13 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "category": "Creative",
+      "icon": "shapes",
+      "iconDither": {
+        "from": 2,
+        "to": 328,
+        "direction": "right"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1411,6 +1854,13 @@
       "source": "builtin",
       "builtin": true,
       "description": "Workflows: petgraph DAG automation with triggers, durable execution, and a natural-language workflow builder.",
+      "category": "Automation",
+      "icon": "workflow-square-01",
+      "iconDither": {
+        "from": 299,
+        "to": 333,
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
