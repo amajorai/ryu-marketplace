@@ -1,6 +1,7 @@
 # Background Bash
 
-A Ryu plugin.
+Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a
+long-running command does not hold the turn open.
 
 Ships one **Pi extension** (`contributes.pi_extensions`): `pi-extensions/ryu-shell.ts`
 adds `bash_background` / `bash_output` / `bash_kill` to the managed `ryu` (Pi) agent,

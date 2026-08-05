@@ -1,5 +1,5 @@
 # Security Guidance
 
-A Ryu plugin.
+Scans each answer for security vulnerabilities and has a second model review the code before you ship it. Off until you flip the Security review toggle in the composer, or run `/security` for a one-off review of the last answer; the reviewer model is configurable.
 
-Declarative Ryu plugin (no UI, no Core Rust). Definition lives in `manifest.json`; a byte-identical copy is registered built-in in Core (`apps/core/src/plugin_manifest/fixtures/security-guidance.manifest.json`). Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.
+Definition lives in `manifest.json`, its sandboxed hook body in `hooks/review.js`; Core compiles both in from this package directory. Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.

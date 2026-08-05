@@ -283,8 +283,7 @@ Honcho workspace from this repo.
 
 ## Files
 
-- `manifest.json` — the plugin. Byte-identical to
-  `apps/core/src/plugin_manifest/fixtures/honcho.manifest.json`, which is the built-in
-  registration seam (`include_str!` in `plugin_manifest/mod.rs`). The contract test
-  asserts they have not drifted.
+- `manifest.json` — the plugin, and the single source of truth. Core registers it
+  built-in by `include_str!`-ing **this** file from its package home (`plugin_manifest/
+  mod.rs`); there is no fixture copy to drift against any more.
 - `plugin.test.mjs` — the co-located contract test. Run with `node --test`.

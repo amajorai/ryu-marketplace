@@ -1,5 +1,5 @@
 # Headroom Compression
 
-A Ryu plugin.
+Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens, reversible retrieval. Requires headroom-ai[mcp].
 
-Declarative Ryu plugin (no UI, no Core Rust). Definition lives in `manifest.json`; a byte-identical copy is registered built-in in Core (`apps/core/src/plugin_manifest/fixtures/headroom.manifest.json`). Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.
+Definition lives in `manifest.json`; Core compiles it in straight from this package directory. Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.

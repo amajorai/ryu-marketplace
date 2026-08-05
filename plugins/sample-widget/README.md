@@ -129,7 +129,7 @@ You should see the tool (with its `_meta.outputTemplate`) and the HTML come back
 ## Gotchas when you fork this
 
 - **Change the `id`.** This template's manifest is also compiled into Core as a
-  built-in fixture (`apps/core/src/plugin_manifest/fixtures/sample-widget.manifest.json`).
+  built-in, `include_str!`-ed straight from this package directory.
   If you drop a copy into `~/.ryu/plugins/` **keeping `id: "sample-widget"`**, the
   loader treats it as a **duplicate id** and skips your copy. Pick your own id
   (reverse-domain-ish is conventional, e.g. `com.acme.checklist`).

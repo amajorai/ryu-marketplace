@@ -129,9 +129,9 @@ exactly this reason: providers differ and the result says which one you got.
 
 ## Registration seam
 
-`manifest.json` here is byte-identical to
-`apps/core/src/plugin_manifest/fixtures/bytebot.manifest.json`, which Core registers with
-`include_str!`. The contract test asserts that, so the two cannot drift.
+`manifest.json` here is the single source of truth: Core registers it built-in by
+`include_str!`-ing **this** file from its package home. There is no fixture copy to
+drift against any more.
 
 ## Tests
 

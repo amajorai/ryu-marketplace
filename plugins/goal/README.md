@@ -1,5 +1,5 @@
 # Goal
 
-A Ryu plugin.
+Give the agent a goal with `/goal` and it keeps working until a judge model agrees the goal is actually met, re-prompting itself after every turn instead of stopping and waiting for you. `/goal clear` stops the loop; the judge model is configurable.
 
-Declarative Ryu plugin (no UI, no Core Rust). Definition lives in `manifest.json`; a byte-identical copy is registered built-in in Core (`apps/core/src/plugin_manifest/fixtures/goal.manifest.json`). Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.
+Definition lives in `manifest.json`, its sandboxed hook body in `hooks/loop.js`; Core compiles both in from this package directory. Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.

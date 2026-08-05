@@ -17,8 +17,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Everything happening on this node, newest first",
       "description": "The unified activity feed: everything happening on this node — monitor alerts, finished tasks, runs, approvals, meetings, and notes — newest first, grouped by day.",
       "category": "Productivity",
+      "keywords": [
+        "activity",
+        "feed",
+        "notifications",
+        "history"
+      ],
       "icon": "activity-03",
       "iconDither": {
         "from": 210,
@@ -43,8 +50,14 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "A stronger second model reviews your answers",
       "description": "Consult a stronger reviewer model for a second opinion — as an auto-review turn hook (toggle / `/advisor`) and as the model-callable `advisor__consult` tool, a declarative HTTP tool routed through Core's `/api/advisor/consult` bridge.",
       "category": "Research",
+      "keywords": [
+        "review",
+        "second-opinion",
+        "quality"
+      ],
       "icon": "bulb",
       "iconDither": {
         "from": 261,
@@ -59,6 +72,31 @@
         "extension",
         "web",
         "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "agent-status",
+      "displayName": "Agent Status",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "See which agents are working, stuck, or done",
+      "description": "Splits your agent runs across three sidebar sections — Working, Needs input and Done — each row showing the project it belongs to.",
+      "category": "Productivity",
+      "keywords": [
+        "runs",
+        "status",
+        "sidebar",
+        "agents",
+        "inbox"
+      ],
+      "icon": "lucide:activity",
+      "surfaces": [
+        "desktop"
       ],
       "engines": {
         "ryu": ">=0.1.0"
@@ -105,8 +143,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Nothing happens until you say yes",
       "description": "Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait for your accept or reject before they take effect.",
       "category": "Security",
+      "keywords": [
+        "approvals",
+        "human-in-the-loop",
+        "security",
+        "review"
+      ],
       "icon": "shield-01",
       "iconDither": {
         "from": 312,
@@ -167,6 +212,12 @@
       "tagline": "Real-Chromium browser control for agents",
       "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated `browser.control` capability: list/open/navigate tabs, screenshot, read titles, take an accessibility snapshot with stable element refs, and drive the page with synthetic click/type/scroll input. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
       "category": "Browsers",
+      "keywords": [
+        "browser",
+        "chromium",
+        "automation",
+        "web"
+      ],
       "icon": "browser",
       "iconDither": {
         "from": 351,
@@ -227,8 +278,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Every scheduled run on one calendar",
       "description": "The scheduled-runs calendar: every agent and workflow scheduled job projected onto Month, Week, Day, and Agenda views — past runs from history, upcoming runs from cron/interval — with a New automation dialog that schedules an agent.",
       "category": "Productivity",
+      "keywords": [
+        "calendar",
+        "scheduling",
+        "automation",
+        "runs"
+      ],
       "icon": "calendar-04",
       "iconDither": {
         "from": 288,
@@ -253,7 +311,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Wire up media and agent nodes on one board",
+      "description": "A node board for generative media: wire up image, video, chat, text-to-speech, speech-to-text, upload, and note nodes, then run the graph through Ryu's media and agent bridges. Each board persists as a Space document, so it stays editable, shareable, and searchable.",
       "category": "Creative",
+      "keywords": [
+        "canvas",
+        "media",
+        "nodes",
+        "generative",
+        "workflow"
+      ],
       "icon": "ai-image",
       "iconDither": {
         "from": 225,
@@ -278,7 +345,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Names your chats for you, automatically",
+      "description": "Auto-renames a chat after every N completed assistant turns (default 5) using a side model, and keeps a Core-side history of the names it chose so you can see how a conversation drifted. Enablement, frequency, and the model to use are all settings.",
       "category": "Productivity",
+      "keywords": [
+        "chat",
+        "titles",
+        "automation",
+        "productivity"
+      ],
       "icon": "bubble-chat-edit",
       "iconDither": {
         "from": 339,
@@ -305,8 +380,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Capture and browse screen clips",
       "description": "Clips: capture and browse screen/timeline clips. A Core→Shadow proxy that depends on the Shadow capture app for its recordings. Runs the out-of-process ryu-clips sidecar; Core proxies /api/clips/* to it. The Shadow record/browse surface is fully served out-of-process (the sidecar reads RYU_SHADOW_URL itself); URL/yt-dlp ingest and auto-file into the Clips Space require Core's kernel machinery and degrade cleanly in the standalone sidecar.",
       "category": "Media & Voice",
+      "keywords": [
+        "clips",
+        "screen",
+        "capture",
+        "video"
+      ],
       "icon": "film-01",
       "iconDither": {
         "from": 327,
@@ -333,8 +415,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Live widget boards over your node",
       "description": "Dashboards: composable widget boards that assemble live views over monitors, meetings, quests, and other Core surfaces via soft HTTP loopback. Declares the out-of-process ryu-dashboards sidecar (kind:local) that owns the store + refresh loop + /api/dashboards/* surface, served to the desktop through the generic ext-proxy public_mount. Started eagerly (not lazy) so the kernel hardware device-dashboard renderer + nudge loop can reach it at boot / on a device poll before any desktop has opened Home. The dashboard_builder MCP runnable + the hardware render seam reach it over loopback via dashboards_client.",
       "category": "Productivity",
+      "keywords": [
+        "dashboards",
+        "widgets",
+        "monitoring",
+        "home"
+      ],
       "icon": "dashboard-square-01",
       "iconDither": {
         "from": 264,
@@ -360,8 +449,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Speak anywhere, type anywhere",
       "description": "System-wide dictation and agent-ask via the Island companion: speak anywhere to type a transcript, or ask an agent and paste the answer into the focused app.",
       "category": "Media & Voice",
+      "keywords": [
+        "dictation",
+        "voice",
+        "transcription",
+        "speech"
+      ],
       "icon": "voice",
       "iconDither": {
         "from": 6,
@@ -427,7 +523,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "A second model reviews every answer",
+      "description": "Sends every answer to a second model for review before you act on it, so mistakes get caught by a fresh set of eyes. Off until you flip the Double-check toggle in the composer; the reviewer model is configurable in settings.",
       "category": "Security",
+      "keywords": [
+        "review",
+        "verification",
+        "quality",
+        "accuracy"
+      ],
       "icon": "tick-double-01",
       "iconDither": {
         "from": 276,
@@ -487,7 +591,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Train a model on your own data, on your own GPU",
+      "description": "A LoRA/QLoRA training studio: launch fine-tune jobs on this node's GPU or a remote Ryu Cloud GPU node, track them durably, merge the trained adapter to GGUF, and register the result as a swappable local model.",
       "category": "Developer Tools",
+      "keywords": [
+        "finetune",
+        "lora",
+        "training",
+        "gpu",
+        "models"
+      ],
       "icon": "ai-brain-01",
       "iconDither": {
         "from": 240,
@@ -548,7 +661,16 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Turn on the Gateway's prompt-injection and PII screen",
+      "description": "An on/off switch over the Gateway's built-in firewall, which screens model traffic for prompt injection and PII. Enabling this plugin forces `firewall.enabled` on at the next Gateway restart; the pattern set and policy mode stay owned by the Gateway config (GET/PUT /v1/config), not by this plugin.",
       "category": "Security",
+      "keywords": [
+        "security",
+        "firewall",
+        "gateway",
+        "prompt-injection",
+        "pii"
+      ],
       "icon": "firewall",
       "iconDither": {
         "from": 252,
@@ -575,6 +697,7 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Let agents see and drive your desktop",
       "description": "Desktop automation: 29 screen perception and input control tools. Windows-first.",
       "category": "Automation",
       "keywords": [
@@ -607,7 +730,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Keep working until a judge model says it's done",
+      "description": "Give the agent a goal with `/goal` and it keeps working until a judge model agrees the goal is actually met, re-prompting itself after every turn instead of stopping and waiting for you. `/goal clear` stops the loop; the judge model is configurable.",
       "category": "Productivity",
+      "keywords": [
+        "agent",
+        "autonomy",
+        "goals",
+        "loop"
+      ],
       "icon": "flag-03",
       "iconDither": {
         "from": 291,
@@ -634,6 +765,7 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Compress noisy context down to a fraction of its tokens",
       "description": "Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens, reversible retrieval. Requires headroom-ai[mcp].",
       "category": "Developer Tools",
       "keywords": [
@@ -666,8 +798,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Failed runs diagnose and fix themselves — with your approval",
       "description": "Self-healing: failed runs are diagnosed by a Gateway side-model and proposed fixes are delivered to the approvals inbox for human review before they apply.",
       "category": "Developer Tools",
+      "keywords": [
+        "healing",
+        "reliability",
+        "automation",
+        "approvals"
+      ],
       "icon": "health",
       "iconDither": {
         "from": 270,
@@ -730,7 +869,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Reference plugin: one observer per hook event",
+      "description": "A worked reference for the turn-hook events Ryu can fire: five observer hooks watching subagent-stop, session-end, notification, workflow-run-failed, and a third-party app event (`com.ryu.meetings#meeting.ended`), each returning a harmless note. Nothing in Core knows this plugin exists — copy the directory as the starting point for your own event-driven plugin.",
       "category": "Developer Tools",
+      "keywords": [
+        "developer",
+        "hooks",
+        "example",
+        "reference"
+      ],
       "icon": "eye",
       "iconDither": {
         "from": 267,
@@ -757,7 +904,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Tell the agent what today's date is",
+      "description": "Injects the current date and time at the start of every session, so the agent stops guessing what \"today\" means and can reason about recency and deadlines. Also the smallest working turn hook in the catalog, which makes it a good template to copy.",
       "category": "Developer Tools",
+      "keywords": [
+        "context",
+        "date",
+        "time",
+        "hooks"
+      ],
       "icon": "sticky-note-01",
       "iconDither": {
         "from": 359,
@@ -784,8 +939,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Turn your chats into reusable skills",
       "description": "Learning loop: turn chats and runs into reusable skills, gated by the approval Inbox, with an experience log of what was learned.",
       "category": "Knowledge & Memory",
+      "keywords": [
+        "learning",
+        "skills",
+        "memory",
+        "improvement"
+      ],
       "icon": "mortarboard-01",
       "iconDither": {
         "from": 342,
@@ -813,6 +975,12 @@
       "tagline": "Email inboxes for your agents",
       "description": "Agent Inboxes — email as a service for agents. Runs the out-of-process ryu-mail sidecar; Core proxies /api/mail/* to it. Its sandboxed companion is a per-node mail client (list inboxes, read messages, compose/send, create an inbox) driving /api/mail/* via the mail:crud bridge capability.",
       "category": "Communication",
+      "keywords": [
+        "email",
+        "inbox",
+        "communication",
+        "agents"
+      ],
       "icon": "mail-01",
       "iconDither": {
         "from": 279,
@@ -876,8 +1044,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Record, transcribe, and write up your meetings",
       "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable.",
       "category": "Communication",
+      "keywords": [
+        "meetings",
+        "transcription",
+        "notes",
+        "recording"
+      ],
       "icon": "mic-01",
       "iconDither": {
         "from": 318,
@@ -977,8 +1152,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Watch a page and get told when it changes",
       "description": "Website monitors: price, stock, keyword, content, and uptime watches with cross-device notification fan-out.",
       "category": "Developer Tools",
+      "keywords": [
+        "monitoring",
+        "alerts",
+        "uptime",
+        "scraping"
+      ],
       "icon": "radar-01",
       "iconDither": {
         "from": 357,
@@ -1039,8 +1221,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Run long commands without holding the turn open",
       "description": "Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a long-running command does not hold the turn open.",
       "category": "Developer Tools",
+      "keywords": [
+        "shell",
+        "bash",
+        "background",
+        "developer"
+      ],
       "icon": "computer-terminal-02",
       "iconDither": {
         "from": 196,
@@ -1067,8 +1256,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Let the agent delegate work to child agents",
       "description": "Adds the Task tool to the managed Pi agent, so it can delegate a bounded, context-isolated job to a child agent.",
       "category": "Automation",
+      "keywords": [
+        "subagent",
+        "delegation",
+        "automation",
+        "agent"
+      ],
       "icon": "user-multiple-02",
       "iconDither": {
         "from": 12,
@@ -1095,7 +1291,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Stop typing \"continue\" during plan mode",
+      "description": "While plan mode is on and the plan has not been accepted, this injects a follow-up turn after each completed turn asking the agent to carry on planning — so a plan never stalls waiting for you to type \"continue\".",
       "category": "Productivity",
+      "keywords": [
+        "planning",
+        "automation",
+        "loop",
+        "productivity"
+      ],
       "icon": "task-01",
       "iconDither": {
         "from": 198,
@@ -1122,7 +1326,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Ghost-text autocomplete in every text field",
+      "description": "Inline ghost-text autocomplete in any text field on your machine, accepted with Tab. A small companion reads the caret context and asks Core for a completion, and every prediction is routed through the Gateway — so no model id, Gateway URL, or policy ever lives in the companion process. Windows-first.",
       "category": "Automation",
+      "keywords": [
+        "autocomplete",
+        "predictions",
+        "typing",
+        "productivity"
+      ],
       "icon": "ai-magic",
       "iconDither": {
         "from": 249,
@@ -1149,7 +1361,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Keep going until a verifier proves it's done",
+      "description": "The stricter sibling of `/goal`: an independent verifier agent has to prove with tool-gathered evidence that the goal is actually done, rather than judging the transcript alone. The loop runs until that proof lands; `/proof clear` stops it and the verifier model is configurable.",
       "category": "Security",
+      "keywords": [
+        "agent",
+        "verification",
+        "autonomy",
+        "goals"
+      ],
       "icon": "stamp-01",
       "iconDither": {
         "from": 306,
@@ -1176,8 +1396,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Your todos, found for you",
       "description": "Quests: auto-detecting todos surfaced from your chats and activity, tracked as a lightweight quest board with progress and completion.",
       "category": "Productivity",
+      "keywords": [
+        "tasks",
+        "todos",
+        "productivity",
+        "tracking"
+      ],
       "icon": "target-02",
       "iconDither": {
         "from": 294,
@@ -1203,8 +1430,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Record a UI sequence once, replay it forever",
       "description": "Desktop-automation recipes: record → save → replay UI action sequences. Backed by Ghost's RecipeStore, so it declares Ghost as a dependency and the graph refuses to disable Ghost out from under it.",
       "category": "Automation",
+      "keywords": [
+        "automation",
+        "recipes",
+        "desktop",
+        "replay"
+      ],
       "icon": "repeat",
       "iconDither": {
         "from": 231,
@@ -1231,8 +1465,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Multi-step web research with cited sources",
       "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports. Declares the out-of-process ryu-research sidecar (a thin Rust proxy that forwards /api/research/* to the Python autoresearch engine on :8087); Core reaches it via the generic ext-proxy loader.",
       "category": "Research",
+      "keywords": [
+        "research",
+        "web",
+        "reports",
+        "sources"
+      ],
       "icon": "microscope",
       "iconDither": {
         "from": 333,
@@ -1262,6 +1503,12 @@
       "tagline": "Token-compress noisy dev-command output for agents",
       "description": "Run a dev command through RTK (Rust Token Killer) and get a token-compressed version of its output (60-90% fewer tokens), exposed as a declarative `command` tool that shells out to the locally-installed `rtk` binary. BYO — no API key.",
       "category": "Developer Tools",
+      "keywords": [
+        "tokens",
+        "cli",
+        "developer",
+        "compression"
+      ],
       "icon": "computer-terminal-01",
       "iconDither": {
         "from": 345,
@@ -1288,7 +1535,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Reference plugin: one of every runnable kind",
+      "description": "The reference plugin: a minimal example that declares one of each runnable kind — an agent, a workflow, a tool, and a skill — plus a companion window. It does nothing useful on purpose, and ships hidden. Copy this directory as the starting point for your own plugin.",
       "category": "Developer Tools",
+      "keywords": [
+        "example",
+        "reference",
+        "developer",
+        "template"
+      ],
       "icon": "book-search",
       "iconDither": {
         "from": 243,
@@ -1316,8 +1571,16 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Reference plugin: an inline chat widget",
       "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget__render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
       "category": "Developer Tools",
+      "keywords": [
+        "example",
+        "reference",
+        "developer",
+        "widget",
+        "mcp"
+      ],
       "icon": "puzzle",
       "iconDither": {
         "from": 282,
@@ -1379,7 +1642,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Catch vulnerabilities before you ship them",
+      "description": "Scans each answer for security vulnerabilities and has a second model review the code before you ship it. Off until you flip the Security review toggle in the composer, or run `/security` for a one-off review of the last answer; the reviewer model is configurable.",
       "category": "Security",
+      "keywords": [
+        "security",
+        "review",
+        "code",
+        "vulnerabilities"
+      ],
       "icon": "shield-key",
       "iconDither": {
         "from": 320,
@@ -1477,6 +1748,13 @@
       "tagline": "iOS Simulator & Android Emulator control for agents",
       "description": "Drive iOS Simulators (macOS + Xcode) and Android Emulators from a workspace tab. Ryu runs the device-control toolchain (`simctl`, `adb`) as a local sidecar and exposes the grant-gated `simulator.control` capability: list/boot devices, install & launch apps, open deep links, screenshot, and (Android) tap/swipe/type. The desktop Simulator panel shows whichever platform the connected node supports.",
       "category": "Developer Tools",
+      "keywords": [
+        "ios",
+        "android",
+        "simulator",
+        "emulator",
+        "mobile"
+      ],
       "icon": "smart-phone-01",
       "iconDither": {
         "from": 11,
@@ -1501,8 +1779,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Write and version your own agent skills",
       "description": "Author a user-owned Agent Skill (SKILL.md): front-matter fields (name / description / allowed tools / always-on), a markdown body editor, debounced autosave, and server-backed undoable version history.",
       "category": "Developer Tools",
+      "keywords": [
+        "skills",
+        "authoring",
+        "editor",
+        "developer"
+      ],
       "icon": "sparkles",
       "iconDither": {
         "from": 308,
@@ -1628,8 +1913,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Address a group of agents as one",
       "description": "Teams: named groups of agents you can address as one. Governance shell over the in-crate teams store (agent-id membership only); no documents, no external dependencies. Runs the out-of-process ryu-teams sidecar; Core proxies /api/teams/* to it.",
       "category": "Communication",
+      "keywords": [
+        "teams",
+        "agents",
+        "collaboration",
+        "groups"
+      ],
       "icon": "user-group",
       "iconDither": {
         "from": 245,
@@ -1656,8 +1948,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Scrub back through everything your screen did",
       "description": "The activity replay timeline: a CapCut-style scrubber over Shadow's captured screen/input/window/audio lanes with a keyframe preview, a Dayflow work journal, and jump-to-moment focus.",
       "category": "Productivity",
+      "keywords": [
+        "timeline",
+        "replay",
+        "screen",
+        "journal"
+      ],
       "icon": "timeline",
       "iconDither": {
         "from": 347,
@@ -1682,7 +1981,15 @@
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Reference plugin: block destructive tool calls",
+      "description": "A worked reference for pre- and post-tool hooks: the pre hook denies any tool call whose input matches a destructive pattern (`rm -rf`, `DROP TABLE`, `mkfs`), and the post hook notes what each tool returned. The pattern set is deliberately tiny — copy this directory as the starting point for your own tool policy.",
       "category": "Security",
+      "keywords": [
+        "security",
+        "tools",
+        "hooks",
+        "example"
+      ],
       "icon": "shield-ban",
       "iconDither": {
         "from": 14,
@@ -1745,8 +2052,16 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Speech in, speech out",
       "description": "Voice data path: speech-to-text transcription (whisper.cpp) and text-to-speech (OuteTTS + the universal Ryu TTS sidecar), plus the installable TTS model catalog. Governance shell over the in-crate voice module.",
       "category": "Media & Voice",
+      "keywords": [
+        "voice",
+        "tts",
+        "stt",
+        "speech",
+        "transcription"
+      ],
       "icon": "audio-wave-01",
       "iconDither": {
         "from": 221,
@@ -1773,8 +2088,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Open your usage windows before you sit down",
       "description": "Starts your subscription agents' rolling usage windows on your own schedule: a one-word ping to each subscription agent, on its cheapest model, at the times of day you choose (05:00 / 10:00 / 15:00 / 20:00 by default) — so a window is already open when you sit down to work.",
       "category": "Automation",
+      "keywords": [
+        "scheduling",
+        "subscriptions",
+        "usage",
+        "automation"
+      ],
       "icon": "sun-03",
       "iconDither": {
         "from": 323,
@@ -1800,8 +2122,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "See every inbound webhook this node answers",
       "description": "Inbound webhook endpoint registry: resolved public URLs, secret presence, last-delivery times, and the ingress backend status.",
       "category": "Automation",
+      "keywords": [
+        "webhooks",
+        "integrations",
+        "ingress",
+        "automation"
+      ],
       "icon": "webhook",
       "iconDither": {
         "from": 260,
@@ -1827,7 +2156,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Draw and diagram, saved into your Spaces",
+      "description": "An Excalidraw whiteboard shipped as a Ryu app: draw, diagram, and rearrange freely, with Mermaid-to-Excalidraw bundled so a diagram can be imported straight from text. Each board persists as a Space document, so it stays editable, shareable, and searchable.",
       "category": "Creative",
+      "keywords": [
+        "whiteboard",
+        "drawing",
+        "diagrams",
+        "excalidraw"
+      ],
       "icon": "shapes",
       "iconDither": {
         "from": 2,
@@ -1853,8 +2190,15 @@
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "tagline": "Automate anything as a durable DAG",
       "description": "Workflows: petgraph DAG automation with triggers, durable execution, and a natural-language workflow builder.",
       "category": "Automation",
+      "keywords": [
+        "workflows",
+        "automation",
+        "dag",
+        "triggers"
+      ],
       "icon": "workflow-square-01",
       "iconDither": {
         "from": 299,

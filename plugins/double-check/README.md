@@ -1,5 +1,5 @@
 # Double Check
 
-A Ryu plugin.
+Sends every answer to a second model for review before you act on it, so mistakes get caught by a fresh set of eyes. Off until you flip the Double-check toggle in the composer; the reviewer model is configurable in settings.
 
-Declarative Ryu plugin (no UI, no Core Rust). Definition lives in `manifest.json`; a byte-identical copy is registered built-in in Core (`apps/core/src/plugin_manifest/fixtures/double-check.manifest.json`). Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.
+Definition lives in `manifest.json`, its sandboxed hook body in `hooks/review.js`; Core compiles both in from this package directory. Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.

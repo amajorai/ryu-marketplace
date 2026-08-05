@@ -1,5 +1,5 @@
 # Session Context
 
-A Ryu plugin.
+Injects the current date and time at the start of every session, so the agent stops guessing what "today" means and can reason about recency and deadlines. Also the smallest working turn hook in the catalog, which makes it a good template to copy.
 
-Declarative Ryu plugin (no UI, no Core Rust). Definition lives in `manifest.json`; a byte-identical copy is registered built-in in Core (`apps/core/src/plugin_manifest/fixtures/hook-session-context.manifest.json`). Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.
+Definition lives in `manifest.json`, its sandboxed hook body in `hooks/start.js`; Core compiles both in from this package directory. Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.

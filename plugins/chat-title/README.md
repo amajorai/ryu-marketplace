@@ -1,5 +1,5 @@
 # Chat Title
 
-Auto-renames chats after every N completed assistant turns (default 5), keeps a Core-side title history, and exposes settings for enablement / frequency / model.
+Auto-renames a chat after every N completed assistant turns (default 5) using a side model, and keeps a Core-side history of the names it chose so you can see how a conversation drifted. Enablement, frequency, and the model to use are all settings.
 
-Declarative Ryu plugin (no UI, no Core Rust beyond the host bridge). Definition lives in `manifest.json`; a byte-identical copy is registered built-in in Core (`apps/core/src/plugin_manifest/fixtures/chat-title.manifest.json`). Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.
+Definition lives in `manifest.json`, its sandboxed hook body in `hooks/rename.js`; Core compiles both in from this package directory. Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.

@@ -1,6 +1,7 @@
 # Subagents
 
-A Ryu plugin.
+Adds the Task tool to the managed Pi agent, so it can delegate a bounded,
+context-isolated job to a child agent.
 
 Ships one **Pi extension** (`contributes.pi_extensions`): `pi-extensions/ryu-subagent.ts`
 registers a tool named exactly `Task` on the managed `ryu` (Pi) agent, so it can delegate
