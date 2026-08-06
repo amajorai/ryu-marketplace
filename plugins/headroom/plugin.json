@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.headroom",
+  "version": "1.0.0",
+  "description": "Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens, reversible retrieval. Requires headroom-ai[mcp].",
+  "keywords": [
+    "context",
+    "compression"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/headroom",
+      "displayName": "Headroom Compression"
+    }
+  }
+}

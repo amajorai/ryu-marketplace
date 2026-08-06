@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.double-check",
+  "version": "1.0.0",
+  "description": "Sends every answer to a second model for review before you act on it, so mistakes get caught by a fresh set of eyes. Off until you flip the Double-check toggle in the composer; the reviewer model is configurable in settings.",
+  "keywords": [
+    "review",
+    "verification",
+    "quality",
+    "accuracy"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/double-check",
+      "displayName": "Double Check"
+    }
+  }
+}

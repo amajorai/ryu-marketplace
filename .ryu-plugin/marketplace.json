@@ -1180,6 +1180,42 @@
       }
     },
     {
+      "name": "output-styles",
+      "displayName": "Output Styles",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Change how the agent talks, not what it knows",
+      "description": "The six built-in output styles — ELI5, I have ADHD, Explanatory, Learning, Proactive and Plain text. A style is appended to (or replaces) the agent's base instructions for the turn, so it changes how the agent talks — role, tone, default response shape — and never what it knows, which tools it has, or which model runs. Pick one in the composer; browse them in the Store's Output Styles tab.",
+      "category": "Productivity",
+      "keywords": [
+        "output-style",
+        "tone",
+        "prompt",
+        "accessibility",
+        "writing"
+      ],
+      "icon": "quill-write-01",
+      "iconDither": {
+        "from": 150,
+        "to": 184,
+        "direction": "up"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "parallel",
       "displayName": "Parallel Search",
       "version": "1.0.0",
