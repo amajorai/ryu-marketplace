@@ -24,7 +24,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (33)
+## First-party plugins (34)
 
 - [`advisor`](./plugins/advisor/) — see [plugins/advisor/README.md](./plugins/advisor/README.md)
 - [`agentbrowser`](./plugins/agentbrowser/) — see [plugins/agentbrowser/README.md](./plugins/agentbrowser/README.md)
@@ -48,6 +48,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 - [`pi-subagent`](./plugins/pi-subagent/) — see [plugins/pi-subagent/README.md](./plugins/pi-subagent/README.md)
 - [`plan-continue`](./plugins/plan-continue/) — see [plugins/plan-continue/README.md](./plugins/plan-continue/README.md)
 - [`proof`](./plugins/proof/) — see [plugins/proof/README.md](./plugins/proof/README.md)
+- [`pxpipe`](./plugins/pxpipe/) — see [plugins/pxpipe/README.md](./plugins/pxpipe/README.md)
 - [`rtk`](./plugins/rtk/) — see [plugins/rtk/README.md](./plugins/rtk/README.md)
 - [`sample-widget`](./plugins/sample-widget/) — see [plugins/sample-widget/README.md](./plugins/sample-widget/README.md)
 - [`sample`](./plugins/sample/) — see [plugins/sample/README.md](./plugins/sample/README.md)
