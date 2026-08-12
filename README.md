@@ -24,9 +24,10 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (38)
+## First-party plugins (39)
 
 - [`advisor`](./plugins/advisor/) — see [plugins/advisor/README.md](./plugins/advisor/README.md)
+- [`agent-comms`](./plugins/agent-comms/) — see [plugins/agent-comms/README.md](./plugins/agent-comms/README.md)
 - [`agentbrowser`](./plugins/agentbrowser/) — see [plugins/agentbrowser/README.md](./plugins/agentbrowser/README.md)
 - [`brave`](./plugins/brave/) — see [plugins/brave/README.md](./plugins/brave/README.md)
 - [`bytebot`](./plugins/bytebot/) — see [plugins/bytebot/README.md](./plugins/bytebot/README.md)

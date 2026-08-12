@@ -78,6 +78,42 @@
       }
     },
     {
+      "name": "agent-comms",
+      "displayName": "Switchboard",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Your agents can message each other",
+      "description": "Lets the agents on this node talk to each other. Any agent can look up who else is here, leave one of them a message, or ask one a question and wait for the answer — so \"ask the research agent what it found\" becomes a real message to a real agent instead of a guess. A message is delivered at the start of the recipient's next turn, and each pair keeps its own history, so the second question does not repeat the first. Works with every agent Ryu can run — the flagship agent, Claude Code, Codex, and any custom agent you have added — because it ships as ordinary tools rather than one agent's private feature. Bounded on purpose: a chain stops after one relay, an agent cannot ask itself, and a pair cannot deadlock waiting on each other.",
+      "category": "Automation",
+      "keywords": [
+        "agents",
+        "messaging",
+        "delegation",
+        "inbox",
+        "multi-agent"
+      ],
+      "icon": "message-multiple-01",
+      "iconDither": {
+        "from": 180,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "agent-status",
       "displayName": "Agent Status",
       "version": "1.0.0",
