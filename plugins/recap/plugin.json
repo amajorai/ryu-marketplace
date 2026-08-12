@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.recap",
+  "version": "1.0.0",
+  "description": "Ends a long agent turn with a short recap of what it actually did — the work, the files and commands it named, what it could not finish, and the obvious next step — written by a side model so the main answer is left untouched. `/recap` recaps the whole conversation on demand without spending a turn on the main model.",
+  "keywords": ["recap", "summary", "review", "productivity", "turn"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/recap",
+      "displayName": "Recap"
+    }
+  }
+}

@@ -24,7 +24,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (34)
+## First-party plugins (38)
 
 - [`advisor`](./plugins/advisor/) — see [plugins/advisor/README.md](./plugins/advisor/README.md)
 - [`agentbrowser`](./plugins/agentbrowser/) — see [plugins/agentbrowser/README.md](./plugins/agentbrowser/README.md)
@@ -42,6 +42,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 - [`hook-observers`](./plugins/hook-observers/) — see [plugins/hook-observers/README.md](./plugins/hook-observers/README.md)
 - [`hook-session-context`](./plugins/hook-session-context/) — see [plugins/hook-session-context/README.md](./plugins/hook-session-context/README.md)
 - [`mem0`](./plugins/mem0/) — see [plugins/mem0/README.md](./plugins/mem0/README.md)
+- [`no-ai-slop`](./plugins/no-ai-slop/) — see [plugins/no-ai-slop/README.md](./plugins/no-ai-slop/README.md)
 - [`output-styles`](./plugins/output-styles/) — see [plugins/output-styles/README.md](./plugins/output-styles/README.md)
 - [`parallel`](./plugins/parallel/) — see [plugins/parallel/README.md](./plugins/parallel/README.md)
 - [`pi-shell`](./plugins/pi-shell/) — see [plugins/pi-shell/README.md](./plugins/pi-shell/README.md)
@@ -49,6 +50,8 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 - [`plan-continue`](./plugins/plan-continue/) — see [plugins/plan-continue/README.md](./plugins/plan-continue/README.md)
 - [`proof`](./plugins/proof/) — see [plugins/proof/README.md](./plugins/proof/README.md)
 - [`pxpipe`](./plugins/pxpipe/) — see [plugins/pxpipe/README.md](./plugins/pxpipe/README.md)
+- [`recap`](./plugins/recap/) — see [plugins/recap/README.md](./plugins/recap/README.md)
+- [`receipts`](./plugins/receipts/) — see [plugins/receipts/README.md](./plugins/receipts/README.md)
 - [`rtk`](./plugins/rtk/) — see [plugins/rtk/README.md](./plugins/rtk/README.md)
 - [`sample-widget`](./plugins/sample-widget/) — see [plugins/sample-widget/README.md](./plugins/sample-widget/README.md)
 - [`sample`](./plugins/sample/) — see [plugins/sample/README.md](./plugins/sample/README.md)
@@ -60,3 +63,4 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 - [`spidercloud`](./plugins/spidercloud/) — see [plugins/spidercloud/README.md](./plugins/spidercloud/README.md)
 - [`tavily`](./plugins/tavily/) — see [plugins/tavily/README.md](./plugins/tavily/README.md)
 - [`tool-firewall`](./plugins/tool-firewall/) — see [plugins/tool-firewall/README.md](./plugins/tool-firewall/README.md)
+- [`toolsmith-example`](./plugins/toolsmith-example/) — see [plugins/toolsmith-example/README.md](./plugins/toolsmith-example/README.md)

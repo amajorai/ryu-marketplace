@@ -110,6 +110,7 @@ test("declares required grants and settings", () => {
 	assert.equal(tab.scope, "node");
 	const keys = tab.fields.map((f) => f.pref_key);
 	assert.ok(keys.includes("auto-title-enabled"));
+	assert.ok(keys.includes("auto-title-on-first-turn"));
 	assert.ok(keys.includes("auto-title-every-n"));
 	assert.ok(keys.includes("auto-title-model"));
 });
@@ -141,6 +142,26 @@ test("renames on the 5th assistant turn by default", async () => {
 	assert.equal(host.calls.setTitle[0].id, "conv-123");
 	assert.equal(host.calls.setTitle[0].mode, "auto");
 	assert.equal(host.calls.setTitle[0].title, "Centering a div");
+});
+
+test("renames on the first assistant turn by default", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost();
+	const out = await run(makeCtx(1), host);
+	assert.deepEqual(out, { kind: "none" });
+	assert.equal(host.calls.sideModel.length, 1);
+	assert.equal(host.calls.setTitle.length, 1);
+	assert.equal(host.calls.setTitle[0].mode, "auto");
+});
+
+test("first-turn rename can be turned off without touching the interval", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost({ prefs: { "auto-title-on-first-turn": "false" } });
+	assert.deepEqual(await run(makeCtx(1), host), { kind: "none" });
+	assert.equal(host.calls.sideModel.length, 0);
+	// The every-5 cadence still applies.
+	await run(makeCtx(5), host);
+	assert.equal(host.calls.sideModel.length, 1);
 });
 
 test("every-n=1 renames every turn", async () => {

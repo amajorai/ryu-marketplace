@@ -29,8 +29,8 @@
       "icon": "activity-03",
       "iconDither": {
         "from": 210,
-        "to": 244,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "desktop",
@@ -61,8 +61,8 @@
       "icon": "bulb",
       "iconDither": {
         "from": 261,
-        "to": 295,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -120,8 +120,8 @@
       "icon": "ai-browser",
       "iconDither": {
         "from": 3,
-        "to": 329,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -155,10 +155,48 @@
       "icon": "shield-01",
       "iconDither": {
         "from": 312,
-        "to": 346,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "blueprint",
+      "displayName": "Blueprint",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Read the plan as a graph, mark it up, and send back a verdict the agent can act on",
+      "description": "Review an agent's plan before it touches a file. The agent publishes its plan over MCP; Blueprint parses the markdown into addressable blocks and renders it next to a dependency graph derived from the steps' own `depends_on` edges — so the two questions a wall of markdown cannot answer become visible at a glance: what actually has to happen first, and which step is the one everything else is waiting on. A plan reads as a sequence because prose is a sequence; the work almost never is. You annotate what you object to, anchored to the block or step it belongs to — a comment, a redline carrying the replacement text you want, a question, or a blocker — and then approve or request changes. The verdict is not a mood: it is a document. Requesting changes serializes every annotation into deterministic text the agent reads back through `blueprint__plan_status`, each finding naming the step or block it attaches to and, for a redline, the exact substitution proposed, so a revision answers what was actually written rather than what a summary of it sounded like. Re-publishing under the same plan id appends a revision instead of creating a new plan, and block ids are content-stable across revisions, so the second draft arrives as a diff against the first — the paragraphs you already read are still the paragraphs you already read.",
+      "category": "Developer Tools",
+      "keywords": [
+        "planning",
+        "review",
+        "annotation",
+        "dependency-graph",
+        "approval",
+        "code-review",
+        "human-in-the-loop",
+        "markdown"
+      ],
+      "icon": "structure-check",
+      "iconDither": {
+        "from": 174,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
         "desktop",
         "island",
         "mobile",
@@ -186,7 +224,7 @@
       "icon": "svgl:brave",
       "iconDither": {
         "from": 300,
-        "to": 334,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -221,8 +259,8 @@
       "icon": "browser",
       "iconDither": {
         "from": 351,
-        "to": 317,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -254,8 +292,8 @@
       ],
       "iconDither": {
         "from": 237,
-        "to": 271,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/154629106?v=4",
       "surfaces": [
@@ -290,8 +328,8 @@
       "icon": "calendar-04",
       "iconDither": {
         "from": 288,
-        "to": 322,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "desktop",
@@ -324,8 +362,8 @@
       "icon": "ai-image",
       "iconDither": {
         "from": 225,
-        "to": 259,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "desktop",
@@ -346,7 +384,7 @@
       "source": "builtin",
       "builtin": true,
       "tagline": "Names your chats for you, automatically",
-      "description": "Auto-renames a chat after every N completed assistant turns (default 5) using a side model, and keeps a Core-side history of the names it chose so you can see how a conversation drifted. Enablement, frequency, and the model to use are all settings.",
+      "description": "Auto-renames a chat as soon as the first reply lands, then again after every N completed assistant turns (default 5), using a side model — and keeps a Core-side history of the names it chose so you can see how a conversation drifted. Enablement, the first-turn rename, frequency, and the model to use are all settings.",
       "category": "Productivity",
       "keywords": [
         "chat",
@@ -357,8 +395,8 @@
       "icon": "bubble-chat-edit",
       "iconDither": {
         "from": 339,
-        "to": 13,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -392,7 +430,7 @@
       "icon": "film-01",
       "iconDither": {
         "from": 327,
-        "to": 1,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -401,6 +439,41 @@
         "island",
         "mobile",
         "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "crm",
+      "displayName": "Harbor",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Your pipeline, your schema, your machine",
+      "description": "A CRM that starts as a data model rather than a fixed set of screens. Harbor ships the five objects every pipeline needs — companies, people, deals, notes, tasks — and then gets out of the way: add your own objects, give any of them typed fields (currency, status, rating, multi-select, or a relation to another object), and every view, filter, board, and report picks them up without a migration or a settings trip. Records are validated value bags, so a `stage` that used to be free text can become a status field with colours and the old rows keep working. Relations are materialised as real edges in both directions, which is why a company page can show its people, its open deals, and every note anyone wrote against any of them without you modelling the reverse side. Each record carries one unified timeline — notes, calls, meetings, tasks, and the field and stage changes the store writes itself — so \"what happened with this account\" is one read, not four. CSV import is a first-class flow, not an afterthought: drop a file, see inferred columns with sampled values, map each to an existing field or make a new one, pick a dedupe key, then read a dry run that tells you exactly how many rows would be created, updated, and skipped before anything is written. Duplicates get found and merged field by field, with activities, list memberships, and relation edges reparented onto the survivor. Everything lives in one SQLite database the node owns, indexed with FTS5 for search, and the whole app runs as a sidecar process reached over loopback — no cloud tenant, no seat count, and no third party holding your pipeline.",
+      "category": "Productivity",
+      "keywords": [
+        "crm",
+        "contacts",
+        "pipeline",
+        "deals",
+        "sales"
+      ],
+      "icon": "user-group",
+      "iconDither": {
+        "from": 205,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
         "web",
         "cli"
       ],
@@ -427,8 +500,8 @@
       "icon": "dashboard-square-01",
       "iconDither": {
         "from": 264,
-        "to": 298,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -461,8 +534,8 @@
       "icon": "voice",
       "iconDither": {
         "from": 6,
-        "to": 332,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -500,8 +573,8 @@
       "icon": "document-attachment",
       "iconDither": {
         "from": 303,
-        "to": 337,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -535,8 +608,8 @@
       "icon": "tick-double-01",
       "iconDither": {
         "from": 276,
-        "to": 310,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -546,6 +619,34 @@
         "extension",
         "web",
         "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "drafts",
+      "displayName": "Drafts",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Every unsent message, kept and queued until it can go",
+      "description": "A durable outbox for messages you have not sent yet. Anything you type into a composer and walk away from is kept as a draft instead of being lost with the tab, and every draft lives in one node-wide store rather than inside the chat it happened to be typed in — so it survives closing the conversation, restarting the app, and moving to another project. A draft can also be armed: give it a condition and it sends itself when the condition holds. The two conditions that exist are the two that actually block work — 'fewer than N agents are running' (so a queued prompt starts the moment a slot frees instead of piling onto a machine already at capacity) and 'this agent's usage window has room again' (so a prompt written against a capped subscription goes out when the cap lifts rather than failing on send). Both are evaluated against readings the app takes from this node, and a draft whose condition never becomes true simply stays a draft — nothing is sent on a guess.",
+      "category": "Productivity",
+      "keywords": [
+        "drafts",
+        "queue",
+        "outbox",
+        "composer",
+        "scheduling",
+        "usage-limits",
+        "concurrency"
+      ],
+      "icon": "lucide:file-pen-line",
+      "surfaces": [
+        "core",
+        "desktop"
       ],
       "engines": {
         "ryu": ">=0.1.0"
@@ -567,7 +668,7 @@
       ],
       "iconDither": {
         "from": 213,
-        "to": 247,
+        "to": "transparent",
         "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/77906174?v=4",
@@ -604,7 +705,7 @@
       "icon": "ai-brain-01",
       "iconDither": {
         "from": 240,
-        "to": 274,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -638,8 +739,8 @@
       "icon": "svgl:firecrawl|firecrawl-dark",
       "iconDither": {
         "from": 315,
-        "to": 349,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -674,8 +775,8 @@
       "icon": "firewall",
       "iconDither": {
         "from": 252,
-        "to": 286,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -707,8 +808,8 @@
       "icon": "cursor-01",
       "iconDither": {
         "from": 354,
-        "to": 320,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -742,7 +843,7 @@
       "icon": "flag-03",
       "iconDither": {
         "from": 291,
-        "to": 325,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -775,8 +876,8 @@
       "icon": "arrow-shrink-02",
       "iconDither": {
         "from": 228,
-        "to": 262,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -810,8 +911,8 @@
       "icon": "health",
       "iconDither": {
         "from": 270,
-        "to": 304,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -845,8 +946,8 @@
       ],
       "iconDither": {
         "from": 330,
-        "to": 4,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/123981229?v=4",
       "surfaces": [
@@ -881,8 +982,8 @@
       "icon": "eye",
       "iconDither": {
         "from": 267,
-        "to": 301,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -916,7 +1017,7 @@
       "icon": "sticky-note-01",
       "iconDither": {
         "from": 359,
-        "to": 325,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -951,8 +1052,8 @@
       "icon": "mortarboard-01",
       "iconDither": {
         "from": 342,
-        "to": 308,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "desktop",
@@ -984,8 +1085,8 @@
       "icon": "mail-01",
       "iconDither": {
         "from": 279,
-        "to": 313,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1021,8 +1122,8 @@
       "icon": "text-align-left",
       "iconDither": {
         "from": 216,
-        "to": 250,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1056,7 +1157,7 @@
       "icon": "mic-01",
       "iconDither": {
         "from": 318,
-        "to": 352,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -1089,7 +1190,7 @@
       ],
       "iconDither": {
         "from": 9,
-        "to": 335,
+        "to": "transparent",
         "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/137054526?v=4",
@@ -1129,8 +1230,8 @@
       "icon": "pdf-01",
       "iconDither": {
         "from": 255,
-        "to": 289,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1138,6 +1239,41 @@
         "island",
         "mobile",
         "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "mission-control",
+      "displayName": "Mission Control",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "What every chat did, and what is still open",
+      "description": "The project-level view over many chats: recent sessions and what each one accomplished, per-day activity, the files several chats keep returning to, and the to-dos left outstanding in threads nobody reopened. Declares the out-of-process ryu-mission-control sidecar (kind:local), which owns the digest store and the cross-chat rollup and is served to the desktop through the generic ext-proxy public_mount. The digests themselves are computed in the desktop from each chat's message parts and PUT here, because a manifest sidecar has no conversation read and the parts column is sealed at rest — the same function feeds the in-chat Mission Control panel, so a chat's summary is identical in both places.",
+      "category": "Productivity",
+      "keywords": [
+        "dashboard",
+        "summary",
+        "history",
+        "tasks",
+        "review"
+      ],
+      "icon": "radar-01",
+      "iconDither": {
+        "from": 201,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
         "web",
         "cli"
       ],
@@ -1164,14 +1300,88 @@
       "icon": "radar-01",
       "iconDither": {
         "from": 357,
-        "to": 323,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
         "desktop",
         "island",
         "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "news",
+      "displayName": "Wire",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Every outlet covering the same story, collapsed into one",
+      "description": "Your own newsroom, running on your node. Wire pulls RSS, Atom and JSON Feed in on a schedule — parsed natively, with conditional GET, per-source backoff, and a source marked `failing` after three consecutive misses rather than quietly going silent — then does the work an aggregator does for you and never shows its working. Duplicates die twice: URLs are canonicalized (redirects followed, `utm_*` and friends stripped, query pairs sorted) and content is fingerprinted with a banded 64-bit SimHash over word shingles, which is what catches one wire story running under six different headlines on six different sites. What survives is clustered across outlets by shingle similarity, entity overlap and title overlap, so the unit you read is a story with *n* sources attached and a visible spread of framings, not the same paragraph six times. A watch is a real boolean query — `AND` / `OR` / `NOT`, phrases, `title:` and `source:` scoping — parsed to an AST and evaluated against tokenized text, and it refuses to save on a parse error with the column, because a watch that silently matches nothing is worse than one that will not save. Breaking is defined, not guessed: a topic's hourly volume against a baseline built from the same hour of day over the trailing week, carrying its z-score and the articles that caused it. Ranking is recency half-life × source count × topic match × unread, every factor displayable. A model is involved in exactly two places — two sentences per cluster in the brief, and one neutral headline for a story eight outlets titled eight ways — and the raw cluster stays inspectable underneath both. Nothing leaves the node but the fetches, and those go to the sources you added.",
+      "category": "Productivity",
+      "keywords": [
+        "news",
+        "rss",
+        "atom",
+        "feeds",
+        "briefing",
+        "monitoring",
+        "clustering",
+        "dedupe"
+      ],
+      "icon": "news",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "no-ai-slop",
+      "displayName": "No AI Slop",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Every answer edited until it stops sounding like AI",
+      "description": "Bundles the `no-ai-slop` editing skill and runs it on every finished answer: a separate reviewer with a fresh context reads the reply, names the AI-slop patterns it finds, and the agent rewrites the answer to fix them. One pass by default, configurable up to twelve, or set to 0 and trigger it by hand from the composer '+' menu. A clean answer is left alone silently.",
+      "category": "Productivity",
+      "keywords": [
+        "writing",
+        "editing",
+        "quality",
+        "style",
+        "turn"
+      ],
+      "icon": "text-align-left",
+      "iconDither": {
+        "from": 264,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
         "web",
         "cli"
       ],
@@ -1199,8 +1409,8 @@
       "icon": "quill-write-01",
       "iconDither": {
         "from": 150,
-        "to": 184,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1233,7 +1443,7 @@
       ],
       "iconDither": {
         "from": 168,
-        "to": 202,
+        "to": "transparent",
         "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/210743255?v=4",
@@ -1269,8 +1479,8 @@
       "icon": "computer-terminal-02",
       "iconDither": {
         "from": 196,
-        "to": 232,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1304,7 +1514,7 @@
       "icon": "user-multiple-02",
       "iconDither": {
         "from": 12,
-        "to": 46,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -1339,7 +1549,7 @@
       "icon": "task-01",
       "iconDither": {
         "from": 198,
-        "to": 232,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -1374,7 +1584,7 @@
       "icon": "ai-magic",
       "iconDither": {
         "from": 249,
-        "to": 283,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -1409,8 +1619,8 @@
       "icon": "stamp-01",
       "iconDither": {
         "from": 306,
-        "to": 340,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1445,8 +1655,8 @@
       "icon": "ai-image",
       "iconDither": {
         "from": 24,
-        "to": 288,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1480,14 +1690,126 @@
       "icon": "target-02",
       "iconDither": {
         "from": 294,
-        "to": 328,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
         "desktop",
         "island",
         "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "reasoning",
+      "displayName": "Automated Reasoning",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Prove the answer follows the policy — or find the counterexample",
+      "description": "Check an answer against a written policy with a solver instead of a second opinion. Point it at a document — an HR handbook, a refund policy, an underwriting rule sheet — and it drafts a formal model of it: typed variables and rules you can read and edit in plain language. From then on, a question and an answer are translated into logic and decided by a decision procedure built from scratch here (finite-domain enumeration over booleans and enums, Fourier–Motzkin elimination over linear rational arithmetic, branch-and-bound for integers). The result is not a score: `valid` means the policy PROVES the answer, `invalid` means it CONTRADICTS it and comes with a concrete counterexample, `satisfiable` means the policy simply does not settle it, and `impossible` means the policy contradicts itself — the case a naive checker silently reports as approval. Every finding names the minimal set of rules that decided it, the facts the answer quietly assumed, and what would have had to be different, all read back out of the solver rather than written by a model. Exact rational arithmetic throughout, so a rule about 0.1 + 0.2 does not fail on floating point. Model calls happen only at the two language edges; the verdict is reproducible offline from the formulas.",
+      "category": "Security",
+      "keywords": [
+        "hallucination",
+        "verification",
+        "policy",
+        "formal-methods",
+        "solver",
+        "compliance",
+        "guardrails",
+        "logic"
+      ],
+      "icon": "checkmark-badge-03",
+      "iconDither": {
+        "from": 292,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "recap",
+      "displayName": "Recap",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "A short recap of what the agent just did",
+      "description": "Ends a long agent turn with a short recap of what it actually did — the work, the files and commands it named, what it could not finish, and the obvious next step — written by a side model so the main answer is left untouched. Long turns only by default (short answers recap themselves). `/recap` recaps the whole conversation on demand without spending a turn on the main model; `/recap off` mutes the automatic one for that chat.",
+      "category": "Productivity",
+      "keywords": [
+        "recap",
+        "summary",
+        "review",
+        "productivity",
+        "turn"
+      ],
+      "icon": "note-01",
+      "iconDither": {
+        "from": 24,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "receipts",
+      "displayName": "Receipts",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "No claim ships without a screenshot",
+      "description": "Verify work with visual evidence: `/receipt <goal>` makes the agent capture a screenshot or screen recording of the thing actually working, then an INDEPENDENT verifier agent opens that artifact and judges what it can SEE against the goal. Where `/proof` verifies by re-reading the workspace, this one requires a durable artifact a human can look at afterwards. Resubmitting an old capture does not count. `/receipt clear` stops the loop.",
+      "category": "Security",
+      "keywords": [
+        "verify",
+        "work",
+        "evidence",
+        "screenshot",
+        "recording",
+        "proof",
+        "agent"
+      ],
+      "icon": "eye",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
         "web",
         "cli"
       ],
@@ -1514,7 +1836,7 @@
       "icon": "repeat",
       "iconDither": {
         "from": 231,
-        "to": 265,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -1549,8 +1871,8 @@
       "icon": "microscope",
       "iconDither": {
         "from": 333,
-        "to": 7,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1584,8 +1906,8 @@
       "icon": "computer-terminal-01",
       "iconDither": {
         "from": 345,
-        "to": 311,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1619,8 +1941,8 @@
       "icon": "book-search",
       "iconDither": {
         "from": 243,
-        "to": 277,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1656,7 +1978,7 @@
       "icon": "puzzle",
       "iconDither": {
         "from": 282,
-        "to": 316,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -1690,8 +2012,8 @@
       ],
       "iconDither": {
         "from": 219,
-        "to": 253,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/20604835?v=4",
       "surfaces": [
@@ -1726,8 +2048,8 @@
       "icon": "shield-key",
       "iconDither": {
         "from": 320,
-        "to": 354,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1761,8 +2083,8 @@
       "icon": "google",
       "iconDither": {
         "from": 257,
-        "to": 291,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1794,8 +2116,8 @@
       "icon": "record",
       "iconDither": {
         "from": 296,
-        "to": 330,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -1830,8 +2152,8 @@
       "icon": "smart-phone-01",
       "iconDither": {
         "from": 11,
-        "to": 337,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "desktop",
@@ -1863,10 +2185,45 @@
       "icon": "sparkles",
       "iconDither": {
         "from": 308,
-        "to": 342,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "social",
+      "displayName": "Outpost",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Schedule, publish, and reply across every account",
+      "description": "A publishing command center for every social account you run: compose once, tailor per platform, queue it on a calendar, and let the node publish while you are away. Scheduled posts, a retrying publish queue, a unified reply inbox, engagement history, and reusable post templates — all in one local SQLite database the node owns.",
+      "category": "Productivity",
+      "keywords": [
+        "social",
+        "scheduling",
+        "publishing",
+        "calendar",
+        "inbox"
+      ],
+      "icon": "share-08",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
         "desktop",
         "island",
         "mobile",
@@ -1893,8 +2250,8 @@
       ],
       "iconDither": {
         "from": 233,
-        "to": 267,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/112983871?v=4",
       "surfaces": [
@@ -1927,8 +2284,8 @@
       ],
       "iconDither": {
         "from": 335,
-        "to": 9,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/112983871?v=4",
       "surfaces": [
@@ -1961,7 +2318,7 @@
       ],
       "iconDither": {
         "from": 272,
-        "to": 306,
+        "to": "transparent",
         "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/170207473?v=4",
@@ -1997,8 +2354,8 @@
       "icon": "user-group",
       "iconDither": {
         "from": 245,
-        "to": 279,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -2032,8 +2389,8 @@
       "icon": "timeline",
       "iconDither": {
         "from": 347,
-        "to": 313,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "desktop",
@@ -2065,8 +2422,8 @@
       "icon": "shield-ban",
       "iconDither": {
         "from": 14,
-        "to": 340,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -2074,6 +2431,90 @@
         "island",
         "mobile",
         "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "toolsmith-example",
+      "displayName": "toolsmith-example",
+      "version": "0.1.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "description": "Worked example for tools/toolsmith — a real, verified inline_deno tool. Not registered with Core and not shipped; it exists so the scaffold → verify pipeline has an end-to-end regression test.",
+      "category": "Developer Tools",
+      "hidden": true
+    },
+    {
+      "name": "tuition",
+      "displayName": "Tuition",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Drill the weakest thing you are ready for, graded by arithmetic",
+      "description": "A tutor for one learner — you. Point it at your own syllabus, chapter or notes and it builds a mastery model you can read: every skill carries a Bayesian Knowledge Tracing posterior, its prerequisite edges, and a spaced-repetition schedule computed in whole days so a review due tomorrow does not move because you studied at 23:58. \"What should I study next\" is a topological answer — the weakest skill whose prerequisites you have already mastered — not a guess, and \"0.62 mastery, three more correct at this difficulty reaches 0.9\" is a projection you can check by hand. Multiple-choice, cloze, numeric-with-tolerance and exact answers are graded by comparison with no model in the loop at all; only free-response answers are marked by a model, and those always show the rubric they were graded against. Given an exam date it projects, from your observed rate over the last ten sessions, whether the syllabus will be covered in time, and says `unknown` rather than extrapolating off two data points. A model is used at exactly two edges — proposing skills from a document, and writing practice items and rubric marks — and both are reviewed by a person before they count.",
+      "category": "Productivity",
+      "keywords": [
+        "study",
+        "revision",
+        "spaced-repetition",
+        "mastery",
+        "flashcards",
+        "exam",
+        "tutor",
+        "learning"
+      ],
+      "icon": "mortarboard-01",
+      "iconDither": {
+        "from": 196,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "ugc",
+      "displayName": "UGC",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Run a UGC campaign and know what you owe",
+      "description": "Creator-marketing campaign tracker: briefs, a creator roster, post submissions with review, per-post metric snapshots refreshed through a curated Composio action map, and CPM/flat payout accrual against a campaign budget.",
+      "category": "Productivity",
+      "keywords": [
+        "ugc",
+        "creators",
+        "campaigns",
+        "payouts",
+        "marketing"
+      ],
+      "icon": "megaphone-01",
+      "iconDither": {
+        "from": 18,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
         "web",
         "cli"
       ],
@@ -2102,8 +2543,8 @@
       "icon": "layers-01",
       "iconDither": {
         "from": 284,
-        "to": 318,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "desktop",
@@ -2137,7 +2578,7 @@
       "icon": "audio-wave-01",
       "iconDither": {
         "from": 221,
-        "to": 255,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [
@@ -2172,8 +2613,8 @@
       "icon": "sun-03",
       "iconDither": {
         "from": 323,
-        "to": 357,
-        "direction": "left"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -2206,8 +2647,8 @@
       "icon": "webhook",
       "iconDither": {
         "from": 260,
-        "to": 294,
-        "direction": "up"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -2240,8 +2681,8 @@
       "icon": "shapes",
       "iconDither": {
         "from": 2,
-        "to": 328,
-        "direction": "right"
+        "to": "transparent",
+        "direction": "down"
       },
       "surfaces": [
         "core",
@@ -2274,7 +2715,7 @@
       "icon": "workflow-square-01",
       "iconDither": {
         "from": 299,
-        "to": 333,
+        "to": "transparent",
         "direction": "down"
       },
       "surfaces": [

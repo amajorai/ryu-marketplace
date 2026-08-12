@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.receipts",
+  "version": "1.0.0",
+  "description": "Verify work with visual evidence: `/receipt <goal>` makes the agent capture a screenshot or screen recording of the thing actually working, then an INDEPENDENT verifier agent opens that artifact and judges what it can SEE against the goal. Where `/proof` verifies by re-reading the workspace, this one requires a durable artifact a human can look at afterwards. Resubmitting an old capture does not count. `/receipt clear` stops the loop.",
+  "keywords": [
+    "verify",
+    "work",
+    "evidence",
+    "screenshot",
+    "recording",
+    "proof",
+    "agent"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/receipts",
+      "displayName": "Receipts"
+    }
+  }
+}
