@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.no-more-mistakes",
+  "version": "1.0.0",
+  "description": "Notices when you correct the agent, writes the lesson down as a one-line rule in a Space, and hands every later session that rule list before the first word is generated — so a mistake you have already fixed once stops coming back.",
+  "keywords": ["memory", "learning", "mistakes", "rules", "quality"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/no-more-mistakes",
+      "displayName": "No More Mistakes"
+    }
+  }
+}

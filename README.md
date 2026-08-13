@@ -24,7 +24,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (39)
+## First-party plugins (40)
 
 - [`advisor`](./plugins/advisor/) — see [plugins/advisor/README.md](./plugins/advisor/README.md)
 - [`agent-comms`](./plugins/agent-comms/) — see [plugins/agent-comms/README.md](./plugins/agent-comms/README.md)
@@ -44,6 +44,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 - [`hook-session-context`](./plugins/hook-session-context/) — see [plugins/hook-session-context/README.md](./plugins/hook-session-context/README.md)
 - [`mem0`](./plugins/mem0/) — see [plugins/mem0/README.md](./plugins/mem0/README.md)
 - [`no-ai-slop`](./plugins/no-ai-slop/) — see [plugins/no-ai-slop/README.md](./plugins/no-ai-slop/README.md)
+- [`no-more-mistakes`](./plugins/no-more-mistakes/) — see [plugins/no-more-mistakes/README.md](./plugins/no-more-mistakes/README.md)
 - [`output-styles`](./plugins/output-styles/) — see [plugins/output-styles/README.md](./plugins/output-styles/README.md)
 - [`parallel`](./plugins/parallel/) — see [plugins/parallel/README.md](./plugins/parallel/README.md)
 - [`pi-shell`](./plugins/pi-shell/) — see [plugins/pi-shell/README.md](./plugins/pi-shell/README.md)

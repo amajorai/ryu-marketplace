@@ -1426,6 +1426,42 @@
       }
     },
     {
+      "name": "no-more-mistakes",
+      "displayName": "No More Mistakes",
+      "version": "1.0.0",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Correct it once, not every week",
+      "description": "Notices when you correct the agent, writes the lesson down as a one-line rule in a Space, and hands every later session that rule list before the first word is generated — so a mistake you have already fixed once stops coming back. Each rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
+      "category": "Knowledge & Memory",
+      "keywords": [
+        "memory",
+        "learning",
+        "mistakes",
+        "rules",
+        "quality"
+      ],
+      "icon": "eraser-01",
+      "iconDither": {
+        "from": 12,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "output-styles",
       "displayName": "Output Styles",
       "version": "1.0.0",
@@ -1433,7 +1469,7 @@
       "source": "builtin",
       "builtin": true,
       "tagline": "Change how the agent talks, not what it knows",
-      "description": "The six built-in output styles — ELI5, I have ADHD, Explanatory, Learning, Proactive and Plain text. A style is appended to (or replaces) the agent's base instructions for the turn, so it changes how the agent talks — role, tone, default response shape — and never what it knows, which tools it has, or which model runs. Pick one in the composer; browse them in the Store's Output Styles tab.",
+      "description": "The eight built-in output styles — ELI5, I have ADHD, Explanatory, Learning, Proactive, Plain text, Bro and Gen Z. A style is appended to (or replaces) the agent's base instructions for the turn, so it changes how the agent talks — role, tone, default response shape — and never what it knows, which tools it has, or which model runs. Pick one in the composer; browse them in the Store's Output Styles tab.",
       "category": "Productivity",
       "keywords": [
         "output-style",
@@ -1924,6 +1960,44 @@
       }
     },
     {
+      "name": "rlm",
+      "displayName": "Recursive Language Model",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Ask a question of more text than a model can hold",
+      "description": "Answer questions about a corpus far larger than any model's context window — without putting it in a prompt. The usual options all degrade: truncate and you lose the answer, embed-and-retrieve and you get fragments without their argument, buy a bigger window and attention over the middle of it thins out anyway. This app does the other thing. Your documents are held here as a variable. A root model plans over an outline of them — chunk ids, sources, line spans, headings — and reaches the text only through operators that summarise before returning: `grep` to locate, `map` to run a cheap model over the chunks that matter in parallel and fold the answers back, `recurse` to give a sub-question its own plan over a subset. The root model never sees the corpus, so its context stays roughly the same size whether you point it at 40 KB or 40 MB, and the answer does not get worse as the input gets bigger. Every answer carries `path:line` citations read back out of the chunks it rests on, and every run keeps a full trace — each operator, each sub-call, what it cost — that you can open and replay. Depth, step, call and wall-clock budgets are hard: a run that hits one says so and returns what it had, rather than quietly shortening the answer. Agents get the same engine as tools, and `grep` and `peek` need no model at all, so a workflow can branch on a deterministic search of a 40 MB corpus.",
+      "category": "Productivity",
+      "keywords": [
+        "long-context",
+        "recursion",
+        "retrieval",
+        "documents",
+        "citations",
+        "map-reduce",
+        "context-window",
+        "research"
+      ],
+      "icon": "lucide:list-tree",
+      "iconDither": {
+        "from": 212,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "rtk",
       "displayName": "RTK (Rust Token Killer)",
       "version": "1.0.0",
@@ -2330,6 +2404,42 @@
         "island",
         "mobile",
         "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "subtitles",
+      "displayName": "Subtitles",
+      "version": "1.0.0",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "tagline": "Subtitle any video, in any language, on your own machine",
+      "description": "Pick a video on this machine, transcribe it locally, translate the transcript into the language you want, and get a timed .srt or .vtt written beside the file so your player picks it up. Both model hops stay on the device — local whisper for the transcription, the local gateway's on-device model for the translation — so nothing about the video leaves the disk it is already on. Long jobs are queued and polled, so a feature film keeps working while you do something else.",
+      "category": "Media & Voice",
+      "keywords": [
+        "subtitles",
+        "captions",
+        "transcription",
+        "translation",
+        "video",
+        "srt",
+        "vtt"
+      ],
+      "icon": "subtitle",
+      "iconDither": {
+        "from": 258,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "mobile",
         "web",
         "cli"
       ],
