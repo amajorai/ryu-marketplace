@@ -1,7 +1,7 @@
 # Output Styles
 
-The six built-in output styles. Fully declarative — no runnables, no sandboxed JS, no
-Core Rust: the plugin is a `contributes.output_styles[]` list pointing at six Markdown
+The nine built-in output styles. Fully declarative — no runnables, no sandboxed JS, no
+Core Rust: the plugin is a `contributes.output_styles[]` list pointing at nine Markdown
 files, plus one Store tab that browses whatever styles the node has.
 
 ## What an output style is
@@ -51,7 +51,7 @@ tool descriptions and the MCP preamble are assembled after it and never depend o
 The body is prose, never code — nothing in the pipeline evaluates it, which is why a
 style needs no capability grants at all. Same argument themes make.
 
-## The six
+## The nine
 
 None of them is forced. The node default is "no style", so this plugin is inert until
 someone picks one.
@@ -64,6 +64,17 @@ someone picks one.
 | **Learning** | `true` | Leaves one `TODO(human)` per response — a small strategic piece with a real decision in it — for you to write. |
 | **Proactive** | `true` | Takes the conventional default and states the assumption instead of pausing for a routine question. Still stops for destructive or genuinely ambiguous work. |
 | **Plain text** | `false` | No headers, bullets, bold or backticks — prose for pasting into an email, a commit message, or a chat that does not render markdown. Code blocks are the one exception. |
+| **No AI slop** | `true` | The named AI-writing patterns — puffery, colon reveals, faux-insight setups, recap endings, the mic-drop last line — kept out of the answer as it is written. Exact text (code, identifiers, error strings, paths) is exempt from the word list. |
+| **Bro** | `false` | Plain human speech: no jargon, no preamble, short blunt sentences, bad news first. File names, commands, error strings and numbers stay exact. |
+| **Gen Z** | `false` | The same answer in gen z vernacular — casual, lowercase, low ceremony. |
+
+**No AI slop** shares its rules with the `@ryu/no-ai-slop` plugin (both adapted from
+[petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop)), and the two are
+complementary rather than redundant. The style is prevention: it costs one prompt block
+and shapes the answer while it is being written. The plugin is review: after the turn it
+sends the finished answer to a separate agent with a fresh context, which names the
+patterns it actually finds, and the agent rewrites. Prevention catches the habits;
+review catches what survived them. Running both is fine.
 
 **I have ADHD** is adapted, with thanks, from
 [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) (MIT). Upstream ships it as
@@ -91,7 +102,7 @@ working directory and the repo root, nearest wins.
 The styles in this package are read-only, because they are part of a signed package.
 Editing one in the UI forks it to your user root rather than mutating the package.
 
-Some things that make a style work, learned writing these six:
+Some things that make a style work, learned writing these nine:
 
 - **Say what to do, not what not to do.** "Lead with the next action" beats "don't
   bury the answer" — a negative constraint leaves the shape unspecified.
@@ -127,7 +138,7 @@ group, sourced from `GET /api/output-styles` and installing with
 sidecar, so nothing is proxied through `/api/ext/`, and the desktop renderer only
 fetches paths that pass its `isCoreApiPath` check.
 
-The tab lists every style on the node, not just the six here — a user or project style
+The tab lists every style on the node, not just the nine here — a user or project style
 appears alongside them and is selectable the same way.
 
 ## Tests

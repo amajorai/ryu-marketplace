@@ -51,8 +51,8 @@ test("declares no runnables, no sandboxed code and no capability grants", () => 
 
 // ── 2. Every declared style resolves to a file on disk ─────────────────────────
 
-test("declares the six built-in styles with unique ids", () => {
-	assert.equal(entries.length, 6);
+test("declares the nine built-in styles with unique ids", () => {
+	assert.equal(entries.length, 9);
 	const ids = entries.map((e) => e.id);
 	assert.deepEqual(ids, [
 		"eli5",
@@ -61,6 +61,9 @@ test("declares the six built-in styles with unique ids", () => {
 		"learning",
 		"proactive",
 		"plain-text",
+		"no-ai-slop",
+		"bro",
+		"gen-z",
 	]);
 	assert.equal(new Set(ids).size, ids.length, "style ids are unique");
 });

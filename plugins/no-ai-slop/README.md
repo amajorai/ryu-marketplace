@@ -5,6 +5,12 @@ against every finished answer. A separate reviewer reads the reply with a **fres
 context**, names the AI-slop patterns it can point at, and the agent rewrites the answer
 to fix them. A clean answer produces nothing at all — no note, no extra turn.
 
+There is also a **No AI slop output style** in `@ryu/output-styles`, built from the same
+rules. It is the prevention half: one prompt block that shapes the answer as it is
+written, at no extra turn and no extra agent. This plugin is the review half — it reads
+what was actually produced and only reports what it can point at. They compose; picking
+the style does not disable this hook.
+
 ## How one turn goes
 
 1. The assistant finishes a turn. The `post_assistant_turn` hook fires.
