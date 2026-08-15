@@ -1,4 +1,5 @@
 # Proof of Work
+<p align="center"><img src="./icon.png" alt="proof" width="96" /></p>
 
 The stricter sibling of `/goal`: an independent verifier agent has to prove with tool-gathered evidence that the goal is actually done, rather than judging the transcript alone. The loop runs until that proof lands; `/proof clear` stops it and the verifier model is configurable.
 

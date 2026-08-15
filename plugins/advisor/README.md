@@ -1,4 +1,5 @@
 # Advisor
+<p align="center"><img src="./icon.png" alt="advisor" width="96" /></p>
 
 Consult a stronger reviewer model.
 

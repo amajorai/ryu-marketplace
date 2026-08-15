@@ -1,4 +1,5 @@
 # Receipts
+<p align="center"><img src="./icon.png" alt="receipts" width="96" /></p>
 
 `/receipt <goal>` is the visual sibling of [`/proof`](../proof). Both loop until an
 independent verifier agent agrees the goal is done; they differ in what counts as

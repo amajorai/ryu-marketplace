@@ -1,4 +1,5 @@
 # Scrapling
+<p align="center"><img src="./icon.png" alt="scrapling" width="96" /></p>
 
 Adaptive web-page extraction for Ryu, powered by
 [Scrapling](https://scrapling.readthedocs.io). Ships as a fully declarative plugin —

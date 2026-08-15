@@ -1,4 +1,5 @@
 # Plan Continue
+<p align="center"><img src="./icon.png" alt="plan-continue" width="96" /></p>
 
 While plan mode is on and the plan has not been accepted, this keeps the agent
 working: when a turn finishes, the plugin injects a follow-up turn asking it to

@@ -1,4 +1,5 @@
 # Bytebot Desktop
+<p align="center"><img src="./icon.png" alt="bytebot" width="96" /></p>
 
 Computer control for Ryu, backed by [`bytebotd`](https://github.com/bytebot-ai/bytebot)
 — the local HTTP daemon inside a Bytebot desktop. Ships as a fully declarative plugin:

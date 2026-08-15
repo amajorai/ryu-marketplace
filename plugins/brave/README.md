@@ -1,4 +1,5 @@
 # Brave Search
+<p align="center"><img src="./icon.png" alt="brave" width="96" /></p>
 
 Independent web search for Ryu, powered by the
 [Brave Search API](https://brave.com/search/api/). Ships as a fully declarative

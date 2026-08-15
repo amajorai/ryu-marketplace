@@ -1,4 +1,5 @@
 # RTK (Rust Token Killer)
+<p align="center"><img src="./icon.png" alt="rtk" width="96" /></p>
 
 Token-compress noisy dev-command output for Ryu agents, powered by the
 [RTK](https://github.com/rtk-ai/rtk) CLI. RTK wraps a dev command (e.g.

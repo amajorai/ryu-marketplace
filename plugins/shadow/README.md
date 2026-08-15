@@ -1,4 +1,5 @@
 # Shadow
+<p align="center"><img src="./icon.png" alt="shadow" width="96" /></p>
 
 Search everything Shadow has captured (screen text, audio transcripts, input) and summarize recent activity. Exposed as declarative HTTP tools that reach the device-local Shadow sidecar through Core's authenticated `/api/shadow/*` proxy (which injects Shadow's bearer token).
 

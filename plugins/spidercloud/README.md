@@ -1,4 +1,5 @@
 # Spider Cloud
+<p align="center"><img src="./icon.png" alt="spidercloud" width="96" /></p>
 
 Hosted multi-page web crawling for Ryu, powered by the
 [Spider Cloud API](https://spider.cloud). Ships as a fully declarative plugin — one

@@ -1,4 +1,5 @@
 # Gateway Firewall
+<p align="center"><img src="./icon.png" alt="firewall" width="96" /></p>
 
 An on/off switch over the Gateway's built-in firewall, which screens model traffic for prompt injection and PII. Enabling this plugin forces `firewall.enabled` on at the next Gateway restart; the pattern set and policy mode stay owned by the Gateway config (GET/PUT /v1/config), not by this plugin.
 
