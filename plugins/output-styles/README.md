@@ -6,14 +6,14 @@
   </picture>
 </p>
 
-The nine built-in output styles. Fully declarative — no runnables, no sandboxed JS, no
-Core Rust: the plugin is a `contributes.output_styles[]` list pointing at nine Markdown
+The ten built-in output styles. Fully declarative — no runnables, no sandboxed JS, no
+Core Rust: the plugin is a `contributes.output_styles[]` list pointing at ten Markdown
 files, plus one Store tab that browses whatever styles the node has.
 
 ## What an output style is
 
-A style changes **how** an agent answers — role, tone, the default shape of a response
-— by editing the system prompt for the turn. It does not change what the agent knows,
+A style changes **how** an agent answers (role, tone, the default shape of a response)
+by editing the system prompt for the turn. It does not change what the agent knows,
 which tools it has, or which model runs.
 
 A style is a Markdown file: YAML frontmatter, then the instructions that get appended
@@ -45,8 +45,8 @@ style](https://code.claude.com/docs/en/output-styles), so a file copied out of
 Unknown keys are preserved but ignored, so a style authored against a newer schema
 degrades to "the fields we understand" instead of failing to load.
 
-`keep-coding-instructions` binds to the **agent's base instructions** — the persona
-text edited in the agent editor — and not to a block of built-in software-engineering
+`keep-coding-instructions` binds to the **agent's base instructions** (the persona
+text edited in the agent editor), and not to a block of built-in software-engineering
 prose, because Ryu has none. `false` is right for a style that turns the agent into
 something other than what it normally is; `true` is right when you are changing how it
 talks while it keeps doing the same work.
@@ -57,7 +57,7 @@ tool descriptions and the MCP preamble are assembled after it and never depend o
 The body is prose, never code — nothing in the pipeline evaluates it, which is why a
 style needs no capability grants at all. Same argument themes make.
 
-## The nine
+## The ten
 
 None of them is forced. The node default is "no style", so this plugin is inert until
 someone picks one.
@@ -67,10 +67,11 @@ someone picks one.
 | **ELI5** | `true` | Small words, short sentences, 2 options max on a decision. Paths and commands stay exact. |
 | **I have ADHD** | `true` | Action first, numbered steps, state restated every turn, no preamble and no closers. |
 | **Explanatory** | `true` | Short `Insight:` asides on the choices behind the code, interleaved with the work rather than lectured at the end. |
-| **Learning** | `true` | Leaves one `TODO(human)` per response — a small strategic piece with a real decision in it — for you to write. |
+| **Learning** | `true` | Leaves one `TODO(human)` per response (a small strategic piece with a real decision in it) for you to write. |
 | **Proactive** | `true` | Takes the conventional default and states the assumption instead of pausing for a routine question. Still stops for destructive or genuinely ambiguous work. |
 | **Plain text** | `false` | No headers, bullets, bold or backticks — prose for pasting into an email, a commit message, or a chat that does not render markdown. Code blocks are the one exception. |
-| **No AI slop** | `true` | The named AI-writing patterns — puffery, colon reveals, faux-insight setups, recap endings, the mic-drop last line — kept out of the answer as it is written. Exact text (code, identifiers, error strings, paths) is exempt from the word list. |
+| **Plain Technical** | `true` | Simplified Technical English (ASD-STE100) — sentences under 20 words, one meaning per word, instructions as numbered commands. Paths, commands, error strings and numbers stay verbatim. |
+| **No AI slop** | `true` | The named AI-writing patterns (puffery, colon reveals, faux-insight setups, recap endings, the mic-drop last line) kept out of the answer as it is written. Exact text (code, identifiers, error strings, paths) is exempt from the word list. |
 | **Bro** | `false` | Plain human speech: no jargon, no preamble, short blunt sentences, bad news first. File names, commands, error strings and numbers stay exact. |
 | **Gen Z** | `false` | The same answer in gen z vernacular — casual, lowercase, low ceremony. |
 
@@ -133,7 +134,7 @@ plus mirrored `name`/`description` manifest keys. One parser serves disk styles 
 plugin styles alike, and the frontmatter stays the single source of truth for a style's
 metadata.
 
-The layout is flat — `output-styles/<slug>.md`, one segment deep, no subdirectories —
+The layout is flat (`output-styles/<slug>.md`, one segment deep, no subdirectories),
 because the mirror script's vendoring glob and Core's path validator both depend on it.
 
 ## Store tab

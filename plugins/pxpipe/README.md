@@ -7,8 +7,8 @@
 </p>
 
 [pxpipe](https://github.com/teamchong/pxpipe) is a loopback proxy that renders the
-bulky, static half of a request — the system prompt, the tool-schema block, large
-tool results, older conversation history — into PNG pages and sends them as image
+bulky, static half of a request (the system prompt, the tool-schema block, large
+tool results, older conversation history) into PNG pages and sends them as image
 blocks. Vision models price an image by its pixel area, not by the density of what
 is drawn on it, so dense technical text lands at roughly **3.1 characters per
 image-token** against 1 character per text-token: ~4.7× more context for the same
@@ -37,14 +37,14 @@ without taking the proxy down.
 
 The dashboard (live savings, before/after pairs, model chips, kill switch) is
 mounted behind Core auth at `/api/ext/@ryu/pxpipe`. The scoped id's slash is a real
-path separator — `split_scoped_plugin_path` reunites the two segments — and the bare
+path separator (`split_scoped_plugin_path` reunites the two segments), and the bare
 form resolves to sub-path `/`, which is why the manifest declares a `"/"` route
 alongside `/dashboard`. Routes are matched by the proxy's own `route_matches`, not
 registered into a router, so `"/"` and `"/fragments/*rest"` coexist without conflict.
 
 `max_body_bytes` is tightened to 4 MiB from the 10 MiB default: it bounds only the
 *request* body Core buffers, and the sole POST here is the kill switch
-(`/api/compression`). Responses — including the PNG previews — stream through
+(`/api/compression`). Responses, including the PNG previews, stream through
 untouched.
 
 ## Why it is shaped this way

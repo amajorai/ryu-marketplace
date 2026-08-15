@@ -85,8 +85,8 @@ caller must be told the click did not happen.
 | `computer.control`| `computer__key`       | `bytebot__type_keys`   |
 | `computer.control`| `computer__scroll`    | `bytebot__scroll`      |
 
-Agents call the canonical verb, not the provider tool. `ghost` — which drives *this*
-machine through the accessibility APIs — stays the declared `default`; this plugin is
+Agents call the canonical verb, not the provider tool. `ghost`, which drives *this*
+machine through the accessibility APIs, stays the declared `default`; this plugin is
 `selectable` and claims no default. Before it existed `computer.control` had exactly one
 provider, so the layer was marked selectable but nothing could be selected.
 
@@ -95,7 +95,7 @@ provider, so the layer was marked selectable but nothing could be selected.
 Bytebot's `application` action validates a **closed enum**: `firefox`, `1password`,
 `thunderbird`, `vscode`, `terminal`, `desktop`, `directory`. The canonical
 `computer__focus_app` takes a free-form `app` string, so binding it would make
-`focus_app("Safari")` — a schema-legal call — fail with a 400. Rather than ship a verb
+`focus_app("Safari")`, a schema-legal call, fail with a 400. Rather than ship a verb
 that 4xxs on legal input, the verb is left unbound and the action stays reachable natively
 as `bytebot__application`, whose own schema carries the enum so an illegal call cannot be
 composed in the first place.
@@ -120,8 +120,8 @@ disappears from the agent-visible surface**. That is the same narrowing `mem0` d
   template them, and safely: there `x`/`y` are **required**, so the placeholders always
   resolve.
 * **`amount` is clamped to 1..10.** Bytebot's `scrollCount` counts mouse-wheel **ticks**
-  and the daemon sleeps 150ms between them. An `amount` a model intends as pixels — say
-  500 — would be 500 ticks and 75 seconds of scrolling. `count` gets no clamp, because the
+  and the daemon sleeps 150ms between them. An `amount` a model intends as pixels (say
+  500) would be 500 ticks and 75 seconds of scrolling. `count` gets no clamp, because the
   canonical maximum is already 3 and Bytebot declares no upper bound: a clamp that narrows
   nothing is noise.
 

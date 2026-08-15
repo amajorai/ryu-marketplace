@@ -111,15 +111,15 @@ returns nothing and falls back to whichever other provider you select.
   with an adapter, which nothing else here needs.
 - **`advanced_settings` is not exposed as a tool argument** on purpose. Core's
   `body_defaults` merge lets the model win every collision and its leaf case is a
-  plain overwrite, so a model sending `advanced_settings: null` — legal in
-  Parallel's own schema — would wipe out `full_content: true` and silently revert
+  plain overwrite, so a model sending `advanced_settings: null` (legal in
+  Parallel's own schema) would wipe out `full_content: true` and silently revert
   to excerpt mode, leaving the canonical `content` null. Not declaring the key
   makes that unreachable.
 
 ## Verification status
 
-The MCP endpoint's behaviour above — stateless `tools/call`, JSON content type, no
-`Accept` requirement, `structuredContent` present alongside the text block — was
+The MCP endpoint's behaviour above (stateless `tools/call`, JSON content type, no
+`Accept` requirement, `structuredContent` present alongside the text block) was
 checked against the live service. The **keyed** REST paths are derived from
 Parallel's published OpenAPI schema and a 401 probe; they have not been exercised
 with a real key here, which is why the fallback condition stays narrow

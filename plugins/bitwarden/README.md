@@ -8,7 +8,7 @@
 
 Pull API keys from [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/)
 on demand instead of storing them in plaintext in config or env. One bootstrap
-secret — a machine-account access token — replaces N provider keys, and rotating
+secret (a machine-account access token) replaces N provider keys, and rotating
 a credential becomes a single change in the Bitwarden web app.
 
 This is a faithful port of Hermes's `hermes secrets bitwarden` feature onto Ryu's

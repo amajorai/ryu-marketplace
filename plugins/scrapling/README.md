@@ -86,7 +86,7 @@ map — read, merge, then write).
 
 `get` is the only tool that works off the base `pip install`. `stealthy_fetch` needs
 `scrapling install` to download Camoufox first, and drives a real browser, so binding
-the canonical verb to it would make `web__extract` slow and — on a partial install —
+the canonical verb to it would make `web__extract` slow and (on a partial install)
 broken. The stealth tools stay directly callable as `scrapling__stealthy_fetch` for an
 agent that actually needs them; only the *layer* default is the cheap path.
 

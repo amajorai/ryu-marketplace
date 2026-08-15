@@ -59,7 +59,7 @@ this same hook — so the guard is the feature, not a detail. Three independent 
    every other looping plugin (`/goal`, `/proof`). The hook clamps `passes` to 12 so a
    large setting degrades to fewer passes instead of a loop that stops mid-rewrite.
 
-The terminating branches return `none` or `note` — never a final `continue` — so a spent
+The terminating branches return `none` or `note` (never a final `continue`), so a spent
 budget cannot re-arm itself.
 
 ## Why the skill text is inlined
@@ -72,7 +72,7 @@ is nothing to drift.
 
 ## Cost
 
-The hook has no `match` gate — it must see every completed turn — so it pays a sandbox
+The hook has no `match` gate (it must see every completed turn), so it pays a sandbox
 spawn per answer, and a sub-agent call per answer that clears the prose floor. That is why
 it is absent from `CORE_DEFAULT_ON`: it ships installed but off, like `@ryu/recap`.
 

@@ -61,7 +61,7 @@ This plugin is a **provider** for two hot-swappable layers:
 | `web.extract` | `web__extract`  | `tavily__extract` |
 
 Agents call the canonical verb (`web__search`), not the provider tool. Selecting a
-different provider — Exa for search, Spider for extraction — re-points that verb
+different provider (Exa for search, Spider for extraction) re-points that verb
 without changing its id, its input schema, or the shape of its results. An agent
 allowlisted for `web__search` keeps working across the swap, and prompts that name
 the tool keep matching.

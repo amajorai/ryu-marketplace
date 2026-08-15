@@ -35,8 +35,8 @@ costs nothing but a KV write.
 
 Writes and reads use different seams, and the split is the security posture:
 
-- A **tool writes.** The sender is `caller.agent_id` — resolved by Core's dispatch
-  — so an agent cannot post as another one by naming it in its arguments.
+- A **tool writes.** The sender is `caller.agent_id` (resolved by Core's dispatch),
+  so an agent cannot post as another one by naming it in its arguments.
 - The **`pre_user_turn` hook reads.** `ctx.agent_id` is the only place "whose mail
   is this" is answered by Core rather than by a model, so the hook is the sole
   reader of an inbox. There is deliberately no tool argument for reading someone
@@ -117,6 +117,6 @@ node --test plugins-store/agent-comms/plugin.test.mjs
 
 `plugin.test.mjs` runs the real bodies through the same splice Core uses
 (`input`/`caller`/`host` for a tool, `ctx`/`host` for a hook) against an in-memory
-KV, and fails on an unsealed edit. The two Core-side registration rows —
-`plugin_manifest::BUILTIN_MANIFESTS` and `plugin_manifest::builtin_code` — are
+KV, and fails on an unsealed edit. The two Core-side registration rows
+(`plugin_manifest::BUILTIN_MANIFESTS` and `plugin_manifest::builtin_code`) are
 covered by `cargo test -p ryu-core --bin ryu-core -- builtin_code_table_matches_package_manifests`.

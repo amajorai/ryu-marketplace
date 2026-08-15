@@ -189,11 +189,11 @@ batch-update, batch-delete, history, feedback, create-export, get-export. None o
 returns "the provider's own synthesis of this user", which is what `memory__context`
 promises. Forcing the verb onto, say, get-all would inject a raw fact dump at system rank
 under a label that says it is a summary. An unverified binding ships a provider that
-4xxs — or worse, silently misleads — on first use while the picker cheerfully offers it.
+4xxs (or worse, silently misleads) on first use while the picker cheerfully offers it.
 
 ## Scoping: one preference, two placements
 
-Mem0 scopes every memory to an entity — `user_id`, `agent_id`, `app_id` or `run_id` — and
+Mem0 scopes every memory to an entity (`user_id`, `agent_id`, `app_id` or `run_id`) and
 **requires at least one**. Ryu's canonical memory verbs carry no principal at all, so the
 id comes from the manifest via `arg_defaults`, resolved at call time from the
 `mem0.user-id` node preference (the `Mem0 user id` settings field is its reader):
@@ -239,7 +239,7 @@ when_to_use?}`. Only `content` has a home in Mem0's request, so the other four m
 without this they would land as undocumented top-level body fields.
 
 They are deliberately *not* folded into Mem0's `metadata` object: this provider's search
-binding never filters on metadata, so they would be write-only — a field nothing reads —
+binding never filters on metadata, so they would be write-only (a field nothing reads),
 and a content-only call would produce `metadata: {}`, a shape no Mem0 example shows. The
 built-in store remains the source of truth for scope and category; the Mem0 copy exists
 for recall.

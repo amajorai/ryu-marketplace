@@ -34,8 +34,8 @@ Both are `unwrap_body`, so they return Honcho's JSON body directly, and both are
 `fail_open`, so with no key configured they degrade rather than error.
 
 Host, paths, methods, request fields and response fields are quoted from the OpenAPI
-fragments Honcho publishes inside its own docs — `servers: - url: https://api.honcho.dev`
-(*"Production SaaS Platform"*), `openapi: 3.1.0`, `info.version: 3.0.11` — at
+fragments Honcho publishes inside its own docs (`servers: - url: https://api.honcho.dev`
+(*"Production SaaS Platform"*), `openapi: 3.1.0`, `info.version: 3.0.11`) at
 `honcho.dev/docs/v3/api-reference/endpoint/peers/chat.md` and
 `honcho.dev/docs/v3/api-reference/endpoint/peers/search-peer.md`.
 
@@ -116,8 +116,8 @@ quickstart names the human peer `user`.
 An **unresolved `pref:` token drops its argument** rather than sending the literal string
 upstream. Here that drop then leaves a `{workspace_id}` placeholder with nothing to fill
 it, and the call fails with `http tool: missing path parameter(s)`. That is the intended
-loud failure: the alternative shapes — a literal `"pref:honcho.workspace-id"` in the URL,
-or a baked-in default — would both silently read the wrong bucket.
+loud failure: the alternative shapes (a literal `"pref:honcho.workspace-id"` in the URL,
+or a baked-in default) would both silently read the wrong bucket.
 
 ### `reasoning_level` is layered on purpose
 
@@ -238,7 +238,7 @@ POST /v3/workspaces/{workspace_id}/sessions/{session_id}/messages
 ```
 
 `MessageCreate` requires **both** `content` and `peer_id` on every item. `arg_template`
-can build an array of objects — that is what made Mem0's writes bindable — but
+can build an array of objects (that is what made Mem0's writes bindable), but
 `map_args_with_defaults` expands the template from the **caller's** arguments only:
 
 ```rust
@@ -278,7 +278,7 @@ Three things the adapter does that are worth knowing:
   a peer from that peer's messages. Writing Ryu's replies as your peer would poison it,
   so replies go to a separate peer id.
 
-`memory__store` has no natural home in Honcho — it models conversations, not fact rows —
+`memory__store` has no natural home in Honcho (it models conversations, not fact rows),
 so a stored fact is written as a message from your peer with the canonical `scope`,
 `category`, `importance` and `when_to_use` preserved in Honcho's documented per-message
 `metadata` rather than silently dropped.

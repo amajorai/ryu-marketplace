@@ -142,7 +142,7 @@ You should see the tool (with its `_meta.outputTemplate`) and the HTML come back
 - **Spawn cwd / the `node server.mjs` path.** `args: ["server.mjs"]` is relative;
   Core spawns the server from the installed plugin directory, so `server.mjs`
   resolves next to `manifest.json`. `server.mjs` reads `sample.html` relative to
-  itself (via `import.meta.url`), not the cwd, so it is robust regardless.
+  itself (via `import.meta.url`), not the cwd, so it resolves either way.
 - **`isError` results emit no widget.** Return `isError: false` (the default) with
   `structuredContent`; an error result is delivered as text only.
 - **Bind from the tool _definition_, not the result.** The binding is the flat

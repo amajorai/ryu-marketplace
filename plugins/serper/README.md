@@ -79,8 +79,8 @@ Serper into resolution for that layer, where it could win the pick away from
 `spider` and silently kill a layer that works.
 
 Agents call the canonical verb (`web__search`), not the provider tool. Selecting a
-different provider — Exa, Tavily or Brave for search, Spider or Tavily for extraction
-— re-points that verb without changing its id, its input schema, or the shape of its
+different provider (Exa, Tavily or Brave for search, Spider or Tavily for extraction)
+re-points that verb without changing its id, its input schema, or the shape of its
 results. An agent allowlisted for `web__search` keeps working across the swap.
 
 Two mappings do the normalizing, both declared in `provides[].tools`:
@@ -101,8 +101,8 @@ Two mappings do the normalizing, both declared in `provides[].tools`:
   `raw`, so nothing is lost by the mapping.
 
 One consequence of omitting the `results` path, worth knowing before anyone "fixes"
-it by inventing one: the facade's absent-path escape hatch — which passes a payload
-straight through when the declared path is missing — does not apply, so a `fail_open`
+it by inventing one: the facade's absent-path escape hatch (which passes a payload
+straight through when the declared path is missing) does not apply, so a `fail_open`
 403 arrives as a single result with no `content` rather than a visible error.
 
 The canonical `limit` accepts up to 100 while Google decides the real page size, so

@@ -57,7 +57,7 @@ One document per rule, in a Space named by the `mistakes-space` setting (default
 `Mistakes`), created on first write via `host.spaces.ensureSpace`.
 
 - **Title = the rule.** The Space's document list shows titles, so the whole ruleset is
-  readable — and deletable one row at a time — from the Spaces page without opening
+  readable (and deletable one row at a time) from the Spaces page without opening
   anything.
 - **Body = the evidence**: why the rule exists, when it was recorded, the conversation id,
   and the exchange that produced it.
@@ -98,11 +98,11 @@ the plugin already holds is bookkeeping, not a turn worth paying a frontier mode
 
 - `ctx.transcript` is **text only** (`HookMessage` is `{role, content}`), so a rule is
   derived from what the agent *said*, never from the tool calls it made. A correction of
-  the shape "you ran the wrong command" still works — the command is usually in the text —
+  the shape "you ran the wrong command" still works (the command is usually in the text),
   but "you edited the wrong file silently" is invisible.
 - The correction gate is **English-only**, on purpose: it is a cost gate, not the
   decision. A correction in another language is not auto-captured; `/mistakes add` records
-  it by hand. The alternative — no gate — is a model call on every message anyone sends.
+  it by hand. The alternative (no gate) is a model call on every message anyone sends.
 - The extraction model decides `rule` / `duplicate` / `none`, and is told to answer `none`
   when unsure. A false positive costs one side-model call; a rule that should not exist is
   one `/mistakes forget` away.

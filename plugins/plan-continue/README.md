@@ -18,7 +18,7 @@ in from this package directory. Published to the grouped `ryu-marketplace` via
 
 ## When it fires
 
-Only when `ryu.plan` — the composer's plan-mode pill — is on for the turn. That
+Only when `ryu.plan` (the composer's plan-mode pill) is on for the turn. That
 flag is also the completeness signal: an approved `ExitPlanMode` writes it back
 off, so the hook stops on its own the moment the plan is accepted. There is no
 judge model in the loop.

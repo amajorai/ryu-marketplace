@@ -9,7 +9,7 @@
 Token-compress noisy dev-command output for Ryu agents, powered by the
 [RTK](https://github.com/rtk-ai/rtk) CLI. RTK wraps a dev command (e.g.
 `rtk git status`, `rtk cargo test`) and returns a token-compressed version of its
-output — 60–90% fewer tokens — so an agent spends far less context on noisy tool
+output (60–90% fewer tokens), so an agent spends far less context on noisy tool
 output. Ships as a fully declarative plugin — one `command` tool-def in
 `manifest.json`, no Core Rust.
 
@@ -51,7 +51,7 @@ logic (`rtk_config`), not part of the declarative tool.
 
 ## Security
 
-`command` is exec'd as an argv array — never through `sh -c` / `cmd /C` — so shell
+`command` is exec'd as an argv array (never through `sh -c` / `cmd /C`), so shell
 metacharacters are inert. Every call is grant-gated (`tool:command:rtk`) and runs
 through the same Gateway budget + exec-approval scan the other command tools use;
 the `run` verb also classifies risky, so Smart-mode approval gates it. Unlike a

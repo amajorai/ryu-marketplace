@@ -69,7 +69,7 @@ you picked), which is precisely why the design splits those three capabilities
 instead of shipping one `web` layer.
 
 Agents call the canonical verb (`web__search`), not the provider tool. Selecting a
-different provider — Exa or Tavily — re-points that verb without changing its id, its
+different provider (Exa or Tavily) re-points that verb without changing its id, its
 input schema, or the shape of its results. An agent allowlisted for `web__search`
 keeps working across the swap.
 
@@ -78,7 +78,7 @@ Two mappings do the normalizing, both declared in `provides[].tools`:
 - **`args`** renames **both** canonical arguments onto Brave's query parameters:
   `query` → `q` and `limit` → `count`. Unmapped canonical arguments are forwarded
   under their *original* name, so leaving either one out would put `query=`/`limit=`
-  on the wire — parameters Brave ignores — while the required `q` went missing.
+  on the wire (parameters Brave ignores) while the required `q` went missing.
 - **`response`** reads the results from the dotted path `web.results` (Brave nests
   them under a `web` cluster alongside `news`, `videos`, and friends) and maps each
   record into the canonical `{title, url, snippet}` shape. Brave calls the snippet
