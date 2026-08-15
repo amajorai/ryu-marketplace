@@ -17,6 +17,13 @@ The extension deliberately does NOT replace Pi's built-in `bash`, and none of it
 tool names may ever be `bash`: pi-acp special-cases that exact name and would hijack the
 call into terminal rendering, dropping `rawOutput` entirely.
 
+**Session restarts are honest.** Every spawn, finish and release is written to a durable
+per-project ledger (`ryu-background-shells.json` in the Pi session directory). If the Pi
+process dies while a shell is running, the next session is told — "N background shell(s)
+from the previous session have no completion record … they have been marked stopped" —
+so the agent re-verifies (is the port still bound?) instead of assuming its server is
+still up. This mirrors Claude Code's background-task restart warning.
+
 The TypeScript is loaded by the Pi process itself, unsandboxed, so Core gates the
 contribution: Core-tier is auto-allowed, anything else needs the operator-only
 `pi:extension` grant. The file reaches the agent through

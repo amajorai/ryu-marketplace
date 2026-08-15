@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.gopls-lsp",
+  "version": "1.0.0",
+  "description": "Go language server (gopls) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install gopls; the plugin ships config.",
+  "keywords": [
+    "go",
+    "golang",
+    "gopls",
+    "language-server",
+    "developer"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/gopls-lsp",
+      "displayName": "Go LSP"
+    }
+  }
+}

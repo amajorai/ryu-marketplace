@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.ruby-lsp",
+  "version": "1.0.0",
+  "description": "Ruby language server (ruby-lsp) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install ruby-lsp; the plugin ships config.",
+  "keywords": [
+    "ruby",
+    "rails",
+    "ruby-lsp",
+    "language-server",
+    "developer"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/ruby-lsp",
+      "displayName": "Ruby LSP"
+    }
+  }
+}

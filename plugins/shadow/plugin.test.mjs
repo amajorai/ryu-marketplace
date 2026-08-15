@@ -111,7 +111,7 @@ test("each tool routes to its expected Shadow sidecar path", () => {
 });
 
 test("every tool is a fail_open, unwrap_body proxy", () => {
-	// Windows-first capture: when the sidecar is down the tool must fail open
+	// Cross-platform capture: when the sidecar is down the tool must fail open
 	// (report unavailable) rather than error the whole turn.
 	for (const r of manifest.runnables) {
 		assert.equal(r.config.fail_open, true, `${r.config.slug} not fail_open`);

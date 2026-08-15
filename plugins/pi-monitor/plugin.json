@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.pi-monitor",
+  "version": "1.0.0",
+  "description": "Adds the monitor tool to the managed Pi agent, so it can watch a command or WebSocket in the background and react when events arrive.",
+  "keywords": [
+    "monitor",
+    "watch",
+    "background",
+    "stream",
+    "websocket",
+    "developer"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/pi-monitor",
+      "displayName": "Monitor"
+    }
+  }
+}

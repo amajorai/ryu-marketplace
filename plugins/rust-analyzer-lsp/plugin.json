@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.rust-analyzer-lsp",
+  "version": "1.0.0",
+  "description": "Rust language server (rust-analyzer) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install rust-analyzer; the plugin ships config.",
+  "keywords": [
+    "rust",
+    "rust-analyzer",
+    "language-server",
+    "developer"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/rust-analyzer-lsp",
+      "displayName": "Rust LSP"
+    }
+  }
+}

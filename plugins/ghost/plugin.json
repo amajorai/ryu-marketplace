@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.ghost",
   "version": "1.0.0",
-  "description": "Desktop automation: 29 screen perception and input control tools. Windows-first.",
+  "description": "Desktop automation: 29 screen perception and input control tools. Cross-platform (Windows, macOS, Linux).",
   "keywords": [
     "automation",
     "desktop"
@@ -14,7 +14,7 @@
       "mcp": {
         "ghost": {
           "command_env": "RYU_GHOST_BIN",
-          "description": "Ghost — desktop automation (29 tools: screen perception + input control). Windows-first; install the `ghost` sidecar to enable. Unavailable until installed."
+          "description": "Ghost — desktop automation (29 tools: screen perception + input control). Cross-platform (Windows, macOS, Linux); install the `ghost` sidecar to enable. Unavailable until installed."
         }
       }
     }

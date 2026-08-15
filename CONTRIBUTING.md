@@ -1,12 +1,16 @@
 # Contributing a plugin to the Ryu marketplace
 
-Two ways to get listed:
+Three ways to get in front of Ryu users:
 
 - **In-app Publish (no GitHub needed):** in Ryu, open your agent / workflow / app and hit
   **Publish**. Ryu's backend packages it and submits it for review; on approval the backend
   commits the entry to this repo for you. Best for non-developers.
 - **Pull request (this guide):** edit one JSON file and open a PR. Best for developers who
   host their plugin in their own repo.
+- **Host your own community marketplace (no submission at all):** keep everything in your own
+  repo — tag it `ryu-marketplace` and add a `marketplace.json`. Ryu discovers it automatically
+  and shows its entries grouped under your marketplace's name. See
+  [Host a community marketplace](#host-a-community-marketplace) below.
 
 ## 1. Build your plugin
 
@@ -68,3 +72,57 @@ catalog.
 - All URLs must be `http(s)` — a `javascript:`/`data:` URL is rejected.
 - `capabilities` must reflect what the plugin actually does (they map to permission grants).
 - Malware, scrapers that violate ToS, and impersonation get rejected.
+
+## Host a community marketplace
+
+The two paths above list you in **this** repo — the reviewed, curated marketplace that ships in the
+default Ryu catalog. A community marketplace is the opposite of that: you host it **yourself**, and
+Ryu discovers it from your public repo instead of you submitting it anywhere.
+
+1. **Tag your repo `ryu-marketplace`.** This is the discovery topic; add it on the repo page like
+   any other topic. The topic is the whole entry — no account, no submission, no review.
+2. **Add a `marketplace.json`** to the repo. Ryu looks for it at (first hit wins):
+
+   - `.ryu-plugin/marketplace.json` — canonical, use this one
+   - `.agents/plugins/marketplace.json`
+   - `.claude-plugin/marketplace.json`
+   - `.cursor-plugin/marketplace.json`
+
+   Each entry in the `plugins` array becomes a listing:
+
+   ```json
+   {
+     "name": "my-bazaar",
+     "displayName": "My Bazaar",
+     "plugins": [
+       {
+         "name": "thing-tool",
+         "displayName": "Thing Tool",
+         "description": "Does the thing.",
+         "source": "you/thing-tool",
+         "icon": "lucide:brain",
+         "hasCompanion": false
+       }
+     ]
+   }
+   ```
+
+   - **`source`** is where each plugin actually lives: a bare `owner/repo`, a git URL, or the
+     object form `{ "repo": "owner/repo" }` / `{ "url": "…" }`. It drives the link-out / install
+     handoff — entries are **browse-only** in the community feed, exactly like a topic-discovered
+     plugin, and installing one is an explicit per-repo act against its own repo.
+   - **`hasCompanion: true`** classifies the entry as an app; anything else is a plugin.
+   - `displayName` is the pretty card title, `name` is the kebab-case identity. Optional card
+     fields: `description`, `version`, `tagline`, `category`, `icon`, `iconUrl`, `homepage`.
+   - Marketplace `name` / `displayName` becomes the heading under which all its entries render.
+
+3. **How it shows up.** Every Ryu install polls the `ryu-marketplace` topic (cached 6 hours, top
+   100 repos by stars). A discovered repo with a `marketplace.json` renders in the store's
+   **Community Marketplaces** section — one sub-heading per marketplace, its entries inside, under
+   the same "not reviewed by Ryu" notice every community listing carries. A repo tagged
+   `ryu-marketplace` without a `marketplace.json` still renders, as a single listing of the repo
+   itself.
+
+Like every community listing, these are **not reviewed, not signed, not endorsed by Ryu**. Being
+discovered means exactly that a public repo carries the topic. The entry's `source` repo is where
+the code actually lives, so make it the thing that earns the install.

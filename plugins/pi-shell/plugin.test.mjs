@@ -59,3 +59,31 @@ test("no tool the extension registers is named `bash`", () => {
 		`the extension must never register a tool named exactly \`bash\`; found: ${names.join(", ")}`
 	);
 });
+
+test("ships the restart-notification wiring", () => {
+	// After the Pi process dies, the agent only learns its background shells were
+	// orphaned because (a) every shell is written to a durable ledger and (b) the
+	// first `context` event injects the "no completion record" notice into the
+	// model's context. Dropping either half makes orphaned shells SILENT again —
+	// the exact failure the feature exists to close — so pin both here.
+	const source = readFileSync(
+		join(HERE, manifest.contributes.pi_extensions[0].file),
+		"utf8"
+	);
+	assert.ok(
+		/LEDGER_FILE\s*=\s*["'`]ryu-background-shells\.json["'`]/.test(source),
+		"the durable shell ledger must be declared"
+	);
+	assert.ok(
+		/pi\.on\("context"/.test(source),
+		"the extension must register a `context` handler to inject the restart notice"
+	);
+	assert.ok(
+		/recordStarted\(shell\)/.test(source),
+		"a spawned shell must be written to the ledger so a restart can detect it was never finished"
+	);
+	assert.ok(
+		/recordFinished\(shell\)/.test(source),
+		"a finished shell must be marked in the ledger so it is not reported as an orphan"
+	);
+});

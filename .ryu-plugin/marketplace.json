@@ -13,10 +13,11 @@
     {
       "name": "activity",
       "displayName": "Activity",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Everything happening on this node, newest first",
       "description": "The unified activity feed: everything happening on this node — monitor alerts, finished tasks, runs, approvals, meetings, and notes — newest first, grouped by day.",
       "category": "Productivity",
@@ -46,10 +47,11 @@
     {
       "name": "advisor",
       "displayName": "Advisor",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "A stronger second model reviews your answers",
       "description": "Consult a stronger reviewer model for a second opinion — as an auto-review turn hook (toggle / `/advisor`) and as the model-callable `advisor__consult` tool, a declarative HTTP tool routed through Core's `/api/advisor/consult` bridge.",
       "category": "Research",
@@ -80,10 +82,11 @@
     {
       "name": "agent-comms",
       "displayName": "Switchboard",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Your agents can message each other",
       "description": "Lets the agents on this node talk to each other. Any agent can look up who else is here, leave one of them a message, or ask one a question and wait for the answer — so \"ask the research agent what it found\" becomes a real message to a real agent instead of a guess. A message is delivered at the start of the recipient's next turn, and each pair keeps its own history, so the second question does not repeat the first. Works with every agent Ryu can run — the flagship agent, Claude Code, Codex, and any custom agent you have added — because it ships as ordinary tools rather than one agent's private feature. Bounded on purpose: a chain stops after one relay, an agent cannot ask itself, and a pair cannot deadlock waiting on each other.",
       "category": "Automation",
@@ -116,10 +119,11 @@
     {
       "name": "agent-status",
       "displayName": "Agent Status",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "See which agents are working, stuck, or done",
       "description": "Splits your agent runs across three sidebar sections — Working, Needs input and Done — each row showing the project it belongs to.",
       "category": "Productivity",
@@ -146,10 +150,11 @@
     {
       "name": "agentbrowser",
       "displayName": "Agent Browser",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": true,
       "tagline": "A second real browser for the browser.control layer",
       "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, so selecting it re-points the stable `browser__*` tools at agent-browser without changing what agents call. Launched via `npx agent-browser mcp`; needs Node on PATH.",
       "category": "Browsers",
@@ -180,10 +185,11 @@
     {
       "name": "approvals",
       "displayName": "Approvals",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Nothing happens until you say yes",
       "description": "Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait for your accept or reject before they take effect.",
       "category": "Security",
@@ -211,12 +217,87 @@
       }
     },
     {
+      "name": "auto-continue",
+      "displayName": "Auto Continue",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "Never type \"continue\" again",
+      "description": "After each turn while armed, a local sub-agent scans the reply and the workspace for work that is genuinely unfinished and that another turn could complete; if it finds any, it injects a follow-up turn automatically, so a task never stalls waiting for you to type \"continue\". '/auto-continue off' stops it.",
+      "category": "Productivity",
+      "keywords": [
+        "automation",
+        "continuation",
+        "agent",
+        "loop",
+        "productivity"
+      ],
+      "icon": "refresh-ccw-02",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "bitwarden",
+      "displayName": "Bitwarden Secrets Manager",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "Pull credentials from Bitwarden, not plaintext",
+      "description": "Pull API keys from Bitwarden Secrets Manager on demand instead of storing them in plaintext — one machine-account bootstrap token (BWS_ACCESS_TOKEN) replaces N provider keys, and rotating a credential is one change in the Bitwarden web app. Declarative `command` tools that shell out to the locally-installed `bws` CLI (BYO binary, no API key in the manifest).",
+      "category": "Security",
+      "keywords": [
+        "secrets",
+        "bitwarden",
+        "credentials",
+        "security",
+        "env"
+      ],
+      "icon": "shield-key",
+      "iconDither": {
+        "from": 261,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "blueprint",
       "displayName": "Blueprint",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Read the plan as a graph, mark it up, and send back a verdict the agent can act on",
       "description": "Review an agent's plan before it touches a file. The agent publishes its plan over MCP; Blueprint parses the markdown into addressable blocks and renders it next to a dependency graph derived from the steps' own `depends_on` edges — so the two questions a wall of markdown cannot answer become visible at a glance: what actually has to happen first, and which step is the one everything else is waiting on. A plan reads as a sequence because prose is a sequence; the work almost never is. You annotate what you object to, anchored to the block or step it belongs to — a comment, a redline carrying the replacement text you want, a question, or a blocker — and then approve or request changes. The verdict is not a mood: it is a document. Requesting changes serializes every annotation into deterministic text the agent reads back through `blueprint__plan_status`, each finding naming the step or block it attaches to and, for a redline, the exact substitution proposed, so a revision answers what was actually written rather than what a summary of it sounded like. Re-publishing under the same plan id appends a revision instead of creating a new plan, and block ids are content-stable across revisions, so the second draft arrives as a diff against the first — the paragraphs you already read are still the paragraphs you already read.",
       "category": "Developer Tools",
@@ -251,10 +332,11 @@
     {
       "name": "brave",
       "displayName": "Brave Search",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Search an index nobody else syndicates",
       "description": "Independent web search via the Brave Search API (https://brave.com/search/api/), exposed as one declarative HTTP tool. Provides the swappable `web.search` layer, so selecting it in the layer picker re-points the stable `web__search` tool at Brave's own crawled index without changing what agents call. Brave is search-only: it deliberately declares neither `web.extract` nor `web.crawl`. Requires a BYOK Brave Search API key.",
       "category": "Search",
@@ -285,10 +367,11 @@
     {
       "name": "browser",
       "displayName": "Browser",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": true,
       "tagline": "Real-Chromium browser control for agents",
       "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated `browser.control` capability: list/open/navigate tabs, screenshot, read titles, take an accessibility snapshot with stable element refs, and drive the page with synthetic click/type/scroll input. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
       "category": "Browsers",
@@ -319,10 +402,11 @@
     {
       "name": "bytebot",
       "displayName": "Bytebot Desktop",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Swap computer control onto a Bytebot desktop",
       "description": "Drives a Bytebot desktop (https://github.com/bytebot-ai/bytebot) through `bytebotd`, its local HTTP daemon, as the SECOND provider of the swappable `computer.control` layer — the first thing that makes that layer actually swappable rather than merely marked selectable. READ THIS BEFORE SELECTING IT: bytebotd drives the desktop IT runs on, which in the shipped Bytebot product is a containerized Linux desktop, NOT the machine running Ryu. Selecting it re-points `computer__capture` / `computer__click` / `computer__type` / `computer__key` / `computer__scroll` away from your own screen (`ghost`, the declared default) and onto that desktop — the same remote-target relationship `browser.control` already has between the local Chromium sidecar and a hosted browser. It serves FIVE of the six canonical verbs: `computer__focus_app` is deliberately NOT bound, because bytebotd's `application` action takes a closed seven-value enum (firefox, 1password, thunderbird, vscode, terminal, desktop, directory) while the canonical verb takes a free-form app name, so any other name would be a schema-legal call that 400s. The app switch is still reachable natively as `bytebot__application`, whose own schema carries that enum so an illegal call cannot be composed. Requires no API key — bytebotd ships with no authentication at all, which is also why this plugin only ever addresses it over loopback. SECURITY, read before enabling: bytebotd ships with NO authentication — no auth middleware, permissive CORS — and this plugin reaches it at the fixed loopback port 9990. Its egress grant is `tool:http-egress:127.0.0.1`, which is HOST-scoped, not port-scoped: approving it grants reach to any service on loopback, not just bytebotd. Only enable this on a machine where you accept that an unauthenticated desktop-control daemon is running and reachable. TARGET: bytebotd drives the desktop IT runs on — in the shipped Bytebot product that is a containerized Linux desktop, NOT the machine running Ryu — so selecting this instead of `ghost` does not give you another way to drive your own computer.",
       "category": "Automation",
@@ -354,10 +438,11 @@
     {
       "name": "calendar",
       "displayName": "Calendar",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Every scheduled run on one calendar",
       "description": "The scheduled-runs calendar: every agent and workflow scheduled job projected onto Month, Week, Day, and Agenda views — past runs from history, upcoming runs from cron/interval — with a New automation dialog that schedules an agent.",
       "category": "Productivity",
@@ -387,10 +472,11 @@
     {
       "name": "canvas",
       "displayName": "Canvas",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Wire up media and agent nodes on one board",
       "description": "A node board for generative media: wire up image, video, chat, text-to-speech, speech-to-text, upload, and note nodes, then run the graph through Ryu's media and agent bridges. Each board persists as a Space document, so it stays editable, shareable, and searchable.",
       "category": "Creative",
@@ -421,10 +507,11 @@
     {
       "name": "chat-title",
       "displayName": "Chat Title",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Names your chats for you, automatically",
       "description": "Auto-renames a chat as soon as the first reply lands, then again after every N completed assistant turns (default 5), using a side model — and keeps a Core-side history of the names it chose so you can see how a conversation drifted. Enablement, the first-turn rename, frequency, and the model to use are all settings.",
       "category": "Productivity",
@@ -454,12 +541,50 @@
       }
     },
     {
+      "name": "clangd-lsp",
+      "displayName": "Clangd (C/C++)",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "C/C++ code intelligence via clangd",
+      "description": "C/C++ language server (clangd) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install clangd; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "c",
+        "c++",
+        "clangd",
+        "language-server",
+        "developer"
+      ],
+      "icon": "code-browser",
+      "iconDither": {
+        "from": 32,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "clips",
       "displayName": "Clips",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Capture and browse screen clips",
       "description": "Clips: capture and browse screen/timeline clips. A Core→Shadow proxy that depends on the Shadow capture app for its recordings. Runs the out-of-process ryu-clips sidecar; Core proxies /api/clips/* to it. The Shadow record/browse surface is fully served out-of-process (the sidecar reads RYU_SHADOW_URL itself); URL/yt-dlp ingest and auto-file into the Clips Space require Core's kernel machinery and degrade cleanly in the standalone sidecar.",
       "category": "Media & Voice",
@@ -491,10 +616,11 @@
     {
       "name": "crm",
       "displayName": "Harbor",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Your pipeline, your schema, your machine",
       "description": "A CRM that starts as a data model rather than a fixed set of screens. Harbor ships the five objects every pipeline needs — companies, people, deals, notes, tasks — and then gets out of the way: add your own objects, give any of them typed fields (currency, status, rating, multi-select, or a relation to another object), and every view, filter, board, and report picks them up without a migration or a settings trip. Records are validated value bags, so a `stage` that used to be free text can become a status field with colours and the old rows keep working. Relations are materialised as real edges in both directions, which is why a company page can show its people, its open deals, and every note anyone wrote against any of them without you modelling the reverse side. Each record carries one unified timeline — notes, calls, meetings, tasks, and the field and stage changes the store writes itself — so \"what happened with this account\" is one read, not four. CSV import is a first-class flow, not an afterthought: drop a file, see inferred columns with sampled values, map each to an existing field or make a new one, pick a dedupe key, then read a dry run that tells you exactly how many rows would be created, updated, and skipped before anything is written. Duplicates get found and merged field by field, with activities, list memberships, and relation edges reparented onto the survivor. Everything lives in one SQLite database the node owns, indexed with FTS5 for search, and the whole app runs as a sidecar process reached over loopback — no cloud tenant, no seat count, and no third party holding your pipeline.",
       "category": "Productivity",
@@ -524,12 +650,50 @@
       }
     },
     {
+      "name": "csharp-lsp",
+      "displayName": "C# LSP",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "C# code intelligence via csharp-ls",
+      "description": "C# language server (csharp-ls) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install csharp-ls; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "c#",
+        "dotnet",
+        "csharp-ls",
+        "language-server",
+        "developer"
+      ],
+      "icon": "code-square-01",
+      "iconDither": {
+        "from": 64,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "dashboards",
       "displayName": "Dashboards",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Live widget boards over your node",
       "description": "Dashboards: composable widget boards that assemble live views over monitors, meetings, quests, and other Core surfaces via soft HTTP loopback. Declares the out-of-process ryu-dashboards sidecar (kind:local) that owns the store + refresh loop + /api/dashboards/* surface, served to the desktop through the generic ext-proxy public_mount. Started eagerly (not lazy) so the kernel hardware device-dashboard renderer + nudge loop can reach it at boot / on a device poll before any desktop has opened Home. The dashboard_builder MCP runnable + the hardware render seam reach it over loopback via dashboards_client.",
       "category": "Productivity",
@@ -558,12 +722,48 @@
       }
     },
     {
-      "name": "dictation",
-      "displayName": "Dictation",
-      "version": "1.0.0",
+      "name": "desktop",
+      "displayName": "Virtual Desktop",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
+      "tagline": "A live, interactive desktop for the node — watch and drive it",
+      "description": "An interactive virtual desktop for any Ryu node — cloud-managed, self-hosted, or local. The sidecar brings up a full headless Linux desktop (Xvfb + window manager + apps) with a VNC server on loopback, exposes it through Core's generic WebSocket ext-proxy, and the desktop Virtual Desktop panel streams it live with mouse/keyboard input. Ghost can drive the same display, so agents see and control exactly what you watch.",
+      "category": "Developer Tools",
+      "keywords": [
+        "desktop",
+        "vnc",
+        "stream",
+        "remote",
+        "computer-use"
+      ],
+      "icon": "monitor-02",
+      "iconDither": {
+        "from": 210,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "dictation",
+      "displayName": "Dictation",
+      "version": "0.1.14",
+      "type": "app",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
       "tagline": "Speak anywhere, type anywhere",
       "description": "System-wide dictation and agent-ask via the Island companion: speak anywhere to type a transcript, or ask an agent and paste the answer into the focused app.",
       "category": "Media & Voice",
@@ -595,10 +795,11 @@
     {
       "name": "docling",
       "displayName": "Docling",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Layout-aware parsing, tables that survive chunking",
       "description": "Document parsing via IBM's MIT-licensed Docling — the highest-fidelity `document.parse` backend. Where a text extractor hands a model a stream of characters, Docling runs real layout analysis: a page-segmentation model finds the reading order, a table-structure model rebuilds merged cells and spanning headers, and the result is exported as markdown whose headings, lists and tables mirror the document's actual structure. That is what makes a multi-column paper or a financial statement survive chunking instead of interleaving into nonsense. The cost is weight: the first parse downloads its models (hundreds of MB) and can take minutes, and every parse after that is CPU-bound inference rather than a string copy. Everything runs locally — Docling explicitly supports air-gapped operation once the models are cached — and no document ever leaves the node. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
       "category": "Documents",
@@ -632,12 +833,44 @@
       }
     },
     {
-      "name": "double-check",
-      "displayName": "Double Check",
-      "version": "1.0.0",
+      "name": "docs",
+      "displayName": "Ryu Docs",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": true,
+      "tagline": "The Ryu docs, as MCP tools",
+      "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships enabled by default.",
+      "category": "Developer Tools",
+      "keywords": [
+        "docs",
+        "documentation",
+        "reference"
+      ],
+      "icon": "book-open-01",
+      "surfaces": [
+        "gateway",
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "double-check",
+      "displayName": "Double Check",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
       "tagline": "A second model reviews every answer",
       "description": "Sends every answer to a second model for review before you act on it, so mistakes get caught by a fresh set of eyes. Off until you flip the Double-check toggle in the composer; the reviewer model is configurable in settings.",
       "category": "Security",
@@ -669,10 +902,11 @@
     {
       "name": "drafts",
       "displayName": "Drafts",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Every unsent message, kept and queued until it can go",
       "description": "A durable outbox for messages you have not sent yet. Anything you type into a composer and walk away from is kept as a draft instead of being lost with the tab, and every draft lives in one node-wide store rather than inside the chat it happened to be typed in — so it survives closing the conversation, restarting the app, and moving to another project. A draft can also be armed: give it a condition and it sends itself when the condition holds. The two conditions that exist are the two that actually block work — 'fewer than N agents are running' (so a queued prompt starts the moment a slot frees instead of piling onto a machine already at capacity) and 'this agent's usage window has room again' (so a prompt written against a capped subscription goes out when the cap lifts rather than failing on send). Both are evaluated against readings the app takes from this node, and a draft whose condition never becomes true simply stays a draft — nothing is sent on a guess.",
       "category": "Productivity",
@@ -702,10 +936,11 @@
     {
       "name": "exa",
       "displayName": "Exa Search",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Neural web search for agents",
       "description": "Neural and keyword web search via the Exa API (https://exa.ai), exposed as two declarative HTTP tools: search and find-similar. Requires a BYOK Exa API key.",
       "category": "Search",
@@ -735,10 +970,11 @@
     {
       "name": "finetune",
       "displayName": "Fine-tuning",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Train a model on your own data, on your own GPU",
       "description": "A LoRA/QLoRA training studio: launch fine-tune jobs on this node's GPU or a remote Ryu Cloud GPU node, track them durably, merge the trained adapter to GGUF, and register the result as a swappable local model.",
       "category": "Developer Tools",
@@ -770,10 +1006,11 @@
     {
       "name": "firecrawl",
       "displayName": "Firecrawl",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Search and scrape the web for agents",
       "description": "Web search and page scraping via the Firecrawl v2 API (https://firecrawl.dev), exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web__search` / `web__extract` tools at Firecrawl without changing what agents call. Requires a BYOK Firecrawl API key.",
       "category": "Search",
@@ -806,10 +1043,11 @@
     {
       "name": "firewall",
       "displayName": "Gateway Firewall",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Turn on the Gateway's prompt-injection and PII screen",
       "description": "An on/off switch over the Gateway's built-in firewall, which screens model traffic for prompt injection and PII. Enabling this plugin forces `firewall.enabled` on at the next Gateway restart; the pattern set and policy mode stay owned by the Gateway config (GET/PUT /v1/config), not by this plugin.",
       "category": "Security",
@@ -842,12 +1080,13 @@
     {
       "name": "ghost",
       "displayName": "Ghost",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": true,
       "tagline": "Let agents see and drive your desktop",
-      "description": "Desktop automation: 29 screen perception and input control tools. Windows-first.",
+      "description": "Desktop automation: 29 screen perception and input control tools. Cross-platform (Windows, macOS, Linux).",
       "category": "Automation",
       "keywords": [
         "automation",
@@ -875,10 +1114,11 @@
     {
       "name": "goal",
       "displayName": "Goal",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Keep working until a judge model says it's done",
       "description": "Give the agent a goal with `/goal` and it keeps working until a judge model agrees the goal is actually met, re-prompting itself after every turn instead of stopping and waiting for you. `/goal clear` stops the loop; the judge model is configurable.",
       "category": "Productivity",
@@ -908,12 +1148,50 @@
       }
     },
     {
-      "name": "headroom",
-      "displayName": "Headroom Compression",
-      "version": "1.0.0",
+      "name": "gopls-lsp",
+      "displayName": "Go LSP",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
+      "tagline": "Go code intelligence via gopls",
+      "description": "Go language server (gopls) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install gopls; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "go",
+        "golang",
+        "gopls",
+        "language-server",
+        "developer"
+      ],
+      "icon": "code-02",
+      "iconDither": {
+        "from": 96,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "headroom",
+      "displayName": "Headroom Compression",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
       "tagline": "Compress noisy context down to a fraction of its tokens",
       "description": "Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks. 60-95% fewer tokens, reversible retrieval. Requires headroom-ai[mcp].",
       "category": "Developer Tools",
@@ -943,10 +1221,11 @@
     {
       "name": "healing",
       "displayName": "Self-Healing",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Failed runs diagnose and fix themselves — with your approval",
       "description": "Self-healing: failed runs are diagnosed by a Gateway side-model and proposed fixes are delivered to the approvals inbox for human review before they apply.",
       "category": "Developer Tools",
@@ -978,10 +1257,11 @@
     {
       "name": "honcho",
       "displayName": "Honcho",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "A standing synthesis of the user, not a list of facts",
       "description": "Give the swappable `memory` layer a provider that MODELS the user instead of only storing rows, via Honcho (https://honcho.dev) — the Plastic Labs identity layer Hermes uses for exactly this. Honcho watches the messages you hand it and derives a per-peer REPRESENTATION; its Dialectic endpoint (`POST /v3/workspaces/{workspace_id}/peers/{peer_id}/chat`) then answers a natural-language question about that peer with its own synthesis. That is what the canonical `memory__context` verb has always promised and no shipped provider served, so this is the first plugin to make the kernel's `context` bridge (`memory.provider-context`) do anything at all. Honcho here serves TWO verbs: `memory__context` (the Dialectic synthesis) and `memory__search` (`POST .../peers/{peer_id}/search`, documented as \"Search a Peer's messages\" — conversation text, not the conclusions Honcho derives from it, which matters because the `prefetch` bridge is on by default and will start injecting message excerpts each turn). It also binds the two WRITE verbs, `memory__sync` and `memory__store`, through an adapter. Honcho's only documented write is `POST /v3/workspaces/{workspace_id}/sessions/{session_id}/messages`, whose `messages[]` items each require a `peer_id` — a NESTED position the declarative `arg_template` cannot reach, because a template substitutes only from CALLER arguments and never sees a resolved `pref:`. That is why both verbs went unbound and why `memory.mirror-builtin` (default ON) was inert. An adapter receives those `pref:` values already resolved, so the per-install peer lands inside `messages[]` without hardcoding one bucket for every install. The session and both peers are caller-named and created on first write, so nothing has to be set up by hand; Ryu's own replies are written as a SEPARATE peer, since attributing an assistant turn to your peer would poison the representation Honcho derives about you. `memory__forget` stays unbound: Honcho documents no message-delete endpoint, which no adapter can invent. The built-in store's own `memorystore__save` tool and this node's per-turn memory write are kernel and untouched. Every call is scoped to one workspace and one peer, both set per install in the settings tab — a hardcoded pair would put every install in one shared bucket. Requires a BYOK Honcho API key.",
       "category": "Knowledge & Memory",
@@ -1014,10 +1294,11 @@
     {
       "name": "hook-observers",
       "displayName": "Hook Observers",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Reference plugin: one observer per hook event",
       "description": "A worked reference for the turn-hook events Ryu can fire: five observer hooks watching subagent-stop, session-end, notification, workflow-run-failed, and a third-party app event (`com.ryu.meetings#meeting.ended`), each returning a harmless note. Nothing in Core knows this plugin exists — copy the directory as the starting point for your own event-driven plugin.",
       "category": "Developer Tools",
@@ -1049,10 +1330,11 @@
     {
       "name": "hook-session-context",
       "displayName": "Session Context",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Tell the agent what today's date is",
       "description": "Injects the current date and time at the start of every session, so the agent stops guessing what \"today\" means and can reason about recency and deadlines. Also the smallest working turn hook in the catalog, which makes it a good template to copy.",
       "category": "Developer Tools",
@@ -1082,12 +1364,87 @@
       }
     },
     {
+      "name": "jdtls-lsp",
+      "displayName": "Java LSP",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "Java code intelligence via Eclipse JDT.LS",
+      "description": "Java language server (Eclipse JDT.LS) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install jdtls; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "java",
+        "jdtls",
+        "eclipse",
+        "language-server",
+        "developer"
+      ],
+      "icon": "code-01",
+      "iconDither": {
+        "from": 128,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "kotlin-lsp",
+      "displayName": "Kotlin LSP",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "Kotlin code intelligence via the Kotlin LSP",
+      "description": "Kotlin language server for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install kotlin-lsp; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "kotlin",
+        "kotlin-lsp",
+        "jvm",
+        "language-server",
+        "developer"
+      ],
+      "icon": "code-square-02",
+      "iconDither": {
+        "from": 160,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "learning",
       "displayName": "Learning",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Turn your chats into reusable skills",
       "description": "Learning loop: turn chats and runs into reusable skills, gated by the approval Inbox, with an experience log of what was learned.",
       "category": "Knowledge & Memory",
@@ -1115,12 +1472,49 @@
       }
     },
     {
+      "name": "lua-lsp",
+      "displayName": "Lua LSP",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "Lua code intelligence via lua-language-server",
+      "description": "Lua language server (lua-language-server) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install lua-language-server; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "lua",
+        "lua-language-server",
+        "language-server",
+        "developer"
+      ],
+      "icon": "code-circle-01",
+      "iconDither": {
+        "from": 192,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "mail",
       "displayName": "Mail",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Email inboxes for your agents",
       "description": "Agent Inboxes — email as a service for agents. Runs the out-of-process ryu-mail sidecar; Core proxies /api/mail/* to it. Its sandboxed companion is a per-node mail client (list inboxes, read messages, compose/send, create an inbox) driving /api/mail/* via the mail:crud bridge capability.",
       "category": "Communication",
@@ -1151,10 +1545,11 @@
     {
       "name": "markitdown",
       "displayName": "MarkItDown",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Pure-pip document parsing, no native toolchain",
       "description": "Document parsing via Microsoft's MIT-licensed MarkItDown library — the default `document.parse` backend, and the one that works on a machine where the user installed nothing on purpose. `pip install 'markitdown[all]'` is a pure-Python install of a few tens of megabytes: no ONNX runtime, no layout-detection model download, no GPU, and no `brew`/`apt` packages to chase. It covers the formats people actually attach — PDF, DOCX, PPTX, XLSX/XLS, HTML, CSV, JSON, XML, EPUB, Outlook .msg, Jupyter notebooks, and ZIP archives expanded member-by-member — and it emits markdown natively rather than a flat text dump, so headings stay headings and spreadsheet tables stay tables. The tradeoffs are honest ones: no OCR (a scanned PDF comes back empty and the job says so), no legacy binary `.doc`/`.ppt`, and no element-level structure for a consumer that wants to chunk on document structure. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
       "category": "Documents",
@@ -1189,10 +1584,11 @@
     {
       "name": "meetings",
       "displayName": "Meetings",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Record, transcribe, and write up your meetings",
       "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable.",
       "category": "Communication",
@@ -1223,10 +1619,11 @@
     {
       "name": "mem0",
       "displayName": "Mem0",
-      "version": "1.1.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Recall and record in an existing Mem0 project inside Ryu",
       "description": "Read and write a hosted Mem0 memory project (https://mem0.ai) through the Mem0 Platform REST API, exposed as three declarative HTTP tools. The SECOND provider of the swappable `memory` layer — the built-in store stays the default and keeps running alongside it — so selecting Mem0 re-points the stable `memory__search` / `memory__store` / `memory__sync` / `memory__forget` tools at your Mem0 project without changing what agents call, and turns on the kernel bridges that fold Mem0 into every turn's recall and echo this node's writes out to it. The one canonical verb Mem0 does NOT serve is `memory__context`: Mem0 publishes no standing-summary endpoint, and forcing the verb onto its get-all would dump raw facts at system rank under a label promising a synthesis. The two WRITE verbs both post to `POST /v3/memories/add/`, which is ASYNCHRONOUS — it answers `{message, status: \"PENDING\", event_id}` and never a fact id — so `memory__store` returns an accepted-for-processing envelope, not the id of the fact it created, and nothing may chain `memory__forget` onto its result. That is fine for the way both verbs are used: the kernel `mirror` and `sync` bridges are fire-and-forget and never read the response. The two verbs differ in ONE documented field: `store` sends `infer: false` because the caller has already decided the fact and Mem0 should keep the text as-is, while `sync` hands over a raw turn with Mem0's default inference on and lets Mem0 mine it. Note the entity id lives in two different places in Mem0's own API — nested inside `filters` for search, top-level for add — and both are pinned from the same `mem0.user-id` preference. Requires a BYOK Mem0 API key.",
       "category": "Knowledge & Memory",
@@ -1258,10 +1655,11 @@
     {
       "name": "mineru",
       "displayName": "MinerU",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Scientific and scanned PDFs, formulas to LaTeX",
       "description": "Document parsing via MinerU (opendatalab) — the highest-fidelity `document.parse` backend, and the heaviest. Built for scientific and scanned PDFs: it runs layout detection to reconstruct true reading order across multi-column pages, converts formulas to LaTeX, converts tables to HTML, and OCRs scanned pages, so a physics paper comes back as markdown a model can actually follow instead of two columns interleaved line by line. The cost is real: MinerU wants Python 3.10-3.13, 16 GB of RAM (32 GB recommended), about 20 GB of disk for its model set, and a 4 GB-VRAM GPU for the pipeline backend (8 GB for the VLM backends) to be quick — a CPU-only host works through the `pipeline` backend but parses take minutes. Models download on first use. MinerU ships as a CLI, so each parse is a supervised subprocess with a hard wall-clock kill: a timed-out or cancelled parse takes its whole process group with it rather than leaving a multi-gigabyte orphan. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
       "category": "Documents",
@@ -1297,10 +1695,11 @@
     {
       "name": "mission-control",
       "displayName": "Mission Control",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "What every chat did, and what is still open",
       "description": "The project-level view over many chats: recent sessions and what each one accomplished, per-day activity, the files several chats keep returning to, and the to-dos left outstanding in threads nobody reopened. Declares the out-of-process ryu-mission-control sidecar (kind:local), which owns the digest store and the cross-chat rollup and is served to the desktop through the generic ext-proxy public_mount. The digests themselves are computed in the desktop from each chat's message parts and PUT here, because a manifest sidecar has no conversation read and the parts column is sealed at rest — the same function feeds the in-chat Mission Control panel, so a chat's summary is identical in both places.",
       "category": "Productivity",
@@ -1332,10 +1731,11 @@
     {
       "name": "monitors",
       "displayName": "Monitors",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Watch a page and get told when it changes",
       "description": "Website monitors: price, stock, keyword, content, and uptime watches with cross-device notification fan-out.",
       "category": "Developer Tools",
@@ -1366,10 +1766,11 @@
     {
       "name": "news",
       "displayName": "Wire",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Every outlet covering the same story, collapsed into one",
       "description": "Your own newsroom, running on your node. Wire pulls RSS, Atom and JSON Feed in on a schedule — parsed natively, with conditional GET, per-source backoff, and a source marked `failing` after three consecutive misses rather than quietly going silent — then does the work an aggregator does for you and never shows its working. Duplicates die twice: URLs are canonicalized (redirects followed, `utm_*` and friends stripped, query pairs sorted) and content is fingerprinted with a banded 64-bit SimHash over word shingles, which is what catches one wire story running under six different headlines on six different sites. What survives is clustered across outlets by shingle similarity, entity overlap and title overlap, so the unit you read is a story with *n* sources attached and a visible spread of framings, not the same paragraph six times. A watch is a real boolean query — `AND` / `OR` / `NOT`, phrases, `title:` and `source:` scoping — parsed to an AST and evaluated against tokenized text, and it refuses to save on a parse error with the column, because a watch that silently matches nothing is worse than one that will not save. Breaking is defined, not guessed: a topic's hourly volume against a baseline built from the same hour of day over the trailing week, carrying its z-score and the articles that caused it. Ranking is recency half-life × source count × topic match × unread, every factor displayable. A model is involved in exactly two places — two sentences per cluster in the brief, and one neutral headline for a story eight outlets titled eight ways — and the raw cluster stays inspectable underneath both. Nothing leaves the node but the fetches, and those go to the sources you added.",
       "category": "Productivity",
@@ -1404,10 +1805,11 @@
     {
       "name": "no-ai-slop",
       "displayName": "No AI Slop",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Every answer edited until it stops sounding like AI",
       "description": "Bundles the `no-ai-slop` editing skill and runs it on every finished answer: a separate reviewer with a fresh context reads the reply, names the AI-slop patterns it finds, and the agent rewrites the answer to fix them. One pass by default, configurable up to twelve, or set to 0 and trigger it by hand from the composer '+' menu. A clean answer is left alone silently.",
       "category": "Productivity",
@@ -1440,10 +1842,11 @@
     {
       "name": "no-more-mistakes",
       "displayName": "No More Mistakes",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Correct it once, not every week",
       "description": "Notices when you correct the agent, writes the lesson down as a one-line rule in a Space, and hands every later session that rule list before the first word is generated — so a mistake you have already fixed once stops coming back. Each rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
       "category": "Knowledge & Memory",
@@ -1476,10 +1879,11 @@
     {
       "name": "output-styles",
       "displayName": "Output Styles",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Change how the agent talks, not what it knows",
       "description": "The nine built-in output styles — ELI5, I have ADHD, Explanatory, Learning, Proactive, Plain text, No AI slop, Bro and Gen Z. A style is appended to (or replaces) the agent's base instructions for the turn, so it changes how the agent talks — role, tone, default response shape — and never what it knows, which tools it has, or which model runs. Pick one in the composer; browse them in the Store's Output Styles tab.",
       "category": "Productivity",
@@ -1512,10 +1916,11 @@
     {
       "name": "parallel",
       "displayName": "Parallel Search",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Objective-driven web search built for agent loops",
       "description": "Web search and content extraction via Parallel (https://parallel.ai), exposed as three declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web__search` / `web__extract` tools at Parallel without changing what agents call. Search works with NO key through Parallel's public Search MCP endpoint; a BYOK Parallel API key unlocks the higher-limit REST API and extraction.",
       "category": "Search",
@@ -1545,12 +1950,87 @@
       }
     },
     {
-      "name": "pi-shell",
-      "displayName": "Background Bash",
-      "version": "1.0.0",
+      "name": "php-lsp",
+      "displayName": "PHP LSP",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
+      "tagline": "PHP code intelligence via Intelephense",
+      "description": "PHP language server (Intelephense) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install intelephense; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "php",
+        "intelephense",
+        "language-server",
+        "developer"
+      ],
+      "icon": "code-circle-02",
+      "iconDither": {
+        "from": 224,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "pi-monitor",
+      "displayName": "Monitor",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "Watch a command or stream and react when it changes",
+      "description": "Adds the monitor tool to the managed Pi agent, so it can watch a command or WebSocket in the background and react when events arrive.",
+      "category": "Developer Tools",
+      "keywords": [
+        "monitor",
+        "watch",
+        "background",
+        "stream",
+        "websocket",
+        "developer"
+      ],
+      "icon": "monitor-02",
+      "iconDither": {
+        "from": 12,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "pi-shell",
+      "displayName": "Background Bash",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
       "tagline": "Run long commands without holding the turn open",
       "description": "Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a long-running command does not hold the turn open.",
       "category": "Developer Tools",
@@ -1582,10 +2062,11 @@
     {
       "name": "pi-subagent",
       "displayName": "Subagents",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Let the agent delegate work to child agents",
       "description": "Adds the Task tool to the managed Pi agent, so it can delegate a bounded, context-isolated job to a child agent.",
       "category": "Automation",
@@ -1617,10 +2098,11 @@
     {
       "name": "plan-continue",
       "displayName": "Plan Continue",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Stop typing \"continue\" during plan mode",
       "description": "While plan mode is on and the plan has not been accepted, this injects a follow-up turn after each completed turn asking the agent to carry on planning — so a plan never stalls waiting for you to type \"continue\".",
       "category": "Productivity",
@@ -1652,10 +2134,11 @@
     {
       "name": "predict",
       "displayName": "Autocomplete",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Ghost-text autocomplete in every text field",
       "description": "Inline ghost-text autocomplete in any text field on your machine, accepted with Tab. A small companion reads the caret context and asks Core for a completion, and every prediction is routed through the Gateway — so no model id, Gateway URL, or policy ever lives in the companion process. Windows-first.",
       "category": "Automation",
@@ -1687,10 +2170,11 @@
     {
       "name": "proof",
       "displayName": "Proof of Work",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Keep going until a verifier proves it's done",
       "description": "The stricter sibling of `/goal`: an independent verifier agent has to prove with tool-gathered evidence that the goal is actually done, rather than judging the transcript alone. The loop runs until that proof lands; `/proof clear` stops it and the verifier model is configurable.",
       "category": "Security",
@@ -1722,10 +2206,11 @@
     {
       "name": "pxpipe",
       "displayName": "pxpipe",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Pay vision-token prices for the boring half of every prompt",
       "description": "Token-saving loopback proxy (https://github.com/teamchong/pxpipe): it renders the bulky, static parts of a request — the system prompt, the tool-schema block, large tool results and older history — into PNG pages and sends them as image blocks, which vision models price by pixel area rather than by character. Dense text lands at roughly 3.1 characters per image-token against 1 per text-token, so the same budget carries ~4.7x more context; recent turns and sparse content stay as text. This plugin owns the process lifecycle (spawn, health, restart) and mounts pxpipe's dashboard behind Core auth. It is a TRANSPARENT proxy and holds no credential of its own: it forwards whatever key its caller sends, so point a custom provider at http://127.0.0.1:47821 with your own API key (see README). Runs `npx -y pxpipe-proxy@0.11.1`; needs Node on PATH and fetches the package on first start.",
       "category": "Developer Tools",
@@ -1756,12 +2241,50 @@
       }
     },
     {
+      "name": "pyright-lsp",
+      "displayName": "Python LSP",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "Python code intelligence via Pyright",
+      "description": "Python language server (Pyright) for the ryu agent: type checking plus definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install pyright-langserver; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "python",
+        "pyright",
+        "type-checking",
+        "language-server",
+        "developer"
+      ],
+      "icon": "binary-code",
+      "iconDither": {
+        "from": 256,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "quests",
       "displayName": "Quests",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Your todos, found for you",
       "description": "Quests: auto-detecting todos surfaced from your chats and activity, tracked as a lightweight quest board with progress and completion.",
       "category": "Productivity",
@@ -1792,10 +2315,11 @@
     {
       "name": "reasoning",
       "displayName": "Automated Reasoning",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Prove the answer follows the policy — or find the counterexample",
       "description": "Check an answer against a written policy with a solver instead of a second opinion. Point it at a document — an HR handbook, a refund policy, an underwriting rule sheet — and it drafts a formal model of it: typed variables and rules you can read and edit in plain language. From then on, a question and an answer are translated into logic and decided by a decision procedure built from scratch here (finite-domain enumeration over booleans and enums, Fourier–Motzkin elimination over linear rational arithmetic, branch-and-bound for integers). The result is not a score: `valid` means the policy PROVES the answer, `invalid` means it CONTRADICTS it and comes with a concrete counterexample, `satisfiable` means the policy simply does not settle it, and `impossible` means the policy contradicts itself — the case a naive checker silently reports as approval. Every finding names the minimal set of rules that decided it, the facts the answer quietly assumed, and what would have had to be different, all read back out of the solver rather than written by a model. Exact rational arithmetic throughout, so a rule about 0.1 + 0.2 does not fail on floating point. Model calls happen only at the two language edges; the verdict is reproducible offline from the formulas.",
       "category": "Security",
@@ -1830,10 +2354,11 @@
     {
       "name": "recap",
       "displayName": "Recap",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "A short recap of what the agent just did",
       "description": "Ends a long agent turn with a short recap of what it actually did — the work, the files and commands it named, what it could not finish, and the obvious next step — written by a side model so the main answer is left untouched. Long turns only by default (short answers recap themselves). `/recap` recaps the whole conversation on demand without spending a turn on the main model; `/recap off` mutes the automatic one for that chat.",
       "category": "Productivity",
@@ -1866,10 +2391,11 @@
     {
       "name": "receipts",
       "displayName": "Receipts",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "No claim ships without a screenshot",
       "description": "Verify work with visual evidence: `/receipt <goal>` makes the agent capture a screenshot or screen recording of the thing actually working, then an INDEPENDENT verifier agent opens that artifact and judges what it can SEE against the goal. Where `/proof` verifies by re-reading the workspace, this one requires a durable artifact a human can look at afterwards. Resubmitting an old capture does not count. `/receipt clear` stops the loop.",
       "category": "Security",
@@ -1904,10 +2430,11 @@
     {
       "name": "recipes",
       "displayName": "Recipes",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Record a UI sequence once, replay it forever",
       "description": "Desktop-automation recipes: record → save → replay UI action sequences. Backed by Ghost's RecipeStore, so it declares Ghost as a dependency and the graph refuses to disable Ghost out from under it.",
       "category": "Automation",
@@ -1939,10 +2466,11 @@
     {
       "name": "research",
       "displayName": "Research",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Multi-step web research with cited sources",
       "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports. Declares the out-of-process ryu-research sidecar (a thin Rust proxy that forwards /api/research/* to the Python autoresearch engine on :8087); Core reaches it via the generic ext-proxy loader.",
       "category": "Research",
@@ -1974,10 +2502,11 @@
     {
       "name": "rlm",
       "displayName": "Recursive Language Model",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Ask a question of more text than a model can hold",
       "description": "Answer questions about a corpus far larger than any model's context window — without putting it in a prompt. The usual options all degrade: truncate and you lose the answer, embed-and-retrieve and you get fragments without their argument, buy a bigger window and attention over the middle of it thins out anyway. This app does the other thing. Your documents are held here as a variable. A root model plans over an outline of them — chunk ids, sources, line spans, headings — and reaches the text only through operators that summarise before returning: `grep` to locate, `map` to run a cheap model over the chunks that matter in parallel and fold the answers back, `recurse` to give a sub-question its own plan over a subset. The root model never sees the corpus, so its context stays roughly the same size whether you point it at 40 KB or 40 MB, and the answer does not get worse as the input gets bigger. Every answer carries `path:line` citations read back out of the chunks it rests on, and every run keeps a full trace — each operator, each sub-call, what it cost — that you can open and replay. Depth, step, call and wall-clock budgets are hard: a run that hits one says so and returns what it had, rather than quietly shortening the answer. Agents get the same engine as tools, and `grep` and `peek` need no model at all, so a workflow can branch on a deterministic search of a 40 MB corpus.",
       "category": "Productivity",
@@ -2012,10 +2541,11 @@
     {
       "name": "rtk",
       "displayName": "RTK (Rust Token Killer)",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Token-compress noisy dev-command output for agents",
       "description": "Run a dev command through RTK (Rust Token Killer) and get a token-compressed version of its output (60-90% fewer tokens), exposed as a declarative `command` tool that shells out to the locally-installed `rtk` binary. BYO — no API key.",
       "category": "Developer Tools",
@@ -2045,12 +2575,86 @@
       }
     },
     {
-      "name": "sample",
-      "displayName": "Research Assistant",
-      "version": "1.0.0",
+      "name": "ruby-lsp",
+      "displayName": "Ruby LSP",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
+      "tagline": "Ruby code intelligence via ruby-lsp",
+      "description": "Ruby language server (ruby-lsp) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install ruby-lsp; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "ruby",
+        "rails",
+        "ruby-lsp",
+        "language-server",
+        "developer"
+      ],
+      "icon": "braces",
+      "iconDither": {
+        "from": 288,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "rust-analyzer-lsp",
+      "displayName": "Rust LSP",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "Rust code intelligence via rust-analyzer",
+      "description": "Rust language server (rust-analyzer) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install rust-analyzer; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "rust",
+        "rust-analyzer",
+        "language-server",
+        "developer"
+      ],
+      "icon": "gear-01",
+      "iconDither": {
+        "from": 320,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "sample",
+      "displayName": "Research Assistant",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
       "tagline": "Reference plugin: one of every runnable kind",
       "description": "The reference plugin: a minimal example that declares one of each runnable kind — an agent, a workflow, a tool, and a skill — plus a companion window. It does nothing useful on purpose, and ships hidden. Copy this directory as the starting point for your own plugin.",
       "category": "Developer Tools",
@@ -2083,10 +2687,11 @@
     {
       "name": "sample-widget",
       "displayName": "Sample Widget",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Reference plugin: an inline chat widget",
       "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget__render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
       "category": "Developer Tools",
@@ -2120,10 +2725,11 @@
     {
       "name": "scrapling",
       "displayName": "Scrapling",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Anti-bot page extraction, no API key",
       "description": "Adaptive web-page extraction via the Scrapling MCP server (https://scrapling.readthedocs.io), a BYO local install. Provides the swappable `web.extract` layer as a THIRD provider alongside the local `spider` CLI and the hosted BYOK services, so selecting it re-points the stable `web__extract` tool at a fetcher that impersonates a real browser TLS fingerprint. No API key. Requires `pip install \"scrapling[ai]\"` and the `scrapling` binary on PATH; until then the MCP server does not start and the layer falls back to whichever other provider you select. Deliberately provides NO `web.crawl`: neither the MCP server nor the CLI follows links — only Scrapling's Python `Spider` class crawls, and it is not reachable over MCP.",
       "category": "Search",
@@ -2155,10 +2761,11 @@
     {
       "name": "security-guidance",
       "displayName": "Security Guidance",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Catch vulnerabilities before you ship them",
       "description": "Scans each answer for security vulnerabilities and has a second model review the code before you ship it. Off until you flip the Security review toggle in the composer, or run `/security` for a one-off review of the last answer; the reviewer model is configurable.",
       "category": "Security",
@@ -2190,10 +2797,11 @@
     {
       "name": "serper",
       "displayName": "Serper",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Google's real results, as JSON, in a second",
       "description": "Google's own search results as JSON via the Serper API (https://serper.dev), plus single-page scraping, exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web__search` / `web__extract` tools at Serper without changing what agents call. Serper is a paid, credit-metered API with a free allowance; requires a BYOK Serper API key.",
       "category": "Search",
@@ -2225,10 +2833,11 @@
     {
       "name": "shadow",
       "displayName": "Shadow",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": true,
       "tagline": "Recall what you have seen and done",
       "description": "Search everything Shadow has captured (screen text, audio transcripts, input) and summarize recent activity. Exposed as declarative HTTP tools that reach the device-local Shadow sidecar through Core's authenticated `/api/shadow/*` proxy (which injects Shadow's bearer token).",
       "category": "Knowledge & Memory",
@@ -2258,10 +2867,11 @@
     {
       "name": "simulator",
       "displayName": "Simulators",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "iOS Simulator & Android Emulator control for agents",
       "description": "Drive iOS Simulators (macOS + Xcode) and Android Emulators from a workspace tab. Ryu runs the device-control toolchain (`simctl`, `adb`) as a local sidecar and exposes the grant-gated `simulator.control` capability: list/boot devices, install & launch apps, open deep links, screenshot, and (Android) tap/swipe/type. The desktop Simulator panel shows whichever platform the connected node supports.",
       "category": "Developer Tools",
@@ -2292,10 +2902,11 @@
     {
       "name": "skill-editor",
       "displayName": "Skill Editor",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Write and version your own agent skills",
       "description": "Author a user-owned Agent Skill (SKILL.md): front-matter fields (name / description / allowed tools / always-on), a markdown body editor, debounced autosave, and server-backed undoable version history.",
       "category": "Developer Tools",
@@ -2325,10 +2936,11 @@
     {
       "name": "social",
       "displayName": "Outpost",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Schedule, publish, and reply across every account",
       "description": "A publishing command center for every social account you run: compose once, tailor per platform, queue it on a calendar, and let the node publish while you are away. Scheduled posts, a retrying publish queue, a unified reply inbox, engagement history, and reusable post templates — all in one local SQLite database the node owns.",
       "category": "Productivity",
@@ -2360,10 +2972,11 @@
     {
       "name": "spider",
       "displayName": "Spider",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Crawl and extract web pages for agents",
       "description": "High-performance web crawling and content extraction via the Spider CLI (https://spider.cloud), exposed as a declarative `command` tool that shells out to the locally-installed `spider` binary. No API key.",
       "category": "Search",
@@ -2393,10 +3006,11 @@
     {
       "name": "spidercloud",
       "displayName": "Spider Cloud",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Hosted site crawling, no local binary",
       "description": "Hosted multi-page web crawling via the Spider Cloud API (https://spider.cloud), exposed as one declarative HTTP tool. Provides the swappable `web.crawl` layer as a SECOND provider alongside the local `spider` CLI, so selecting it re-points the stable `web__crawl` tool at a hosted crawler that needs no local binary. The crawl is synchronous — `run_in_background` defaults to false and one request returns every fetched page's content, so there is no job id to poll. The canonical `depth` argument is deliberately DROPPED: Spider Cloud documents `depth: 0` as \"no limit will be applied\", the exact inverse of the canonical contract's \"0 = the start page only\". Requires a BYOK Spider Cloud API key.",
       "category": "Search",
@@ -2428,10 +3042,11 @@
     {
       "name": "subtitles",
       "displayName": "Subtitles",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Subtitle any video, in any language, on your own machine",
       "description": "Pick a video on this machine, transcribe it locally, translate the transcript into the language you want, and get a timed .srt or .vtt written beside the file so your player picks it up. Both model hops stay on the device — local whisper for the transcription, the local gateway's on-device model for the translation — so nothing about the video leaves the disk it is already on. Long jobs are queued and polled, so a feature film keeps working while you do something else.",
       "category": "Media & Voice",
@@ -2462,12 +3077,50 @@
       }
     },
     {
-      "name": "tavily",
-      "displayName": "Tavily Search",
-      "version": "1.0.0",
+      "name": "swift-lsp",
+      "displayName": "Swift LSP",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
+      "tagline": "Swift code intelligence via SourceKit-LSP",
+      "description": "Swift language server (SourceKit-LSP) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install sourcekit-lsp; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "swift",
+        "sourcekit-lsp",
+        "apple",
+        "language-server",
+        "developer"
+      ],
+      "icon": "rocket-01",
+      "iconDither": {
+        "from": 352,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "tavily",
+      "displayName": "Tavily Search",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
       "tagline": "Agent-tuned web search and extraction",
       "description": "Search-and-extract for agents via the Tavily API (https://tavily.com), exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web__search` / `web__extract` tools at Tavily without changing what agents call. Requires a BYOK Tavily API key.",
       "category": "Search",
@@ -2499,10 +3152,11 @@
     {
       "name": "teams",
       "displayName": "Teams",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Address a group of agents as one",
       "description": "Teams: named groups of agents you can address as one. Governance shell over the in-crate teams store (agent-id membership only); no documents, no external dependencies. Runs the out-of-process ryu-teams sidecar; Core proxies /api/teams/* to it.",
       "category": "Communication",
@@ -2534,10 +3188,11 @@
     {
       "name": "timeline",
       "displayName": "Timeline",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Scrub back through everything your screen did",
       "description": "The activity replay timeline: a CapCut-style scrubber over Shadow's captured screen/input/window/audio lanes with a keyframe preview, a Dayflow work journal, and jump-to-moment focus.",
       "category": "Productivity",
@@ -2567,10 +3222,11 @@
     {
       "name": "tool-firewall",
       "displayName": "Tool Firewall",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Reference plugin: block destructive tool calls",
       "description": "A worked reference for pre- and post-tool hooks: the pre hook denies any tool call whose input matches a destructive pattern (`rm -rf`, `DROP TABLE`, `mkfs`), and the post hook notes what each tool returned. The pattern set is deliberately tiny — copy this directory as the starting point for your own tool policy.",
       "category": "Security",
@@ -2602,10 +3258,11 @@
     {
       "name": "toolsmith-example",
       "displayName": "toolsmith-example",
-      "version": "0.1.0",
+      "version": "0.1.14",
       "type": "plugin",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "description": "Worked example for tools/toolsmith — a real, verified inline_deno tool. Not registered with Core and not shipped; it exists so the scaffold → verify pipeline has an end-to-end regression test.",
       "category": "Developer Tools",
       "hidden": true
@@ -2613,10 +3270,11 @@
     {
       "name": "tuition",
       "displayName": "Tuition",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Drill the weakest thing you are ready for, graded by arithmetic",
       "description": "A tutor for one learner — you. Point it at your own syllabus, chapter or notes and it builds a mastery model you can read: every skill carries a Bayesian Knowledge Tracing posterior, its prerequisite edges, and a spaced-repetition schedule computed in whole days so a review due tomorrow does not move because you studied at 23:58. \"What should I study next\" is a topological answer — the weakest skill whose prerequisites you have already mastered — not a guess, and \"0.62 mastery, three more correct at this difficulty reaches 0.9\" is a projection you can check by hand. Multiple-choice, cloze, numeric-with-tolerance and exact answers are graded by comparison with no model in the loop at all; only free-response answers are marked by a model, and those always show the rubric they were graded against. Given an exam date it projects, from your observed rate over the last ten sessions, whether the syllabus will be covered in time, and says `unknown` rather than extrapolating off two data points. A model is used at exactly two edges — proposing skills from a document, and writing practice items and rubric marks — and both are reviewed by a person before they count.",
       "category": "Productivity",
@@ -2649,12 +3307,51 @@
       }
     },
     {
+      "name": "typescript-lsp",
+      "displayName": "TypeScript & JavaScript LSP",
+      "version": "0.1.14",
+      "type": "plugin",
+      "source": "builtin",
+      "builtin": true,
+      "system": false,
+      "tagline": "TS/JS code intelligence via typescript-language-server",
+      "description": "TypeScript/JavaScript language server for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install typescript-language-server; the plugin ships config.",
+      "category": "Developer Tools",
+      "keywords": [
+        "typescript",
+        "javascript",
+        "ts",
+        "js",
+        "language-server",
+        "developer"
+      ],
+      "icon": "file-code-01",
+      "iconDither": {
+        "from": 384,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "ugc",
       "displayName": "UGC",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Run a UGC campaign and know what you owe",
       "description": "Creator-marketing campaign tracker: briefs, a creator roster, post submissions with review, per-post metric snapshots refreshed through a curated Composio action map, and CPM/flat payout accrual against a campaign budget.",
       "category": "Productivity",
@@ -2686,10 +3383,11 @@
     {
       "name": "unstructured",
       "displayName": "Unstructured",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Sixty formats, element-typed output",
       "description": "Document parsing via the Apache-2.0 Unstructured library — the broadest-coverage `document.parse` backend, reading roughly sixty formats (PDF, the whole Office family including the legacy binary .doc/.ppt/.xls, email, EPUB, HTML, spreadsheets, and OCR over scanned images). Its distinguishing output is element-level: every fragment comes back typed (Title, NarrativeText, ListItem, Table, CodeSnippet, PageBreak), so the sidecar can emit markdown that preserves document structure instead of a flat text dump — headings stay headings and tables stay tables through chunking. The cost is install weight: `unstructured[all-docs]` is a 1-2 GB Python install, and the native tools it shells out to (poppler, tesseract, libreoffice, pandoc) are NOT pip-installable and must be present on the host. The sidecar detects each missing tool and reports it by name through the job's `error`/`missing_dependencies` fields rather than failing as an empty document. Parses run as jobs: submit returns 202 + a job_id, the caller polls.",
       "category": "Documents",
@@ -2722,10 +3420,11 @@
     {
       "name": "voice",
       "displayName": "Voice",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Speech in, speech out",
       "description": "Voice data path: speech-to-text transcription (whisper.cpp) and text-to-speech (OuteTTS + the universal Ryu TTS sidecar), plus the installable TTS model catalog. Governance shell over the in-crate voice module.",
       "category": "Media & Voice",
@@ -2758,10 +3457,11 @@
     {
       "name": "warmup",
       "displayName": "Warmup",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Open your usage windows before you sit down",
       "description": "Starts your subscription agents' rolling usage windows on your own schedule: a one-word ping to each subscription agent, on its cheapest model, at the times of day you choose (05:00 / 10:00 / 15:00 / 20:00 by default) — so a window is already open when you sit down to work.",
       "category": "Automation",
@@ -2792,10 +3492,11 @@
     {
       "name": "webhooks",
       "displayName": "Webhooks",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "See every inbound webhook this node answers",
       "description": "Inbound webhook endpoint registry: resolved public URLs, secret presence, last-delivery times, and the ingress backend status.",
       "category": "Automation",
@@ -2826,10 +3527,11 @@
     {
       "name": "whiteboard",
       "displayName": "Whiteboard",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Draw and diagram, saved into your Spaces",
       "description": "An Excalidraw whiteboard shipped as a Ryu app: draw, diagram, and rearrange freely, with Mermaid-to-Excalidraw bundled so a diagram can be imported straight from text. Each board persists as a Space document, so it stays editable, shareable, and searchable.",
       "category": "Creative",
@@ -2860,10 +3562,11 @@
     {
       "name": "workflows",
       "displayName": "Workflows",
-      "version": "1.0.0",
+      "version": "0.1.14",
       "type": "app",
       "source": "builtin",
       "builtin": true,
+      "system": false,
       "tagline": "Automate anything as a durable DAG",
       "description": "Workflows: petgraph DAG automation with triggers, durable execution, and a natural-language workflow builder.",
       "category": "Automation",

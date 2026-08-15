@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.lua-lsp",
+  "version": "1.0.0",
+  "description": "Lua language server (lua-language-server) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install lua-language-server; the plugin ships config.",
+  "keywords": [
+    "lua",
+    "lua-language-server",
+    "language-server",
+    "developer"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/lua-lsp",
+      "displayName": "Lua LSP"
+    }
+  }
+}

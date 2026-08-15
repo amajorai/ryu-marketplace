@@ -14,7 +14,7 @@ This tree is a ONE-WAY mirror generated from the private monorepo by
 `tools/mirror-plugins.sh`; do not edit it here (changes are overwritten —
 edit the generator instead).
 
-## Apps (43)
+## Apps (44)
 
 Manifest-driven feature apps, grouped by their manifest `category`.
 
@@ -58,6 +58,7 @@ not carried here).
 | | App | Built-in | System | Hidden | Version | What it is |
 | --- | --- | --- | --- | --- | --- | --- |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/blueprint-dark.png" /><img src="./app-icons/blueprint-light.png" width="32" alt="" /></picture> | [Blueprint](https://github.com/amajorai/ryu-blueprint) | – | – | – | 0.1.14 | Review an agent's plan before it touches a file. The agent publishes its plan over MCP;… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/desktop-dark.png" /><img src="./app-icons/desktop-light.png" width="32" alt="" /></picture> | [Virtual Desktop](https://github.com/amajorai/ryu-desktop) | – | – | – | 0.1.14 | An interactive virtual desktop for any Ryu node — cloud-managed, self-hosted, or local. The… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/finetune-dark.png" /><img src="./app-icons/finetune-light.png" width="32" alt="" /></picture> | [Fine-tuning](https://github.com/amajorai/ryu-finetune) | – | – | – | 0.1.14 | A LoRA/QLoRA training studio: launch fine-tune jobs on this node's GPU or a remote Ryu Cloud GPU… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/healing-dark.png" /><img src="./app-icons/healing-light.png" width="32" alt="" /></picture> | [Self-Healing](https://github.com/amajorai/ryu-healing) | – | – | – | 0.1.14 | Self-healing: failed runs are diagnosed by a Gateway side-model and proposed fixes are delivered… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/monitors-dark.png" /><img src="./app-icons/monitors-light.png" width="32" alt="" /></picture> | [Monitors](https://github.com/amajorai/ryu-monitors) | – | – | – | 0.1.14 | Website monitors: price, stock, keyword, content, and uptime watches with cross-device… |
@@ -130,7 +131,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (40)
+## First-party plugins (56)
 
 Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 
@@ -140,7 +141,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 | --- | --- | --- | --- | --- | --- | --- |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/agent-comms/icon-dark.png" /><img src="./plugins/agent-comms/icon-light.png" width="32" alt="" /></picture> | [Switchboard](./plugins/agent-comms/) | – | – | – | 0.1.14 | Lets the agents on this node talk to each other. Any agent can look up who else is here, leave… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/bytebot/icon-dark.png" /><img src="./plugins/bytebot/icon-light.png" width="32" alt="" /></picture> | [Bytebot Desktop](./plugins/bytebot/) | – | – | – | 0.1.14 | Drives a Bytebot desktop (https://github.com/bytebot-ai/bytebot) through `bytebotd`, its local… |
-| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/ghost/icon-dark.png" /><img src="./plugins/ghost/icon-light.png" width="32" alt="" /></picture> | [Ghost](./plugins/ghost/) | ✓ | ✓ | – | 0.1.14 | Desktop automation: 29 screen perception and input control tools. Windows-first. |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/ghost/icon-dark.png" /><img src="./plugins/ghost/icon-light.png" width="32" alt="" /></picture> | [Ghost](./plugins/ghost/) | ✓ | ✓ | – | 0.1.14 | Desktop automation: 29 screen perception and input control tools. Cross-platform (Windows,… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/pi-subagent/icon-dark.png" /><img src="./plugins/pi-subagent/icon-light.png" width="32" alt="" /></picture> | [Subagents](./plugins/pi-subagent/) | – | – | – | 0.1.14 | Adds the Task tool to the managed Pi agent, so it can delegate a bounded, context-isolated job… |
 
 ### Browsers
@@ -153,15 +154,29 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 
 | | Plugin | Built-in | System | Hidden | Version | What it is |
 | --- | --- | --- | --- | --- | --- | --- |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/clangd-lsp/icon-dark.png" /><img src="./plugins/clangd-lsp/icon-light.png" width="32" alt="" /></picture> | [Clangd (C/C++)](./plugins/clangd-lsp/) | – | – | – | 0.1.14 | C/C++ language server (clangd) for the ryu agent: definitions, references, hover, symbols,… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/csharp-lsp/icon-dark.png" /><img src="./plugins/csharp-lsp/icon-light.png" width="32" alt="" /></picture> | [C# LSP](./plugins/csharp-lsp/) | – | – | – | 0.1.14 | C# language server (csharp-ls) for the ryu agent: definitions, references, hover, symbols,… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/docs/icon-dark.png" /><img src="./plugins/docs/icon-light.png" width="32" alt="" /></picture> | [Ryu Docs](./plugins/docs/) | ✓ | ✓ | – | 0.1.14 | Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/gopls-lsp/icon-dark.png" /><img src="./plugins/gopls-lsp/icon-light.png" width="32" alt="" /></picture> | [Go LSP](./plugins/gopls-lsp/) | – | – | – | 0.1.14 | Go language server (gopls) for the ryu agent: definitions, references, hover, symbols,… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/headroom/icon-dark.png" /><img src="./plugins/headroom/icon-light.png" width="32" alt="" /></picture> | [Headroom Compression](./plugins/headroom/) | – | – | – | 0.1.14 | Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks.… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/hook-observers/icon-dark.png" /><img src="./plugins/hook-observers/icon-light.png" width="32" alt="" /></picture> | [Hook Observers](./plugins/hook-observers/) | – | – | – | 0.1.14 | A worked reference for the turn-hook events Ryu can fire: five observer hooks watching… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/hook-session-context/icon-dark.png" /><img src="./plugins/hook-session-context/icon-light.png" width="32" alt="" /></picture> | [Session Context](./plugins/hook-session-context/) | – | – | – | 0.1.14 | Injects the current date and time at the start of every session, so the agent stops guessing… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/jdtls-lsp/icon-dark.png" /><img src="./plugins/jdtls-lsp/icon-light.png" width="32" alt="" /></picture> | [Java LSP](./plugins/jdtls-lsp/) | – | – | – | 0.1.14 | Java language server (Eclipse JDT.LS) for the ryu agent: definitions, references, hover,… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/kotlin-lsp/icon-dark.png" /><img src="./plugins/kotlin-lsp/icon-light.png" width="32" alt="" /></picture> | [Kotlin LSP](./plugins/kotlin-lsp/) | – | – | – | 0.1.14 | Kotlin language server for the ryu agent: definitions, references, hover, symbols,… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/lua-lsp/icon-dark.png" /><img src="./plugins/lua-lsp/icon-light.png" width="32" alt="" /></picture> | [Lua LSP](./plugins/lua-lsp/) | – | – | – | 0.1.14 | Lua language server (lua-language-server) for the ryu agent: definitions, references, hover,… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/php-lsp/icon-dark.png" /><img src="./plugins/php-lsp/icon-light.png" width="32" alt="" /></picture> | [PHP LSP](./plugins/php-lsp/) | – | – | – | 0.1.14 | PHP language server (Intelephense) for the ryu agent: definitions, references, hover, symbols,… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/pi-monitor/icon-dark.png" /><img src="./plugins/pi-monitor/icon-light.png" width="32" alt="" /></picture> | [Monitor](./plugins/pi-monitor/) | – | – | – | 0.1.14 | Adds the monitor tool to the managed Pi agent, so it can watch a command or WebSocket in the… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/pi-shell/icon-dark.png" /><img src="./plugins/pi-shell/icon-light.png" width="32" alt="" /></picture> | [Background Bash](./plugins/pi-shell/) | – | – | – | 0.1.14 | Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a long-running… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/pxpipe/icon-dark.png" /><img src="./plugins/pxpipe/icon-light.png" width="32" alt="" /></picture> | [pxpipe](./plugins/pxpipe/) | – | – | – | 0.1.14 | Token-saving loopback proxy (https://github.com/teamchong/pxpipe): it renders the bulky, static… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/pyright-lsp/icon-dark.png" /><img src="./plugins/pyright-lsp/icon-light.png" width="32" alt="" /></picture> | [Python LSP](./plugins/pyright-lsp/) | – | – | – | 0.1.14 | Python language server (Pyright) for the ryu agent: type checking plus definitions, references,… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/rtk/icon-dark.png" /><img src="./plugins/rtk/icon-light.png" width="32" alt="" /></picture> | [RTK (Rust Token Killer)](./plugins/rtk/) | – | – | – | 0.1.14 | Run a dev command through RTK (Rust Token Killer) and get a token-compressed version of its… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/ruby-lsp/icon-dark.png" /><img src="./plugins/ruby-lsp/icon-light.png" width="32" alt="" /></picture> | [Ruby LSP](./plugins/ruby-lsp/) | – | – | – | 0.1.14 | Ruby language server (ruby-lsp) for the ryu agent: definitions, references, hover, symbols,… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/rust-analyzer-lsp/icon-dark.png" /><img src="./plugins/rust-analyzer-lsp/icon-light.png" width="32" alt="" /></picture> | [Rust LSP](./plugins/rust-analyzer-lsp/) | – | – | – | 0.1.14 | Rust language server (rust-analyzer) for the ryu agent: definitions, references, hover, symbols,… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/sample/icon-dark.png" /><img src="./plugins/sample/icon-light.png" width="32" alt="" /></picture> | [Research Assistant](./plugins/sample/) | – | – | ✓ | 0.1.14 | The reference plugin: a minimal example that declares one of each runnable kind — an agent, a… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/sample-widget/icon-dark.png" /><img src="./plugins/sample-widget/icon-light.png" width="32" alt="" /></picture> | [Sample Widget](./plugins/sample-widget/) | – | – | ✓ | 0.1.14 | Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/swift-lsp/icon-dark.png" /><img src="./plugins/swift-lsp/icon-light.png" width="32" alt="" /></picture> | [Swift LSP](./plugins/swift-lsp/) | – | – | – | 0.1.14 | Swift language server (SourceKit-LSP) for the ryu agent: definitions, references, hover,… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/toolsmith-example/icon-dark.png" /><img src="./plugins/toolsmith-example/icon-light.png" width="32" alt="" /></picture> | [toolsmith-example](./plugins/toolsmith-example/) | – | – | ✓ | 0.1.14 | Worked example for tools/toolsmith — a real, verified inline_deno tool. Not registered with Core… |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/typescript-lsp/icon-dark.png" /><img src="./plugins/typescript-lsp/icon-light.png" width="32" alt="" /></picture> | [TypeScript & JavaScript LSP](./plugins/typescript-lsp/) | – | – | – | 0.1.14 | TypeScript/JavaScript language server for the ryu agent: definitions, references, hover,… |
 
 ### Knowledge & Memory
 
@@ -176,6 +191,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 
 | | Plugin | Built-in | System | Hidden | Version | What it is |
 | --- | --- | --- | --- | --- | --- | --- |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/auto-continue/icon-dark.png" /><img src="./plugins/auto-continue/icon-light.png" width="32" alt="" /></picture> | [Auto Continue](./plugins/auto-continue/) | – | – | – | 0.1.14 | After each turn while armed, a local sub-agent scans the reply and the workspace for work that… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/chat-title/icon-dark.png" /><img src="./plugins/chat-title/icon-light.png" width="32" alt="" /></picture> | [Chat Title](./plugins/chat-title/) | – | – | – | 0.1.14 | Auto-renames a chat as soon as the first reply lands, then again after every N completed… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/goal/icon-dark.png" /><img src="./plugins/goal/icon-light.png" width="32" alt="" /></picture> | [Goal](./plugins/goal/) | – | – | – | 0.1.14 | Give the agent a goal with `/goal` and it keeps working until a judge model agrees the goal is… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/no-ai-slop/icon-dark.png" /><img src="./plugins/no-ai-slop/icon-light.png" width="32" alt="" /></picture> | [No AI Slop](./plugins/no-ai-slop/) | – | – | – | 0.1.14 | Bundles the `no-ai-slop` editing skill and runs it on every finished answer: a separate reviewer… |
@@ -207,6 +223,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 
 | | Plugin | Built-in | System | Hidden | Version | What it is |
 | --- | --- | --- | --- | --- | --- | --- |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/bitwarden/icon-dark.png" /><img src="./plugins/bitwarden/icon-light.png" width="32" alt="" /></picture> | [Bitwarden Secrets Manager](./plugins/bitwarden/) | – | – | – | 0.1.14 | Pull API keys from Bitwarden Secrets Manager on demand instead of storing them in plaintext —… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/double-check/icon-dark.png" /><img src="./plugins/double-check/icon-light.png" width="32" alt="" /></picture> | [Double Check](./plugins/double-check/) | – | – | – | 0.1.14 | Sends every answer to a second model for review before you act on it, so mistakes get caught by… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/firewall/icon-dark.png" /><img src="./plugins/firewall/icon-light.png" width="32" alt="" /></picture> | [Gateway Firewall](./plugins/firewall/) | – | – | – | 0.1.14 | An on/off switch over the Gateway's built-in firewall, which screens model traffic for prompt… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/proof/icon-dark.png" /><img src="./plugins/proof/icon-light.png" width="32" alt="" /></picture> | [Proof of Work](./plugins/proof/) | – | – | – | 0.1.14 | The stricter sibling of `/goal`: an independent verifier agent has to prove with tool-gathered… |
