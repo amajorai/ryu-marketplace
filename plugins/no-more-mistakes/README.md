@@ -1,5 +1,10 @@
 # No More Mistakes
-<p align="center"><img src="./icon.png" alt="no-more-mistakes" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="no-more-mistakes" width="96" />
+  </picture>
+</p>
 
 Notices when you correct the agent, writes the lesson down as a one-line rule in a Space,
 and hands every later session that rule list before the first word is generated — so a

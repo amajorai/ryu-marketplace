@@ -1,5 +1,10 @@
 # Parallel Search
-<p align="center"><img src="./icon.png" alt="parallel" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="parallel" width="96" />
+  </picture>
+</p>
 
 Objective-driven web search and content extraction for Ryu agents, powered by
 [Parallel](https://parallel.ai). Ships as a fully declarative plugin — three

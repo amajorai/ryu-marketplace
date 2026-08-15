@@ -1,5 +1,10 @@
 # Background Bash
-<p align="center"><img src="./icon.png" alt="pi-shell" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="pi-shell" width="96" />
+  </picture>
+</p>
 
 Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a
 long-running command does not hold the turn open.

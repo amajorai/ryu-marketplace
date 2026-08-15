@@ -1,5 +1,10 @@
 # Serper
-<p align="center"><img src="./icon.png" alt="serper" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="serper" width="96" />
+  </picture>
+</p>
 
 Google's own search results as JSON, plus single-page scraping, powered by the
 [Serper API](https://serper.dev). Ships as a fully declarative plugin — two `http`

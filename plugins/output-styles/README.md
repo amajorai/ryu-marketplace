@@ -1,5 +1,10 @@
 # Output Styles
-<p align="center"><img src="./icon.png" alt="output-styles" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="output-styles" width="96" />
+  </picture>
+</p>
 
 The nine built-in output styles. Fully declarative — no runnables, no sandboxed JS, no
 Core Rust: the plugin is a `contributes.output_styles[]` list pointing at nine Markdown

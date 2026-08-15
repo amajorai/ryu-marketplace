@@ -1,5 +1,10 @@
 # Tool Firewall
-<p align="center"><img src="./icon.png" alt="tool-firewall" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="tool-firewall" width="96" />
+  </picture>
+</p>
 
 A worked reference for pre- and post-tool hooks: the pre hook denies any tool call whose input matches a destructive pattern (`rm -rf`, `DROP TABLE`, `mkfs`), and the post hook notes what each tool returned. The pattern set is deliberately tiny — copy this directory as the starting point for your own tool policy.
 

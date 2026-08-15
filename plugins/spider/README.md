@@ -1,5 +1,10 @@
 # Spider
-<p align="center"><img src="./icon.png" alt="spider" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="spider" width="96" />
+  </picture>
+</p>
 
 Web crawling and content extraction for Ryu agents, powered by the
 [Spider](https://spider.cloud) crawler (`spider-rs/spider`). Ships as a fully

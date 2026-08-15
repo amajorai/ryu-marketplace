@@ -1,5 +1,10 @@
 # Subagents
-<p align="center"><img src="./icon.png" alt="pi-subagent" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="pi-subagent" width="96" />
+  </picture>
+</p>
 
 Adds the Task tool to the managed Pi agent, so it can delegate a bounded,
 context-isolated job to a child agent.

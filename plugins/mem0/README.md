@@ -1,5 +1,10 @@
 # Mem0
-<p align="center"><img src="./icon.png" alt="mem0" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="mem0" width="96" />
+  </picture>
+</p>
 
 Recall from **and record into** a hosted [Mem0](https://mem0.ai) memory project inside
 Ryu, powered by the [Mem0 Platform REST API](https://docs.mem0.ai/api-reference). Ships

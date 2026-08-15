@@ -1,5 +1,10 @@
 # Agent Browser
-<p align="center"><img src="./icon.png" alt="agentbrowser" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="agentbrowser" width="96" />
+  </picture>
+</p>
 
 Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, so selecting it re-points the stable `browser__*` tools at agent-browser without changing what agents call. Launched via `npx agent-browser mcp`; needs Node on PATH.
 

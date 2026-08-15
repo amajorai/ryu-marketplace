@@ -1,5 +1,10 @@
 # Advisor
-<p align="center"><img src="./icon.png" alt="advisor" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="advisor" width="96" />
+  </picture>
+</p>
 
 Consult a stronger reviewer model.
 

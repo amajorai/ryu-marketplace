@@ -1,5 +1,10 @@
 # Recap
-<p align="center"><img src="./icon.png" alt="recap" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="recap" width="96" />
+  </picture>
+</p>
 
 Ends a long agent turn with a short recap of what it actually did — the work, the files
 and commands it named, what it could not finish, and the obvious next step — written by a

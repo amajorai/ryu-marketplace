@@ -1,5 +1,10 @@
 # Exa Search
-<p align="center"><img src="./icon.png" alt="exa" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="exa" width="96" />
+  </picture>
+</p>
 
 Neural and keyword web search for Ryu agents, powered by the
 [Exa API](https://exa.ai). Ships as a fully declarative plugin — two `http`

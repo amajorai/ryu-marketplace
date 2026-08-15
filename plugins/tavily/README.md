@@ -1,5 +1,10 @@
 # Tavily Search
-<p align="center"><img src="./icon.png" alt="tavily" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="tavily" width="96" />
+  </picture>
+</p>
 
 Agent-tuned web search and content extraction for Ryu, powered by the
 [Tavily API](https://tavily.com). Ships as a fully declarative plugin — two `http`

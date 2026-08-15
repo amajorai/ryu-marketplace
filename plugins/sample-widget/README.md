@@ -1,5 +1,10 @@
 # Sample Widget — reference third-party MCP widget plugin
-<p align="center"><img src="./icon.png" alt="sample-widget" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="sample-widget" width="96" />
+  </picture>
+</p>
 
 A minimal, **self-contained** widget plugin you can copy as the starting point for
 your own. It shows the smallest thing that works end-to-end:

@@ -1,5 +1,10 @@
 # No AI Slop (`@ryu/no-ai-slop`)
-<p align="center"><img src="./icon.png" alt="no-ai-slop" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="no-ai-slop" width="96" />
+  </picture>
+</p>
 
 Runs the bundled [`no-ai-slop`](https://github.com/petergyang/no-ai-slop) editing skill
 against every finished answer. A separate reviewer reads the reply with a **fresh

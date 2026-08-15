@@ -1,5 +1,10 @@
 # pxpipe
-<p align="center"><img src="./icon.png" alt="pxpipe" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="pxpipe" width="96" />
+  </picture>
+</p>
 
 [pxpipe](https://github.com/teamchong/pxpipe) is a loopback proxy that renders the
 bulky, static half of a request — the system prompt, the tool-schema block, large

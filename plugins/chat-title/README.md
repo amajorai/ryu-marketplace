@@ -1,5 +1,10 @@
 # Chat Title
-<p align="center"><img src="./icon.png" alt="chat-title" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="chat-title" width="96" />
+  </picture>
+</p>
 
 Auto-renames a chat as soon as the first reply lands, then again after every N completed assistant turns (default 5), using a side model — and keeps a Core-side history of the names it chose so you can see how a conversation drifted. Enablement, the first-turn rename, frequency, and the model to use are all settings.
 

@@ -1,5 +1,10 @@
 # Firecrawl
-<p align="center"><img src="./icon.png" alt="firecrawl" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="firecrawl" width="96" />
+  </picture>
+</p>
 
 Web search and page scraping for Ryu, powered by the
 [Firecrawl v2 API](https://firecrawl.dev). Ships as a fully declarative plugin — two

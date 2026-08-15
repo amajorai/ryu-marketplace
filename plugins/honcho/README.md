@@ -1,5 +1,10 @@
 # Honcho
-<p align="center"><img src="./icon.png" alt="honcho" width="96" /></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="honcho" width="96" />
+  </picture>
+</p>
 
 Give the swappable `memory` layer a provider that **models the user** rather than only
 storing rows, powered by [Honcho](https://honcho.dev) (Plastic Labs) and its
