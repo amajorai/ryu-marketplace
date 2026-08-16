@@ -17,7 +17,7 @@ output. Ships as a fully declarative plugin — one `command` tool-def in
 
 | Tool id           | Backend                        | Required args | Optional args      |
 | ----------------- | ------------------------------ | ------------- | ------------------ |
-| `rtk__run`   | `command` → local `rtk` binary | `command`     | `mode` (default `wrap`) |
+| `rtk.run`   | `command` → local `rtk` binary | `command`     | `mode` (default `wrap`) |
 
 The tool shells out to `rtk [mode] <command…>` under a 120s wall-clock timeout.
 `command` is `shell_words`-split into a variadic argv (quotes honored, never a
@@ -62,9 +62,9 @@ crawler there is no `egress_url_arg` — RTK is a purely-local wrapper.
 This plugin replaces the former built-in `rtk` registry server
 (`apps/core/src/sidecar/mcp/rtk.rs`). Behavioural deltas from that implementation:
 
-- **Callable id** is now `rtk__run` (declarative tools live under the `app__`
-  namespace), not the bare `rtk__run`. Agent allowlists or grants referencing
-  `rtk__run` or the `rtk` server must migrate to `rtk__run` /
+- **Callable id** is now `rtk.run` (declarative tools live under the `app__`
+  namespace), not the bare `rtk.run`. Agent allowlists or grants referencing
+  `rtk.run` or the `rtk` server must migrate to `rtk.run` /
   `tool:command:rtk`.
 - **Binary resolution** is now the command-tool allowlist
   (`RYU_COMMAND_TOOL_ALLOWLIST`, an absolute path), not PATH auto-detection or the

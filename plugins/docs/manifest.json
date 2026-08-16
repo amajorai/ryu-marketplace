@@ -1,7 +1,7 @@
 {
   "id": "@ryu/docs",
   "name": "Ryu Docs",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "system": true,
   "builtin": true,
   "category": "Developer Tools",

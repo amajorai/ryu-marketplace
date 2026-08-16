@@ -1,7 +1,8 @@
 {
   "id": "@ryu/pi-shell",
   "name": "Background Bash",
-  "version": "0.1.14",
+  "version": "0.1.15",
+  "stability": "experimental",
   "category": "Developer Tools",
   "description": "Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a long-running command does not hold the turn open.",
   "tagline": "Run long commands without holding the turn open",

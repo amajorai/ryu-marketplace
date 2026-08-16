@@ -53,7 +53,7 @@ closed instead of rubber-stamping a filename.
 
 The brief deliberately names no single tool — it asks for whatever the node has: a
 screenshot/recording MCP tool (`ghost`, `bytebot`, computer-use), the browser app's
-`chromium__screenshot_tab`, the [Clips](../../apps-store/clips) recorder
+`chromium.screenshot_tab`, the [Clips](../../apps-store/clips) recorder
 (`/api/clips/start` → `/api/clips/{id}/stop` → `/api/clips/{id}/file`),
 `screencapture` on macOS, or `ffmpeg`.
 

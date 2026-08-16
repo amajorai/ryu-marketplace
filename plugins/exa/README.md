@@ -14,8 +14,8 @@ tool-defs in `manifest.json`, no Core Rust.
 
 | Tool id             | Endpoint                        | Required arg |
 | ------------------- | ------------------------------- | ------------ |
-| `exa__search`  | `POST https://api.exa.ai/search`      | `query`      |
-| `exa__find_similar` | `POST https://api.exa.ai/findSimilar` | `url`        |
+| `exa.search`  | `POST https://api.exa.ai/search`      | `query`      |
+| `exa.find_similar` | `POST https://api.exa.ai/findSimilar` | `url`        |
 
 `search` also accepts `num_results` (1–100, Exa default 10), `use_autoprompt`
 (Exa default true), and `contents` (e.g. `{"text": true}` to include full page
@@ -66,7 +66,7 @@ implementation:
   and the `RYU_EXA_BASE_URL` self-host override are dropped. The model passes
   Exa-native keys and relies on Exa's server-side defaults.
 
-The callable tool ids (`exa__search`, `exa__find_similar`) are
-unchanged. Agent allowlists or grants referencing the bare `exa__search` id or
-the `mcp:exa` grant must migrate to `exa__search` /
+The callable tool ids (`exa.search`, `exa.find_similar`) are
+unchanged. Agent allowlists or grants referencing the bare `exa.search` id or
+the `mcp:exa` grant must migrate to `exa.search` /
 `tool:http-egress:api.exa.ai`.

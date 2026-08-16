@@ -25,8 +25,8 @@ enabled and the docs site is reachable.
 | `docs_get_page` | Fetch one docs page as Markdown (`{ path }` — a `/docs/...` path or full URL). |
 | `docs_index` | List documentation pages, optionally filtered by top-level section (`{ section? }`). |
 
-In the Ryu registry the tools surface as `docs__docs_search`,
-`docs__docs_get_page` and `docs__docs_index`.
+In the Ryu registry the tools surface as `docs.docs_search`,
+`docs.docs_get_page` and `docs.docs_index`.
 
 ## Overriding the endpoint
 

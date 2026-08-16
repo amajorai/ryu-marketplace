@@ -15,7 +15,7 @@ Honcho ingests the messages you hand it and derives a per-peer **representation*
 standing model of that person built from their messages and the conclusions Honcho draws
 from them. Its **Dialectic** endpoint then answers a natural-language question against
 that representation with Honcho's own synthesis. That is exactly what Ryu's canonical
-`memory__context` verb promises, and **no shipped provider served it** — so
+`memory.context` verb promises, and **no shipped provider served it** — so
 `memory_provider::context`, the `memory.provider-context` setting, and the whole `context`
 kernel bridge were dead code. This plugin is the first that makes them run.
 
@@ -27,8 +27,8 @@ took the idea from (see `docs/swappable-layers-design.md` §3).
 
 | Tool id          | Endpoint                                                             | Required args |
 | ---------------- | -------------------------------------------------------------------- | ------------- |
-| `honcho__chat`   | `POST https://api.honcho.dev/v3/workspaces/{workspace_id}/peers/{peer_id}/chat`   | `workspace_id`, `peer_id`, `query` |
-| `honcho__search` | `POST https://api.honcho.dev/v3/workspaces/{workspace_id}/peers/{peer_id}/search` | `workspace_id`, `peer_id`, `query` |
+| `honcho.chat`   | `POST https://api.honcho.dev/v3/workspaces/{workspace_id}/peers/{peer_id}/chat`   | `workspace_id`, `peer_id`, `query` |
+| `honcho.search` | `POST https://api.honcho.dev/v3/workspaces/{workspace_id}/peers/{peer_id}/search` | `workspace_id`, `peer_id`, `query` |
 
 Both are `unwrap_body`, so they return Honcho's JSON body directly, and both are
 `fail_open`, so with no key configured they degrade rather than error.
@@ -39,7 +39,7 @@ fragments Honcho publishes inside its own docs (`servers: - url: https://api.hon
 `honcho.dev/docs/v3/api-reference/endpoint/peers/chat.md` and
 `honcho.dev/docs/v3/api-reference/endpoint/peers/search-peer.md`.
 
-### `honcho__chat` — the Dialectic endpoint
+### `honcho.chat` — the Dialectic endpoint
 
 > Query a Peer's representation using natural language. Performs agentic search and
 > reasoning to comprehensively answer the query based on all latent knowledge gathered
@@ -54,7 +54,7 @@ Response (`DialecticResponse`): `{ "content": string | null }`.
 `stream` is **deliberately not exposed**. The 200 response declares
 `text/event-stream: {}` alongside JSON, and an SSE body is not a JSON tool result.
 
-### `honcho__search`
+### `honcho.search`
 
 > Search a Peer's messages, optionally filtered by various criteria.
 
@@ -125,7 +125,7 @@ The kernel gives a memory provider **4 seconds** (`memory_provider::PROVIDER_TIM
 then continues without it — and `read_hooks` runs `context` and `prefetch` under **one**
 shared budget, so a slow Dialectic call takes prefetch down with it. A Dialectic call does
 agentic search plus reasoning; at Honcho's own default (`low`) it can comfortably exceed
-that, which would leave `memory__context` bound but never actually arriving in a chat
+that, which would leave `memory.context` bound but never actually arriving in a chat
 turn — the exact silent failure this plugin exists to end.
 
 Two mechanisms, and they compose because `body_defaults` merge **under** the arguments:
@@ -144,8 +144,8 @@ is a UI default; it is not written to the preference store until the user saves,
 
 | Capability | Canonical verb    | Forwards to      |
 | ---------- | ----------------- | ---------------- |
-| `memory`   | `memory__context` | `honcho__chat`   |
-| `memory`   | `memory__search`  | `honcho__search` |
+| `memory`   | `memory.context` | `honcho.chat`   |
+| `memory`   | `memory.search`  | `honcho.search` |
 
 The entry declares `"selectable": true` and claims **no** `"default"`. Selectability needs
 unanimity — if any provider of a capability omits the flag, the capability has candidates
@@ -163,18 +163,18 @@ Select a provider in the desktop node selector's Layers section, or via
 `if !is_external().await { return }`, where "external" means "not `@ryu/memory`".
 Selecting Honcho makes **two** of them fire:
 
-- **`context`** → `memory__context`, at system-prompt assembly, gated by
+- **`context`** → `memory.context`, at system-prompt assembly, gated by
   `memory.provider-context` (default **off**, so turn it on). This is the one that had no
   provider at all before this plugin.
-- **`prefetch`** → `memory__search`, before each turn, following `recall_mode` (on by
+- **`prefetch`** → `memory.search`, before each turn, following `recall_mode` (on by
   default).
 
-- **`mirror`** → `memory__store`, and **`sync`** → `memory__sync`. Both are bound now
+- **`mirror`** → `memory.store`, and **`sync`** → `memory.sync`. Both are bound now
   (see below); `memory.mirror-builtin` is ON by default, so selecting Honcho starts
   writing facts to it. Both kernel hooks are fire-and-forget, so a write failure never
   surfaces in the turn.
 
-### `memory__context` declares NO `response` map, and that is load-bearing
+### `memory.context` declares NO `response` map, and that is load-bearing
 
 `memory_provider::summary_text` reads the prose out of a context result by looking for
 `context` / `summary` / `content` / `text` at the top level, or one level inside `raw`.
@@ -193,12 +193,12 @@ peer_card}`; both are real standing-summary endpoints, but `representation` is n
 the four keys `summary_text` accepts, and no `response` mapping can produce one of them
 without a Core change.
 
-### `memory__search` searches MESSAGES, not derived facts
+### `memory.search` searches MESSAGES, not derived facts
 
 Worth stating plainly, because `prefetch` is on by default: `POST
 .../peers/{peer_id}/search` searches *"a Peer's messages"*. Selecting Honcho therefore
 starts folding excerpts of raw conversation into every turn's recall, not distilled facts.
-The synthesis lives behind `memory__context`. Provider text is capped and run through
+The synthesis lives behind `memory.context`. Provider text is capped and run through
 `untrusted::neutralize` either way, but if you want only the synthesis, turn
 `memory.recall-mode` down and leave `memory.provider-context` on.
 
@@ -220,13 +220,13 @@ The mapping is small on purpose:
 
 ## The write path, and why it needs an adapter
 
-`memory__sync` and `memory__store` are bound; `memory__forget` is not.
+`memory.sync` and `memory.store` are bound; `memory.forget` is not.
 
 **Delete has nothing to bind.** Honcho's documented API surface, from
 `honcho.dev/docs/llms.txt`, includes *Get Message*, *Get Messages*, *Update Message*,
 *Create Messages For Session* and *Create Messages With File* — and **no** message-delete
 endpoint. (There is a *Delete Session* and a *Delete Workspace*; deleting a whole session
-because an agent wanted to forget one fact is not what `memory__forget` promises.) No
+because an agent wanted to forget one fact is not what `memory.forget` promises.) No
 adapter can invent an endpoint, so this verb stays unbound.
 
 **Write was blocked by a real limit of the DECLARATIVE grammar.** The only documented
@@ -248,7 +248,7 @@ out.extend(templated);
 ```
 
 `arg_defaults` (and therefore every `pref:` token) is merged *after*, at the top level. It
-cannot reach inside the template. The canonical `memory__store` / `memory__sync` arguments
+cannot reach inside the template. The canonical `memory.store` / `memory.sync` arguments
 are `content` (+ `role`, `scope`, `category`, …) — none of which is the install's peer id.
 So the only expressible declarative binding would hardcode a peer, i.e. exactly the
 shared-bucket bug the `pref:` mechanism exists to prevent.
@@ -278,7 +278,7 @@ Three things the adapter does that are worth knowing:
   a peer from that peer's messages. Writing Ryu's replies as your peer would poison it,
   so replies go to a separate peer id.
 
-`memory__store` has no natural home in Honcho (it models conversations, not fact rows),
+`memory.store` has no natural home in Honcho (it models conversations, not fact rows),
 so a stored fact is written as a message from your peer with the canonical `scope`,
 `category`, `importance` and `when_to_use` preserved in Honcho's documented per-message
 `metadata` rather than silently dropped.

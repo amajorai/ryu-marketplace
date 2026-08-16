@@ -35,6 +35,41 @@ test("carries no sandboxed hook or adapter code", () => {
 	assert.deepEqual(manifest.provides ?? [], []);
 });
 
+test("registers an inherited-by-default subagent model setting", () => {
+	assert.deepEqual(manifest.permission_grants, ["preferences:read"]);
+	const tabs = manifest.contributes?.settings_tabs ?? [];
+	assert.equal(tabs.length, 1);
+	assert.equal(tabs[0].scope, "node");
+	assert.deepEqual(tabs[0].fields, [
+		{
+			type: "model_picker",
+			pref_key: "pi-subagent-model",
+			label: "Default subagent model",
+			description:
+				"Leave unset to let the main agent choose a model for each task. Selecting a model forces every subagent to use it.",
+			placeholder: "Let the main agent decide",
+		},
+	]);
+});
+
+test("forces the registered model over the main agent's requested model", () => {
+	const source = readFileSync(
+		join(HERE, manifest.contributes.pi_extensions[0].file),
+		"utf8"
+	);
+	assert.match(source, /const DEFAULT_MODEL_PREF_KEY = "pi-subagent-model"/);
+	assert.match(
+		source,
+		/const childModel = modelOverride \?\? requestedModel \?\? agent\.model/
+	);
+	assert.match(source, /args\.push\("--model", childModel\)/);
+	const taskSchema = source.slice(
+		source.indexOf("const TaskItem"),
+		source.indexOf("// ── Global in-flight accounting")
+	);
+	assert.match(taskSchema, /\bmodel: Type\.Optional/);
+});
+
 test("registers the tool as exactly `Task`", () => {
 	// `acp_tool_ui_name`'s KNOWN_TOOLS matches on the ACP title, which pi-acp sets to
 	// the raw Pi tool name. Renaming this drops the call off the desktop's subagent
@@ -50,4 +85,17 @@ test("registers the tool as exactly `Task`", () => {
 		names.includes("Task"),
 		`expected a tool named exactly \`Task\`; found: ${names.join(", ")}`
 	);
+});
+
+test("surfaces every spawned child as a nested Agent lifecycle transaction", () => {
+	const source = readFileSync(
+		join(HERE, manifest.contributes.pi_extensions[0].file),
+		"utf8"
+	);
+	assert.match(source, /function childLifecycleStep\(/);
+	assert.match(source, /name: "Agent"/);
+	assert.match(source, /lifecycleId: `agent-\$\{index\}`/);
+	assert.match(source, /status: "pending"/);
+	assert.match(source, /lifecycle\.status = isFailedResult\(currentResult\)/);
+	assert.match(source, /Publish the lifecycle row before creating the process/);
 });

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.effort-escalator",
+  "version": "0.1.0",
+  "description": "Detects stalled work with a cheap background judge and moves the next turn up a configured reasoning-effort or model ladder, per agent or globally.",
+  "keywords": ["models", "effort", "stuck", "agent", "automation"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/effort-escalator",
+      "displayName": "Effort Escalator"
+    }
+  }
+}

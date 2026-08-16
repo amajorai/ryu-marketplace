@@ -32,5 +32,5 @@ Install the Kotlin LSP CLI: `brew install JetBrains/utils/kotlin-lsp`.
 
 The language-server declaration is field-for-field Claude Code's `.lsp.json`, so
 the same config body loads in either host. See the [Declare Language Servers
-guide](/docs/develop/extensions/lsp-servers) for how Ryu arbitrates plugins that
+guide](/docs/extend/develop/extensions/lsp-servers) for how Ryu arbitrates plugins that
 declare the same extension.

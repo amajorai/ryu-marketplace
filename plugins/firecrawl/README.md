@@ -14,8 +14,8 @@ Web search and page scraping for Ryu, powered by the
 
 | Tool id              | Endpoint                                     | Required arg |
 | -------------------- | -------------------------------------------- | ------------ |
-| `firecrawl__search`  | `POST https://api.firecrawl.dev/v2/search`   | `query`      |
-| `firecrawl__scrape`  | `POST https://api.firecrawl.dev/v2/scrape`   | `url`        |
+| `firecrawl.search`  | `POST https://api.firecrawl.dev/v2/search`   | `query`      |
+| `firecrawl.scrape`  | `POST https://api.firecrawl.dev/v2/scrape`   | `url`        |
 
 Both are on the **v2** API. That prefix is part of the contract, not a detail: v1 and
 v2 differ in response shape (v2 search nests its results under `data.web`), so a
@@ -63,13 +63,13 @@ This plugin is a **provider** for two hot-swappable layers:
 
 | Capability    | Canonical verb  | Forwards to          |
 | ------------- | --------------- | -------------------- |
-| `web.search`  | `web__search`   | `firecrawl__search`  |
-| `web.extract` | `web__extract`  | `firecrawl__scrape`  |
+| `web.search`  | `web.search`   | `firecrawl.search`  |
+| `web.extract` | `web.extract`  | `firecrawl.scrape`  |
 
-Agents call the canonical verb (`web__search`), not the provider tool. Selecting a
+Agents call the canonical verb (`web.search`), not the provider tool. Selecting a
 different provider (Exa or Tavily for search, Spider or Tavily for extraction)
 re-points that verb without changing its id, its input schema, or the shape of its
-results. An agent allowlisted for `web__search` keeps working across the swap.
+results. An agent allowlisted for `web.search` keeps working across the swap.
 
 Two mappings do the normalizing, both declared in `provides[].tools`:
 
@@ -116,7 +116,7 @@ returns `status`/`total`/`completed` plus a `data` array and a `next` cursor onc
 job finishes. (`POST /v2/batch/scrape` is the same story, and takes a URL list rather
 than a start URL + depth, so it cannot satisfy the canonical crawl schema either.)
 
-A declarative `http` tool is **one request with no polling loop**. Binding `web__crawl`
+A declarative `http` tool is **one request with no polling loop**. Binding `web.crawl`
 to the crawl endpoint would therefore hand the model a UUID where the canonical verb
 promises page content — every crawl on a node that selected Firecrawl would return
 nothing usable.

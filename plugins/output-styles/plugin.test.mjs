@@ -3,7 +3,7 @@
 // Runner: `node --test` (zero dependencies — node:test + node:assert only).
 //   node --test plugins-store/output-styles/plugin.test.mjs
 //
-// This plugin carries no runnables and no sandboxed JS: it is six Markdown files
+// This plugin carries no runnables and no sandboxed JS: it is ten Markdown files
 // plus a declarative Store tab. So every way it can break is a REFERENCE going
 // stale — a manifest row naming a file that is not there, a file nothing declares,
 // frontmatter Core cannot parse, or a body pasted into manifest.json instead of
@@ -51,8 +51,8 @@ test("declares no runnables, no sandboxed code and no capability grants", () => 
 
 // ── 2. Every declared style resolves to a file on disk ─────────────────────────
 
-test("declares the nine built-in styles with unique ids", () => {
-	assert.equal(entries.length, 9);
+test("declares the ten built-in styles with unique ids", () => {
+	assert.equal(entries.length, 10);
 	const ids = entries.map((e) => e.id);
 	assert.deepEqual(ids, [
 		"eli5",
@@ -61,6 +61,7 @@ test("declares the nine built-in styles with unique ids", () => {
 		"learning",
 		"proactive",
 		"plain-text",
+		"plain-technical",
 		"no-ai-slop",
 		"bro",
 		"gen-z",

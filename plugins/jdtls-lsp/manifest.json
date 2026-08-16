@@ -1,7 +1,8 @@
 {
   "id": "@ryu/jdtls-lsp",
   "name": "Java LSP",
-  "version": "0.1.14",
+  "version": "0.1.15",
+  "stability": "experimental",
   "category": "Developer Tools",
   "description": "Java language server (Eclipse JDT.LS) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install jdtls; the plugin ships config.",
   "tagline": "Java code intelligence via Eclipse JDT.LS",

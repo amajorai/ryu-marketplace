@@ -22,10 +22,10 @@ gateway plane's tool loop.
 
 | Tool | What it does |
 | --- | --- |
-| `agents__directory` | The other agents on this node: id, name, what each is for. Auto-discovery — call it when the user names an agent loosely, or to find out who is better placed to answer. |
-| `agents__send` | Leave a message in another agent's inbox and carry on. Delivered at the start of the recipient's next turn. |
-| `agents__ask` | Ask an agent a question and wait. It runs now, in a clean context, and its reply is the tool's result. |
-| `agents__thread` | What you and another agent have already said to each other, or the list of agents you have a thread with. |
+| `agents.directory` | The other agents on this node: id, name, what each is for. Auto-discovery — call it when the user names an agent loosely, or to find out who is better placed to answer. |
+| `agents.send` | Leave a message in another agent's inbox and carry on. Delivered at the start of the recipient's next turn. |
+| `agents.ask` | Ask an agent a question and wait. It runs now, in a clean context, and its reply is the tool's result. |
+| `agents.thread` | What you and another agent have already said to each other, or the list of agents you have a thread with. |
 
 Two paths, on purpose. `ask` is for an answer that changes what you do next and
 costs a full agent run; `send` is a handover that does not need answering now and
@@ -74,26 +74,26 @@ model can act on, not an error it has to interpret.
 ## Known limits (v1)
 
 - **Delivery is next-turn, not live.** Nothing wakes an idle agent; a queued
-  message sits until that agent runs again. `agents__ask` is the synchronous path.
+  message sits until that agent runs again. `agents.ask` is the synchronous path.
 - **The inbox is per-agent, not per-conversation.** An agent with several open
   chats reads its mail in whichever one runs next.
-- **`agents__ask` runs the peer with a clean context.** It sees the pair's message
+- **`agents.ask` runs the peer with a clean context.** It sees the pair's message
   history (carried in explicitly) and nothing else — not the asker's conversation.
 - **The delivery hook has no `match` pre-gate**, so it costs one KV read and a
   sandbox spawn per turn. That is why the plugin is pre-installed but **off** by
   default; enable it from the Store.
 - **A message to an agent id that does not exist looks like a success.** The
-  sandbox cannot check the roster (the tools have no network), so `agents__send`
-  returns `ok:true` and the message waits in an inbox nobody reads. `agents__ask`
+  sandbox cannot check the roster (the tools have no network), so `agents.send`
+  returns `ok:true` and the message waits in an inbox nobody reads. `agents.ask`
   does surface it, because the delegation engine reports the unknown agent back
-  as a failure to answer. Pair `send` with `agents__directory` when the id came
+  as a failure to answer. Pair `send` with `agents.directory` when the id came
   from a guess rather than from the user.
-- **`agents__directory` is unavailable on an org-bound node.** It reads Core's own
+- **`agents.directory` is unavailable on an org-bound node.** It reads Core's own
   `GET /api/agents` over loopback with the node token, and `enforce_permission`
   refuses a caller with no user principal once the node is bound to an
   organisation — correctly, since the node token is not a person. The tool is
   `fail_open`, so the model gets an `available:false` envelope instead of an
-  error, and `agents__send` / `agents__ask` still work against an agent id the
+  error, and `agents.send` / `agents.ask` still work against an agent id the
   user names. Closing this properly means a user-principal-scoped roster read, not
   a wider token.
 
@@ -104,7 +104,7 @@ model can act on, not an error it has to interpret.
 | `manifest.json` | The four tools, the two hooks, and the grants (`tool:execute`, `storage:kv`, `hook:run-agent`, `tool:http-egress:127.0.0.1`). |
 | `tools/*.js` | The `inline_deno` tool bodies — the SOURCE form. Sealed into the manifest's `code` strings. |
 | `hooks/deliver.js` | `pre_user_turn` — delivers the inbox. |
-| `hooks/directory.js` | `tool_result` — projects `agents__directory` down to id/name/description, so no other agent's `system_prompt` ever reaches the transcript. |
+| `hooks/directory.js` | `tool_result` — projects `agents.directory` down to id/name/description, so no other agent's `system_prompt` ever reaches the transcript. |
 | `seal.mjs` | Seals `tools/*.js` into the manifest (`--check` verifies). |
 
 ## Working on it

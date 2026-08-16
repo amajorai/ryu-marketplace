@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.php-lsp",
-  "version": "1.0.0",
+  "version": "0.1.14",
   "description": "PHP language server (Intelephense) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install intelephense; the plugin ships config.",
   "keywords": [
     "php",

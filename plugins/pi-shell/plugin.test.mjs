@@ -87,3 +87,15 @@ test("ships the restart-notification wiring", () => {
 		"a finished shell must be marked in the ledger so it is not reported as an orphan"
 	);
 });
+
+test("wakes the parent agent when a background shell finishes", () => {
+	const source = readFileSync(
+		join(HERE, manifest.contributes.pi_extensions[0].file),
+		"utf8"
+	);
+	assert.match(source, /customType: "ryu-background-shell-lifecycle"/);
+	assert.match(source, /reportCompletion\?\.\(shell\)/);
+	assert.match(source, /deliverAs: "followUp", triggerTurn: true/);
+	assert.match(source, /Call bash_output with shell_id/);
+	assert.match(source, /Manual\/session teardown already reports elsewhere/);
+});

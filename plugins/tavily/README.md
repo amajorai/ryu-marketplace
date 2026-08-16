@@ -14,8 +14,8 @@ tool-defs in `manifest.json`, no Core Rust.
 
 | Tool id            | Endpoint                                | Required arg |
 | ------------------ | --------------------------------------- | ------------ |
-| `tavily__search`   | `POST https://api.tavily.com/search`    | `query`      |
-| `tavily__extract`  | `POST https://api.tavily.com/extract`   | `urls`       |
+| `tavily.search`   | `POST https://api.tavily.com/search`    | `query`      |
+| `tavily.extract`  | `POST https://api.tavily.com/extract`   | `urls`       |
 
 ## Setup
 
@@ -57,20 +57,20 @@ This plugin is a **provider** for two hot-swappable layers:
 
 | Capability    | Canonical verb  | Forwards to       |
 | ------------- | --------------- | ----------------- |
-| `web.search`  | `web__search`   | `tavily__search`  |
-| `web.extract` | `web__extract`  | `tavily__extract` |
+| `web.search`  | `web.search`   | `tavily.search`  |
+| `web.extract` | `web.extract`  | `tavily.extract` |
 
-Agents call the canonical verb (`web__search`), not the provider tool. Selecting a
+Agents call the canonical verb (`web.search`), not the provider tool. Selecting a
 different provider (Exa for search, Spider for extraction) re-points that verb
 without changing its id, its input schema, or the shape of its results. An agent
-allowlisted for `web__search` keeps working across the swap, and prompts that name
+allowlisted for `web.search` keeps working across the swap, and prompts that name
 the tool keep matching.
 
 Two mappings do the normalizing, both declared in `provides[].tools`:
 
 - **`args`** renames the canonical arguments onto Tavily's (`limit` → `max_results`).
   The suffix `[]` means "rename and wrap in a single-element array": the canonical
-  `web__extract` passes one `url`, while Tavily's endpoint takes a batch `urls`
+  `web.extract` passes one `url`, while Tavily's endpoint takes a batch `urls`
   array, so the binding is `"url": "urls[]"`.
 - **`response`** maps Tavily's records into the canonical `{title, url, snippet}`
   shape. Each item keeps the provider's original record under `raw`, so nothing is

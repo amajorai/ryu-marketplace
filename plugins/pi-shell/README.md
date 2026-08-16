@@ -13,6 +13,13 @@ Ships one **Pi extension** (`contributes.pi_extensions`): `pi-extensions/ryu-she
 adds `bash_background` / `bash_output` / `bash_kill` to the managed `ryu` (Pi) agent,
 so starting a dev server no longer holds the turn open for its whole lifetime.
 
+Starting, polling, and manually stopping a shell render as ordinary chat tool
+transactions. When a shell exits on its own, fails to spawn, or reaches its
+lifetime cap, the extension also sends a lifecycle message to the parent agent
+and triggers a follow-up turn. The agent then collects the final output through
+`bash_output`, so a background completion cannot silently disappear between
+turns.
+
 The extension deliberately does NOT replace Pi's built-in `bash`, and none of its three
 tool names may ever be `bash`: pi-acp special-cases that exact name and would hijack the
 call into terminal rendering, dropping `rawOutput` entirely.

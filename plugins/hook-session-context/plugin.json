@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.session-context",
-  "version": "1.0.0",
+  "version": "0.1.14",
   "description": "Injects the current date and time at the start of every session, so the agent stops guessing what \"today\" means and can reason about recency and deadlines. Also the smallest working turn hook in the catalog, which makes it a good template to copy.",
   "keywords": [
     "context",

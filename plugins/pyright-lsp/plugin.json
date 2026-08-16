@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.pyright-lsp",
-  "version": "1.0.0",
+  "version": "0.1.14",
   "description": "Python language server (Pyright) for the ryu agent: type checking plus definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install pyright-langserver; the plugin ships config.",
   "keywords": [
     "python",

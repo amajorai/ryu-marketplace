@@ -1,7 +1,8 @@
 {
   "id": "@ryu/auto-continue",
   "name": "Auto Continue",
-  "version": "0.1.14",
+  "version": "0.1.15",
+  "stability": "experimental",
   "description": "After each turn while armed, a local sub-agent scans the reply and the workspace for work that is genuinely unfinished and that another turn could complete; if it finds any, it injects a follow-up turn automatically, so a task never stalls waiting for you to type \"continue\". '/auto-continue off' stops it.",
   "tagline": "Never type \"continue\" again",
   "keywords": ["automation", "continuation", "agent", "loop", "productivity"],

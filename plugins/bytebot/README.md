@@ -59,14 +59,14 @@ constant, which each one pins in `body_defaults`.
 
 | Tool id                | `action`      | Required arg   |
 | ---------------------- | ------------- | -------------- |
-| `bytebot__screenshot`  | `screenshot`  | —              |
-| `bytebot__click`       | `click_mouse` | `coordinates`  |
-| `bytebot__type_text`   | `type_text`   | `text`         |
-| `bytebot__type_keys`   | `type_keys`   | `keys`         |
-| `bytebot__scroll`      | `scroll`      | `direction`    |
-| `bytebot__application` | `application` | `application`  |
+| `bytebot.screenshot`  | `screenshot`  | —              |
+| `bytebot.click`       | `click_mouse` | `coordinates`  |
+| `bytebot.type_text`   | `type_text`   | `text`         |
+| `bytebot.type_keys`   | `type_keys`   | `keys`         |
+| `bytebot.scroll`      | `scroll`      | `direction`    |
+| `bytebot.application` | `application` | `application`  |
 
-`bytebot__screenshot` is the only one with `unwrap_body`, because its `{image}` base64
+`bytebot.screenshot` is the only one with `unwrap_body`, because its `{image}` base64
 payload *is* the result. The five action tools return an **empty body** on success, so
 they answer `{status, body}` instead — an unwrapped empty string reaches the caller as
 `""`, which reads like a failure. (Nest answers a `@Post()` with **201**, not 200.)
@@ -79,44 +79,44 @@ caller must be told the click did not happen.
 
 | Capability        | Canonical verb        | Forwards to            |
 | ----------------- | --------------------- | ---------------------- |
-| `computer.control`| `computer__capture`   | `bytebot__screenshot`  |
-| `computer.control`| `computer__click`     | `bytebot__click`       |
-| `computer.control`| `computer__type`      | `bytebot__type_text`   |
-| `computer.control`| `computer__key`       | `bytebot__type_keys`   |
-| `computer.control`| `computer__scroll`    | `bytebot__scroll`      |
+| `computer.control`| `computer.capture`   | `bytebot.screenshot`  |
+| `computer.control`| `computer.click`     | `bytebot.click`       |
+| `computer.control`| `computer.type`      | `bytebot.type_text`   |
+| `computer.control`| `computer.key`       | `bytebot.type_keys`   |
+| `computer.control`| `computer.scroll`    | `bytebot.scroll`      |
 
 Agents call the canonical verb, not the provider tool. `ghost`, which drives *this*
 machine through the accessibility APIs, stays the declared `default`; this plugin is
 `selectable` and claims no default. Before it existed `computer.control` had exactly one
 provider, so the layer was marked selectable but nothing could be selected.
 
-### Five verbs, not six — `computer__focus_app` is unbound
+### Five verbs, not six — `computer.focus_app` is unbound
 
 Bytebot's `application` action validates a **closed enum**: `firefox`, `1password`,
 `thunderbird`, `vscode`, `terminal`, `desktop`, `directory`. The canonical
-`computer__focus_app` takes a free-form `app` string, so binding it would make
+`computer.focus_app` takes a free-form `app` string, so binding it would make
 `focus_app("Safari")`, a schema-legal call, fail with a 400. Rather than ship a verb
 that 4xxs on legal input, the verb is left unbound and the action stays reachable natively
-as `bytebot__application`, whose own schema carries the enum so an illegal call cannot be
+as `bytebot.application`, whose own schema carries the enum so an illegal call cannot be
 composed in the first place.
 
-The consequence, stated plainly: **while Bytebot is selected, `computer__focus_app`
+The consequence, stated plainly: **while Bytebot is selected, `computer.focus_app`
 disappears from the agent-visible surface**. That is the same narrowing `mem0` does to
-`memory__store`, and for the same reason.
+`memory.store`, and for the same reason.
 
 ### Three binding decisions worth knowing
 
-* **`computer__key` binds `type_keys`, not `press_keys`.** They look interchangeable and
+* **`computer.key` binds `type_keys`, not `press_keys`.** They look interchangeable and
   are not. `type_keys` → nut.js `pressKey(...all)` then `releaseKey(...all)` — one chord,
   which is what the canonical verb promises. `press_keys` is a *half* action with a
   required `press: "up" | "down"`; sending a chord through it would leave the modifiers
   physically held down on the desktop.
-* **`computer__scroll` drops `x`/`y`.** `arg_template` builds its object shape
+* **`computer.scroll` drops `x`/`y`.** `arg_template` builds its object shape
   unconditionally, and Bytebot's `coordinates` is `@IsOptional @ValidateNested` over a
   `{x, y}` that are both `@IsNumber` — so a scroll with no coordinates (legal: the
   canonical schema marks them optional) would send `coordinates: {}` and be rejected.
   Dropping them scrolls at the pointer's current position, which is exactly the fallback
-  the canonical `x` description already warns callers about. `computer__click` *does*
+  the canonical `x` description already warns callers about. `computer.click` *does*
   template them, and safely: there `x`/`y` are **required**, so the placeholders always
   resolve.
 * **`amount` is clamped to 1..10.** Bytebot's `scrollCount` counts mouse-wheel **ticks**
@@ -127,7 +127,7 @@ disappears from the agent-visible surface**. That is the same narrowing `mem0` d
 
 ### What a capture returns
 
-`computer__capture` answers `{provider: "bytebot", raw: {image: "<base64 png>"}}` — no
+`computer.capture` answers `{provider: "bytebot", raw: {image: "<base64 png>"}}` — no
 accessibility tree, no set-of-mark indices. Ghost returns annotated, indexed elements;
 Bytebot's daemon is pixels-only, so a model working through this provider must read
 coordinates off the image. The verb's own schema is silent about capture *mode* for

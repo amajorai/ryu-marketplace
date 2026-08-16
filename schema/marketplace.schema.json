@@ -60,6 +60,10 @@
           ]
         },
         "builtin": { "type": "boolean" },
+        "official": {
+          "type": "boolean",
+          "description": "Published by the verified first-party marketplace; this does not mean Core-owned."
+        },
         "developer": { "type": "string" },
         "author": {
           "oneOf": [

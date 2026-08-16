@@ -14,9 +14,9 @@ Objective-driven web search and content extraction for Ryu agents, powered by
 
 | Tool id                 | Endpoint                                | Required arg     | Key    |
 | ----------------------- | --------------------------------------- | ---------------- | ------ |
-| `parallel__search`      | `POST https://api.parallel.ai/v1/search`  | `search_queries` | yes    |
-| `parallel__free_search` | `POST https://search.parallel.ai/mcp`     | JSON-RPC envelope | **no** |
-| `parallel__extract`     | `POST https://api.parallel.ai/v1/extract` | `urls`           | yes    |
+| `parallel.search`      | `POST https://api.parallel.ai/v1/search`  | `search_queries` | yes    |
+| `parallel.free_search` | `POST https://search.parallel.ai/mcp`     | JSON-RPC envelope | **no** |
+| `parallel.extract`     | `POST https://api.parallel.ai/v1/extract` | `urls`           | yes    |
 
 `search` also accepts `objective` (a self-contained natural-language statement of
 what you are looking for), `mode` (`turbo` / `basic` / `advanced`; this plugin
@@ -32,7 +32,7 @@ rather than a no-op. Size the response with `max_chars_total`; the canonical
 
 ## Capabilities
 
-- **`web.search`** — through `adapters/web__search.js`. Four things make an
+- **`web.search`** — through `adapters/web.search.js`. Four things make an
   adapter mandatory here rather than stylistic:
   1. Parallel search takes an `objective` **and** `search_queries`; the canonical
      verb supplies one `query`, and a declarative `args` map is 1:1.
@@ -44,8 +44,8 @@ rather than a no-op. Size the response with `max_chars_total`; the canonical
 - **`web.extract`** — bound declaratively (`urls[]` wrap + a `response.fields`
   map). No adapter, because nothing needs reshaping once `full_content` is on.
 
-Selecting Parallel in the layer picker re-points the stable `web__search` /
-`web__extract` tools at it without changing the id or schema an agent sees.
+Selecting Parallel in the layer picker re-points the stable `web.search` /
+`web.extract` tools at it without changing the id or schema an agent sees.
 
 ## Works with no key
 

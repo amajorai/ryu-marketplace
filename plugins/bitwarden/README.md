@@ -22,20 +22,20 @@ from the environment, and Core passes it through to the child process as
 
 | Tool id                    | Backend                      | Required args   |
 | -------------------------- | ---------------------------- | --------------- |
-| `bitwarden__status`   | `command` → local `bws`       | —               |
-| `bitwarden__projects` | `command` → local `bws`       | —               |
-| `bitwarden__list`     | `command` → local `bws`       | `project_id`    |
-| `bitwarden__get`      | `command` → local `bws`       | `secret_id`     |
+| `bitwarden.status`   | `command` → local `bws`       | —               |
+| `bitwarden.projects` | `command` → local `bws`       | —               |
+| `bitwarden.list`     | `command` → local `bws`       | `project_id`    |
+| `bitwarden.get`      | `command` → local `bws`       | `secret_id`     |
 
-- `bitwarden__status` — `bws --version`. Confirms the CLI is installed before any
+- `bitwarden.status` — `bws --version`. Confirms the CLI is installed before any
   other call (no token needed).
-- `bitwarden__projects` — `bws project list`. Lists the projects the machine
+- `bitwarden.projects` — `bws project list`. Lists the projects the machine
   account can read, returning `{ id, name }` — discover a `project_id` here.
-- `bitwarden__list` — `bws secret list <project_id>`. Returns every secret in a
+- `bitwarden.list` — `bws secret list <project_id>`. Returns every secret in a
   project as `{ id, key, value, note, projectId }`. This is the "pull my keys"
   operation: the agent reads a credential from Bitwarden instead of it living in
   config.
-- `bitwarden__get` — `bws secret get <secret_id>`. Fetches one secret by its
+- `bitwarden.get` — `bws secret get <secret_id>`. Fetches one secret by its
   Bitwarden id.
 
 All four run under a 60s wall-clock timeout; the list/get/projects commands parse

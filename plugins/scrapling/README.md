@@ -57,20 +57,20 @@ Registering the MCP server publishes all ten of Scrapling's tools under a
 
 | Tool id                       | What it is                                          |
 | ----------------------------- | --------------------------------------------------- |
-| `scrapling__get`              | Fast HTTP fetch with browser TLS impersonation       |
-| `scrapling__bulk_get`         | The concurrent form, for many URLs                   |
-| `scrapling__fetch`            | Chromium render, for SPA / JS-built pages            |
-| `scrapling__bulk_fetch`       | The concurrent form                                  |
-| `scrapling__stealthy_fetch`   | Camoufox + Cloudflare solving, for protected sites   |
-| `scrapling__bulk_stealthy_fetch` | The concurrent form                               |
-| `scrapling__screenshot`       | PNG/JPEG capture                                     |
-| `scrapling__open_session` / `close_session` / `list_sessions` | Persistent browser sessions |
+| `scrapling.get`              | Fast HTTP fetch with browser TLS impersonation       |
+| `scrapling.bulk_get`         | The concurrent form, for many URLs                   |
+| `scrapling.fetch`            | Chromium render, for SPA / JS-built pages            |
+| `scrapling.bulk_fetch`       | The concurrent form                                  |
+| `scrapling.stealthy_fetch`   | Camoufox + Cloudflare solving, for protected sites   |
+| `scrapling.bulk_stealthy_fetch` | The concurrent form                               |
+| `scrapling.screenshot`       | PNG/JPEG capture                                     |
+| `scrapling.open_session` / `close_session` / `list_sessions` | Persistent browser sessions |
 
 ## It is a swappable layer provider
 
 | Capability    | Canonical verb  | Forwards to      |
 | ------------- | --------------- | ---------------- |
-| `web.extract` | `web__extract`  | `scrapling__get` |
+| `web.extract` | `web.extract`  | `scrapling.get` |
 
 `"selectable": true` is declared and `"default"` is **not** — the local `spider`
 plugin is the declared default for `web.extract`, and exactly one provider per
@@ -86,8 +86,8 @@ map — read, merge, then write).
 
 `get` is the only tool that works off the base `pip install`. `stealthy_fetch` needs
 `scrapling install` to download Camoufox first, and drives a real browser, so binding
-the canonical verb to it would make `web__extract` slow and (on a partial install)
-broken. The stealth tools stay directly callable as `scrapling__stealthy_fetch` for an
+the canonical verb to it would make `web.extract` slow and (on a partial install)
+broken. The stealth tools stay directly callable as `scrapling.stealthy_fetch` for an
 agent that actually needs them; only the *layer* default is the cheap path.
 
 ### Why no `web.crawl`
@@ -127,7 +127,7 @@ what makes the `mcp` 2.x breakage above visible rather than silent.
 
 ### `format` is forwarded, uniquely
 
-The canonical `web__extract.format` enum (`markdown | text | html`) is *exactly*
+The canonical `web.extract.format` enum (`markdown | text | html`) is *exactly*
 Scrapling's `extraction_type` enum, so this is the one shipped extract provider that
 honours the argument instead of dropping it. That is why
 `layer.web.extract.default.format` still has no settings field: a node-wide default

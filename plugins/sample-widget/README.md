@@ -42,7 +42,7 @@ does **not** authorize promotion. The plugin must be installed + enabled, hold t
 ```json
 "contributes": {
   "widgets": [
-    { "tool_id": "sample_widget__render", "uri": "ui://widget/sample.html",
+    { "tool_id": "sample_widget.render", "uri": "ui://widget/sample.html",
       "mime": "text/html+skybridge", "default_display_mode": "inline" }
   ]
 }
@@ -51,13 +51,13 @@ does **not** authorize promotion. The plugin must be installed + enabled, hold t
 ### The tool_id join (easy to get wrong)
 
 `contributes.widgets[].tool_id` is the **runtime** id, formed as
-`<mcp_servers-key>__<toolName>`:
+`<mcp_servers-key>.<toolName>`:
 
 ```
 mcp_servers key   "sample_widget"
 tool name         "render"           (from tools/list)
                   ───────────────
-tool_id           "sample_widget__render"
+tool_id           "sample_widget.render"
 ```
 
 The manifest `uri` and the `_meta` `outputTemplate` must be the **same** string,
@@ -65,7 +65,7 @@ and the server must serve that uri via `resources/list` + `resources/read`.
 
 ## Data flow at runtime
 
-1. The model calls `sample_widget__render`.
+1. The model calls `sample_widget.render`.
 2. The server returns `{ structuredContent: {...} }`. Core maps
    `structuredContent` → `window.openai.toolOutput`.
 3. Core reads the widget HTML from the server's `resources/read` (cached

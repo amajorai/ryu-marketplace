@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.dynamic-workflows",
+  "version": "0.1.14",
+  "description": "Run a validated, bounded fan-out of clean-context delegates.",
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/dynamic-workflows",
+      "displayName": "dynamic-workflows"
+    }
+  }
+}

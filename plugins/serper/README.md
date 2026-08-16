@@ -14,8 +14,8 @@ tool-defs in `manifest.json`, no Core Rust.
 
 | Tool id           | Endpoint                                    | Required arg |
 | ----------------- | ------------------------------------------- | ------------ |
-| `serper__search`  | `POST https://google.serper.dev/search`     | `q`          |
-| `serper__scrape`  | `POST https://scrape.serper.dev`            | `url`        |
+| `serper.search`  | `POST https://google.serper.dev/search`     | `q`          |
+| `serper.scrape`  | `POST https://scrape.serper.dev`            | `url`        |
 
 Note the two **different hosts**, and that the scrape endpoint has no path segment
 at all — it is the bare host. That is why `permission_grants` carries two
@@ -29,8 +29,8 @@ time of writing) and no subscription — you top up credits and spend them.
 
 | Call                             | Credits                                        |
 | -------------------------------- | ---------------------------------------------- |
-| `serper__search` (Google search) | 1                                              |
-| `serper__scrape` (one page)      | 2 typically; 6 or 10 for hard-to-scrape pages  |
+| `serper.search` (Google search) | 1                                              |
+| `serper.scrape` (one page)      | 2 typically; 6 or 10 for hard-to-scrape pages  |
 
 Serper publishes volume pricing (around \$1.00 per 1,000 credits at the 50k tier).
 Selecting Serper as your `web.search` layer therefore means every agent search on
@@ -70,18 +70,18 @@ This plugin is a **provider** for two hot-swappable layers:
 
 | Capability    | Canonical verb  | Forwards to      |
 | ------------- | --------------- | ---------------- |
-| `web.search`  | `web__search`   | `serper__search` |
-| `web.extract` | `web__extract`  | `serper__scrape` |
+| `web.search`  | `web.search`   | `serper.search` |
+| `web.extract` | `web.extract`  | `serper.scrape` |
 
 It deliberately does **not** provide `web.crawl`: Serper scrapes exactly one URL per
 call and has no link-following endpoint. Declaring the capability anyway would put
 Serper into resolution for that layer, where it could win the pick away from
 `spider` and silently kill a layer that works.
 
-Agents call the canonical verb (`web__search`), not the provider tool. Selecting a
+Agents call the canonical verb (`web.search`), not the provider tool. Selecting a
 different provider (Exa, Tavily or Brave for search, Spider or Tavily for extraction)
 re-points that verb without changing its id, its input schema, or the shape of its
-results. An agent allowlisted for `web__search` keeps working across the swap.
+results. An agent allowlisted for `web.search` keeps working across the swap.
 
 Two mappings do the normalizing, both declared in `provides[].tools`:
 

@@ -18,7 +18,7 @@ was nothing to swap to.
 
 | Tool id              | Endpoint                                    | Required arg |
 | -------------------- | ------------------------------------------- | ------------ |
-| `spidercloud__crawl` | `POST https://api.spider.cloud/crawl`       | `url`        |
+| `spidercloud.crawl` | `POST https://api.spider.cloud/crawl`       | `url`        |
 
 ## Setup
 
@@ -43,7 +43,7 @@ whichever other provider you select.
 
 ## Why this API and not another crawler
 
-A canonical `web__crawl` call must come back with page **content**. Spider Cloud's
+A canonical `web.crawl` call must come back with page **content**. Spider Cloud's
 crawl is **synchronous**: `run_in_background` is documented with default `false`, and
 a plain `POST /crawl` returns the fetched pages in the same HTTP response. That is the
 whole reason this provider can exist as a declarative HTTP tool — one request, no
@@ -57,7 +57,7 @@ where it promises page content. Nothing here changes that.
 
 | Capability  | Canonical verb | Forwards to          |
 | ----------- | -------------- | -------------------- |
-| `web.crawl` | `web__crawl`   | `spidercloud__crawl` |
+| `web.crawl` | `web.crawl`   | `spidercloud.crawl` |
 
 `"selectable": true` is declared, and `"default"` is **not** — the local `spider`
 plugin is the declared default for `web.crawl`, and exactly one provider per
@@ -82,20 +82,20 @@ individual depth value counts, so that assertion is unverifiable. The grammar's
 explicit drop (`""`) is the honest encoding: this provider cannot express the
 argument, so it ignores it rather than misreading it.
 
-The consequence, stated plainly: with Spider Cloud selected, `web__crawl` is bounded
+The consequence, stated plainly: with Spider Cloud selected, `web.crawl` is bounded
 by `limit` alone, not by hop count. The `layer.web.crawl.default.depth` preference is
 dropped for this provider (the local `spider` provider still forwards it, so that
 settings field is not decoration).
 
 **`limit` gets both a default and a clamp — this is the load-bearing one.** Upstream
 documents `limit` default `0`, *"Remove the value or set it to `0` to crawl all
-pages."* The canonical `limit` is **optional**, so `web__crawl {url}` with no limit
+pages."* The canonical `limit` is **optional**, so `web.crawl {url}` with no limit
 would ask Spider Cloud to crawl an entire site. Core's http tool aborts at 30s, so
 that call returns nothing at all — the layer would break on its very first use by a
 model that simply omitted an optional argument.
 
 - `body_defaults: {"limit": 10}` supplies the canonical schema's own stated default
-  whenever no limit is sent, on the verb path *and* on a direct `spidercloud__crawl`
+  whenever no limit is sent, on the verb path *and* on a direct `spidercloud.crawl`
   call. Caller arguments merge over it, so an explicit `limit` still wins.
 - `arg_clamp: {"limit": {"min": 1, "max": 25}}` turns a `limit: 0` into 1 rather than
   "everything", and caps the ceiling far below the canonical maximum of 500. 25 is a

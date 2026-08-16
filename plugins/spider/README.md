@@ -14,7 +14,7 @@ declarative plugin — one `command` tool-def in `manifest.json`, no Core Rust.
 
 | Tool id              | Backend                          | Required args          |
 | -------------------- | -------------------------------- | ---------------------- |
-| `spider__crawl` | `command` → local `spider` binary | `url`, `depth`, `limit` |
+| `spider.crawl` | `command` → local `spider` binary | `url`, `depth`, `limit` |
 
 The tool shells out to `spider crawl --depth <n> --limit <n> --output json -- <url>`
 under a 120s wall-clock timeout and returns the crawler's parsed JSON. `depth`
@@ -52,10 +52,10 @@ This plugin replaces the former built-in `spider` registry server
 (`apps/core/src/sidecar/mcp/spider.rs`) and its downloader/sidecar plumbing.
 Behavioural deltas from that implementation:
 
-- **Callable id** is now `spider__crawl` (declarative tools live under the
-  `app__` namespace), not the bare `spider__crawl`. Agent allowlists or grants
-  referencing `spider__crawl` or the `mcp:spider` grant must migrate to
-  `spider__crawl` / `tool:command:spider`. (Core's monitors host callback is
+- **Callable id** is now `spider.crawl` (declarative tools live under the
+  `app__` namespace), not the bare `spider.crawl`. Agent allowlists or grants
+  referencing `spider.crawl` or the `mcp:spider` grant must migrate to
+  `spider.crawl` / `tool:command:spider`. (Core's monitors host callback is
   updated accordingly.)
 - **`depth`/`limit` are now required** — the declarative `command` backend does
   no default-filling or server-side clamping, so both are always supplied by the

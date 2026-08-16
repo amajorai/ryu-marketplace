@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.plan-continue",
-  "version": "1.0.0",
+  "version": "0.1.14",
   "description": "While plan mode is on and the plan has not been accepted, this injects a follow-up turn after each completed turn asking the agent to carry on planning — so a plan never stalls waiting for you to type \"continue\".",
   "keywords": [
     "planning",

@@ -18,7 +18,7 @@ layer to Brave changes *which web the agent sees*, not just which vendor bills y
 
 | Tool id         | Endpoint                                                | Required arg |
 | --------------- | ------------------------------------------------------- | ------------ |
-| `brave__search` | `GET https://api.search.brave.com/res/v1/web/search`     | `q`          |
+| `brave.search` | `GET https://api.search.brave.com/res/v1/web/search`     | `q`          |
 
 Two things about that row are easy to get wrong and both fail only at runtime:
 
@@ -59,7 +59,7 @@ the layer falls through to whichever other provider you select.
 
 | Capability   | Canonical verb | Forwards to     |
 | ------------ | -------------- | --------------- |
-| `web.search` | `web__search`  | `brave__search` |
+| `web.search` | `web.search`  | `brave.search` |
 
 That table has exactly one row on purpose. The Brave Search API returns *search
 results*; it has no page-extraction and no crawl endpoint. So this plugin declares
@@ -68,9 +68,9 @@ selecting Brave for search leaves extraction and crawling on Spider (or whatever
 you picked), which is precisely why the design splits those three capabilities
 instead of shipping one `web` layer.
 
-Agents call the canonical verb (`web__search`), not the provider tool. Selecting a
+Agents call the canonical verb (`web.search`), not the provider tool. Selecting a
 different provider (Exa or Tavily) re-points that verb without changing its id, its
-input schema, or the shape of its results. An agent allowlisted for `web__search`
+input schema, or the shape of its results. An agent allowlisted for `web.search`
 keeps working across the swap.
 
 Two mappings do the normalizing, both declared in `provides[].tools`:
@@ -100,7 +100,7 @@ map — read, merge, then write).
 
 ## Known limitation: `limit` above 20
 
-The canonical `web__search` schema advertises `limit` up to 100. Brave's `count`
+The canonical `web.search` schema advertises `limit` up to 100. Brave's `count`
 caps at 20, and nothing between the facade's rename and the HTTP send clamps a
 renamed argument against the provider's schema. A caller that asks for more than 20
 results therefore gets Brave's own validation error rather than 20 results. Ask for

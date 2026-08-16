@@ -388,6 +388,24 @@ test("non-active stored status → {kind:'none'}", async () => {
 	assert.equal(host.sideModelCalls.length, 0);
 });
 
+test("paused goal keeps its persisted state and does not judge", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost("MET: no - should not run", {
+		"conv-123": JSON.stringify({
+			condition: "ship it",
+			status: "paused",
+			turns: 4,
+		}),
+	});
+	assert.deepEqual(await run(makeCtx(), host), { kind: "none" });
+	assert.deepEqual(JSON.parse(host.store.get("conv-123")), {
+		condition: "ship it",
+		status: "paused",
+		turns: 4,
+	});
+	assert.equal(host.sideModelCalls.length, 0);
+});
+
 test("command detection uses the NEWEST user turn (reverse scan)", async () => {
 	const run = loadHookRunner(parseManifest());
 	const host = makeHost("unused", {

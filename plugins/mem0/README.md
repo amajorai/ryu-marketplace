@@ -14,12 +14,12 @@ as a fully declarative plugin — three `http` tool-defs in `manifest.json`, no 
 
 | Tool id         | Endpoint                                                | Required arg |
 | --------------- | ------------------------------------------------------- | ------------ |
-| `mem0__search`  | `POST https://api.mem0.ai/v3/memories/search/`          | `query`, `filters` |
-| `mem0__add`     | `POST https://api.mem0.ai/v3/memories/add/`             | `messages`   |
-| `mem0__delete`  | `DELETE https://api.mem0.ai/v1/memories/{memory_id}/`   | `memory_id`  |
+| `mem0.search`  | `POST https://api.mem0.ai/v3/memories/search/`          | `query`, `filters` |
+| `mem0.add`     | `POST https://api.mem0.ai/v3/memories/add/`             | `messages`   |
+| `mem0.delete`  | `DELETE https://api.mem0.ai/v1/memories/{memory_id}/`   | `memory_id`  |
 
-`mem0__search` and `mem0__add` set `unwrap_body`, so they return Mem0's JSON body
-directly. `mem0__delete` does not: Mem0 documents delete as a **204**, and an unwrapped
+`mem0.search` and `mem0.add` set `unwrap_body`, so they return Mem0's JSON body
+directly. `mem0.delete` does not: Mem0 documents delete as a **204**, and an unwrapped
 empty 204 payload reaches the caller as a bare empty string that reads like a failure, so
 it keeps the `{status, body}` envelope.
 
@@ -62,10 +62,10 @@ and the `memory` layer falls back to whichever other provider you select.
 
 | Capability | Canonical verb   | Forwards to    | Notes |
 | ---------- | ---------------- | -------------- | ----- |
-| `memory`   | `memory__search` | `mem0__search` | entity id nested in `filters` |
-| `memory`   | `memory__store`  | `mem0__add`    | `infer: false` — store the decided fact as-is |
-| `memory`   | `memory__sync`   | `mem0__add`    | Mem0's default inference on — it mines the turn |
-| `memory`   | `memory__forget` | `mem0__delete` | |
+| `memory`   | `memory.search` | `mem0.search` | entity id nested in `filters` |
+| `memory`   | `memory.store`  | `mem0.add`    | `infer: false` — store the decided fact as-is |
+| `memory`   | `memory.sync`   | `mem0.add`    | Mem0's default inference on — it mines the turn |
+| `memory`   | `memory.forget` | `mem0.delete` | |
 
 Before this plugin, `memory` had exactly one provider (`@ryu/memory`), which made the
 layer un-swappable and left the four kernel bridges in `apps/core/src/memory_provider.rs`
@@ -76,12 +76,12 @@ Selecting Mem0 now fires **three of those four bridges**:
 
 | Bridge | Verb | When | Setting | Default |
 | --- | --- | --- | --- | --- |
-| `prefetch` | `memory__search` | before each turn | follows `memory.recall-mode` | on |
-| `mirror` | `memory__store` | after a built-in write succeeds | `memory.mirror-builtin` | **on** |
-| `sync` | `memory__sync` | per turn, raw user text | `memory.sync-turns` | off |
-| `context` | `memory__context` | prompt assembly | `memory.provider-context` | off — **inert**, see below |
+| `prefetch` | `memory.search` | before each turn | follows `memory.recall-mode` | on |
+| `mirror` | `memory.store` | after a built-in write succeeds | `memory.mirror-builtin` | **on** |
+| `sync` | `memory.sync` | per turn, raw user text | `memory.sync-turns` | off |
+| `context` | `memory.context` | prompt assembly | `memory.provider-context` | off — **inert**, see below |
 
-`context` stays a no-op because this provider binds no `memory__context`, so
+`context` stays a no-op because this provider binds no `memory.context`, so
 `memory.provider-context` has nothing to call while Mem0 is selected.
 
 The entry declares `"selectable": true` and claims **no** `"default"`. Selectability
@@ -114,15 +114,15 @@ curl -X POST https://api.mem0.ai/v3/memories/add/ \
 
 `messages` is an array of `{role, content}` **objects** (`role` ∈ `user | assistant |
 system`). The canonical verbs hand a provider a single `content` string
-(`memory__store`) or `content` plus `role` (`memory__sync`). `CapabilityToolBinding.args`
+(`memory.store`) or `content` plus `role` (`memory.sync`). `CapabilityToolBinding.args`
 is a flat rename table whose only shape transform is the `[]` suffix, which wraps the
 value it was given in a one-element array — applied here it produces
 `{"messages": ["…"]}`, an array of strings, which Mem0 documents no form of. That is why
 both verbs were unbound until `arg_template` shipped:
 
 ```json
-"memory__store": {
-  "tool": "mem0__add",
+"memory.store": {
+  "tool": "mem0.add",
   "arg_template": { "messages": [{ "role": "user", "content": "{content}" }] },
   "arg_defaults": { "user_id": "pref:mem0.user-id", "infer": false }
 }
@@ -138,20 +138,20 @@ appear twice.
 They differ in one documented field. Mem0 documents `infer` as *"Set to `false` to skip
 inference and store the provided text as-is"*, default `true`.
 
-- `memory__store` is *"a fact you have already decided on"* — the `mirror` bridge sends a
+- `memory.store` is *"a fact you have already decided on"* — the `mirror` bridge sends a
   fact the built-in store just recorded. Re-running Mem0's extractor over an
   already-distilled fact would paraphrase or discard it, so this binding sends
   `infer: false`.
-- `memory__sync` *"delegates the extraction"* — the whole point is that the provider
+- `memory.sync` *"delegates the extraction"* — the whole point is that the provider
   decides what is worth keeping. It leaves `infer` at Mem0's default.
 
-### `role` on `memory__sync` is carried through, not defaulted
+### `role` on `memory.sync` is carried through, not defaulted
 
 ```json
 "arg_template": { "messages": [{ "role": "{role}", "content": "{content}" }] }
 ```
 
-The canonical `memory__sync` schema is `{content, role?}` — `role` is optional. An absent
+The canonical `memory.sync` schema is `{content, role?}` — `role` is optional. An absent
 placeholder **drops its field**, so a caller that omits `role` produces
 `{"content": "…"}`, a message Mem0 does not document and will reject.
 
@@ -161,7 +161,7 @@ store the assistant's words as facts about the user. Silent corruption of stored
 is worse than a rejected write, especially since the write is `fail_open` and
 fire-and-forget — a 4xx here is a no-op nobody sees. The kernel `sync` bridge
 (`memory_provider::sync_turn`) always passes a role, so the only path that can produce a
-role-less message is an agent calling `memory__sync` by hand and choosing to omit it.
+role-less message is an agent calling `memory.sync` by hand and choosing to omit it.
 There is no grammar for defaulting a value *inside* a template: `arg_defaults` merges
 under the template's output, so a default `messages` would simply be overwritten.
 
@@ -175,18 +175,18 @@ Mem0 answers with a **job envelope, never a memory id**. Neither write verb decl
 `response` map, so this passes through untouched under `{provider, raw}` and nothing
 pretends it is a fact record. Two consequences worth stating:
 
-- **Do not chain `memory__forget` onto a store result.** `event_id` is a job id;
-  `DELETE /v1/memories/{memory_id}/` wants a memory id. Use an id from `mem0__search`.
+- **Do not chain `memory.forget` onto a store result.** `event_id` is a job id;
+  `DELETE /v1/memories/{memory_id}/` wants a memory id. Use an id from `mem0.search`.
 - **A successful call means "accepted", not "stored".** Both kernel bridges are
   fire-and-forget (`detach()` does `let _ = call_verb(…)`), so neither reads the
   response, which is what makes an async write acceptable here at all.
 
-## Why `memory__context` is NOT bound
+## Why `memory.context` is NOT bound
 
 Mem0 publishes no standing-summary endpoint. The complete memory API surface, from
 `docs.mem0.ai/llms.txt`, is: add, get-all, get, search, update, delete, delete-all,
 batch-update, batch-delete, history, feedback, create-export, get-export. None of them
-returns "the provider's own synthesis of this user", which is what `memory__context`
+returns "the provider's own synthesis of this user", which is what `memory.context`
 promises. Forcing the verb onto, say, get-all would inject a raw fact dump at system rank
 under a label that says it is a summary. An unverified binding ships a provider that
 4xxs (or worse, silently misleads) on first use while the picker cheerfully offers it.
@@ -199,9 +199,9 @@ id comes from the manifest via `arg_defaults`, resolved at call time from the
 `mem0.user-id` node preference (the `Mem0 user id` settings field is its reader):
 
 ```json
-"memory__search": { "arg_defaults": { "filters": { "user_id": "pref:mem0.user-id" } } },
-"memory__store":  { "arg_defaults": { "user_id": "pref:mem0.user-id" } },
-"memory__sync":   { "arg_defaults": { "user_id": "pref:mem0.user-id" } }
+"memory.search": { "arg_defaults": { "filters": { "user_id": "pref:mem0.user-id" } } },
+"memory.store":  { "arg_defaults": { "user_id": "pref:mem0.user-id" } },
+"memory.sync":   { "arg_defaults": { "user_id": "pref:mem0.user-id" } }
 ```
 
 **The nesting differs because Mem0's API differs, and getting it wrong is silent.**
@@ -228,12 +228,12 @@ Everything else about the choice is unchanged from search:
   instead of parking it in a bucket nothing can read back.
 
 If your project already uses a different id, set it in the **Mem0 user id** field, or
-call `mem0__search` / `mem0__add` directly with your own arguments — the provider-native
+call `mem0.search` / `mem0.add` directly with your own arguments — the provider-native
 tool ids stay registered and take them.
 
 ## Dropped canonical arguments
 
-`memory__store`'s canonical schema is `{content, scope?, category?, importance?,
+`memory.store`'s canonical schema is `{content, scope?, category?, importance?,
 when_to_use?}`. Only `content` has a home in Mem0's request, so the other four map to
 `""` — an explicit drop. Unmapped arguments pass through **under their own name**, so
 without this they would land as undocumented top-level body fields.
@@ -246,7 +246,7 @@ for recall.
 
 ## No `arg_clamp`
 
-Mem0's `top_k` ceiling (1000) is **above** the canonical `memory__search.limit` maximum
+Mem0's `top_k` ceiling (1000) is **above** the canonical `memory.search.limit` maximum
 (50), and the kernel prefetch clamps lower still. `arg_clamp` is for a provider that
 accepts *less* than the canonical schema allows (Brave's `count` maxes at 20); declaring
 one that can never narrow anything is noise that reads as a real constraint.
@@ -261,4 +261,4 @@ Validates the manifest contract, the egress-grant/called-host agreement, and the
 bindings — including that every argument rename targets an argument the provider tool
 actually accepts, that the write templates build the documented `messages` shape, that
 the entity id sits where Mem0 documents it on **each** endpoint, and that
-`memory__context` stays unbound.
+`memory.context` stays unbound.
