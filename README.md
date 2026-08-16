@@ -143,7 +143,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (63)
+## First-party plugins (65)
 
 Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 
@@ -171,11 +171,13 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 | | Plugin | Official | System | Hidden | Version | What it is |
 | --- | --- | --- | --- | --- | --- | --- |
 
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/agentation/icon-dark.png" /><img src="./plugins/agentation/icon-light.png" width="32" alt="" /></picture> | [Agentation](./plugins/agentation/) | ✓ | – | – | 0.1.15 | Visual feedback for coding agents. Agentation connects UI annotations from a running web app to… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/agents-md-tail/icon-dark.png" /><img src="./plugins/agents-md-tail/icon-light.png" width="32" alt="" /></picture> | [AGENTS.md Tail](./plugins/agents-md-tail/) | ✓ | – | – | 0.1.15 | Experimental context hook that keeps the active AGENTS.md instructions at the head and repeats… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/clangd-lsp/icon-dark.png" /><img src="./plugins/clangd-lsp/icon-light.png" width="32" alt="" /></picture> | [Clangd (C/C++)](./plugins/clangd-lsp/) | ✓ | – | – | 0.1.15 | C/C++ language server (clangd) for the ryu agent: definitions, references, hover, symbols,… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/csharp-lsp/icon-dark.png" /><img src="./plugins/csharp-lsp/icon-light.png" width="32" alt="" /></picture> | [C# LSP](./plugins/csharp-lsp/) | ✓ | – | – | 0.1.15 | C# language server (csharp-ls) for the ryu agent: definitions, references, hover, symbols,… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/docs/icon-dark.png" /><img src="./plugins/docs/icon-light.png" width="32" alt="" /></picture> | [Ryu Docs](./plugins/docs/) | ✓ | ✓ | – | 0.1.15 | Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/dynamic-workflows/icon-dark.png" /><img src="./plugins/dynamic-workflows/icon-light.png" width="32" alt="" /></picture> | [dynamic-workflows](./plugins/dynamic-workflows/) | ✓ | – | – | 0.1.15 | Run a validated, bounded fan-out of clean-context delegates. |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/expect/icon-dark.png" /><img src="./plugins/expect/icon-light.png" width="32" alt="" /></picture> | [Expect](./plugins/expect/) | ✓ | – | – | 0.1.15 | Browser-based QA for agent code. Expect reads the current changes, creates a test plan, and runs… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/gopls-lsp/icon-dark.png" /><img src="./plugins/gopls-lsp/icon-light.png" width="32" alt="" /></picture> | [Go LSP](./plugins/gopls-lsp/) | ✓ | – | – | 0.1.15 | Go language server (gopls) for the ryu agent: definitions, references, hover, symbols,… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/headroom/icon-dark.png" /><img src="./plugins/headroom/icon-light.png" width="32" alt="" /></picture> | [Headroom Compression](./plugins/headroom/) | ✓ | – | – | 0.1.15 | Context compression (chopratejas/headroom): compress tool outputs, logs, files, and RAG chunks.… |
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/hook-observers/icon-dark.png" /><img src="./plugins/hook-observers/icon-light.png" width="32" alt="" /></picture> | [Hook Observers](./plugins/hook-observers/) | ✓ | – | – | 0.1.15 | A worked reference for the turn-hook events Ryu can fire: five observer hooks watching… |

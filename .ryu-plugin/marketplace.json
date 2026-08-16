@@ -152,6 +152,38 @@
       }
     },
     {
+      "name": "agentation",
+      "displayName": "Agentation",
+      "version": "0.1.15",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "tagline": "Visual feedback for coding agents",
+      "description": "Visual feedback for coding agents. Agentation connects UI annotations from a running web app to an MCP server so agents can read, acknowledge, resolve, dismiss, and reply to feedback without copy-paste.",
+      "category": "Developer Tools",
+      "keywords": [
+        "ui",
+        "feedback",
+        "annotations",
+        "browser"
+      ],
+      "homepage": "https://www.agentation.com/",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "agentbrowser",
       "displayName": "Agent Browser",
       "version": "0.1.15",
@@ -1060,6 +1092,38 @@
         "direction": "down"
       },
       "iconUrl": "https://avatars.githubusercontent.com/u/77906174?v=4",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "expect",
+      "displayName": "Expect",
+      "version": "0.1.15",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "tagline": "Test agent code in a real browser",
+      "description": "Browser-based QA for agent code. Expect reads the current changes, creates a test plan, and runs it in a real browser with Playwright to catch regressions in behavior, performance, security, and design.",
+      "category": "Developer Tools",
+      "keywords": [
+        "testing",
+        "browser",
+        "qa",
+        "playwright"
+      ],
+      "homepage": "https://www.expect.dev/",
       "surfaces": [
         "core",
         "desktop",
