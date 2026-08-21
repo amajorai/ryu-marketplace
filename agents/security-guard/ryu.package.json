@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/security-guard",
+  "name": "Security Guard",
+  "version": "0.2.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Gateway config",
+    "Ryu config",
+    "Quick and deep scans"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/security-guard",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Catch gateway and Ryu configuration drift before it becomes an incident.",
+    "category": "Security",
+    "description": "Runs a fast hourly configuration check and a deeper midnight diagnostic pass over Gateway and Ryu settings.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Run a quick configuration scan now.",
+      "Show me the last deep scan findings."
+    ],
+    "featuredRank": 125
+  }
+}

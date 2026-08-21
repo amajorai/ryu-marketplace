@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/expiry-date-tracker",
+  "name": "Expiry Date Tracker",
+  "version": "0.2.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Read documents",
+    "Track dates",
+    "Prepare reminders"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/expiry-date-tracker",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Keep commitments, renewals, and deadlines from quietly expiring.",
+    "category": "Operations",
+    "description": "Reviews the dates in your connected documents and Spaces, then calls out what is expiring soon with a clear owner, source, and next action.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "What expires in the next 30 days?",
+      "Find renewals I need to start this week."
+    ],
+    "featuredRank": 130
+  }
+}

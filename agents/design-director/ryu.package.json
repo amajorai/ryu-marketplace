@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/design-director",
+  "name": "Design Director",
+  "version": "0.2.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Product design",
+    "UI/UX systems",
+    "Interaction design",
+    "Motion and video",
+    "Accessibility"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/design-director",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Build distinctive, accessible product interfaces and motion with a complete design system.",
+    "category": "Design",
+    "description": "Expert product design director and design engineer for UI/UX, responsive systems, motion, accessibility, and technical explainers.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Design a distinctive landing page for our product.",
+      "Audit this interface and fix hierarchy, states, responsiveness, and motion.",
+      "Create a Remotion or HyperFrames explainer for this workflow."
+    ],
+    "featuredRank": 135
+  }
+}

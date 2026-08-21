@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/adversarial-verification",
+  "name": "Adversarial Verification",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:adversarial-verification"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/adversarial-verification",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "Generate an answer, have N independent verifiers vote, and accept on majority — else revise.",
+    "category": "quality",
+    "pattern": "adversarial-verification",
+    "icon": "ShieldCheck",
+    "nodeCount": 7,
+    "tags": [
+      "verification",
+      "voting",
+      "quality",
+      "sub-agents"
+    ]
+  }
+}

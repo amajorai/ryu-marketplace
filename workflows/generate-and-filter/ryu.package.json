@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/generate-and-filter",
+  "name": "Generate & Filter",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:generate-and-filter"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/generate-and-filter",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "Generate N proposals in parallel, then score and select the best.",
+    "category": "quality",
+    "pattern": "generate-and-filter",
+    "icon": "Filter",
+    "nodeCount": 4,
+    "tags": [
+      "generate",
+      "filter",
+      "select",
+      "best-of-n"
+    ]
+  }
+}

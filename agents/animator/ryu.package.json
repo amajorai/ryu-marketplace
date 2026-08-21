@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/animator",
+  "name": "Animator",
+  "version": "0.2.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Manim technical explainers",
+    "HyperFrames motion design",
+    "Remotion React video",
+    "Data visualisations"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/animator",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Turn technical ideas and data into clear, polished motion.",
+    "category": "Creative",
+    "description": "Expert animation director and creative technologist for technical explainers, data visualisations, motion graphics, product videos, and parametrised video compositions.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Animate this architecture diagram as a 30-second explainer.",
+      "Visualise this dataset with a narrated Remotion composition."
+    ],
+    "featuredRank": 122
+  }
+}

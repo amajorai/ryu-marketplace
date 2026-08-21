@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/codex-quota-reset-watch",
+  "name": "Codex Quota Reset Watch",
+  "version": "0.2.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Fetch a public web page",
+    "Detect forecast changes",
+    "Desktop notifications"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/codex-quota-reset-watch",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Know when the Codex reset forecast changes.",
+    "category": "Monitoring",
+    "description": "Checks willcodexquotareset.com every 30 minutes, remembers the last forecast, and sends a desktop alert only when the public reset signals materially change.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Check the Codex quota reset forecast now.",
+      "What changed in the Codex reset forecast since the last check?"
+    ],
+    "featuredRank": 128
+  }
+}

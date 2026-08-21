@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/autonomous-agent",
+  "name": "Autonomous Agent",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:autonomous-agent"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/autonomous-agent",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "A tool-using agent runs its own loop, wrapped in a bounded durable loop until it is done.",
+    "category": "orchestration",
+    "pattern": "autonomous-agent",
+    "icon": "Bot",
+    "nodeCount": 3,
+    "tags": [
+      "agent",
+      "autonomous",
+      "loop",
+      "tools"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/prompt-chaining",
+  "name": "Prompt Chaining",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:prompt-chaining"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/prompt-chaining",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "Decompose a task into a fixed sequence of LLM steps, each feeding the next (outline → draft → polish).",
+    "category": "orchestration",
+    "pattern": "prompt-chaining",
+    "icon": "Link",
+    "nodeCount": 5,
+    "tags": [
+      "chaining",
+      "sequential",
+      "decomposition"
+    ]
+  }
+}

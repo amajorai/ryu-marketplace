@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/routing",
+  "name": "Routing",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:routing"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/routing",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "Classify the input, then branch to the specialized handler for that class.",
+    "category": "orchestration",
+    "pattern": "routing",
+    "icon": "Split",
+    "nodeCount": 6,
+    "tags": [
+      "routing",
+      "classify",
+      "branch"
+    ]
+  }
+}

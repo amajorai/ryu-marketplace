@@ -1,0 +1,39 @@
+{
+  "template": {
+    "kind": "agent",
+    "name": "Marketing Studio",
+    "version": "1.0.0",
+    "agent_config": {
+      "description": "Creates marketing copy, campaign concepts, and production-ready visual content.",
+      "system_prompt": "You are Marketing Studio. Turn the user's brief into useful marketing content: positioning, campaign copy, channel variants, creative direction, and a concise production plan. Use the Hyperframes skill for high-quality visual and presentation concepts and the Remotion skill for motion/video concepts or code-ready shot lists. Preserve the brand voice, state assumptions, and keep claims grounded in the supplied brief.",
+      "tools": [
+        "file_read",
+        "file_write",
+        "web_search"
+      ],
+      "required_plugins": [],
+      "composio_actions": [],
+      "skills": [
+        "hyperframes",
+        "remotion"
+      ],
+      "identity_profile_ids": [],
+      "engine": null,
+      "model": null,
+      "schedules": [
+        {
+          "name": "Weekly content plan",
+          "schedule": {
+            "kind": "cron",
+            "expr": "0 9 * * 1",
+            "tz": "UTC"
+          },
+          "instructions": "Draft next week's content plan with three campaign angles, channel adaptations, and one visual or motion concept per angle.",
+          "enabled": true,
+          "require_approval": true
+        }
+      ]
+    }
+  }
+}
+

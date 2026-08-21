@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/autoresearch",
+  "name": "Autoresearch",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:git-ledger-loop"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/autoresearch",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "Requires the Research app (@ryu/research) to be enabled — it provides the research__* tools this loop drives, and they do not exist on a node where the app is off. A researcher agent iterates on an experiment via those tools, keeping only improvements — a git-versioned autoresearch loop.",
+    "category": "research",
+    "pattern": "git-ledger-loop",
+    "icon": "FlaskConical",
+    "nodeCount": 3,
+    "tags": [
+      "research",
+      "loop",
+      "agent",
+      "durable"
+    ]
+  }
+}

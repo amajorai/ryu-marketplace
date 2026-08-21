@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
+  "title": "Ryu portable package envelope",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "version",
+    "kind",
+    "artifacts",
+    "targets",
+    "scopes",
+    "requires",
+    "capabilities",
+    "security"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "version": {
+      "type": "string",
+      "pattern": "^v?\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$"
+    },
+    "kind": {
+      "enum": [
+        "plugin",
+        "app",
+        "skill",
+        "agent",
+        "workflow",
+        "theme",
+        "output_style",
+        "space",
+        "profile",
+        "bundle"
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "targets": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "enum": ["desktop", "node", "gateway", "agent", "space", "workflow"]
+      }
+    },
+    "requires": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "capabilities": { "type": "array", "items": { "type": "string" } },
+    "includes": { "type": "array", "items": { "type": "string" } },
+    "source": { "$ref": "#/definitions/source" },
+    "security": { "$ref": "#/definitions/security" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": true,
+  "definitions": {
+    "source": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["github", "local", "archive"] },
+        "repository": { "type": "string" },
+        "path": { "type": "string" },
+        "ref": { "type": "string" },
+        "commit": { "type": "string" },
+        "checksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "security": {
+      "type": "object",
+      "required": [
+        "containsSecrets",
+        "permissions",
+        "privateContent",
+        "redacted"
+      ],
+      "properties": {
+        "containsSecrets": { "type": "boolean" },
+        "permissions": { "type": "array", "items": { "type": "string" } },
+        "privateContent": { "type": "boolean" },
+        "redacted": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

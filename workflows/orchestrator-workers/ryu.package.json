@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/orchestrator-workers",
+  "name": "Orchestrator–Workers",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:orchestrator-workers"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/orchestrator-workers",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "An orchestrator LLM plans subtasks, delegates them to workers, then integrates the results.",
+    "category": "orchestration",
+    "pattern": "orchestrator-workers",
+    "icon": "Workflow",
+    "nodeCount": 5,
+    "tags": [
+      "orchestrator",
+      "planning",
+      "sub-agents"
+    ]
+  }
+}

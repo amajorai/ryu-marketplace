@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/marketing-studio",
+  "name": "Marketing Studio",
+  "version": "0.2.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Copywriting",
+    "Hyperframes",
+    "Remotion"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/marketing-studio",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Turn a brief into polished campaigns, visuals, and motion content.",
+    "category": "Marketing",
+    "description": "Generates on-brand marketing content and production-ready visual directions with Hyperframes and Remotion.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Create a launch campaign for our new feature.",
+      "Turn this brief into a 30-second Remotion concept."
+    ],
+    "featuredRank": 115
+  }
+}

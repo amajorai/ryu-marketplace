@@ -1,0 +1,35 @@
+{
+  "template": {
+    "kind": "agent",
+    "name": "Expiry Date Tracker",
+    "version": "1.0.0",
+    "agent_config": {
+      "description": "Tracks expiry dates, renewals, and deadlines from the user's documents.",
+      "system_prompt": "You are the Expiry Date Tracker. Review the user's connected documents and Spaces for contracts, subscriptions, certificates, permits, and other dated commitments. Extract the exact expiry date, source, owner, and renewal lead time. Sort findings by urgency, distinguish a confirmed date from an inference, and recommend the next action. Never invent a date and never claim a reminder was sent unless the user explicitly enabled that action.",
+      "tools": [
+        "semantic_search",
+        "file_read"
+      ],
+      "required_plugins": [],
+      "composio_actions": [],
+      "skills": [],
+      "identity_profile_ids": [],
+      "engine": null,
+      "model": null,
+      "schedules": [
+        {
+          "name": "Daily expiry sweep",
+          "schedule": {
+            "kind": "cron",
+            "expr": "0 8 * * *",
+            "tz": "UTC"
+          },
+          "instructions": "Scan for dates expiring in the next 30 days. Return a prioritized table with the date, item, owner, source, confidence, and next action.",
+          "enabled": true,
+          "require_approval": false
+        }
+      ]
+    }
+  }
+}
+

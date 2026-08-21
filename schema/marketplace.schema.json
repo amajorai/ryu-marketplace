@@ -31,6 +31,20 @@
     "plugins": {
       "type": "array",
       "items": { "$ref": "#/definitions/plugin" }
+    },
+    "packages": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/package" }
+    },
+    "entries": {
+      "type": "array",
+      "description": "Unified legacy listing and portable package projection.",
+      "items": {
+        "oneOf": [
+          { "$ref": "#/definitions/plugin" },
+          { "$ref": "#/definitions/package" }
+        ]
+      }
     }
   },
   "additionalProperties": true,
@@ -80,7 +94,7 @@
         },
         "category": { "type": "string" },
         "type": {
-          "enum": ["app", "plugin"],
+          "enum": ["app", "plugin", "agent", "workflow", "theme", "space", "profile", "bundle", "package"],
           "description": "App (ships a Companion UI surface, or bundles other apps) vs plugin (tools/agents/channels/policies). Preferred over deriving app-ness from a Companion runnable."
         },
         "hasCompanion": {
@@ -145,6 +159,33 @@
             { "type": "array", "items": { "$ref": "#/definitions/setupStep" } }
           ]
         }
+      },
+      "additionalProperties": true
+    },
+    "package": {
+      "type": "object",
+      "required": ["id", "name", "version", "kind", "packageKind", "artifacts", "targets", "scopes", "source", "security"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "displayName": { "type": "string" },
+        "version": { "type": "string" },
+        "type": { "type": "string" },
+        "kind": { "type": "string" },
+        "packageKind": { "type": "string" },
+        "artifactKinds": { "type": "array", "items": { "type": "string" } },
+        "artifacts": { "type": "array", "items": { "type": "string" } },
+        "targets": { "type": "array", "items": { "type": "string" } },
+        "scopes": { "type": "array", "items": { "type": "string" } },
+        "requires": { "type": "object" },
+        "capabilities": { "type": "array", "items": { "type": "string" } },
+        "source": { "type": ["string", "object"] },
+        "commit": { "type": "string" },
+        "ref": { "type": "string" },
+        "checksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "security": { "type": "object" },
+        "official": { "type": "boolean" },
+        "hidden": { "type": "boolean" }
       },
       "additionalProperties": true
     },

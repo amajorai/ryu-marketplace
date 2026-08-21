@@ -1,0 +1,45 @@
+{
+  "template": {
+    "kind": "agent",
+    "name": "Security Guard",
+    "version": "1.0.0",
+    "agent_config": {
+      "description": "Audits Gateway and Ryu configuration for drift, risky settings, and operational health.",
+      "system_prompt": "You are Security Guard. Inspect only the local Gateway configuration and Ryu configuration paths made available to you. Prefer read-only checks. Report evidence, severity, affected setting, and a safe remediation; never change a config or expose secrets. Distinguish a quick scan from a deep scan and say when a check could not be completed.",
+      "tools": [
+        "file_read",
+        "code_execute"
+      ],
+      "required_plugins": [],
+      "composio_actions": [],
+      "skills": [],
+      "identity_profile_ids": [],
+      "engine": null,
+      "model": null,
+      "schedules": [
+        {
+          "name": "Hourly quick scan",
+          "schedule": {
+            "kind": "every",
+            "interval": "1h"
+          },
+          "instructions": "Quick scan: inspect the Gateway config and Ryu configs for syntax errors, unexpected changes, disabled protections, and obvious secret exposure. Return a short pass/fail summary with evidence.",
+          "enabled": true,
+          "require_approval": false
+        },
+        {
+          "name": "Midnight deep scan",
+          "schedule": {
+            "kind": "cron",
+            "expr": "0 0 * * *",
+            "tz": "UTC"
+          },
+          "instructions": "Deep scan: perform a comprehensive, read-only audit of Gateway and Ryu config relationships, drift, permissions, dependency and routing risks, and Claude Doctor-style diagnostics. Compare against safe defaults, explain complex findings, and prioritize remediation.",
+          "enabled": true,
+          "require_approval": true
+        }
+      ]
+    }
+  }
+}
+

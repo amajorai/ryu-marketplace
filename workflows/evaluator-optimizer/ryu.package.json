@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/evaluator-optimizer",
+  "name": "Evaluator–Optimizer",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:evaluator-optimizer"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/evaluator-optimizer",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "Generate a draft, then iteratively critique and rewrite it over several bounded passes.",
+    "category": "quality",
+    "pattern": "evaluator-optimizer",
+    "icon": "Gauge",
+    "nodeCount": 4,
+    "tags": [
+      "eval",
+      "refine",
+      "loop",
+      "quality"
+    ]
+  }
+}

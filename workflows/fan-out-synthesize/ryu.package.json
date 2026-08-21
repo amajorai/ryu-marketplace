@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/fan-out-synthesize",
+  "name": "Fan-out / Synthesize",
+  "version": "0.2.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:fan-out-synthesize"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/workflows/fan-out-synthesize",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "Fan work out over items to independent sub-agents, then merge their outputs into one result.",
+    "category": "quality",
+    "pattern": "fan-out-synthesize",
+    "icon": "GitFork",
+    "nodeCount": 4,
+    "tags": [
+      "fan-out",
+      "merge",
+      "sub-agents"
+    ]
+  }
+}

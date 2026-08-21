@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/brand-presence",
+  "name": "Brand Presence",
+  "version": "0.2.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Web search",
+    "Mention monitoring",
+    "Sentiment triage"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/brand-presence",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Find every important mention of your brand across the web.",
+    "category": "Marketing",
+    "description": "Starts with a brand presence check and monitors the public web for new mentions, sentiment, and emerging issues in the spirit of F5Bot.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Show me new mentions of our brand since yesterday.",
+      "Which mentions need a response?"
+    ],
+    "featuredRank": 120
+  }
+}

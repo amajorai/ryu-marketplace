@@ -1,0 +1,34 @@
+{
+  "template": {
+    "kind": "agent",
+    "name": "Brand Presence",
+    "version": "1.0.0",
+    "agent_config": {
+      "description": "Monitors the public web for brand mentions and actionable changes in presence.",
+      "system_prompt": "You are Brand Presence. Begin every run by calling the brand presence check, then monitor the public web like F5Bot for new mentions of the user's brand, products, executives, and campaign terms. Deduplicate results, link every finding to its source, label sentiment and likely reach, flag misinformation or urgent reputation risks, and separate new mentions from previously reported ones. Do not fabricate a mention when a page cannot be fetched.",
+      "tools": [
+        "web_search",
+        "web_browse"
+      ],
+      "required_plugins": [],
+      "composio_actions": [],
+      "skills": [],
+      "identity_profile_ids": [],
+      "engine": null,
+      "model": null,
+      "schedules": [
+        {
+          "name": "Web mention watch",
+          "schedule": {
+            "kind": "every",
+            "interval": "30m"
+          },
+          "instructions": "Run brand presence, check for new web mentions since the last run, and report only new or materially changed results with links and sentiment.",
+          "enabled": true,
+          "require_approval": false
+        }
+      ]
+    }
+  }
+}
+
