@@ -29,7 +29,7 @@ not carried here).
 ### Automation
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/predict-dark.png" /><img src="./app-icons/predict-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-predict">Autocomplete</a></div> | ✓ | – | – | 0.2.0 | Inline ghost-text autocomplete in any text field on your machine, accepted with Tab. A small… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/recipes-dark.png" /><img src="./app-icons/recipes-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-recipes">Recipes</a></div> | ✓ | – | – | 0.2.0 | Desktop-automation recipes: record → save → replay UI action sequences. Backed by Ghost's… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/warmup-dark.png" /><img src="./app-icons/warmup-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-warmup">Warmup</a></div> | ✓ | – | – | 0.2.0 | Starts your subscription agents' rolling usage windows on your own schedule: a one-word ping to… |
@@ -39,13 +39,13 @@ not carried here).
 ### Browsers
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/browser-dark.png" /><img src="./app-icons/browser-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-browser">Browser</a></div> | ✓ | ✓ | – | 0.2.0 | A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated… |
 
 ### Communication
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/mail-dark.png" /><img src="./app-icons/mail-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-mail">Mail</a></div> | ✓ | – | – | 0.2.0 | Agent Inboxes — email as a service for agents. Runs the out-of-process ryu-mail sidecar; Core… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/meetings-dark.png" /><img src="./app-icons/meetings-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-meetings">Meetings</a></div> | ✓ | – | – | 0.2.0 | Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/teams-dark.png" /><img src="./app-icons/teams-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-teams">Teams</a></div> | ✓ | – | – | 0.2.0 | Teams: named groups of agents you can address as one. Governance shell over the in-crate teams… |
@@ -53,7 +53,7 @@ not carried here).
 ### Creative
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/canvas-dark.png" /><img src="./app-icons/canvas-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-canvas">Canvas</a></div> | ✓ | – | – | 0.2.0 | A node board for generative media: wire up image, video, chat, text-to-speech, speech-to-text,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/reelfarm-dark.png" /><img src="./app-icons/reelfarm-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-reelfarm">Sprout Studio</a></div> | ✓ | – | – | 0.2.0 | A Ryu-native local-first creator workspace: turn a point of view into an AI-assisted short-form… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/whiteboard-dark.png" /><img src="./app-icons/whiteboard-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-whiteboard">Whiteboard</a></div> | ✓ | – | – | 0.2.0 | An Excalidraw whiteboard shipped as a Ryu app: draw, diagram, and rearrange freely, with… |
@@ -61,7 +61,7 @@ not carried here).
 ### Developer Tools
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/blueprint-dark.png" /><img src="./app-icons/blueprint-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-blueprint">Blueprint</a></div> | ✓ | – | – | 0.2.0 | Review an agent's plan before it touches a file. The agent publishes its plan over MCP;… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/checks-dark.png" /><img src="./app-icons/checks-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-checks">Checks</a></div> | ✓ | – | – | 0.2.0 | A local-first verification workspace for planning, running, and reviewing UI, API, and… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/desktop-dark.png" /><img src="./app-icons/desktop-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-desktop">Virtual Desktop</a></div> | ✓ | – | – | 0.2.0 | An interactive virtual desktop for any Ryu node — cloud-managed, self-hosted, or local. The… |
@@ -75,7 +75,7 @@ not carried here).
 ### Documents
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/docling-dark.png" /><img src="./app-icons/docling-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-docling">Docling</a></div> | ✓ | – | – | 0.2.0 | Document parsing via IBM's MIT-licensed Docling — the highest-fidelity `document.parse` backend.… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/markitdown-dark.png" /><img src="./app-icons/markitdown-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-markitdown">MarkItDown</a></div> | ✓ | – | – | 0.2.0 | Document parsing via Microsoft's MIT-licensed MarkItDown library — the default `document.parse`… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/mineru-dark.png" /><img src="./app-icons/mineru-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-mineru">MinerU</a></div> | ✓ | – | – | 0.2.0 | Document parsing via MinerU (opendatalab) — the highest-fidelity `document.parse` backend, and… |
@@ -84,19 +84,19 @@ not carried here).
 ### Games
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/token-table-dark.png" /><img src="./app-icons/token-table-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-token-table">Token Table</a></div> | ✓ | – | – | 0.2.0 | A cosmetic six-max no-limit Texas Hold'em table with simulated tokens, deterministic server-side… |
 
 ### Knowledge & Memory
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/learning-dark.png" /><img src="./app-icons/learning-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-learning">Learning</a></div> | ✓ | – | – | 0.2.0 | Learning loop: turn chats and runs into reusable skills, gated by the approval Inbox, with an… |
 
 ### Media & Voice
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/clips-dark.png" /><img src="./app-icons/clips-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-clips">Clips</a></div> | ✓ | – | – | 0.2.0 | Clips: capture and browse screen/timeline clips. A Core→Shadow proxy that depends on the Shadow… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/dictation-dark.png" /><img src="./app-icons/dictation-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-dictation">Dictation</a></div> | ✓ | – | – | 0.2.0 | System-wide dictation and agent-ask via the Island companion: speak anywhere to type a… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/subtitles-dark.png" /><img src="./app-icons/subtitles-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-subtitles">Subtitles</a></div> | ✓ | – | – | 0.2.0 | Pick a video on this machine, transcribe it locally, translate the transcript into the language… |
@@ -105,7 +105,7 @@ not carried here).
 ### Productivity
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/activity-dark.png" /><img src="./app-icons/activity-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-activity">Activity</a></div> | ✓ | – | – | 0.2.0 | The unified activity feed: everything happening on this node — monitor alerts, finished tasks,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/agent-status-dark.png" /><img src="./app-icons/agent-status-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-agent-status">Agent Status</a></div> | ✓ | – | – | 0.2.0 | Splits your agent runs across three sidebar sections — Working, Needs input and Done — each row… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/calendar-dark.png" /><img src="./app-icons/calendar-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-calendar">Calendar</a></div> | ✓ | – | – | 0.2.0 | The scheduled-runs calendar: every agent and workflow scheduled job projected onto Month, Week,… |
@@ -124,13 +124,13 @@ not carried here).
 ### Research
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/research-dark.png" /><img src="./app-icons/research-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-research">Research</a></div> | ✓ | – | – | 0.2.0 | Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources,… |
 
 ### Security
 
 | App | Official | System | Hidden | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/approvals-dark.png" /><img src="./app-icons/approvals-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-approvals">Approvals</a></div> | ✓ | – | – | 0.2.0 | Approval inbox: a human-in-the-loop queue where agent-proposed actions, edits, and fixes wait… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/reasoning-dark.png" /><img src="./app-icons/reasoning-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-reasoning">Automated Reasoning</a></div> | ✓ | – | – | 0.2.0 | Check an answer against a written policy with a solver instead of a second opinion. Point it at… |
 
@@ -151,7 +151,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 ### Automation
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/agent-comms/icon-dark.png" /><img src="./plugins/plugins/agent-comms/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/agent-comms/">Switchboard</a></div> | ✓ | – | – | – | 0.2.0 | Lets the agents on this node talk to each other. Any agent can look up who else is here, leave… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/bytebot/icon-dark.png" /><img src="./plugins/plugins/bytebot/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/bytebot/">Bytebot Desktop</a></div> | ✓ | – | – | – | 0.2.0 | Drives a Bytebot desktop (https://github.com/bytebot-ai/bytebot) through `bytebotd`, its local… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/effort-escalator/icon-dark.png" /><img src="./plugins/plugins/effort-escalator/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/effort-escalator/">Effort Escalator</a></div> | ✓ | – | – | – | 0.2.0 | Detects stalled work with a cheap background judge and moves the next turn up a configured… |
@@ -162,14 +162,14 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 ### Browsers
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/agentbrowser/icon-dark.png" /><img src="./plugins/plugins/agentbrowser/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/agentbrowser/">Agent Browser</a></div> | ✓ | ✓ | – | – | 0.2.0 | Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev).… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/ego-browser/icon-dark.png" /><img src="./plugins/plugins/ego-browser/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/ego-browser/">Ego Browser</a></div> | ✓ | – | – | – | 0.2.0 | Ego lite (https://github.com/citrolabs/ego-lite) as an optional provider for Ryu's swappable… |
 
 ### Developer Tools
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/agentation/icon-dark.png" /><img src="./plugins/plugins/agentation/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/agentation/">Agentation</a></div> | ✓ | – | – | – | 0.2.0 | Visual feedback for coding agents. Agentation connects UI annotations from a running web app to… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/agents-md-tail/icon-dark.png" /><img src="./plugins/plugins/agents-md-tail/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/agents-md-tail/">AGENTS.md Tail</a></div> | ✓ | – | – | – | 0.2.0 | Experimental context hook that keeps the active AGENTS.md instructions at the head and repeats… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/docs/icon-dark.png" /><img src="./plugins/plugins/docs/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/docs/">Ryu Docs</a></div> | ✓ | ✓ | – | – | 0.2.0 | Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any… |
@@ -190,7 +190,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 ### Knowledge & Memory
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/honcho/icon-dark.png" /><img src="./plugins/plugins/honcho/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/honcho/">Honcho</a></div> | ✓ | – | – | – | 0.2.0 | Give the swappable `memory` layer a provider that MODELS the user instead of only storing rows,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/mem0/icon-dark.png" /><img src="./plugins/plugins/mem0/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/mem0/">Mem0</a></div> | ✓ | – | – | – | 0.2.0 | Read and write a hosted Mem0 memory project (https://mem0.ai) through the Mem0 Platform REST… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/no-more-mistakes/icon-dark.png" /><img src="./plugins/plugins/no-more-mistakes/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/no-more-mistakes/">No More Mistakes</a></div> | ✓ | – | – | – | 0.2.0 | Notices when you correct the agent, writes the lesson down as a one-line rule in a Space, and… |
@@ -199,13 +199,13 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 ### Models
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/chatgpt-web/icon-dark.png" /><img src="./plugins/plugins/chatgpt-web/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/chatgpt-web/">ChatGPT Web</a></div> | ✓ | – | – | – | 0.2.0 | Use a ChatGPT Web subscription through Ryu's signed-in Browser app as an OpenAI-compatible model… |
 
 ### Productivity
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/action-summary/icon-dark.png" /><img src="./plugins/plugins/action-summary/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/action-summary/">Action Summary</a></div> | ✓ | – | – | – | 0.2.0 | Explains streamed thinking blocks and tool calls in one plain-language line per action, using a… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/ambient-elevator/icon-dark.png" /><img src="./plugins/plugins/ambient-elevator/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/ambient-elevator/">Ambient Elevator</a></div> | ✓ | – | – | – | 0.2.0 | Plays one low-volume elevator track while any Ryu agent is actively working, then stops when the… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/auto-continue/icon-dark.png" /><img src="./plugins/plugins/auto-continue/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/auto-continue/">Auto Continue</a></div> | ✓ | – | – | – | 0.2.0 | After each turn while armed, a local sub-agent scans the reply and the workspace for work that… |
@@ -226,13 +226,13 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 ### Research
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/advisor/icon-dark.png" /><img src="./plugins/plugins/advisor/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/advisor/">Advisor</a></div> | ✓ | – | – | – | 0.2.0 | Consult a stronger reviewer model for a second opinion — as an auto-review turn hook (toggle /… |
 
 ### Search
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/brave/icon-dark.png" /><img src="./plugins/plugins/brave/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/brave/">Brave Search</a></div> | ✓ | – | – | – | 0.2.0 | Independent web search via the Brave Search API (https://brave.com/search/api/), exposed as one… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/exa/icon-dark.png" /><img src="./plugins/plugins/exa/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/exa/">Exa Search</a></div> | ✓ | – | – | – | 0.2.0 | Neural and keyword web search via the Exa API (https://exa.ai), exposed as two declarative HTTP… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/firecrawl/icon-dark.png" /><img src="./plugins/plugins/firecrawl/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/firecrawl/">Firecrawl</a></div> | ✓ | – | – | – | 0.2.0 | Web search and page scraping via the Firecrawl v2 API (https://firecrawl.dev), exposed as two… |
@@ -246,7 +246,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 ### Security
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/bitwarden/icon-dark.png" /><img src="./plugins/plugins/bitwarden/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/bitwarden/">Bitwarden Secrets Manager</a></div> | ✓ | – | – | – | 0.2.0 | Pull API keys from Bitwarden Secrets Manager on demand instead of storing them in plaintext —… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/double-check/icon-dark.png" /><img src="./plugins/plugins/double-check/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/double-check/">Double Check</a></div> | ✓ | – | – | – | 0.2.0 | Sends every answer to a second model for review before you act on it, so mistakes get caught by… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/firewall/icon-dark.png" /><img src="./plugins/plugins/firewall/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/firewall/">Gateway Firewall</a></div> | ✓ | – | – | – | 0.2.0 | An on/off switch over the Gateway's built-in firewall, which screens model traffic for prompt… |
@@ -260,7 +260,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 ### LSP
 
 | Plugin | Official | System | Hidden | Layer | Version | What it is |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/lsp/clangd-lsp/icon-dark.png" /><img src="./plugins/lsp/clangd-lsp/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/lsp/clangd-lsp/">Clangd (C/C++)</a></div> | ✓ | – | – | – | 0.2.0 | C/C++ language server (clangd) for the ryu agent: definitions, references, hover, symbols,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/lsp/csharp-lsp/icon-dark.png" /><img src="./plugins/lsp/csharp-lsp/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/lsp/csharp-lsp/">C# LSP</a></div> | ✓ | – | – | – | 0.2.0 | C# language server (csharp-ls) for the ryu agent: definitions, references, hover, symbols,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/lsp/gopls-lsp/icon-dark.png" /><img src="./plugins/lsp/gopls-lsp/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/lsp/gopls-lsp/">Go LSP</a></div> | ✓ | – | – | – | 0.2.0 | Go language server (gopls) for the ryu agent: definitions, references, hover, symbols,… |
@@ -281,13 +281,13 @@ Hosted providers that connect Ryu's swappable layers to an outside service.
 ### Browsers
 
 | Plugin | External | Layer | Version | What it is |
-| --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/external_plugins/cloudflare-browser-run/icon-dark.png" /><img src="./plugins/external_plugins/cloudflare-browser-run/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/external_plugins/cloudflare-browser-run/">Cloudflare Browser Run</a></div> | ✓ | – | 0.2.0 | Hosted Browser Run quick actions over Cloudflare's remote OAuth MCP server. Adds URL-scoped… |
 
 ### Productivity
 
 | Plugin | External | Layer | Version | What it is |
-| --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/external_plugins/composio-connect/icon-dark.png" /><img src="./plugins/external_plugins/composio-connect/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/external_plugins/composio-connect/">Composio Connect</a></div> | ✓ | – | 0.2.0 | Connect Ryu to Composio's hosted For You MCP server with OAuth. The connection exposes… |
 
 ## Portable packages (19)
@@ -297,44 +297,44 @@ Every package is an editable folder and can also be packed as a deterministic `.
 ### Creative
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [animator](./agents/animator/) | 0.2.0 | `fc0820e82b34…` | Expert animation director and creative technologist for technical explainers, data… |
 
 ### Design
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [design-director](./agents/design-director/) | 0.2.0 | `236cbf917743…` | Expert product design director and design engineer for UI/UX, responsive systems, motion,… |
 
 ### Marketing
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [brand-presence](./agents/brand-presence/) | 0.2.0 | `63d8f5cd18de…` | Starts with a brand presence check and monitors the public web for new mentions, sentiment, and… |
 | [marketing-studio](./agents/marketing-studio/) | 0.2.0 | `4350e8c3b77c…` | Generates on-brand marketing content and production-ready visual directions with Hyperframes and… |
 
 ### Monitoring
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [codex-quota-reset-watch](./agents/codex-quota-reset-watch/) | 0.2.0 | `b493eb6045aa…` | Checks willcodexquotareset.com every 30 minutes, remembers the last forecast, and sends a… |
 
 ### Operations
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [expiry-date-tracker](./agents/expiry-date-tracker/) | 0.2.0 | `6b313aeafb8e…` | Reviews the dates in your connected documents and Spaces, then calls out what is expiring soon… |
 
 ### Security
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [security-guard](./agents/security-guard/) | 0.2.0 | `444b5c1f0fe2…` | Runs a fast hourly configuration check and a deeper midnight diagnostic pass over Gateway and… |
 
 ### orchestration
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [autonomous-agent](./workflows/autonomous-agent/) | 0.2.0 | `adf9fb2d73f1…` | A tool-using agent runs its own loop, wrapped in a bounded durable loop until it is done. |
 | [classify-and-act](./workflows/classify-and-act/) | 0.2.0 | `c5abdced5b20…` | Classify the request, then hand it to a specialized agent per class. |
 | [orchestrator-workers](./workflows/orchestrator-workers/) | 0.2.0 | `b4e3ec216ba2…` | An orchestrator LLM plans subtasks, delegates them to workers, then integrates the results. |
@@ -345,7 +345,7 @@ Every package is an editable folder and can also be packed as a deterministic `.
 ### quality
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [adversarial-verification](./workflows/adversarial-verification/) | 0.2.0 | `98a0728badf8…` | Generate an answer, have N independent verifiers vote, and accept on majority — else revise. |
 | [evaluator-optimizer](./workflows/evaluator-optimizer/) | 0.2.0 | `c24555b182c6…` | Generate a draft, then iteratively critique and rewrite it over several bounded passes. |
 | [fan-out-synthesize](./workflows/fan-out-synthesize/) | 0.2.0 | `2748d5502582…` | Fan work out over items to independent sub-agents, then merge their outputs into one result. |
@@ -355,6 +355,6 @@ Every package is an editable folder and can also be packed as a deterministic `.
 ### research
 
 | Package | Version | Checksum | What it is |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | --- |
 | [autoresearch](./workflows/autoresearch/) | 0.2.0 | `683b409e3bce…` | Requires the Research app (@ryu/research) to be enabled — it provides the research__* tools this… |
 
