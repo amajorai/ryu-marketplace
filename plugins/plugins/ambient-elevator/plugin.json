@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ambient-elevator",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ambient-elevator",
-  "keywords": ["audio", "ambient", "agents", "focus", "music"],
+  "keywords": [
+    "audio",
+    "ambient",
+    "agents",
+    "focus",
+    "music"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/ambient-elevator",

@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/gopls-lsp",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/gopls-lsp",
-  "keywords": ["go", "golang", "gopls", "language-server", "developer"],
+  "keywords": [
+    "go",
+    "golang",
+    "gopls",
+    "language-server",
+    "developer"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/gopls-lsp",

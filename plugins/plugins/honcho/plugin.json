@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/honcho",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/honcho",
-  "keywords": ["memory", "context", "identity", "dialectic", "honcho"],
+  "keywords": [
+    "memory",
+    "context",
+    "identity",
+    "dialectic",
+    "honcho"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/honcho",

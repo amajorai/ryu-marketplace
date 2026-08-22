@@ -9,7 +9,10 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/shadow",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/shadow",
-  "keywords": ["capture", "memory"],
+  "keywords": [
+    "capture",
+    "memory"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/shadow",

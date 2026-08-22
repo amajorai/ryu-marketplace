@@ -9,7 +9,10 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/exa",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/exa",
-  "keywords": ["search", "web"],
+  "keywords": [
+    "search",
+    "web"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/exa",

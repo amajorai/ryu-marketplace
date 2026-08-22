@@ -9,7 +9,11 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tavily",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tavily",
-  "keywords": ["search", "web", "extract"],
+  "keywords": [
+    "search",
+    "web",
+    "extract"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/tavily",

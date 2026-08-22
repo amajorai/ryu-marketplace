@@ -9,7 +9,10 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/headroom",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/headroom",
-  "keywords": ["context", "compression"],
+  "keywords": [
+    "context",
+    "compression"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/headroom",

@@ -4,7 +4,9 @@
     "ghost": {
       "type": "stdio",
       "command": "ghost",
-      "args": ["mcp"]
+      "args": [
+        "mcp"
+      ]
     }
   }
 }

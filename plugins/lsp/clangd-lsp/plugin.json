@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/clangd-lsp",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/clangd-lsp",
-  "keywords": ["c", "c++", "clangd", "language-server", "developer"],
+  "keywords": [
+    "c",
+    "c++",
+    "clangd",
+    "language-server",
+    "developer"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/clangd-lsp",

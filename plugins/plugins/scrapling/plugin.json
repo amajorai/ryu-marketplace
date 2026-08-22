@@ -9,7 +9,11 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/scrapling",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/scrapling",
-  "keywords": ["web", "scraping", "extract"],
+  "keywords": [
+    "web",
+    "scraping",
+    "extract"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/scrapling",

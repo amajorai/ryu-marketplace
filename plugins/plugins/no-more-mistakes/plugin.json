@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/no-more-mistakes",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/no-more-mistakes",
-  "keywords": ["memory", "learning", "mistakes", "rules", "quality"],
+  "keywords": [
+    "memory",
+    "learning",
+    "mistakes",
+    "rules",
+    "quality"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/no-more-mistakes",

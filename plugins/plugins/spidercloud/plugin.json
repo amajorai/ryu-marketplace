@@ -9,7 +9,11 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/spidercloud",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/spidercloud",
-  "keywords": ["web", "crawl", "scraping"],
+  "keywords": [
+    "web",
+    "crawl",
+    "scraping"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/spidercloud",

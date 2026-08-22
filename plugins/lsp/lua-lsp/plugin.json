@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/lua-lsp",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/lua-lsp",
-  "keywords": ["lua", "lua-language-server", "language-server", "developer"],
+  "keywords": [
+    "lua",
+    "lua-language-server",
+    "language-server",
+    "developer"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/lua-lsp",

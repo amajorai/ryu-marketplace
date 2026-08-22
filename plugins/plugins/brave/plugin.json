@@ -9,7 +9,10 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/brave",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/brave",
-  "keywords": ["search", "web"],
+  "keywords": [
+    "search",
+    "web"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/brave",

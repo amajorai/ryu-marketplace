@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ghost-chats",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ghost-chats",
-  "keywords": ["chat", "temporary", "private", "ghost", "incognito"],
+  "keywords": [
+    "chat",
+    "temporary",
+    "private",
+    "ghost",
+    "incognito"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/ghost-chats",

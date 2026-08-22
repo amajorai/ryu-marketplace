@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/csharp-lsp",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/csharp-lsp",
-  "keywords": ["c#", "dotnet", "csharp-ls", "language-server", "developer"],
+  "keywords": [
+    "c#",
+    "dotnet",
+    "csharp-ls",
+    "language-server",
+    "developer"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/csharp-lsp",

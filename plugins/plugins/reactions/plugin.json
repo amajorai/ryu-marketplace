@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reactions",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reactions",
-  "keywords": ["chat", "emoji", "reactions", "messages"],
+  "keywords": [
+    "chat",
+    "emoji",
+    "reactions",
+    "messages"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/reactions",

@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/double-check",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/double-check",
-  "keywords": ["review", "verification", "quality", "accuracy"],
+  "keywords": [
+    "review",
+    "verification",
+    "quality",
+    "accuracy"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/double-check",

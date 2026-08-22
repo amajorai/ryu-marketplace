@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/chat-title",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/chat-title",
-  "keywords": ["chat", "titles", "automation", "productivity"],
+  "keywords": [
+    "chat",
+    "titles",
+    "automation",
+    "productivity"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/chat-title",

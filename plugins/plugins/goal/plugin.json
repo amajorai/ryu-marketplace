@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/goal",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/goal",
-  "keywords": ["agent", "autonomy", "goals", "loop"],
+  "keywords": [
+    "agent",
+    "autonomy",
+    "goals",
+    "loop"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/goal",

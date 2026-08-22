@@ -4,7 +4,13 @@
     "agentbrowser": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "agent-browser", "mcp", "--tools", "all"]
+      "args": [
+        "-y",
+        "agent-browser",
+        "mcp",
+        "--tools",
+        "all"
+      ]
     }
   }
 }

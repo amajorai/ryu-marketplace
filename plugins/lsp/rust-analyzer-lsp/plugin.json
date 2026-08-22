@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/rust-analyzer-lsp",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/rust-analyzer-lsp",
-  "keywords": ["rust", "rust-analyzer", "language-server", "developer"],
+  "keywords": [
+    "rust",
+    "rust-analyzer",
+    "language-server",
+    "developer"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/rust-analyzer-lsp",

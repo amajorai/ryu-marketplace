@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/side-chats",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/side-chats",
-  "keywords": ["chat", "context", "side-chat", "btw", "questions"],
+  "keywords": [
+    "chat",
+    "context",
+    "side-chat",
+    "btw",
+    "questions"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/side-chats",

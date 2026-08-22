@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/jdtls-lsp",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/jdtls-lsp",
-  "keywords": ["java", "jdtls", "eclipse", "language-server", "developer"],
+  "keywords": [
+    "java",
+    "jdtls",
+    "eclipse",
+    "language-server",
+    "developer"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/jdtls-lsp",

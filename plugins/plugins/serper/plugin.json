@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/serper",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/serper",
-  "keywords": ["search", "web", "google", "scrape"],
+  "keywords": [
+    "search",
+    "web",
+    "google",
+    "scrape"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/serper",

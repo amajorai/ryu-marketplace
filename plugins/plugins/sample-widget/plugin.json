@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/sample-widget",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/sample-widget",
-  "keywords": ["example", "reference", "developer", "widget", "mcp"],
+  "keywords": [
+    "example",
+    "reference",
+    "developer",
+    "widget",
+    "mcp"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/sample-widget",

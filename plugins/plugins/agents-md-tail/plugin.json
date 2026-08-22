@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agents-md-tail",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agents-md-tail",
-  "keywords": ["agents.md", "context", "instructions", "prompt", "acp"],
+  "keywords": [
+    "agents.md",
+    "context",
+    "instructions",
+    "prompt",
+    "acp"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/agents-md-tail",

@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/auto-continue",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/auto-continue",
-  "keywords": ["automation", "continuation", "agent", "loop", "productivity"],
+  "keywords": [
+    "automation",
+    "continuation",
+    "agent",
+    "loop",
+    "productivity"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/auto-continue",

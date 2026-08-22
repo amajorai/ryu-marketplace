@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pxpipe",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pxpipe",
-  "keywords": ["tokens", "cost", "proxy", "compression", "context"],
+  "keywords": [
+    "tokens",
+    "cost",
+    "proxy",
+    "compression",
+    "context"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/pxpipe",

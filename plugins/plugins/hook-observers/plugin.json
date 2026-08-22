@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/hook-observers",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/hook-observers",
-  "keywords": ["developer", "hooks", "example", "reference"],
+  "keywords": [
+    "developer",
+    "hooks",
+    "example",
+    "reference"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/hook-observers",

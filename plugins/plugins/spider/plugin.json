@@ -9,7 +9,10 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/spider",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/spider",
-  "keywords": ["web", "scraping"],
+  "keywords": [
+    "web",
+    "scraping"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/spider",

@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/rules",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/rules",
-  "keywords": ["rules", "cursor", "claude", "context", "agents"],
+  "keywords": [
+    "rules",
+    "cursor",
+    "claude",
+    "context",
+    "agents"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/rules",

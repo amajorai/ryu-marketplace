@@ -9,7 +9,11 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/docs",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/docs",
-  "keywords": ["docs", "documentation", "reference"],
+  "keywords": [
+    "docs",
+    "documentation",
+    "reference"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/docs",

@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/firewall",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/firewall",
-  "keywords": ["security", "firewall", "gateway", "prompt-injection", "pii"],
+  "keywords": [
+    "security",
+    "firewall",
+    "gateway",
+    "prompt-injection",
+    "pii"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/firewall",

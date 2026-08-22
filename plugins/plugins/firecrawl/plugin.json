@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/firecrawl",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/firecrawl",
-  "keywords": ["search", "web", "extract", "scrape"],
+  "keywords": [
+    "search",
+    "web",
+    "extract",
+    "scrape"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/firecrawl",

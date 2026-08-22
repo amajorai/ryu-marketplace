@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agent-comms",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agent-comms",
-  "keywords": ["agents", "messaging", "delegation", "inbox", "multi-agent"],
+  "keywords": [
+    "agents",
+    "messaging",
+    "delegation",
+    "inbox",
+    "multi-agent"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/agent-comms",

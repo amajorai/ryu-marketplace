@@ -9,7 +9,12 @@
   },
   "homepage": "https://composio.dev/for-you",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/external_plugins/composio-connect",
-  "keywords": ["composio", "mcp", "oauth", "integrations"],
+  "keywords": [
+    "composio",
+    "mcp",
+    "oauth",
+    "integrations"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/composio-connect",

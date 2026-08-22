@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pi-shell",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pi-shell",
-  "keywords": ["shell", "bash", "background", "developer"],
+  "keywords": [
+    "shell",
+    "bash",
+    "background",
+    "developer"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/pi-shell",

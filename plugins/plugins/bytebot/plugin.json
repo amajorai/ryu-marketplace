@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/bytebot",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/bytebot",
-  "keywords": ["automation", "desktop", "computer-use", "bytebot"],
+  "keywords": [
+    "automation",
+    "desktop",
+    "computer-use",
+    "bytebot"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/bytebot",

@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/output-styles",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/output-styles",
-  "keywords": ["output-style", "tone", "prompt", "accessibility", "writing"],
+  "keywords": [
+    "output-style",
+    "tone",
+    "prompt",
+    "accessibility",
+    "writing"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/output-styles",

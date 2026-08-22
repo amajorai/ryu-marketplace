@@ -9,7 +9,12 @@
   },
   "homepage": "https://www.agentation.com/",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agentation",
-  "keywords": ["ui", "feedback", "annotations", "browser"],
+  "keywords": [
+    "ui",
+    "feedback",
+    "annotations",
+    "browser"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/agentation",

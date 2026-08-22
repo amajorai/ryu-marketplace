@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/plan-continue",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/plan-continue",
-  "keywords": ["planning", "automation", "loop", "productivity"],
+  "keywords": [
+    "planning",
+    "automation",
+    "loop",
+    "productivity"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/plan-continue",

@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/prompt-suggestions",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/prompt-suggestions",
-  "keywords": ["chat", "prompts", "composer", "suggestions", "productivity"],
+  "keywords": [
+    "chat",
+    "prompts",
+    "composer",
+    "suggestions",
+    "productivity"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/prompt-suggestions",

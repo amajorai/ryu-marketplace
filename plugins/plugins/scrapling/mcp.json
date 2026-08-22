@@ -4,7 +4,9 @@
     "scrapling": {
       "type": "stdio",
       "command": "scrapling",
-      "args": ["mcp"]
+      "args": [
+        "mcp"
+      ]
     }
   }
 }

@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/expanded-composer",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/expanded-composer",
-  "keywords": ["chat", "composer", "prompt", "expand"],
+  "keywords": [
+    "chat",
+    "composer",
+    "prompt",
+    "expand"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/expanded-composer",

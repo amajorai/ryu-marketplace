@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/proof",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/proof",
-  "keywords": ["agent", "verification", "autonomy", "goals"],
+  "keywords": [
+    "agent",
+    "verification",
+    "autonomy",
+    "goals"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/proof",

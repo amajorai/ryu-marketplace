@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/bitwarden",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/bitwarden",
-  "keywords": ["secrets", "bitwarden", "credentials", "security", "env"],
+  "keywords": [
+    "secrets",
+    "bitwarden",
+    "credentials",
+    "security",
+    "env"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/bitwarden",

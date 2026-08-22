@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/observer-agents",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/observer-agents",
-  "keywords": ["observer", "watchdog", "review", "agents", "safety"],
+  "keywords": [
+    "observer",
+    "watchdog",
+    "review",
+    "agents",
+    "safety"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/observer-agents",

@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reconnect-retry",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reconnect-retry",
-  "keywords": ["chat", "reconnect", "network", "retry", "reliability"],
+  "keywords": [
+    "chat",
+    "reconnect",
+    "network",
+    "retry",
+    "reliability"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/reconnect-retry",

@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ego-browser",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ego-browser",
-  "keywords": ["browser", "automation", "ego-lite", "chromium"],
+  "keywords": [
+    "browser",
+    "automation",
+    "ego-lite",
+    "chromium"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/ego-browser",

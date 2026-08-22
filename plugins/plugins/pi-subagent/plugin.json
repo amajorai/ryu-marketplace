@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pi-subagent",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pi-subagent",
-  "keywords": ["subagent", "delegation", "automation", "agent"],
+  "keywords": [
+    "subagent",
+    "delegation",
+    "automation",
+    "agent"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/pi-subagent",

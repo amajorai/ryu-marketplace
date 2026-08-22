@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tool-firewall",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tool-firewall",
-  "keywords": ["security", "tools", "hooks", "example"],
+  "keywords": [
+    "security",
+    "tools",
+    "hooks",
+    "example"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/tool-firewall",

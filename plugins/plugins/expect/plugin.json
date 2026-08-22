@@ -9,7 +9,12 @@
   },
   "homepage": "https://www.expect.dev/",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/expect",
-  "keywords": ["testing", "browser", "qa", "playwright"],
+  "keywords": [
+    "testing",
+    "browser",
+    "qa",
+    "playwright"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/expect",

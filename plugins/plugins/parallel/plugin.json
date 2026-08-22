@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/parallel",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/parallel",
-  "keywords": ["search", "web", "extract", "mcp"],
+  "keywords": [
+    "search",
+    "web",
+    "extract",
+    "mcp"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/parallel",

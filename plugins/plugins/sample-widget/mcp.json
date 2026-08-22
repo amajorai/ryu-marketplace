@@ -4,7 +4,9 @@
     "sample_widget": {
       "type": "stdio",
       "command": "node",
-      "args": ["server.mjs"]
+      "args": [
+        "server.mjs"
+      ]
     }
   }
 }

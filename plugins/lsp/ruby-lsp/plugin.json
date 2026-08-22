@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/ruby-lsp",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/ruby-lsp",
-  "keywords": ["ruby", "rails", "ruby-lsp", "language-server", "developer"],
+  "keywords": [
+    "ruby",
+    "rails",
+    "ruby-lsp",
+    "language-server",
+    "developer"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/ruby-lsp",

@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/hook-session-context",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/hook-session-context",
-  "keywords": ["context", "date", "time", "hooks"],
+  "keywords": [
+    "context",
+    "date",
+    "time",
+    "hooks"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/session-context",

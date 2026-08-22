@@ -9,7 +9,11 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/advisor",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/advisor",
-  "keywords": ["review", "second-opinion", "quality"],
+  "keywords": [
+    "review",
+    "second-opinion",
+    "quality"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/advisor",

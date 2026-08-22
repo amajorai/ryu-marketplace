@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/recap",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/recap",
-  "keywords": ["recap", "summary", "review", "productivity", "turn"],
+  "keywords": [
+    "recap",
+    "summary",
+    "review",
+    "productivity",
+    "turn"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/recap",

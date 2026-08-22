@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/no-ai-slop",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/no-ai-slop",
-  "keywords": ["writing", "editing", "quality", "style", "turn"],
+  "keywords": [
+    "writing",
+    "editing",
+    "quality",
+    "style",
+    "turn"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/no-ai-slop",

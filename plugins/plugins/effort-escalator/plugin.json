@@ -9,7 +9,13 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/effort-escalator",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/effort-escalator",
-  "keywords": ["models", "effort", "stuck", "agent", "automation"],
+  "keywords": [
+    "models",
+    "effort",
+    "stuck",
+    "agent",
+    "automation"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/effort-escalator",

@@ -9,7 +9,10 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ghost",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ghost",
-  "keywords": ["automation", "desktop"],
+  "keywords": [
+    "automation",
+    "desktop"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/ghost",

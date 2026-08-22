@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/mem0",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/mem0",
-  "keywords": ["memory", "recall", "facts", "mem0"],
+  "keywords": [
+    "memory",
+    "recall",
+    "facts",
+    "mem0"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/mem0",

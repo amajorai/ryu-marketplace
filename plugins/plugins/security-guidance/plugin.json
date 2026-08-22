@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/security-guidance",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/security-guidance",
-  "keywords": ["security", "review", "code", "vulnerabilities"],
+  "keywords": [
+    "security",
+    "review",
+    "code",
+    "vulnerabilities"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/security-guidance",

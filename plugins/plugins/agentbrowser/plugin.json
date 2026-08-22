@@ -9,7 +9,11 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agentbrowser",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agentbrowser",
-  "keywords": ["browser", "automation", "web"],
+  "keywords": [
+    "browser",
+    "automation",
+    "web"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@ryu/agentbrowser",

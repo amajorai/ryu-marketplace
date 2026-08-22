@@ -4,7 +4,11 @@
     "expect": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "expect-cli@latest", "mcp"]
+      "args": [
+        "-y",
+        "expect-cli@latest",
+        "mcp"
+      ]
     }
   }
 }

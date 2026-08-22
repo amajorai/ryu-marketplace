@@ -9,7 +9,12 @@
   },
   "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/sample",
   "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/sample",
-  "keywords": ["example", "reference", "developer", "template"],
+  "keywords": [
+    "example",
+    "reference",
+    "developer",
+    "template"
+  ],
   "extensions": {
     "com.ryuhq.ryu": {
       "id": "@example/research-assistant",
