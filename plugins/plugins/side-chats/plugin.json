@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.side-chats",
+  "version": "0.1.0",
+  "description": "Ask focused questions about the current conversation without adding another turn to the main transcript, then keep the answer as a recoverable side chat.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/side-chats",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/side-chats",
+  "keywords": ["chat", "context", "side-chat", "btw", "questions"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/side-chats",
+      "displayName": "Side Chats"
+    }
+  }
+}

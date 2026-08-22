@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.expanded-composer",
+  "version": "0.1.0",
+  "description": "Expand the current chat composer in place while keeping the same draft, attachments, and send controls.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/expanded-composer",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/expanded-composer",
+  "keywords": ["chat", "composer", "prompt", "expand"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/expanded-composer",
+      "displayName": "Expanded Composer"
+    }
+  }
+}

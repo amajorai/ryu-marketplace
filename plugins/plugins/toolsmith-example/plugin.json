@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.toolsmith-example",
+  "version": "0.1.14",
+  "description": "Worked example for tools/toolsmith — a real, verified inline_deno tool. Not registered with Core and not shipped; it exists so the scaffold → verify pipeline has an end-to-end regression test.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/toolsmith-example",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/toolsmith-example",
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/toolsmith-example",
+      "displayName": "toolsmith-example"
+    }
+  }
+}

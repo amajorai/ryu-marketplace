@@ -1,0 +1,10 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "scrapling": {
+      "type": "stdio",
+      "command": "scrapling",
+      "args": ["mcp"]
+    }
+  }
+}

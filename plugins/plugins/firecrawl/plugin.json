@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.firecrawl",
+  "version": "0.1.14",
+  "description": "Web search and page scraping via the Firecrawl v2 API (https://firecrawl.dev), exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at Firecrawl without changing what agents call. Requires a BYOK Firecrawl API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/firecrawl",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/firecrawl",
+  "keywords": ["search", "web", "extract", "scrape"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/firecrawl",
+      "displayName": "Firecrawl"
+    }
+  }
+}

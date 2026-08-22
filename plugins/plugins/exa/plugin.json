@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.exa",
+  "version": "0.1.14",
+  "description": "Neural and keyword web search via the Exa API (https://exa.ai), exposed as two declarative HTTP tools: search and find-similar. Requires a BYOK Exa API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/exa",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/exa",
+  "keywords": ["search", "web"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/exa",
+      "displayName": "Exa Search"
+    }
+  }
+}

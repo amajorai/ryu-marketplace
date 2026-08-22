@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.tokenmaxxing",
+  "version": "0.1.0",
+  "description": "Opt-in notification when all delegated agents finish.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokenmaxxing",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokenmaxxing",
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/tokenmaxxing",
+      "displayName": "Tokenmaxxing"
+    }
+  }
+}

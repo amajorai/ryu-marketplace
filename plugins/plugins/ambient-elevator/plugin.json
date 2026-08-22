@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.ambient-elevator",
+  "version": "0.1.0",
+  "description": "Plays one low-volume elevator track while any Ryu agent is actively working, then stops when the last working run ends or needs input.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ambient-elevator",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ambient-elevator",
+  "keywords": ["audio", "ambient", "agents", "focus", "music"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/ambient-elevator",
+      "displayName": "Ambient Elevator"
+    }
+  }
+}

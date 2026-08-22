@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.sample-widget",
+  "version": "0.1.14",
+  "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget.render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/sample-widget",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/sample-widget",
+  "keywords": ["example", "reference", "developer", "widget", "mcp"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/sample-widget",
+      "displayName": "Sample Widget",
+      "mcp": {
+        "sample_widget": {
+          "description": "Sample widget MCP server: one render tool + the ui://widget/sample.html resource."
+        }
+      }
+    }
+  }
+}

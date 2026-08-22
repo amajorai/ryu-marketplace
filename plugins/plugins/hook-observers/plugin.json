@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.hook-observers",
+  "version": "0.1.14",
+  "description": "A worked reference for the turn-hook events Ryu can fire: five observer hooks watching subagent-stop, session-end, notification, workflow-run-failed, and a third-party app event (`com.ryu.meetings#meeting.ended`), each returning a harmless note. Nothing in Core knows this plugin exists — copy the directory as the starting point for your own event-driven plugin.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/hook-observers",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/hook-observers",
+  "keywords": ["developer", "hooks", "example", "reference"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/hook-observers",
+      "displayName": "Hook Observers"
+    }
+  }
+}

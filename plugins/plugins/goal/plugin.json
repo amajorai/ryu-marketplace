@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.goal",
+  "version": "0.1.14",
+  "description": "Give the agent a goal with `/goal` or let an agent set one with `goal.set`; it keeps working until a judge model agrees the goal is actually met, re-prompting itself after every turn instead of stopping and waiting for you. `/goal clear` stops the loop; the judge model is configurable.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/goal",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/goal",
+  "keywords": ["agent", "autonomy", "goals", "loop"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/goal",
+      "displayName": "Goal"
+    }
+  }
+}

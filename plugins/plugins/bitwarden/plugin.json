@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.bitwarden",
+  "version": "0.1.14",
+  "description": "Pull API keys from Bitwarden Secrets Manager on demand instead of storing them in plaintext — one machine-account bootstrap token (BWS_ACCESS_TOKEN) replaces N provider keys, and rotating a credential is one change in the Bitwarden web app. Declarative `command` tools that shell out to the locally-installed `bws` CLI (BYO binary, no API key in the manifest).",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/bitwarden",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/bitwarden",
+  "keywords": ["secrets", "bitwarden", "credentials", "security", "env"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/bitwarden",
+      "displayName": "Bitwarden Secrets Manager"
+    }
+  }
+}

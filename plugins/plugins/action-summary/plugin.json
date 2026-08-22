@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.action-summary",
+  "version": "0.1.0",
+  "description": "Explains streamed thinking blocks and tool calls in one plain-language line per action, using a configurable small side model.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/action-summary",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/action-summary",
+  "keywords": ["summary", "thinking", "tools", "commands", "accessibility"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/action-summary",
+      "displayName": "Action Summary"
+    }
+  }
+}

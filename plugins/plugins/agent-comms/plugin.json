@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.agent-comms",
+  "version": "0.1.14",
+  "description": "Lets the agents on this node talk to each other. Any agent can look up who else is here, leave one of them a message, and inspect the pair's bounded message history. A message is delivered at the start of the recipient's next turn, so delegation stays asynchronous and scoped to the calling agent. Works with every agent Ryu can run — the flagship agent, Claude Code, Codex, and any custom agent you have added — because it ships as ordinary tools rather than one agent's private feature.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agent-comms",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/agent-comms",
+  "keywords": ["agents", "messaging", "delegation", "inbox", "multi-agent"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/agent-comms",
+      "displayName": "Switchboard"
+    }
+  }
+}

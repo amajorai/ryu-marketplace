@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.spider",
+  "version": "0.1.14",
+  "description": "High-performance web crawling and content extraction via the Spider CLI (https://spider.cloud), exposed as a declarative `command` tool that shells out to the locally-installed `spider` binary. No API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/spider",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/spider",
+  "keywords": ["web", "scraping"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/spider",
+      "displayName": "Spider"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.ego-browser",
+  "version": "0.1.14",
+  "description": "Ego lite (https://github.com/citrolabs/ego-lite) as an optional provider for Ryu's swappable browser.control layer. Each call launches the installed ego-browser CLI in a conversation-scoped Ego Space, while agents keep using the stable browser.navigate, browser.tabs, browser.snapshot, browser.click, browser.type, browser.scroll, and browser.screenshot verbs. Requires the Ego lite macOS app and ego-browser on PATH; Ryu does not install Ego lite or copy browser login state.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ego-browser",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ego-browser",
+  "keywords": ["browser", "automation", "ego-lite", "chromium"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/ego-browser",
+      "displayName": "Ego Browser"
+    }
+  }
+}

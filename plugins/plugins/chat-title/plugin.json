@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.chat-title",
+  "version": "0.1.14",
+  "description": "Auto-renames a chat as soon as the first reply lands, then again after every N completed assistant turns (default 5), using a side model — and keeps a Core-side history of the names it chose so you can see how a conversation drifted. Enablement, the first-turn rename, frequency, and the model to use are all settings.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/chat-title",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/chat-title",
+  "keywords": ["chat", "titles", "automation", "productivity"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/chat-title",
+      "displayName": "Chat Title"
+    }
+  }
+}

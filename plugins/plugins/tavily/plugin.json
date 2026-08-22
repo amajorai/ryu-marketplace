@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.tavily",
+  "version": "0.1.14",
+  "description": "Search-and-extract for agents via the Tavily API (https://tavily.com), exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at Tavily without changing what agents call. Requires a BYOK Tavily API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tavily",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tavily",
+  "keywords": ["search", "web", "extract"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/tavily",
+      "displayName": "Tavily Search"
+    }
+  }
+}

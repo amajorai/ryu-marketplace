@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.jdtls-lsp",
+  "version": "0.1.14",
+  "description": "Java language server (Eclipse JDT.LS) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install jdtls; the plugin ships config.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/jdtls-lsp",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/jdtls-lsp",
+  "keywords": ["java", "jdtls", "eclipse", "language-server", "developer"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/jdtls-lsp",
+      "displayName": "Java LSP"
+    }
+  }
+}

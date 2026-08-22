@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.chatgpt-web",
+  "version": "0.1.0",
+  "description": "Use a ChatGPT Web subscription through Ryu's signed-in Browser app as an OpenAI-compatible model provider.",
+  "keywords": ["chatgpt", "browser", "model", "temporary-chat", "subscription"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/chatgpt-web",
+      "displayName": "ChatGPT Web"
+    }
+  }
+}

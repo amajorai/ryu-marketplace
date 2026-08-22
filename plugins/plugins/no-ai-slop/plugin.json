@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.no-ai-slop",
+  "version": "0.1.14",
+  "description": "Bundles the `no-ai-slop` editing skill and runs it on every finished answer: a separate reviewer with a fresh context reads the reply, names the AI-slop patterns it finds, and the agent rewrites the answer to fix them. One pass by default, configurable up to twelve, or set to 0 and trigger it by hand from the composer '+' menu. A clean answer is left alone silently.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/no-ai-slop",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/no-ai-slop",
+  "keywords": ["writing", "editing", "quality", "style", "turn"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/no-ai-slop",
+      "displayName": "No AI Slop"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.reconnect-retry",
+  "version": "0.1.0",
+  "description": "Remember chats that were running when the selected node or network went away, then retry each eligible interrupted turn once when the connection returns.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reconnect-retry",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reconnect-retry",
+  "keywords": ["chat", "reconnect", "network", "retry", "reliability"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/reconnect-retry",
+      "displayName": "Reconnect Retry"
+    }
+  }
+}

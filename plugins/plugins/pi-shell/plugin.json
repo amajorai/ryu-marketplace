@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.pi-shell",
+  "version": "0.1.14",
+  "description": "Adds bash_background / bash_output / bash_kill to the managed Pi agent, so a long-running command does not hold the turn open.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pi-shell",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pi-shell",
+  "keywords": ["shell", "bash", "background", "developer"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/pi-shell",
+      "displayName": "Background Bash"
+    }
+  }
+}

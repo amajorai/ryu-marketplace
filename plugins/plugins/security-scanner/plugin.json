@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.security-scanner",
+  "version": "0.1.14",
+  "description": "A model-agnostic security workbench for Ryu: map the architecture, hunt for vulnerabilities, validate findings with independent agents, review diffs, and draft safe fixes without changing files.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/security-scanner",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/security-scanner",
+  "keywords": [
+    "security",
+    "scanner",
+    "vulnerability",
+    "threat-model",
+    "diff",
+    "secrets",
+    "verification"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/security-scanner",
+      "displayName": "Security Scanner"
+    }
+  }
+}

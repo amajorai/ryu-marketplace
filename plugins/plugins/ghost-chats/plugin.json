@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.ghost-chats",
+  "version": "0.1.0",
+  "description": "Start a private temporary chat that stays in the current tab and leaves no conversation history, drafts, presence, or reactions behind.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ghost-chats",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ghost-chats",
+  "keywords": ["chat", "temporary", "private", "ghost", "incognito"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/ghost-chats",
+      "displayName": "Temporary Chats"
+    }
+  }
+}

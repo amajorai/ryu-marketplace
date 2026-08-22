@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.composio-connect",
+  "version": "0.1.14",
+  "description": "Connect Ryu to Composio's hosted For You MCP server with OAuth. The connection exposes Composio's connected-app tools without requiring a Composio API key; Ryu still applies its own tool allowlists and approval policy.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://composio.dev/for-you",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/external_plugins/composio-connect",
+  "keywords": ["composio", "mcp", "oauth", "integrations"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/composio-connect",
+      "displayName": "Composio Connect",
+      "mcp": {
+        "composio_connect": {
+          "description": "Composio Connect — hosted MCP access to connected third-party apps. Authorize the account from Marketplace → Connections before using its tools."
+        }
+      }
+    }
+  }
+}

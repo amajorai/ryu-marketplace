@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.csharp-lsp",
+  "version": "0.1.14",
+  "description": "C# language server (csharp-ls) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install csharp-ls; the plugin ships config.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/csharp-lsp",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/csharp-lsp",
+  "keywords": ["c#", "dotnet", "csharp-ls", "language-server", "developer"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/csharp-lsp",
+      "displayName": "C# LSP"
+    }
+  }
+}

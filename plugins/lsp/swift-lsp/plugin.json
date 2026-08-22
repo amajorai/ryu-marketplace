@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.swift-lsp",
+  "version": "0.1.14",
+  "description": "Swift language server (SourceKit-LSP) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install sourcekit-lsp; the plugin ships config.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/swift-lsp",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/swift-lsp",
+  "keywords": [
+    "swift",
+    "sourcekit-lsp",
+    "apple",
+    "language-server",
+    "developer"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/swift-lsp",
+      "displayName": "Swift LSP"
+    }
+  }
+}

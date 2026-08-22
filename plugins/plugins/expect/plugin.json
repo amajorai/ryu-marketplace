@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.expect",
+  "version": "0.1.15",
+  "description": "Browser-based QA for agent code. Expect reads the current changes, creates a test plan, and runs it in a real browser with Playwright to catch regressions in behavior, performance, security, and design.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://www.expect.dev/",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/expect",
+  "keywords": ["testing", "browser", "qa", "playwright"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/expect",
+      "displayName": "Expect",
+      "mcp": {
+        "expect": {
+          "description": "Expect — test the current agent changes in a real browser with Playwright. Launched via `npx -y expect-cli@latest mcp`; requires Node.js and downloads the CLI on first use. Ask the agent to run the Expect workflow after making UI changes."
+        }
+      }
+    }
+  }
+}

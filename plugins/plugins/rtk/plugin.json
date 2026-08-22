@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.rtk",
+  "version": "0.1.14",
+  "description": "Run a dev command through RTK (Rust Token Killer) and get a token-compressed version of its output (60-90% fewer tokens), exposed as a declarative `command` tool that shells out to the locally-installed `rtk` binary. BYO — no API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/rtk",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/rtk",
+  "keywords": ["tokens", "cli", "developer", "compression"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/rtk",
+      "displayName": "RTK (Rust Token Killer)"
+    }
+  }
+}

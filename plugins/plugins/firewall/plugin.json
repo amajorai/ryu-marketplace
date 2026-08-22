@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.firewall",
+  "version": "0.1.14",
+  "description": "An on/off switch over the Gateway's built-in firewall, which screens model traffic for prompt injection and PII. Enabling this plugin forces `firewall.enabled` on at the next Gateway restart; the pattern set and policy mode stay owned by the Gateway config (GET/PUT /v1/config), not by this plugin.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/firewall",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/firewall",
+  "keywords": ["security", "firewall", "gateway", "prompt-injection", "pii"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/firewall",
+      "displayName": "Gateway Firewall"
+    }
+  }
+}

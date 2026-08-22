@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.reactions",
+  "version": "0.1.0",
+  "description": "Adds emoji reactions to persisted chat messages through the shared message-action contribution surface.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reactions",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reactions",
+  "keywords": ["chat", "emoji", "reactions", "messages"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/reactions",
+      "displayName": "Message Reactions"
+    }
+  }
+}
