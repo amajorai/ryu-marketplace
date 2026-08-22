@@ -322,7 +322,7 @@ test("hook: null advice from side model → kind:none", async () => {
 // check is skipped there rather than failing.
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
-	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	if (!existsSync(coreSrc)) {
 		return; // satellite tree: no apps/core here at all
 	}

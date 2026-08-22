@@ -27,7 +27,7 @@ test("declares a current-tab ghost-chat feature with no persistence", () => {
 
 test("stays distinct from the computer-control ghost plugin", () => {
 	assert.notEqual(manifest.id, "@ryu/ghost");
-	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	assert.ok(existsSync(coreSrc));
 	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
 	assert.ok(

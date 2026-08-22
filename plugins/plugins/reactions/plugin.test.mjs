@@ -34,7 +34,7 @@ test("declares one user-targeted reaction picker action", () => {
 });
 
 test("is registered from its package manifest, not a Core fixture copy", () => {
-	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	assert.ok(existsSync(coreSrc));
 	assert.equal(
 		existsSync(join(coreSrc, "plugin_manifest", "fixtures", "reactions.manifest.json")),

@@ -299,7 +299,7 @@ test("the tab declares its own empty state", () => {
 // ── 6. This manifest has exactly one home (monorepo only) ──────────────────────
 
 test("no fixtures/ copy of this manifest exists", () => {
-	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	if (!existsSync(coreSrc)) {
 		return; // satellite tree: no apps/core here at all
 	}

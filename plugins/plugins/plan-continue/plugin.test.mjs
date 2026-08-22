@@ -133,7 +133,7 @@ test("no sandboxed code is inlined into the manifest", () => {
 });
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
-	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	if (!existsSync(coreSrc)) {
 		return; // satellite tree: no apps/core here at all
 	}

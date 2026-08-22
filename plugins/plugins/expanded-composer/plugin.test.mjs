@@ -26,7 +26,7 @@ test("declares a desktop expanded-composer feature without a runnable", () => {
 });
 
 test("is registered from its package manifest, not a Core fixture copy", () => {
-	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	assert.ok(existsSync(coreSrc));
 	assert.equal(
 		existsSync(

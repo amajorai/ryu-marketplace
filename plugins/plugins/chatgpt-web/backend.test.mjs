@@ -14,7 +14,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const backend = join(here, "backend.js");
 const bootstrap = join(
 	here,
-	"../../apps/core/src/sidecar/assets/plugin_host_bootstrap.mjs"
+	"../../../apps/core/src/sidecar/assets/plugin_host_bootstrap.mjs"
 );
 
 async function readBody(request) {

@@ -149,7 +149,7 @@ test("permission_grants matches the declared command binary", () => {
 });
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
-	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	const coreSrc = join(here, "..", "..", "..", "apps", "core", "src");
 	if (!existsSync(coreSrc)) {
 		return; // satellite tree: no apps/core here at all
 	}

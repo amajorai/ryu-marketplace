@@ -298,7 +298,7 @@ test("adapter tolerates a scalar `content` if upstream ever stops using an array
 // ── Registration seams ────────────────────────────────────────────────────────
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
-	const coreSrc = join(here, "..", "..", "apps", "core", "src");
+	const coreSrc = join(here, "..", "..", "..", "apps", "core", "src");
 	if (!existsSync(coreSrc)) {
 		return; // satellite tree: no apps/core here at all
 	}
@@ -338,7 +338,7 @@ test("the plugin is Core-tier but NOT default-on", () => {
 	//
 	// Opt-in, because it needs a `pip install` the user must perform — shipping it
 	// default-on would put a permanently unavailable tool on every fresh install.
-	const builtinsPath = resolve(here, "../../apps/core/src/plugins/builtins.rs");
+	const builtinsPath = resolve(here, "../../../apps/core/src/plugins/builtins.rs");
 	if (!existsSync(builtinsPath)) {
 		return; // satellite tree
 	}

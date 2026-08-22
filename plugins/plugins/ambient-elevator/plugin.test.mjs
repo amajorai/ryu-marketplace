@@ -31,7 +31,7 @@ test("declares user controls and one desktop audio source", () => {
 	});
 
 	const audioBytes = readFileSync(
-		join(here, "../../apps/desktop/public/sounds/elevator-4.mp3")
+		join(here, "../../../apps/desktop/public/sounds/elevator-4.mp3")
 	);
 	assert.equal(audioBytes.subarray(0, 3).toString("ascii"), "ID3");
 	assert.ok(audioBytes.length > 1_000_000);

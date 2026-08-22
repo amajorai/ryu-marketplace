@@ -167,7 +167,7 @@ test("the skill is bundled in the hook body, not read from disk", () => {
 });
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
-	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	if (!existsSync(coreSrc)) {
 		return; // satellite tree: no apps/core here at all
 	}

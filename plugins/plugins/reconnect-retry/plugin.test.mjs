@@ -32,7 +32,7 @@ test("declares one bounded host-rendered reconnect feature", () => {
 test("does not ship a sandbox body and is registered from its package manifest", () => {
 	assert.equal(existsSync(join(HERE, "hooks")), false);
 	assert.equal(existsSync(join(HERE, "adapters")), false);
-	const coreSrc = join(HERE, "..", "..", "apps", "core", "src");
+	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	assert.ok(existsSync(coreSrc));
 	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
 	assert.ok(
