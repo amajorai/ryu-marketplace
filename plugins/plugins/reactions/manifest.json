@@ -14,6 +14,7 @@
   "tagline": "React to messages with emoji",
   "keywords": ["chat", "emoji", "reactions", "messages"],
   "icon": "smile",
+  "iconDither": { "from": 50, "to": "transparent", "direction": "down" },
   "surfaces": {
     "gateway": { "support": "none" },
     "core": { "support": "full" },

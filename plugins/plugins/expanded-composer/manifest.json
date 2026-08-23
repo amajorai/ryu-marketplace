@@ -14,6 +14,7 @@
   "tagline": "Write prompts with more room",
   "keywords": ["chat", "composer", "prompt", "expand"],
   "icon": "expand-diagonal",
+  "iconDither": { "from": 268, "to": "transparent", "direction": "down" },
   "surfaces": {
     "gateway": { "support": "none" },
     "core": { "support": "full" },

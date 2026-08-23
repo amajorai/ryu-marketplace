@@ -74,7 +74,7 @@ is nothing to drift.
 
 The hook has no `match` gate (it must see every completed turn), so it pays a sandbox
 spawn per answer, and a sub-agent call per answer that clears the prose floor. That is why
-it is absent from `CORE_DEFAULT_ON`: it ships installed but off, like `@ryu/recap`.
+it is absent from `CORE_PREINSTALLED`: it ships installed but off, like `@ryu/recap`.
 
 ## Tests
 

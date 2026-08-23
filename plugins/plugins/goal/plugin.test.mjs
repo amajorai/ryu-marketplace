@@ -247,11 +247,11 @@ test("goal.set stores an active goal under the caller's conversation", async () 
 		message:
 			"Goal set for this conversation. Continue working toward it; the goal judge will evaluate progress after the reply.",
 	});
-	assert.deepEqual(JSON.parse(host.store.get("conv-agent")), {
-		condition: "ship the release notes",
-		status: "active",
-		turns: 0,
-	});
+	const stored = JSON.parse(host.store.get("conv-agent"));
+	assert.equal(stored.condition, "ship the release notes");
+	assert.equal(stored.status, "active");
+	assert.equal(stored.turns, 0);
+	assert.equal(typeof stored.started_at, "number");
 });
 
 test("goal.set ignores a model-supplied conversation id", async () => {
@@ -263,11 +263,11 @@ test("goal.set ignores a model-supplied conversation id", async () => {
 		host
 	);
 	assert.equal(host.store.has("another-chat"), false);
-	assert.deepEqual(JSON.parse(host.store.get("current-chat")), {
-		condition: "only this chat",
-		status: "active",
-		turns: 0,
-	});
+	const stored = JSON.parse(host.store.get("current-chat"));
+	assert.equal(stored.condition, "only this chat");
+	assert.equal(stored.status, "active");
+	assert.equal(stored.turns, 0);
+	assert.equal(typeof stored.started_at, "number");
 });
 
 test("goal.set rejects empty, oversized, and agent-less calls", async () => {
@@ -347,11 +347,10 @@ test("'/goal <condition>' seeds active state and returns a continue", async () =
 	});
 	// storage now holds a parseable active goal at turn 0
 	const stored = JSON.parse(host.store.get("conv-123"));
-	assert.deepEqual(stored, {
-		condition: "ship the release notes",
-		status: "active",
-		turns: 0,
-	});
+	assert.equal(stored.condition, "ship the release notes");
+	assert.equal(stored.status, "active");
+	assert.equal(stored.turns, 0);
+	assert.equal(typeof stored.started_at, "number");
 	assert.equal(host.sideModelCalls.length, 0, "seeding does not judge");
 });
 
@@ -422,7 +421,7 @@ test("active goal, judge says not met → continue + turn incremented + state pe
 	assert.equal(stored.last_reason, "MET: no - not there yet");
 });
 
-test("active goal, judge says met → note + state cleared", async () => {
+test("active goal, judge says met → note + achieved state persisted", async () => {
 	const run = loadHookRunner(parseManifest());
 	const host = makeHost("MET: yes - all done", {
 		"conv-123": JSON.stringify({
@@ -437,7 +436,13 @@ test("active goal, judge says met → note + state cleared", async () => {
 		kind: "note",
 		text: "Goal met. MET: yes - all done",
 	});
-	assert.equal(host.store.has("conv-123"), false, "met goal is cleared");
+	assert.equal(host.store.has("conv-123"), true, "met goal is retained");
+	const stored = JSON.parse(host.store.get("conv-123"));
+	assert.equal(stored.condition, "finish the task");
+	assert.equal(stored.status, "achieved");
+	assert.equal(stored.turns, 3);
+	assert.equal(stored.last_reason, "MET: yes - all done");
+	assert.equal(typeof stored.achieved_at, "number");
 	assert.equal(host.sideModelCalls.length, 1);
 });
 

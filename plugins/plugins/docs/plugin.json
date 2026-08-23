@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.docs",
   "version": "0.1.14",
-  "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships enabled by default.",
+  "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships pre-installed and enabled.",
   "author": {
     "name": "Ryu",
     "url": "https://ryuhq.com"

@@ -28,6 +28,7 @@ const manifest = {
 	keywords: ["chatgpt", "browser", "model", "temporary-chat", "subscription"],
 	category: "Models",
 	icon: "ai-chat",
+	iconDither: { from: 143, to: "transparent", direction: "down" },
 	surfaces: {
 		gateway: { support: "none" },
 		core: { support: "full" },

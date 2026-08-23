@@ -292,12 +292,14 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 	// Registration seam: forgetting the include_str! leaves every other guard passing
 	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
 	assert.ok(
-		mod.includes('include_str!("../../../../plugins-store/plugins/exa/manifest.json")'),
+		mod.includes(
+			'include_str!("../../../../plugins-store/plugins/exa/manifest.json")'
+		),
 		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });
 
-// --- The no-key fallback (why exa can ship default-ON) -----------------------
+// --- The no-key fallback (why exa can ship pre-installed) --------------------
 // exa is the ONE search provider seeded enabled on a fresh install, so it has to
 // return results with no credential at all. Exa's REST search needs a key; Exa's
 // public MCP endpoint does not.

@@ -17,7 +17,7 @@ Definition lives in `manifest.json`, its sandboxed hook bodies in `hooks/turn.js
 the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.
 
 Community-tier and **opt-in**: it is in `CORE_PLUGINS` but deliberately not in
-`CORE_DEFAULT_ON`, because every recap is a real side-model call the user pays for.
+`CORE_PREINSTALLED`, because every recap is a real side-model call the user pays for.
 
 ## The two hooks
 

@@ -97,7 +97,7 @@ reaches it and concurrent Core profiles do not collide on 47821.
 
 ## Tier
 
-Core-tier (`CORE_PLUGINS`) but **not** default-on, for the same reason
+Core-tier (`CORE_PLUGINS`) but **not pre-installed**, for the same reason
 `@ryu/scrapling` is: Core-tier is a requirement, not a promotion. A Community-tier
 plugin needs the Gateway-approved `sidecar:process` grant before Core will spawn a
 managed sidecar, and the Gateway denies that grant at enable — a Community pxpipe

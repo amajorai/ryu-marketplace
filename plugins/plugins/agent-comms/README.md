@@ -72,8 +72,8 @@ model can act on, not an error it has to interpret.
 - **The inbox is per-agent, not per-conversation.** An agent with several open
   chats reads its mail in whichever one runs next.
 - **The delivery hook has no `match` pre-gate**, so it costs one KV read and a
-  sandbox spawn per turn. That is why the plugin is pre-installed but **off** by
-  default; enable it from the Store.
+  sandbox spawn per turn. That is why the plugin is install-on-demand and **off** by
+  default; install and enable it from the Store.
 - **A message to an agent id that does not exist looks like a success.** The
   sandbox cannot check the roster (the tools have no network), so `agents.send`
   returns `ok:true` and the message waits in an inbox nobody reads. Pair `send`

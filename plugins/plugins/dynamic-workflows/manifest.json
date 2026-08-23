@@ -10,6 +10,7 @@
   "stability": "experimental",
   "version": "0.2.0",
   "description": "Run a validated, bounded fan-out of clean-context delegates.",
+  "iconDither": { "from": 232, "to": "transparent", "direction": "down" },
   "category": "Developer Tools",
   "permission_grants": ["tool:execute", "hook:run-agent"],
   "runnables": [

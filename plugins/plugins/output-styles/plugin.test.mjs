@@ -186,7 +186,7 @@ test("no built-in style forces itself on the whole node", () => {
 		assert.notEqual(
 			keys["force-for-plugin"],
 			"true",
-			`${entry.file} forces itself for the whole node; the built-ins ship opt-in`
+			`${entry.file} forces itself for the whole node; pre-installed built-ins must not force a style`
 		);
 	}
 });

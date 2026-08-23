@@ -9,7 +9,7 @@
 Read-only [Model Context Protocol](https://modelcontextprotocol.io) access to the
 Ryu documentation, served by the docs site itself at
 `https://docs.ryuhq.com/mcp` — the same pattern OpenAI hosts for its developer
-docs. Ships built-in and enabled by default, so every agent can look up Ryu
+docs. Ships built-in and pre-installed, so every agent can look up Ryu
 documentation without leaving the chat.
 
 The plugin declares a **remote** MCP server (`docs`) that Core registers on

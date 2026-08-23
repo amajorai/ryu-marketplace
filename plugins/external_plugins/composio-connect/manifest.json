@@ -11,6 +11,7 @@
   "external": true,
   "description": "Connect Ryu to Composio's hosted For You MCP server with OAuth. The connection exposes Composio's connected-app tools without requiring a Composio API key; Ryu still applies its own tool allowlists and approval policy.",
   "icon": "link-01",
+  "iconDither": { "from": 48, "to": "transparent", "direction": "down" },
   "tagline": "OAuth access to Composio's connected apps",
   "keywords": ["composio", "mcp", "oauth", "integrations"],
   "category": "Productivity",

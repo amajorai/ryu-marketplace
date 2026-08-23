@@ -14,6 +14,7 @@
   "keywords": ["summary", "thinking", "tools", "commands", "accessibility"],
   "category": "Productivity",
   "icon": "text-align-left",
+  "iconDither": { "from": 204, "to": "transparent", "direction": "down" },
   "surfaces": {
     "gateway": { "support": "none" },
     "core": { "support": "full" },

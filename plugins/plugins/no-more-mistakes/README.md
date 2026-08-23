@@ -17,7 +17,7 @@ Definition lives in `manifest.json`, its sandboxed hook bodies in `hooks/capture
 directory. Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.
 
 Community-tier and **opt-in**: it is in `CORE_PLUGINS` but deliberately not in
-`CORE_DEFAULT_ON`. The capture hook cannot be `match`-gated (there is no "this message
+`CORE_PREINSTALLED`. The capture hook cannot be `match`-gated (there is no "this message
 reads like a complaint" pre-gate in the manifest grammar), so it costs a sandbox spawn per
 user turn, and a captured correction costs a side-model call on top.
 

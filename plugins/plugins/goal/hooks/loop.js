@@ -25,6 +25,7 @@ if (lastUser) {
 			await host.storage.set(convId, {
 				condition: condition,
 				status: "active",
+				started_at: Date.now(),
 				turns: 0,
 			});
 			return {
@@ -70,7 +71,9 @@ const met = /met:\s*yes/i.test(verdict || "");
 goal.turns = turns + 1;
 goal.last_reason = verdict;
 if (met) {
-	await host.storage.delete(convId);
+	goal.status = "achieved";
+	goal.achieved_at = Date.now();
+	await host.storage.set(convId, goal);
 	return { kind: "note", text: "Goal met. " + (verdict || "") };
 }
 await host.storage.set(convId, goal);

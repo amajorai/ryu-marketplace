@@ -135,7 +135,7 @@ applied whichever provider is selected would be silently ignored by the other fo
 
 ## Tier: Core, but opt-in
 
-Registered in `CORE_PLUGINS` and deliberately **not** in `CORE_DEFAULT_ON`.
+Registered in `CORE_PLUGINS` and deliberately **not** in `CORE_PREINSTALLED`.
 
 Core-tier is not a promotion here, it is a requirement. `may_register_mcp_servers`
 auto-allows manifest-declared `mcp_servers` only for compiled-in fixtures; a
@@ -145,7 +145,7 @@ granted out-of-band via `RYU_MARKETPLACE_GRANT_ALLOWLIST`. A Community-tier Scra
 would register nothing and be dead on arrival.
 
 Opt-in, because it needs a `pip install` the user has to perform. Shipping it
-default-on would put a permanently unavailable tool on every fresh install — the same
+pre-installing it would put a permanently unavailable tool on every fresh install — the same
 reason the BYOK search providers stay opt-in. `firewall`, `routing`, `sandbox` and
 `predict` are the existing Core-tier-but-opt-in precedent.
 

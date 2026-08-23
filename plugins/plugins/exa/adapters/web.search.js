@@ -8,7 +8,7 @@
 // canonical result. That is why a top-level `return` is correct here, and why
 // plugins-store/*/*/adapters is excluded from Biome — a module parser rejects it.
 
-// exa is the ONE search provider shipped enabled by default, so it has to work
+// exa is the ONE search provider shipped pre-installed and enabled, so it has to work
 // with no credential at all. Exa's REST search needs a key; Exa's PUBLIC MCP
 // endpoint does not. Try the keyed path first (higher limits, richer fields) and
 // fall back to the free endpoint only when the key is genuinely absent.

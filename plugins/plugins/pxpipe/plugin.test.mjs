@@ -226,7 +226,7 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 	);
 });
 
-test("plugin is Core-tier but not default-on (the second registration seam)", () => {
+test("plugin is Core-tier but not pre-installed (the second registration seam)", () => {
 	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	if (!existsSync(coreSrc)) {
 		return; // satellite tree
@@ -249,17 +249,17 @@ test("plugin is Core-tier but not default-on (the second registration seam)", ()
 		`${id} must be in CORE_PLUGINS or its sidecar is refused at enable`
 	);
 
-	// …but NOT default-on: it needs Node on PATH, fetches an npm package on first
+	// …but NOT pre-installed: it needs Node on PATH, fetches an npm package on first
 	// start, and does nothing until a provider is pointed at it by hand.
-	const defaultOnIdx = builtins.indexOf("pub const CORE_DEFAULT_ON");
-	if (defaultOnIdx >= 0) {
-		const defaultOn = builtins.slice(
-			defaultOnIdx,
-			builtins.indexOf("];", defaultOnIdx)
+	const preinstalledIdx = builtins.indexOf("pub const CORE_PREINSTALLED");
+	if (preinstalledIdx >= 0) {
+		const preinstalled = builtins.slice(
+			preinstalledIdx,
+			builtins.indexOf("];", preinstalledIdx)
 		);
 		assert.ok(
-			!defaultOn.includes(`"${id}"`),
-			`${id} must not be default-on — it has unmet host prerequisites`
+			!preinstalled.includes(`"${id}"`),
+			`${id} must not be pre-installed — it has unmet host prerequisites`
 		);
 	}
 });

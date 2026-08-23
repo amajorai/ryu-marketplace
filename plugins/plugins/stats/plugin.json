@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.stats",
+  "version": "0.1.0",
+  "description": "Show provider-neutral session tokens, cache efficiency, throughput, context, compactions, cost, and usage windows in chat.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/stats",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/stats",
+  "keywords": [
+    "chat",
+    "stats",
+    "tokens",
+    "cache",
+    "context",
+    "usage"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/stats",
+      "displayName": "Session Stats"
+    }
+  }
+}

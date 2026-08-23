@@ -34,7 +34,7 @@
 //      ordinary turn costs a regex sweep and nothing else. There is no manifest
 //      `match` that can express "this message reads like a complaint" (the pre-gate
 //      grammar is flag / commands / stateful / tools), so the cheap gate has to live
-//      here — and it is why this plugin ships opt-in rather than default-on.
+//      here — and it is why this plugin is install-on-demand rather than pre-installed.
 
 const MAX_ANSWER_CHARS = 6000;
 const MAX_CORRECTION_CHARS = 2000;

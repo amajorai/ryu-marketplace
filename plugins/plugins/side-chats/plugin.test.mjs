@@ -23,6 +23,22 @@ test("declares a main-chat-context side-chat feature and /btw command", () => {
 			persistence: "parent-conversation",
 		},
 	]);
+	assert.deepEqual(manifest.contributes?.selection_actions, [
+		{
+			args: { dispatch: "side-chat.selection", intent: "ask" },
+			id: "side-chats.ask-selection",
+			kind: "button",
+			label: "Ask in side chat",
+			order: 100,
+		},
+		{
+			args: { dispatch: "side-chat.selection", intent: "explain" },
+			id: "side-chats.explain-selection",
+			kind: "button",
+			label: "Explain",
+			order: 110,
+		},
+	]);
 	assert.equal(manifest.contributes?.slash_commands?.[0]?.command, "/btw");
 });
 

@@ -16,7 +16,7 @@
 // It runs on every turn with no `match` pre-gate, because there is no cheap
 // condition to gate on: the inbox is keyed by AGENT and Core's `stateful` match
 // tests a key named after the CONVERSATION. The cost is one KV read per turn on
-// the pre-turn path, which is why the plugin is not in `CORE_DEFAULT_ON`.
+// the pre-turn path, which is why the plugin is not in `CORE_PREINSTALLED`.
 
 const MAX_SHOWN = 10;
 

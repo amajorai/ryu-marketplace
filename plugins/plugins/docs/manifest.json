@@ -11,9 +11,10 @@
   "system": true,
   "builtin": true,
   "category": "Developer Tools",
-  "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships enabled by default.",
+  "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships pre-installed and enabled.",
   "tagline": "The Ryu docs, as MCP tools",
   "icon": "book-open-01",
+  "iconDither": { "from": 208, "to": "transparent", "direction": "down" },
   "keywords": ["docs", "documentation", "reference"],
   "surfaces": {
     "gateway": { "support": "full" },

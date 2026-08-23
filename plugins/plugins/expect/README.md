@@ -11,7 +11,7 @@ reads the current changes, creates a test plan, and runs that plan in a real
 browser with Playwright to catch behavior, performance, security, and design
 regressions.
 
-Ryu ships the plugin enabled by default. Core launches the server lazily as:
+Ryu ships the plugin install-on-demand. After the user installs and enables it, Core launches the server lazily as:
 
 ```bash
 npx -y expect-cli@latest mcp

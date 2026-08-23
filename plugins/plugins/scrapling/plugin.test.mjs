@@ -330,15 +330,18 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 	);
 });
 
-test("the plugin is Core-tier but NOT default-on", () => {
+test("the plugin is Core-tier but NOT pre-installed", () => {
 	// Core-tier is a REQUIREMENT, not a promotion: `may_register_mcp_servers`
 	// auto-allows manifest `mcp_servers` only for compiled-in fixtures, and the
 	// Community path needs the `mcp:server` grant, which is off the Gateway's
 	// default allowlist. A Community-tier scrapling would register nothing.
 	//
 	// Opt-in, because it needs a `pip install` the user must perform — shipping it
-	// default-on would put a permanently unavailable tool on every fresh install.
-	const builtinsPath = resolve(here, "../../../apps/core/src/plugins/builtins.rs");
+	// Pre-installing it would put a permanently unavailable tool on every fresh install.
+	const builtinsPath = resolve(
+		here,
+		"../../../apps/core/src/plugins/builtins.rs"
+	);
 	if (!existsSync(builtinsPath)) {
 		return; // satellite tree
 	}
@@ -350,7 +353,7 @@ test("the plugin is Core-tier but NOT default-on", () => {
 		"scrapling must be Core-tier or its MCP server is never registered"
 	);
 	assert.ok(
-		!section("CORE_DEFAULT_ON").includes('"scrapling"'),
+		!section("CORE_PREINSTALLED").includes('"scrapling"'),
 		"scrapling must stay opt-in: it needs a BYO `pip install`"
 	);
 });

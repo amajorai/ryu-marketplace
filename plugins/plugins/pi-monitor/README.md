@@ -62,6 +62,6 @@ model reports.
 ## Installing / enabling
 
 This is a built-in (Core-tier) plugin, so it ships compiled into Core. It is in
-`CORE_DEFAULT_ON` and is seeded installed + enabled on a fresh install, like
+`CORE_PREINSTALLED` and is seeded installed + enabled on a fresh install, like
 `pi-shell` and `pi-subagent`. Toggling it takes effect in a **new chat** — Pi
 reads its extensions at process start.

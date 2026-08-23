@@ -38,6 +38,7 @@ await host.storage.set(
 	JSON.stringify({
 		condition: goal,
 		status: "active",
+		started_at: Date.now(),
 		turns: 0,
 	})
 );

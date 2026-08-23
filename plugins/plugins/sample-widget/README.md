@@ -108,7 +108,7 @@ The widget renderer is **experimental and opt-in**, behind two gates:
    experimental flag. Off → the widget shows an inert placeholder and the host
    context is withheld. Turn it on to see the sample render.
 2. **Core consent** — this plugin ships as a built-in fixture but is **opt-in**
-   (not in `CORE_DEFAULT_ON`). Install/enable it so it holds `widget:render` and
+   (not in `CORE_PREINSTALLED`). Install/enable it so it holds `widget:render` and
    its `contributes.widgets` entry is live.
 
 Sanity-check the server by hand (newline-delimited JSON-RPC on stdin):

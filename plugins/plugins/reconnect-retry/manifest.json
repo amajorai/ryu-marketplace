@@ -14,6 +14,7 @@
   "tagline": "Pick up chats after Wi-Fi or LAN returns",
   "keywords": ["chat", "reconnect", "network", "retry", "reliability"],
   "icon": "refresh-02",
+  "iconDither": { "from": 188, "to": "transparent", "direction": "down" },
   "surfaces": {
     "gateway": { "support": "none" },
     "core": { "support": "full" },

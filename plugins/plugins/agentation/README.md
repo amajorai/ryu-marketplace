@@ -11,8 +11,8 @@ feedback an agent can act on. Its toolbar records the selected element, source
 location, component context, computed styles, and the user's request; the MCP
 server lets an agent read and update that feedback without copy-paste.
 
-Ryu ships the plugin enabled by default. Core launches the local server lazily
-as:
+Ryu ships the plugin install-on-demand. After the user installs and enables it,
+Core launches the local server lazily as:
 
 ```bash
 npx -y agentation-mcp server

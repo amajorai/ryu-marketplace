@@ -14,6 +14,7 @@
   "keywords": ["chat", "prompts", "composer", "suggestions", "productivity"],
   "category": "Productivity",
   "icon": "sparkles-02",
+  "iconDither": { "from": 324, "to": "transparent", "direction": "down" },
   "surfaces": {
     "gateway": { "support": "none" },
     "core": { "support": "full" },

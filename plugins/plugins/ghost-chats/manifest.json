@@ -14,6 +14,7 @@
   "tagline": "Chat privately without saving a thread",
   "keywords": ["chat", "temporary", "private", "ghost", "incognito"],
   "icon": "ghost",
+  "iconDither": { "from": 286, "to": "transparent", "direction": "down" },
   "surfaces": {
     "gateway": { "support": "none" },
     "core": { "support": "full" },

@@ -42,6 +42,11 @@
         "accessibility"
       ],
       "icon": "text-align-left",
+      "iconDither": {
+        "from": 204,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/action-summary",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -290,6 +295,11 @@
         "annotations",
         "browser"
       ],
+      "iconDither": {
+        "from": 28,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://www.agentation.com/",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -460,6 +470,11 @@
         "music"
       ],
       "icon": "lucide:music-2",
+      "iconDither": {
+        "from": 312,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ambient-elevator",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -697,6 +712,54 @@
       }
     },
     {
+      "name": "bookmarks",
+      "displayName": "Bookmarks",
+      "version": "0.2.0",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Remember why you saved it",
+      "description": "A self-organizing bookmark library with HTML/browser imports, notes, inferred collections, and semantic search through Ryu Spaces.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-bookmarks",
+      "category": "Knowledge & Memory",
+      "keywords": [
+        "bookmarks",
+        "browser",
+        "reading list",
+        "semantic search",
+        "knowledge"
+      ],
+      "tags": [
+        "bookmarks",
+        "browser",
+        "knowledge",
+        "search"
+      ],
+      "icon": "bookmark-02",
+      "iconDither": {
+        "from": 214,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-bookmarks",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop",
+        "extension"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "brave",
       "displayName": "Brave Search",
       "version": "0.2.0",
@@ -791,7 +854,7 @@
         }
       ],
       "tagline": "Real-Chromium browser control for agents",
-      "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated `browser.control` capability: control tabs, capture screenshots and accessibility snapshots, inspect DOM context, attach frozen-frame annotations, and drive pages with element or coordinate mouse/keyboard input. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
+      "description": "A real-Chromium browser (Electron) exposed as the grant-gated `browser.control` capability. Local nodes can share one embedded session with the user; managed cloud nodes give each Bot a hidden tab lane inside one persistent managed-Bot Chromium context, so cookies and logins are shared while active tabs stay separate. Core routes the desktop Browser panel and agent tools through its authenticated ext-proxy.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -1002,6 +1065,53 @@
       }
     },
     {
+      "name": "chat-broadcast",
+      "displayName": "Chat Broadcast",
+      "version": "0.2.0",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Change direction across many chats at once",
+      "description": "Send one message to every running chat or a hand-picked set of visible chats, including idle conversations.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-chat-broadcast",
+      "category": "Productivity",
+      "keywords": [
+        "chat",
+        "broadcast",
+        "announcement",
+        "multi-chat",
+        "coordination"
+      ],
+      "tags": [
+        "chat",
+        "broadcast",
+        "announcements",
+        "multi-chat"
+      ],
+      "icon": "message-multiple-01",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-chat-broadcast",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "chat-title",
       "displayName": "Chat Title",
       "version": "0.2.0",
@@ -1072,6 +1182,11 @@
         "subscription"
       ],
       "icon": "ai-chat",
+      "iconDither": {
+        "from": 143,
+        "to": "transparent",
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -1088,7 +1203,7 @@
     },
     {
       "name": "checks",
-      "displayName": "Checks",
+      "displayName": "Tests",
       "version": "0.2.0",
       "type": "app",
       "source": "builtin",
@@ -1096,7 +1211,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Turn every change into evidence",
-      "description": "A local-first verification workspace for planning, running, and reviewing UI, API, and agent-driven checks from one Ryu surface.",
+      "description": "A local-first verification workspace for planning, running, and reviewing UI, API, and agent-driven tests from one Ryu surface.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -1349,6 +1464,11 @@
         "integrations"
       ],
       "icon": "link-01",
+      "iconDither": {
+        "from": 48,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://composio.dev/for-you",
       "surfaces": [
         "gateway",
@@ -1532,7 +1652,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "A live, interactive desktop for the node — watch and drive it",
-      "description": "An interactive virtual desktop for any Ryu node — cloud-managed, self-hosted, or local. The sidecar brings up a full headless Linux desktop (Xvfb + window manager + apps) with a VNC server on loopback, exposes it through Core's generic WebSocket ext-proxy, and the desktop Virtual Desktop panel streams it live with mouse/keyboard input. Ghost can drive the same display, so agents see and control exactly what you watch.",
+      "description": "An interactive Linux virtual desktop for Ryu nodes. The app sidecar owns stable per-Bot screens on the shared node computer and exposes them through Core's authenticated WebSocket proxy with mouse and keyboard input. Files and installed applications remain shared.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -1705,7 +1825,7 @@
       "system": true,
       "developer": "Ryu",
       "tagline": "The Ryu docs, as MCP tools",
-      "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships enabled by default.",
+      "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships pre-installed and enabled.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -1723,6 +1843,11 @@
         "reference"
       ],
       "icon": "book-open-01",
+      "iconDither": {
+        "from": 208,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/docs",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -1864,6 +1989,11 @@
       "tags": [
         "developer-tools"
       ],
+      "iconDither": {
+        "from": 232,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/dynamic-workflows",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -1901,6 +2031,11 @@
         "automation"
       ],
       "icon": "trending-up-01",
+      "iconDither": {
+        "from": 104,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/effort-escalator",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -2074,6 +2209,11 @@
         "expand"
       ],
       "icon": "expand-diagonal",
+      "iconDither": {
+        "from": 268,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/expanded-composer",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -2115,6 +2255,11 @@
         "qa",
         "playwright"
       ],
+      "iconDither": {
+        "from": 16,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://www.expect.dev/",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -2417,6 +2562,11 @@
         "incognito"
       ],
       "icon": "ghost",
+      "iconDither": {
+        "from": 286,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ghost-chats",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -3632,6 +3782,11 @@
         "safety"
       ],
       "icon": "eye",
+      "iconDither": {
+        "from": 172,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/observer-agents",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -4123,6 +4278,11 @@
         "productivity"
       ],
       "icon": "sparkles-02",
+      "iconDither": {
+        "from": 324,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/prompt-suggestions",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -4435,6 +4595,11 @@
         "messages"
       ],
       "icon": "smile",
+      "iconDither": {
+        "from": 50,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reactions",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -4714,6 +4879,11 @@
         "retry"
       ],
       "icon": "refresh-02",
+      "iconDither": {
+        "from": 188,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reconnect-retry",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -4736,7 +4906,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Shape a clear idea into a repeatable publishing system",
-      "description": "A Ryu-native local-first creator workspace: turn a point of view into an AI-assisted short-form project, refine every frame, schedule a queue, and read local performance signals.",
+      "description": "A catalog preview of a planned local-first creator workspace for short-form projects, schedules, and performance signals.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -4771,8 +4941,6 @@
       "surfaces": [
         "core",
         "desktop",
-        "island",
-        "mobile",
         "web",
         "cli"
       ],
@@ -5543,6 +5711,11 @@
         "questions"
       ],
       "icon": "message-question-01",
+      "iconDither": {
+        "from": 176,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/side-chats",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -5854,6 +6027,61 @@
       }
     },
     {
+      "name": "stats",
+      "displayName": "Session Stats",
+      "version": "0.2.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "See what each chat turn costs",
+      "description": "Show provider-neutral session tokens, cache efficiency, throughput, context, compactions, cost, and usage windows in chat.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/stats",
+      "category": "Productivity",
+      "keywords": [
+        "chat",
+        "stats",
+        "tokens",
+        "cache",
+        "context",
+        "usage"
+      ],
+      "tags": [
+        "chat",
+        "stats",
+        "tokens",
+        "usage",
+        "context"
+      ],
+      "icon": "chart",
+      "iconDither": {
+        "from": 120,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/stats",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "subtitles",
       "displayName": "Subtitles",
       "version": "0.2.0",
@@ -6146,7 +6374,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Play a friendly hand with simulated tokens",
-      "description": "A cosmetic six-max no-limit Texas Hold'em table with simulated tokens, deterministic server-side dealing, and durable local state.",
+      "description": "A catalog preview of a planned cosmetic six-max Texas Hold'em table with simulated tokens.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -6172,8 +6400,6 @@
       "surfaces": [
         "core",
         "desktop",
-        "island",
-        "mobile",
         "web",
         "cli"
       ],
@@ -6199,6 +6425,11 @@
       },
       "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokenmaxxing",
       "category": "Productivity",
+      "iconDither": {
+        "from": 344,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokenmaxxing",
       "surfaces": [
         "core",
@@ -6285,6 +6516,11 @@
       "tags": [
         "developer-tools"
       ],
+      "iconDither": {
+        "from": 72,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/toolsmith-example",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -6734,6 +6970,58 @@
         "core",
         "desktop",
         "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "whatsapp",
+      "displayName": "WhatsApp",
+      "version": "0.2.0",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Talk to Ryu from WhatsApp",
+      "description": "Connect WhatsApp Personal or WhatsApp Business (Cloud API) to a Ryu agent or team from a native workspace tab.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-whatsapp",
+      "category": "Communication",
+      "keywords": [
+        "whatsapp",
+        "whatsapp business",
+        "cloud api",
+        "personal",
+        "channels",
+        "messaging"
+      ],
+      "tags": [
+        "whatsapp",
+        "messaging",
+        "channels",
+        "bots"
+      ],
+      "icon": "message-multiple-01",
+      "iconDither": {
+        "from": 142,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-whatsapp",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "gateway",
+        "desktop",
         "mobile",
         "web",
         "cli"
@@ -7868,6 +8156,11 @@
         "accessibility"
       ],
       "icon": "text-align-left",
+      "iconDither": {
+        "from": 204,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/action-summary",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -8167,6 +8460,11 @@
         "annotations",
         "browser"
       ],
+      "iconDither": {
+        "from": 28,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://www.agentation.com/",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -8337,6 +8635,11 @@
         "music"
       ],
       "icon": "lucide:music-2",
+      "iconDither": {
+        "from": 312,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ambient-elevator",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -8731,6 +9034,54 @@
       }
     },
     {
+      "name": "bookmarks",
+      "displayName": "Bookmarks",
+      "version": "0.2.0",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Remember why you saved it",
+      "description": "A self-organizing bookmark library with HTML/browser imports, notes, inferred collections, and semantic search through Ryu Spaces.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-bookmarks",
+      "category": "Knowledge & Memory",
+      "keywords": [
+        "bookmarks",
+        "browser",
+        "reading list",
+        "semantic search",
+        "knowledge"
+      ],
+      "tags": [
+        "bookmarks",
+        "browser",
+        "knowledge",
+        "search"
+      ],
+      "icon": "bookmark-02",
+      "iconDither": {
+        "from": 214,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-bookmarks",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop",
+        "extension"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "brand-presence",
       "displayName": "Brand Presence",
       "id": "ryu/brand-presence",
@@ -8879,7 +9230,7 @@
         }
       ],
       "tagline": "Real-Chromium browser control for agents",
-      "description": "A real-Chromium browser (Electron) Ryu runs as a local sidecar and exposes as the grant-gated `browser.control` capability: control tabs, capture screenshots and accessibility snapshots, inspect DOM context, attach frozen-frame annotations, and drive pages with element or coordinate mouse/keyboard input. Core spawns the sidecar lazily and idle-stops it; the desktop Browser panel drives it through the ext-proxy.",
+      "description": "A real-Chromium browser (Electron) exposed as the grant-gated `browser.control` capability. Local nodes can share one embedded session with the user; managed cloud nodes give each Bot a hidden tab lane inside one persistent managed-Bot Chromium context, so cookies and logins are shared while active tabs stay separate. Core routes the desktop Browser panel and agent tools through its authenticated ext-proxy.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -9090,6 +9441,53 @@
       }
     },
     {
+      "name": "chat-broadcast",
+      "displayName": "Chat Broadcast",
+      "version": "0.2.0",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Change direction across many chats at once",
+      "description": "Send one message to every running chat or a hand-picked set of visible chats, including idle conversations.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-chat-broadcast",
+      "category": "Productivity",
+      "keywords": [
+        "chat",
+        "broadcast",
+        "announcement",
+        "multi-chat",
+        "coordination"
+      ],
+      "tags": [
+        "chat",
+        "broadcast",
+        "announcements",
+        "multi-chat"
+      ],
+      "icon": "message-multiple-01",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-chat-broadcast",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "chat-title",
       "displayName": "Chat Title",
       "version": "0.2.0",
@@ -9160,6 +9558,11 @@
         "subscription"
       ],
       "icon": "ai-chat",
+      "iconDither": {
+        "from": 143,
+        "to": "transparent",
+        "direction": "down"
+      },
       "surfaces": [
         "core",
         "desktop",
@@ -9176,7 +9579,7 @@
     },
     {
       "name": "checks",
-      "displayName": "Checks",
+      "displayName": "Tests",
       "version": "0.2.0",
       "type": "app",
       "source": "builtin",
@@ -9184,7 +9587,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Turn every change into evidence",
-      "description": "A local-first verification workspace for planning, running, and reviewing UI, API, and agent-driven checks from one Ryu surface.",
+      "description": "A local-first verification workspace for planning, running, and reviewing UI, API, and agent-driven tests from one Ryu surface.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -9541,6 +9944,11 @@
         "integrations"
       ],
       "icon": "link-01",
+      "iconDither": {
+        "from": 48,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://composio.dev/for-you",
       "surfaces": [
         "gateway",
@@ -9781,7 +10189,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "A live, interactive desktop for the node — watch and drive it",
-      "description": "An interactive virtual desktop for any Ryu node — cloud-managed, self-hosted, or local. The sidecar brings up a full headless Linux desktop (Xvfb + window manager + apps) with a VNC server on loopback, exposes it through Core's generic WebSocket ext-proxy, and the desktop Virtual Desktop panel streams it live with mouse/keyboard input. Ghost can drive the same display, so agents see and control exactly what you watch.",
+      "description": "An interactive Linux virtual desktop for Ryu nodes. The app sidecar owns stable per-Bot screens on the shared node computer and exposes them through Core's authenticated WebSocket proxy with mouse and keyboard input. Files and installed applications remain shared.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -9954,7 +10362,7 @@
       "system": true,
       "developer": "Ryu",
       "tagline": "The Ryu docs, as MCP tools",
-      "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships enabled by default.",
+      "description": "Read-only MCP access to the Ryu documentation on docs.ryuhq.com — search the docs and pull any page into context as Markdown, without leaving your agent. Backed by the same content /llms.txt serves, exposed as tools by the hosted docs MCP server at https://docs.ryuhq.com/mcp. Ships pre-installed and enabled.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -9972,6 +10380,11 @@
         "reference"
       ],
       "icon": "book-open-01",
+      "iconDither": {
+        "from": 208,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/docs",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -10113,6 +10526,11 @@
       "tags": [
         "developer-tools"
       ],
+      "iconDither": {
+        "from": 232,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/dynamic-workflows",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -10150,6 +10568,11 @@
         "automation"
       ],
       "icon": "trending-up-01",
+      "iconDither": {
+        "from": 104,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/effort-escalator",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -10374,6 +10797,11 @@
         "expand"
       ],
       "icon": "expand-diagonal",
+      "iconDither": {
+        "from": 268,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/expanded-composer",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -10415,6 +10843,11 @@
         "qa",
         "playwright"
       ],
+      "iconDither": {
+        "from": 16,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://www.expect.dev/",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -10872,6 +11305,11 @@
         "incognito"
       ],
       "icon": "ghost",
+      "iconDither": {
+        "from": 286,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ghost-chats",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -12141,6 +12579,11 @@
         "safety"
       ],
       "icon": "eye",
+      "iconDither": {
+        "from": 172,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/observer-agents",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -12782,6 +13225,11 @@
         "productivity"
       ],
       "icon": "sparkles-02",
+      "iconDither": {
+        "from": 324,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/prompt-suggestions",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -13094,6 +13542,11 @@
         "messages"
       ],
       "icon": "smile",
+      "iconDither": {
+        "from": 50,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reactions",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -13373,6 +13826,11 @@
         "retry"
       ],
       "icon": "refresh-02",
+      "iconDither": {
+        "from": 188,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/reconnect-retry",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -13395,7 +13853,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Shape a clear idea into a repeatable publishing system",
-      "description": "A Ryu-native local-first creator workspace: turn a point of view into an AI-assisted short-form project, refine every frame, schedule a queue, and read local performance signals.",
+      "description": "A catalog preview of a planned local-first creator workspace for short-form projects, schedules, and performance signals.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -13430,8 +13888,6 @@
       "surfaces": [
         "core",
         "desktop",
-        "island",
-        "mobile",
         "web",
         "cli"
       ],
@@ -14306,6 +14762,11 @@
         "questions"
       ],
       "icon": "message-question-01",
+      "iconDither": {
+        "from": 176,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/side-chats",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -14617,6 +15078,61 @@
       }
     },
     {
+      "name": "stats",
+      "displayName": "Session Stats",
+      "version": "0.2.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "See what each chat turn costs",
+      "description": "Show provider-neutral session tokens, cache efficiency, throughput, context, compactions, cost, and usage windows in chat.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/stats",
+      "category": "Productivity",
+      "keywords": [
+        "chat",
+        "stats",
+        "tokens",
+        "cache",
+        "context",
+        "usage"
+      ],
+      "tags": [
+        "chat",
+        "stats",
+        "tokens",
+        "usage",
+        "context"
+      ],
+      "icon": "chart",
+      "iconDither": {
+        "from": 120,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/stats",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "subtitles",
       "displayName": "Subtitles",
       "version": "0.2.0",
@@ -14909,7 +15425,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Play a friendly hand with simulated tokens",
-      "description": "A cosmetic six-max no-limit Texas Hold'em table with simulated tokens, deterministic server-side dealing, and durable local state.",
+      "description": "A catalog preview of a planned cosmetic six-max Texas Hold'em table with simulated tokens.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -14935,8 +15451,6 @@
       "surfaces": [
         "core",
         "desktop",
-        "island",
-        "mobile",
         "web",
         "cli"
       ],
@@ -14962,6 +15476,11 @@
       },
       "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokenmaxxing",
       "category": "Productivity",
+      "iconDither": {
+        "from": 344,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokenmaxxing",
       "surfaces": [
         "core",
@@ -15048,6 +15567,11 @@
       "tags": [
         "developer-tools"
       ],
+      "iconDither": {
+        "from": 72,
+        "to": "transparent",
+        "direction": "down"
+      },
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/toolsmith-example",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
@@ -15547,6 +16071,58 @@
         "core",
         "desktop",
         "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "whatsapp",
+      "displayName": "WhatsApp",
+      "version": "0.2.0",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Talk to Ryu from WhatsApp",
+      "description": "Connect WhatsApp Personal or WhatsApp Business (Cloud API) to a Ryu agent or team from a native workspace tab.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-whatsapp",
+      "category": "Communication",
+      "keywords": [
+        "whatsapp",
+        "whatsapp business",
+        "cloud api",
+        "personal",
+        "channels",
+        "messaging"
+      ],
+      "tags": [
+        "whatsapp",
+        "messaging",
+        "channels",
+        "bots"
+      ],
+      "icon": "message-multiple-01",
+      "iconDither": {
+        "from": 142,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-whatsapp",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "gateway",
+        "desktop",
         "mobile",
         "web",
         "cli"
