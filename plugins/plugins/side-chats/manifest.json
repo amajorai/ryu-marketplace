@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/side-chats",
   "name": "Side Chats",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "stability": "experimental",
   "category": "Productivity",
   "description": "Ask focused questions about the current conversation without adding another turn to the main transcript, then keep the answer as a recoverable side chat.",

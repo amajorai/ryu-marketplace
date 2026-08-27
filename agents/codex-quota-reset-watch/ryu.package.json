@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/codex-quota-reset-watch",
   "name": "Codex Quota Reset Watch",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "kind": "agent",
   "artifacts": [
     "agent.json"

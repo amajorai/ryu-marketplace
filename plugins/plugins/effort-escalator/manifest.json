@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/effort-escalator",
   "name": "Effort Escalator",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "stability": "experimental",
   "category": "Automation",
   "description": "Detects stalled work with a cheap background judge and moves the next turn up a configured reasoning-effort or model ladder, per agent or globally.",

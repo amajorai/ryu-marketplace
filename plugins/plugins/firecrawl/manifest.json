@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/firecrawl",
   "name": "Firecrawl",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "stability": "experimental",
   "description": "Web search and page scraping via the Firecrawl v2 API (https://firecrawl.dev), exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at Firecrawl without changing what agents call. Requires a BYOK Firecrawl API key.",
   "icon": "svgl:firecrawl|firecrawl-dark",

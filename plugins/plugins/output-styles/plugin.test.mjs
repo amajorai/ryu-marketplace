@@ -3,7 +3,7 @@
 // Runner: `node --test` (zero dependencies — node:test + node:assert only).
 //   node --test plugins-store/plugins/output-styles/plugin.test.mjs
 //
-// This plugin carries no runnables and no sandboxed JS: it is ten Markdown files
+// This plugin carries no runnables and no sandboxed JS: it is eleven Markdown files
 // plus a declarative Store tab. So every way it can break is a REFERENCE going
 // stale — a manifest row naming a file that is not there, a file nothing declares,
 // frontmatter Core cannot parse, or a body pasted into manifest.json instead of
@@ -51,8 +51,8 @@ test("declares no runnables, no sandboxed code and no capability grants", () => 
 
 // ── 2. Every declared style resolves to a file on disk ─────────────────────────
 
-test("declares the ten built-in styles with unique ids", () => {
-	assert.equal(entries.length, 10);
+test("declares the eleven built-in styles with unique ids", () => {
+	assert.equal(entries.length, 11);
 	const ids = entries.map((e) => e.id);
 	assert.deepEqual(ids, [
 		"eli5",
@@ -63,6 +63,7 @@ test("declares the ten built-in styles with unique ids", () => {
 		"plain-text",
 		"plain-technical",
 		"no-ai-slop",
+		"no-hype",
 		"bro",
 		"gen-z",
 	]);
@@ -84,10 +85,10 @@ test("every output_styles[].file is a flat output-styles/<slug>.md that exists",
 });
 
 test("the contribution id matches the file stem", () => {
-	// The id is what a selection persists as (`ChatRequest.output_style`, the sticky
-	// per-conversation choice, the node default). Letting it drift from the filename
-	// gives the same style two names and makes the built-in table's include_str! rows
-	// unreadable against the manifest.
+	// The id is what a profile assignment persists as (`PersonaSlot.output_style_id`)
+	// and what a one-turn `ChatRequest.output_style` override names. Letting it drift
+	// from the filename gives the same profile two names and makes the built-in table's
+	// include_str! rows unreadable against the manifest.
 	for (const entry of entries) {
 		const [, stem] = STYLE_PATH.exec(entry.file);
 		assert.equal(
@@ -159,6 +160,17 @@ test("every declared style parses into frontmatter with a name and a body", () =
 	}
 });
 
+test("No Hype requires neutral, evidence-based reporting", () => {
+	const entry = entries.find((candidate) => candidate.id === "no-hype");
+	assert.ok(entry, "no-hype must be declared");
+	const parsed = parseFrontmatter(readFileSync(join(HERE, entry.file), "utf8"));
+	assert.ok(parsed, "no-hype must have parseable frontmatter");
+	assert.match(parsed.body, /neutral, literal language/);
+	assert.match(parsed.body, /what is known from what is inferred/);
+	assert.match(parsed.body, /Remove hype, praise/);
+	assert.match(parsed.body, /Never claim a test passed/);
+});
+
 test("keep-coding-instructions, where present, is a bare boolean", () => {
 	for (const entry of entries) {
 		const { keys } = parseFrontmatter(
@@ -174,11 +186,11 @@ test("keep-coding-instructions, where present, is a bare boolean", () => {
 	}
 });
 
-test("no built-in style forces itself on the whole node", () => {
-	// `force-for-plugin: true` overrides the per-turn, per-conversation AND node
-	// default selection for as long as the plugin is enabled. This plugin is
-	// pre-installed, so a forced style here would silently restyle every fresh
-	// install with no way to turn it off short of disabling the plugin.
+test("no built-in style forces itself on every agent", () => {
+	// `force-for-plugin: true` overrides the per-turn and per-agent profile for as
+	// long as the plugin is enabled. This plugin is pre-installed, so a forced style
+	// here would silently restyle every agent with no way to turn it off short of
+	// disabling the plugin.
 	for (const entry of entries) {
 		const { keys } = parseFrontmatter(
 			readFileSync(join(HERE, entry.file), "utf8")
@@ -227,7 +239,7 @@ test("contributes exactly one store tab, in the catalog group", () => {
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "output-styles");
-	assert.equal(tab.title, "Output Styles");
+	assert.equal(tab.title, "Personality Profiles");
 	assert.equal(tab.group, "catalog");
 	assert.ok(tab.subtitle?.length > 0, "the tab explains what a style is");
 	assert.ok(tab.icon?.length > 0, "the tab has a glyph");
@@ -240,20 +252,14 @@ test("contributes exactly one store tab, in the catalog group", () => {
 const isCoreApiPath = (p) =>
 	p.startsWith("/api/") && !p.split("/").some((segment) => segment === "..");
 
-test("the tab sources and installs over Core-relative /api paths", () => {
+test("the tab sources profiles over a Core-relative /api path", () => {
 	const { spec } = manifest.contributes.store_tabs[0];
 
 	assert.equal(spec.source.http.method, "GET");
 	assert.equal(spec.source.http.path, "/api/output-styles");
 	assert.ok(isCoreApiPath(spec.source.http.path));
 	assert.equal(spec.source.items, "styles");
-
-	assert.equal(spec.install.http.method, "POST");
-	assert.equal(spec.install.http.path, "/api/output-styles/select");
-	assert.ok(isCoreApiPath(spec.install.http.path));
-	assert.deepEqual(spec.install.http.body, { style_id: "{{item.id}}" });
-	assert.equal(spec.install.label, "Use");
-	assert.equal(spec.install.successMessage, "Output style selected");
+	assert.equal(spec.install, undefined);
 });
 
 test("the tab does NOT route through the ext-proxy", () => {
@@ -262,7 +268,7 @@ test("the tab does NOT route through the ext-proxy", () => {
 	// nothing behind /api/ext/com.ryu.output-styles/ to proxy to, and a path written
 	// that way would 404 into a tab that renders permanently empty with no error.
 	const { spec } = manifest.contributes.store_tabs[0];
-	for (const path of [spec.source.http.path, spec.install.http.path]) {
+	for (const path of [spec.source.http.path]) {
 		assert.ok(
 			!path.startsWith("/api/ext/"),
 			`${path} is an ext-proxy path, but this plugin has no sidecar`
@@ -270,16 +276,14 @@ test("the tab does NOT route through the ext-proxy", () => {
 	}
 });
 
-test("the tab maps the wire row onto card fields, including installed-state", () => {
-	// `map.installed` is what makes the renderer trust the SERVER's notion of which
-	// style is selected. Without it the Store falls back to tracking installs it
-	// performed itself this session, so the active style reads as "Not added" on
-	// every reload.
+test("the tab maps the wire row onto profile card fields without a global state", () => {
+	// Profiles are assigned on an agent, so this catalog is intentionally read-only:
+	// a row must not map the retired node-wide active state or offer a global action.
 	const { map } = manifest.contributes.store_tabs[0].spec;
 	assert.equal(map.id, "id");
 	assert.equal(map.title, "name");
 	assert.equal(map.description, "description");
-	assert.equal(map.installed, "active");
+	assert.equal(map.installed, undefined);
 	// Every mapped key must be a field the wire row actually carries. `tags` was
 	// mapped here once and `OutputStyleSummary` has no such field, so the detail
 	// pane's Tags aside rendered empty on every style — a mapping that silently

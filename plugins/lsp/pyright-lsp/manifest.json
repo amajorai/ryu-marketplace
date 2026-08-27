@@ -13,7 +13,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/pyright-lsp",
   "name": "Python LSP",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "stability": "experimental",
   "category": "Developer Tools",
   "description": "Python language server (Pyright) for the ryu agent: type checking plus definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install pyright-langserver; the plugin ships config.",

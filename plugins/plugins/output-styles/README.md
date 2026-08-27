@@ -1,4 +1,4 @@
-# Output Styles
+# Personality Profiles
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
@@ -6,9 +6,10 @@
   </picture>
 </p>
 
-The ten built-in output styles. Fully declarative — no runnables, no sandboxed JS, no
-Core Rust: the plugin is a `contributes.output_styles[]` list pointing at ten Markdown
-files, plus one Store tab that browses whatever styles the node has.
+The eleven built-in personality profiles. Fully declarative — no runnables, no sandboxed JS, no
+Core Rust: the plugin is a `contributes.output_styles[]` list pointing at eleven Markdown
+files, plus one Store tab that browses whatever profiles the node has. Each agent chooses
+its own profile in the agent editor.
 
 ## What an output style is
 
@@ -57,10 +58,10 @@ tool descriptions and the MCP preamble are assembled after it and never depend o
 The body is prose, never code — nothing in the pipeline evaluates it, which is why a
 style needs no capability grants at all. Same argument themes make.
 
-## The ten
+## The eleven
 
-None of them is forced. The node default is "no style", so this plugin is inert until
-someone picks one.
+None of them is forced. An agent defaults to its own instructions and tone, so this
+plugin is inert until a profile is assigned to an agent.
 
 | Style | `keep-coding-instructions` | What it does |
 | --- | --- | --- |
@@ -72,6 +73,7 @@ someone picks one.
 | **Plain text** | `false` | No headers, bullets, bold or backticks — prose for pasting into an email, a commit message, or a chat that does not render markdown. Code blocks are the one exception. |
 | **Plain Technical** | `true` | Simplified Technical English (ASD-STE100) — sentences under 20 words, one meaning per word, instructions as numbered commands. Paths, commands, error strings and numbers stay verbatim. |
 | **No AI slop** | `true` | The named AI-writing patterns (puffery, colon reveals, faux-insight setups, recap endings, the mic-drop last line) kept out of the answer as it is written. Exact text (code, identifiers, error strings, paths) is exempt from the word list. |
+| **No Hype** | `true` | Facts, evidence, uncertainty and tradeoffs in neutral language. No praise, sales language, superlatives, artificial urgency or unsupported claims of success. |
 | **Bro** | `false` | Plain human speech: no jargon, no preamble, short blunt sentences, bad news first. File names, commands, error strings and numbers stay exact. |
 | **Gen Z** | `false` | The same answer in gen z vernacular — casual, lowercase, low ceremony. |
 
@@ -87,12 +89,13 @@ review catches what survived them. Running both is fine.
 [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) (MIT). Upstream ships it as
 a *skill*, which means the agent decides per turn whether the task looks like one it
 applies to. That is exactly wrong for a formatting need that does not come and go — so
-it is an output style here, selected once and applied to every turn until you pick
-something else.
+it is an output style here, assigned once to an agent and applied to every turn until
+you pick something else.
 
 ## Writing your own
 
-Drop a `.md` file into your `output-styles/` directory and it shows up in the picker.
+Drop a `.md` file into your `output-styles/` directory and it shows up in the agent
+editor's personality profile picker.
 Four sources merge into one registry, later ones winning on an id collision:
 
 | Source | Location | Writable |
@@ -109,7 +112,7 @@ working directory and the repo root, nearest wins.
 The styles in this package are read-only, because they are part of a signed package.
 Editing one in the UI forks it to your user root rather than mutating the package.
 
-Some things that make a style work, learned writing these nine:
+Some things that make a style work, learned writing these eleven:
 
 - **Say what to do, not what not to do.** "Lead with the next action" beats "don't
   bury the answer" — a negative constraint leaves the shape unspecified.
@@ -139,13 +142,14 @@ because the mirror script's vendoring glob and Core's path validator both depend
 
 ## Store tab
 
-`contributes.store_tabs[]` declares the **Output Styles** tab in the Store's catalog
-group, sourced from `GET /api/output-styles` and installing with
-`POST /api/output-styles/select`. Both are Core-relative paths: this plugin has no
-sidecar, so nothing is proxied through `/api/ext/`, and the desktop renderer only
-fetches paths that pass its `isCoreApiPath` check.
+`contributes.store_tabs[]` declares the **Personality Profiles** tab in the Store's
+catalog group, sourced from `GET /api/output-styles`. It is browse-only because a
+profile belongs to an agent; choose the profile from the agent editor instead. The
+path is Core-relative: this plugin has no sidecar, so nothing is proxied through
+`/api/ext/`, and the desktop renderer only fetches paths that pass its
+`isCoreApiPath` check.
 
-The tab lists every style on the node, not just the nine here — a user or project style
+The tab lists every style on the node, not just the eleven here — a user or project style
 appears alongside them and is selectable the same way.
 
 ## Tests

@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/reactions",
   "name": "Message Reactions",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "stability": "experimental",
   "category": "Productivity",
   "description": "Adds emoji reactions to persisted chat messages through the shared message-action contribution surface.",
@@ -34,7 +34,7 @@
         "id": "reactions.picker",
         "label": "Add reaction",
         "icon": "smile",
-        "target": "user",
+        "target": "any",
         "kind": "menu",
         "capability": "reactions.toggle",
         "args": {

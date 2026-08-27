@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/sample-widget",
   "name": "Sample Widget",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "stability": "experimental",
   "hidden": true,
   "category": "Developer Tools",

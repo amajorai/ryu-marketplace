@@ -15,7 +15,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/security-scanner",
   "name": "Security Scanner",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "stability": "experimental",
   "description": "A model-agnostic security workbench for Ryu: map the architecture, hunt for vulnerabilities, validate findings with independent agents, review diffs, and draft safe fixes without changing files.",
   "tagline": "Threat model, hunt, verify, and safely fix",
