@@ -6,7 +6,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "expect-cli@latest",
+        "expect-cli@0.1.3",
         "mcp"
       ]
     }

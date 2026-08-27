@@ -12,10 +12,19 @@
 // give: REPLACE semantics, and an optional Enter afterwards. agent-browser's
 // type tool takes `clear`, which covers the first; `submit` needs a second
 // call, which is why this verb is adapted rather than bound declaratively.
+if (
+	input.tab_id !== undefined &&
+	input.tab_id !== null &&
+	input.tab_id !== ""
+) {
+	await callNamed("agentbrowser.agent_browser_tab_switch", {
+		tab: input.tab_id,
+	});
+}
 const typed = await callTool({
 	selector: input.ref,
 	text: input.text,
-	clear: true,
+	clear: input.replace === true,
 });
 if (!input.submit) {
 	return { ok: true, ref: input.ref, submitted: false, raw: typed };

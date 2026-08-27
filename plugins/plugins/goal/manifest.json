@@ -1,10 +1,5 @@
 {
-  "tags": [
-    "agent",
-    "autonomy",
-    "goals",
-    "loop"
-  ],
+  "tags": ["agent", "autonomy", "goals", "loop"],
   "author": {
     "name": "Ryu",
     "url": "https://ryuhq.com"
@@ -15,16 +10,11 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/goal",
   "name": "Goal",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "stability": "experimental",
   "description": "Give the agent a goal with `/goal` or let an agent set one with `goal.set`; it keeps working until a judge model agrees the goal is actually met, re-prompting itself after every turn instead of stopping and waiting for you. `/goal clear` stops the loop; the judge model is configurable.",
   "tagline": "Keep working until a judge model says it's done",
-  "keywords": [
-    "agent",
-    "autonomy",
-    "goals",
-    "loop"
-  ],
+  "keywords": ["agent", "autonomy", "goals", "loop"],
   "category": "Productivity",
   "icon": "flag-03",
   "iconDither": {
@@ -72,9 +62,7 @@
         "description": "Set or replace the goal for the conversation you are currently working in. The conversation scope comes from the caller context, so the tool cannot target another chat. Use this when the user asks you to pursue a durable outcome; it resets goal progress and starts the judge loop from the next reply.",
         "input_schema": {
           "type": "object",
-          "required": [
-            "goal"
-          ],
+          "required": ["goal"],
           "properties": {
             "goal": {
               "type": "string",
@@ -89,14 +77,8 @@
       }
     }
   ],
-  "permission_grants": [
-    "tool:execute",
-    "hook:side-model",
-    "storage:kv"
-  ],
-  "activation_events": [
-    "*"
-  ],
+  "permission_grants": ["tool:execute", "hook:side-model", "storage:kv"],
+  "activation_events": ["*"],
   "contributes": {
     "slash_commands": [
       {
@@ -124,9 +106,7 @@
         "id": "goal.loop",
         "on": "post_assistant_turn",
         "match": {
-          "commands": [
-            "/goal"
-          ],
+          "commands": ["/goal"],
           "stateful": true
         },
         "code_file": "hooks/loop.js"

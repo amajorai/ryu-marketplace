@@ -7,9 +7,9 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/no-more-mistakes",
   "name": "No More Mistakes",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "stability": "experimental",
-  "description": "Notices when you correct the agent, writes the lesson down as a one-line rule in a Space, and hands every later session that rule list before the first word is generated — so a mistake you have already fixed once stops coming back. Each rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
+  "description": "Notices when you correct the agent, proposes a one-line lesson for your confirmation, and hands only explicitly saved rules to later sessions before the first word is generated. Each confirmed rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
   "tagline": "Correct it once, not every week",
   "keywords": ["memory", "learning", "mistakes", "rules", "quality"],
   "category": "Knowledge & Memory",
@@ -52,7 +52,7 @@
             "type": "toggle",
             "pref_key": "mistakes-capture",
             "label": "Learn from corrections",
-            "description": "When a message reads as a correction, a side model turns what went wrong into one durable rule and files it in the Space below. Off leaves `/mistakes add` as the only way in.",
+            "description": "When a message reads as a correction, a side model proposes a rule as a note. Nothing is saved until you explicitly confirm it with `/mistakes add`.",
             "default": true
           },
           {

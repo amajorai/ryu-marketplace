@@ -9,10 +9,13 @@ const raw = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
 const hook = raw.contributes.turn_hooks[0];
 hook.code = readFileSync(join(HERE, hook.code_file), "utf8");
 const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
-const run = (ctx, host) => new AsyncFunction("ctx", "host", hook.code)(ctx, host);
+const run = (ctx, host) =>
+	new AsyncFunction("ctx", "host", hook.code)(ctx, host);
 
 function harness(seed) {
-	const store = new Map(seed ? [["tokenmaxxing:global", JSON.stringify(seed)]] : []);
+	const store = new Map(
+		seed ? [["tokenmaxxing:run-1", JSON.stringify(seed)]] : []
+	);
 	const notifications = [];
 	return {
 		notifications,
@@ -26,10 +29,16 @@ function harness(seed) {
 	};
 }
 
-const event = (active_count, transition_id, agent_id = "worker-a") => ({
+const event = (
+	active_count,
+	transition_id,
+	agent_id = "worker-a",
+	run_active_count = active_count
+) => ({
 	run_id: "run-1",
 	agent_id,
 	active_count,
+	run_active_count,
 	transition_id,
 });
 
@@ -42,29 +51,64 @@ test("manifest uses flat code_file and narrow grants", () => {
 
 test("notifies exactly once on 1-to-0", async () => {
 	const h = harness();
-	await run({ event: event(1, 10) }, h.host);
-	await run({ event: event(0, 11) }, h.host);
+	await run({ event: event(1, 10, "worker-a", 1) }, h.host);
+	await run({ event: event(0, 11, "worker-a", 0) }, h.host);
 	await run({ event: event(0, 11) }, h.host);
 	assert.equal(h.notifications.length, 1);
 });
 
 test("parallel and unrelated transitions stay silent", async () => {
 	const h = harness();
-	await run({ event: { ...event(1, 20), run_id: "run-a" } }, h.host);
-	await run({ event: { ...event(2, 21), run_id: "run-b" } }, h.host);
-	await run({ event: { ...event(1, 22), run_id: "run-a" } }, h.host);
-	await run({ event: { ...event(0, 23), run_id: "run-b" } }, h.host);
-	await run({ event: { ...event(0, 24), run_id: "unrelated" } }, h.host);
-	assert.equal(h.notifications.length, 1);
+	await run(
+		{ event: { ...event(1, 20, "worker-a", 1), run_id: "run-a" } },
+		h.host
+	);
+	await run(
+		{ event: { ...event(2, 21, "worker-b", 1), run_id: "run-b" } },
+		h.host
+	);
+	await run(
+		{ event: { ...event(1, 22, "worker-a", 0), run_id: "run-a" } },
+		h.host
+	);
+	await run(
+		{ event: { ...event(0, 23, "worker-b", 0), run_id: "run-b" } },
+		h.host
+	);
+	await run(
+		{ event: { ...event(0, 24, "unrelated", 0), run_id: "unrelated" } },
+		h.host
+	);
+	assert.equal(h.notifications.length, 2);
 });
 
 test("malformed, out-of-order, and failed notification paths fail closed", async () => {
-	const h = harness({ active_count: 1, transition_id: 50 });
-	await run({ event: event(0, 49) }, h.host);
-	await run({ event: { run_id: "run-1", active_count: 0, transition_id: 51 } }, h.host);
+	const h = harness({
+		active_count: 1,
+		run_active_count: 1,
+		transition_id: 50,
+	});
+	await run({ event: event(0, 49, "worker-a", 0) }, h.host);
+	await run(
+		{
+			event: {
+				run_id: "run-1",
+				active_count: 0,
+				run_active_count: 0,
+				transition_id: 51,
+			},
+		},
+		h.host
+	);
 	assert.equal(h.notifications.length, 0);
-	const failing = harness({ active_count: 1, transition_id: 60 });
-	failing.host.notify = async () => { throw new Error("unavailable"); };
-	await run({ event: event(0, 61) }, failing.host);
+	const failing = harness({
+		active_count: 1,
+		run_active_count: 1,
+		transition_id: 60,
+	});
+	failing.host.notify = async () => {
+		throw new Error("unavailable");
+	};
+	await run({ event: event(0, 61, "worker-a", 0) }, failing.host);
 	assert.equal(failing.notifications.length, 0);
 });

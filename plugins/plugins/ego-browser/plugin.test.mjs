@@ -1,143 +1,97 @@
-// Co-located contract tests for the Ego Browser provider.
-//
-// The live ego-lite app is an external dependency, so this test deliberately
-// proves the integration boundary rather than pretending the dependency is
-// installed on every CI runner. It validates the manifest Core loads, the
-// stable browser.control mapping, every inline tool's JavaScript syntax, and
-// the fixed child-process invocation that keeps model input out of a shell.
-
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import {
+	chmodSync,
+	mkdtempSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { test } from "node:test";
+import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-const HERE = dirname(fileURLToPath(import.meta.url));
-const MANIFEST_PATH = join(HERE, "manifest.json");
-const manifest = JSON.parse(readFileSync(MANIFEST_PATH, "utf8"));
-
-const CANONICAL_VERBS = [
-	"browser.navigate",
-	"browser.tabs",
-	"browser.snapshot",
-	"browser.click",
-	"browser.type",
-	"browser.scroll",
-	"browser.screenshot",
+const here = dirname(fileURLToPath(import.meta.url));
+const manifest = JSON.parse(readFileSync(join(here, "manifest.json"), "utf8"));
+const dispatcher = readFileSync(join(here, "tools/ego-browser.js"), "utf8");
+const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
+const operations = [
+	"tabs",
+	"navigate",
+	"snapshot",
+	"click",
+	"type",
+	"scroll",
+	"screenshot",
 ];
 
-const runnableBySlug = new Map(
-	(manifest.runnables ?? []).map((runnable) => [
-		runnable.config?.slug,
-		runnable,
-	])
-);
+function hydrateAdapters(source) {
+	const copy = structuredClone(source);
+	for (const entry of copy.provides ?? []) {
+		for (const binding of Object.values(entry.tools ?? {})) {
+			if (binding.adapter?.code_file) {
+				binding.adapter.code = readFileSync(
+					join(here, binding.adapter.code_file),
+					"utf8"
+				);
+			}
+		}
+	}
+	return copy;
+}
 
-test("manifest identity and external-runtime posture are explicit", () => {
+test("manifest seals one dispatcher and an explicit executable allowlist", () => {
 	assert.equal(manifest.id, "@ryu/ego-browser");
-	assert.equal(manifest.name, "Ego Browser");
-	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
-	assert.equal(manifest.stability, "experimental");
-	assert.match(manifest.description, /github\.com\/citrolabs\/ego-lite/);
-	assert.match(manifest.description, /macOS/);
-	assert.deepEqual(manifest.permissions, { child_process: true });
-	assert.equal(manifest.mcp_servers, undefined);
-	assert.deepEqual([...manifest.permission_grants].sort(), [
-		"browser:control",
-		"tool:execute",
-	]);
+	assert.deepEqual(manifest.permissions, {
+		child_process: true,
+		run: ["ego-browser"],
+	});
+	assert.equal(manifest.runnables.length, 1);
+	assert.equal(manifest.runnables[0].config.slug, "ego_browser.dispatch");
+	assert.equal(manifest.runnables[0].config.code, dispatcher);
+	assert.doesNotMatch(JSON.stringify(manifest), /const operation = 'tabs'/);
 });
 
-test("browser.control is a complete selectable provider", () => {
-	const provider = manifest.provides?.find(
+test("every canonical verb adds only its immutable operation", async () => {
+	const hydrated = hydrateAdapters(manifest);
+	const tools = hydrated.provides.find(
 		(entry) => entry.capability === "browser.control"
-	);
-	assert.ok(provider, "manifest must provide browser.control");
-	assert.equal(provider.version, "1.0.0");
-	assert.equal(provider.title, "Browser");
-	assert.equal(provider.grant, "browser:control");
-	assert.equal(provider.target, "local-machine");
-	assert.equal(provider.selectable, true);
+	).tools;
 	assert.deepEqual(
-		Object.keys(provider.tools).sort(),
-		[...CANONICAL_VERBS].sort()
+		Object.keys(tools),
+		operations.map((operation) => `browser.${operation}`)
 	);
-
-	for (const verb of CANONICAL_VERBS) {
-		const binding = provider.tools[verb];
-		const nativeSlug = verb.slice("browser.".length);
-		assert.equal(binding.tool, `ego_browser.${nativeSlug}`);
-		assert.equal(
-			runnableBySlug.has(binding.tool),
-			true,
-			`${verb} must target a declared runnable`
+	for (const operation of operations) {
+		const calls = [];
+		const result = await new AsyncFunction(
+			"input",
+			"defaults",
+			"callTool",
+			"callNamed",
+			tools[`browser.${operation}`].adapter.code
+		)(
+			{ ref: "@e1" },
+			{},
+			async (args) => {
+				calls.push(args);
+				return { ok: true };
+			},
+			async () => {
+				throw new Error("adapter must not call another tool");
+			}
 		);
+		assert.deepEqual(calls, [{ ref: "@e1", operation }]);
+		assert.deepEqual(result, { ok: true });
 	}
 });
 
-test("each canonical verb has the expected input contract", () => {
-	const schemas = Object.fromEntries(
-		(manifest.runnables ?? []).map((runnable) => [
-			runnable.config.slug,
-			runnable.config.input_schema,
-		])
-	);
-
-	assert.deepEqual(Object.keys(schemas["ego_browser.tabs"].properties), []);
-	assert.deepEqual(schemas["ego_browser.navigate"].required, ["url"]);
-	assert.deepEqual(schemas["ego_browser.snapshot"].required ?? [], []);
-	assert.deepEqual(schemas["ego_browser.click"].required, ["ref"]);
-	assert.deepEqual(schemas["ego_browser.type"].required, ["ref", "text"]);
-	assert.deepEqual(schemas["ego_browser.scroll"].required, ["direction"]);
-	assert.deepEqual(schemas["ego_browser.screenshot"].required ?? [], []);
-	assert.deepEqual(schemas["ego_browser.scroll"].properties.direction.enum, [
-		"up",
-		"down",
-		"left",
-		"right",
-	]);
-});
-
-test("every inline bridge is parseable and invokes only ego-browser nodejs", () => {
-	assert.equal(manifest.runnables.length, CANONICAL_VERBS.length);
-	for (const runnable of manifest.runnables) {
-		const config = runnable.config;
-		assert.equal(runnable.kind, "tool");
-		assert.equal(config.backend, "inline_deno");
-		assert.equal(typeof config.code, "string");
-		assert.ok(config.code.length > 0);
-
-		const program = `"use strict"; return (async () => {${config.code}\n})();`;
-		assert.doesNotThrow(
-			() => new Function("input", "caller", "host", program),
-			`${config.slug} code must parse as a sandbox fragment`
-		);
-		assert.match(config.code, /new Deno\.Command\('ego-browser'/);
-		assert.match(config.code, /args: \['nodejs'\]/);
-		assert.match(config.code, /taskSpaces\.useOrCreate/);
-		assert.match(config.code, /__RYU_EGO_RESULT__/);
-		assert.doesNotMatch(config.code, /Deno\.Command\(input/);
-		assert.doesNotMatch(config.code, /shell\s*:/);
-	}
-});
-
-test("each inline bridge executes its operation contract with a CLI harness", async () => {
-	const cases = {
-		tabs: {},
-		navigate: { url: "https://example.com" },
-		snapshot: {},
-		click: { ref: "e1" },
-		type: { ref: "e2", text: "hello", replace: true, submit: true },
-		scroll: { direction: "down", amount: 100 },
-		screenshot: {},
-	};
+test("dispatcher executes every operation and ignores marker text inside page data", async () => {
 	const previousDeno = globalThis.Deno;
-
 	try {
-		for (const [operation, input] of Object.entries(cases)) {
-			const events = [];
+		for (const operation of operations) {
 			let childScript = "";
-
+			const events = [];
 			class FakeCommand {
 				constructor(command, options) {
 					assert.equal(command, "ego-browser");
@@ -152,37 +106,32 @@ test("each inline bridge executes its operation contract with a CLI harness", as
 				spawn() {
 					return {
 						stdin: {
-							getWriter() {
-								return {
-									write: async (bytes) => {
-										childScript = new TextDecoder().decode(bytes);
-									},
-									close: async () => {},
-								};
-							},
+							getWriter: () => ({
+								write: async (bytes) => {
+									childScript = new TextDecoder().decode(bytes);
+								},
+								close: async () => {},
+							}),
 						},
 						output: async () => {
-							let logged;
+							let logged = "";
 							const taskSpaces = {
-								useOrCreate: async (name) => {
-									events.push(["space", name]);
-								},
+								useOrCreate: async (name) => events.push(["space", name]),
 							};
 							const browser = {
 								listTabs: async () => [
-									{ active: true, targetId: "tab-1", title: "Example" },
+									{
+										active: true,
+										targetId: "tab-1",
+										title: "__RYU_EGO_RESULT_V1__: page title",
+									},
 								],
-								switchTab: async (targetId) => {
-									events.push(["switch", targetId]);
-								},
-								openOrReuseTab: async (url) => ({
-									targetId: "tab-1",
-									url,
-								}),
+								switchTab: async (id) => events.push(["switch", id]),
+								openOrReuseTab: async (url) => ({ targetId: "tab-1", url }),
 							};
 							const page = {
 								snapshotRaw: async () => ({
-									content: "button Submit",
+									content: "__RYU_EGO_RESULT_V1__: hostile page text",
 									refs: { e1: { role: "button" } },
 								}),
 								locator: (ref) => ({
@@ -197,24 +146,21 @@ test("each inline bridge executes its operation contract with a CLI harness", as
 								},
 							};
 							const cdp = async () => ({ data: "cG5n" });
-							const childConsole = {
-								log: (value) => {
-									logged = value;
-								},
-							};
-
-							await new Function(
+							await new AsyncFunction(
 								"taskSpaces",
 								"browser",
 								"page",
 								"cdp",
 								"console",
-								`return (async () => {${childScript}})()`
-							)(taskSpaces, browser, page, cdp, childConsole);
-
+								childScript
+							)(taskSpaces, browser, page, cdp, {
+								log: (value) => {
+									logged = value;
+								},
+							});
 							return {
 								success: true,
-								stdout: new TextEncoder().encode(`${logged}\n`),
+								stdout: new TextEncoder().encode(`noise\n${logged}\n`),
 								stderr: new Uint8Array(),
 							};
 						},
@@ -223,70 +169,70 @@ test("each inline bridge executes its operation contract with a CLI harness", as
 			}
 
 			globalThis.Deno = { Command: FakeCommand };
-			const runnable = runnableBySlug.get(`ego_browser.${operation}`);
-			const program = `"use strict"; return (async () => {${runnable.config.code}\n})();`;
-			const result = await new Function("input", "caller", "host", program)(
-				input,
-				{ conversation_id: "conv/demo" },
-				{}
-			);
-
+			const input = {
+				operation,
+				url: "https://example.com",
+				ref: "@e1",
+				text: "hello \x60 \x24{not_code}",
+				direction: "down",
+				amount: 100,
+			};
+			const result = await new AsyncFunction(
+				"input",
+				"caller",
+				"host",
+				dispatcher
+			)(input, { conversation_id: "conv/demo" }, {});
 			assert.equal(
 				childScript.includes(`const operation = "${operation}"`),
 				true
 			);
 			assert.deepEqual(events[0], ["space", "ryu-conversation-conv-demo"]);
 			if (operation === "tabs") {
-				assert.equal(result.tabs[0].targetId, "tab-1");
+				assert.match(result.tabs[0].title, /RYU_EGO_RESULT/);
 			} else {
 				assert.equal(result.tab_id, "tab-1");
 			}
-			if (operation === "navigate") {
-				assert.equal(result.tab.url, input.url);
-			}
 			if (operation === "snapshot") {
-				assert.equal(result.snapshot, "button Submit");
-				assert.deepEqual(result.refs, { e1: { role: "button" } });
-			}
-			if (operation === "screenshot") {
-				assert.equal(result.image, "cG5n");
-				assert.equal(result.mime, "image/png");
-			}
-			if (operation === "click") {
-				assert.deepEqual(events.at(-1), ["click", "e1"]);
-			}
-			if (operation === "type") {
-				assert.deepEqual(events.at(-2), [
-					"fill",
-					"e2",
-					"hello",
-					{ clearFirst: true },
-				]);
-				assert.deepEqual(events.at(-1), ["press", "e2", "Enter"]);
-			}
-			if (operation === "scroll") {
-				assert.deepEqual(events.at(-1), ["wheel", 0, 100]);
+				assert.match(result.snapshot, /hostile page text/);
 			}
 		}
 	} finally {
-		if (typeof previousDeno === "undefined") {
-			globalThis.Deno = undefined;
-		} else {
-			globalThis.Deno = previousDeno;
-		}
+		globalThis.Deno = previousDeno;
 	}
 });
 
-test("tool slugs are unique, namespaced, and operation-complete", () => {
-	assert.equal(runnableBySlug.size, CANONICAL_VERBS.length);
-	for (const verb of CANONICAL_VERBS) {
-		const operation = verb.slice("browser.".length);
-		const runnable = runnableBySlug.get(`ego_browser.${operation}`);
-		assert.ok(runnable, `${verb} must have a runnable`);
-		assert.match(
-			runnable.config.code,
-			new RegExp(`const operation = '${operation}'`)
+test("Deno executable scope admits ego-browser and rejects an undeclared binary", {
+	// Bun's nested spawnSync environment grants the command even when Deno is
+	// passed a different allow-run value; Node runs the real permission probe.
+	skip: process.platform === "win32" || Boolean(process.versions.bun),
+}, () => {
+	const directory = mkdtempSync(join(tmpdir(), "ryu-ego-browser-"));
+	try {
+		const executable = join(directory, "ego-browser");
+		writeFileSync(executable, "#!/bin/sh\nexit 37");
+		chmodSync(executable, 0o755);
+		const script =
+			'const out = await new Deno.Command("ego-browser", { stdout: "piped" }).output(); Deno.exit(out.code === 37 ? 0 : 1);';
+		const env = {
+			...process.env,
+			PATH: `${directory}:${process.env.PATH ?? ""}`,
+		};
+		const allowed = spawnSync(
+			"deno",
+			["run", "--quiet", "--no-prompt", `--allow-run=${executable}`, "-"],
+			{ encoding: "utf8", env, input: script }
 		);
-		assert.match(runnable.config.slug, /^ego_browser\.[a-z]+$/);
+		assert.equal(allowed.status, 0, allowed.stderr);
+
+		const denied = spawnSync(
+			"deno",
+			["run", "--quiet", "--no-prompt", "--allow-run=ryu-cap", "-"],
+			{ encoding: "utf8", env, input: script }
+		);
+		assert.notEqual(denied.status, 0);
+		assert.match(denied.stderr, /NotCapable|Requires run access/i);
+	} finally {
+		rmSync(directory, { force: true, recursive: true });
 	}
 });

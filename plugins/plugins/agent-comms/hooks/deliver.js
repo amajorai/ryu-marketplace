@@ -19,14 +19,15 @@
 // the pre-turn path, which is why the plugin is not in `CORE_PREINSTALLED`.
 
 const MAX_SHOWN = 10;
+const AGENT_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
 
 const me = String(ctx.agent_id ?? "").trim();
-if (me === "") {
+if (!AGENT_ID.test(me)) {
 	return { kind: "none" };
 }
 
-const inboxKey = `inbox:${me}`;
-const raw = await host.storage.get(inboxKey);
+const inboxKey = `inbox:${encodeURIComponent(me)}`;
+let raw = await host.storage.get(inboxKey);
 if (raw === null || raw === undefined || raw === "") {
 	return { kind: "none" };
 }
@@ -45,10 +46,11 @@ if (messages.length === 0) {
 	return { kind: "none" };
 }
 
-// Delivered exactly once. Clearing BEFORE building the text means a failure
-// below loses a message; clearing after would risk delivering it every turn
-// forever, which is worse — a duplicated inbox is a loop the user pays for.
-await host.storage.delete(inboxKey);
+// Delivered exactly once. CAS clears only the snapshot we read; a concurrent
+// sender that appended after it will cause a retry rather than losing mail.
+if (!(await host.storage.compareAndSet(inboxKey, raw, null))) {
+	return { kind: "none" };
+}
 
 // Carry the chain depth onto this conversation so a relay the agent sends while
 // answering counts as the next hop rather than restarting at one. Both tools
@@ -58,7 +60,7 @@ const deepest = messages.reduce((acc, m) => {
 	return Number.isFinite(h) && h > acc ? h : acc;
 }, 0);
 if (ctx.conversation_id && deepest > 0) {
-	await host.storage.set(`hops.conv:${ctx.conversation_id}`, String(deepest));
+	await host.storage.set(`hops.conv:${encodeURIComponent(ctx.conversation_id)}`, String(deepest));
 }
 
 const shown = messages.slice(-MAX_SHOWN);

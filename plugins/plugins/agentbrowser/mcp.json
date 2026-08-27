@@ -6,7 +6,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "agent-browser",
+        "agent-browser@0.34.0",
         "mcp",
         "--tools",
         "all"

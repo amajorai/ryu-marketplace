@@ -26,8 +26,9 @@ scrapling install               # ONLY for the browser-backed tools (Chromium + 
 
 `scrapling` must be on `PATH` — Core launches the server as `scrapling mcp`. Nothing
 here is downloaded or managed by Ryu; this is a BYO install, exactly like the `spider`
-CLI. Until it is present the MCP server does not start, `web.extract` falls back to
-whichever other provider you select, and nothing errors.
+CLI. If Scrapling is selected before the binary works, `web.extract` reports the MCP
+tool as unavailable. Ryu does not retry another provider automatically; install
+Scrapling or explicitly select a working provider.
 
 ### Known upstream breakage: `mcp` 2.x
 

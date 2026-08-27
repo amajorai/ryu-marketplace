@@ -39,11 +39,12 @@ the browser.control provider back to **Agent Browser** or disable this plugin.
 
 ## Security and limits
 
-The bridge is a fixed inline_deno tool: it starts only ego-browser nodejs with a
-fixed argument list, passes the validated JSON input into a generated Node.js
-helper program, and never invokes a shell. It requests child-process permission
-but no direct filesystem or network permission; web traffic and authentication
-stay inside Ego lite. Ryu does not copy or expose Ego's login state.
+The bridge is one readable dispatcher sealed into the signed manifest, with tiny
+per-verb adapters. It starts only `ego-browser nodejs` with a fixed argument list,
+passes validated JSON input into the generated helper program, and never invokes a
+shell. Its sandbox grants `child_process` with an explicit `run: ["ego-browser"]`
+allowlist and no direct filesystem or network permission; web traffic and
+authentication stay inside Ego lite. Ryu does not copy or expose Ego's login state.
 
 This package intentionally provides the canonical browsing surface only. Agent
 Browser's recording and live-stream extras are not part of this provider.

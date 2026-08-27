@@ -10,10 +10,10 @@
 // What this is: the learning half. A correction ("no, never edit that file", "you
 // broke the build again") is the one moment where the user states, for free, a rule
 // they expect to hold forever — and today that rule lives exactly as long as the
-// chat window does. This hook catches the correction as it is typed, has a side
-// model compress it into ONE durable line, and files that line as a document in a
-// Space, where `no-more-mistakes.brief` reads it back at the start of every later
-// conversation.
+// chat window does. This hook catches the correction as it is typed and has a side
+// model compress it into ONE proposed line. It never persists model-derived text:
+// the user must explicitly confirm with `/mistakes add ...` before it becomes a
+// standing instruction.
 //
 // Why `pre_user_turn` and not `post_assistant_turn`: the correction is a USER
 // message. On the post phase the correcting message has not been typed yet — the
@@ -25,8 +25,8 @@
 //   1. It never returns `replace`. Rewriting the user's own words to smuggle a rule
 //      in would change what is persisted as their message — the one text in the
 //      conversation that must stay theirs. It returns `inject`, which appends to the
-//      outgoing turn only, so the rule takes effect immediately without editing the
-//      message the transcript will show.
+//      outgoing turn only. The proposal is shown as a note and takes effect only
+//      after explicit confirmation.
 //   2. It never files a rule the ledger already has. The existing titles go to the
 //      model with the correction, and a `duplicate` verdict ends the turn — a ledger
 //      that re-lists "don't run git stash" nine times is a ledger nobody reads.
@@ -39,7 +39,6 @@
 const MAX_ANSWER_CHARS = 6000;
 const MAX_CORRECTION_CHARS = 2000;
 const MAX_RULE_CHARS = 160;
-const MAX_WHY_CHARS = 600;
 const MAX_EXISTING_RULES = 40;
 const DEFAULT_SPACE_NAME = "Mistakes";
 
@@ -163,33 +162,17 @@ if (existingRules.some((r) => sameRule(r, rule))) {
 	return { kind: "none" };
 }
 
-const why = oneLine(verdict.why).slice(0, MAX_WHY_CHARS);
-try {
-	// Title carries the rule and body carries the evidence, on purpose: the Space
-	// document list shows titles, so the whole ruleset is readable — and deletable
-	// one row at a time — without opening anything.
-	const docId = await host.spaces.createDoc({ space_id: spaceId, title: rule });
-	await host.spaces.updateDoc({
-		doc_id: docId,
-		title: rule,
-		source: renderDoc(rule, why, answer, input),
-	});
-} catch (e) {
-	host.log("no-more-mistakes: filing the rule failed", e);
-	return { kind: "none" };
-}
-
-// Enforce it on the turn that just taught it. `inject` appends to the outgoing
-// message rather than replacing it, so the user's own words are still what gets
-// persisted and shown.
+// Model-derived rules are proposals only. Persistence and enforcement require
+// an explicit user command, so untrusted assistant/tool text can never become a
+// durable instruction through this hook.
 return {
-	kind: "inject",
+	kind: "note",
 	text:
-		"\n\n[No More Mistakes] Recorded this as a standing rule, kept in the " +
-		spaceName +
-		" Space and repeated at the start of every future chat: " +
+		"[No More Mistakes] Proposed standing rule: " +
 		rule +
-		". Apply it from now on, and do not thank the user for it — just follow it.",
+		". Nothing was saved. Confirm it explicitly with `/mistakes add " +
+		rule +
+		"` if you want it applied in future chats.",
 };
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -284,22 +267,4 @@ function sameRule(a, b) {
 function clampEnd(text, max) {
 	const s = String(text || "");
 	return s.length > max ? s.slice(-max) : s;
-}
-
-/** The document body: the rule, why it exists, and the exchange that produced it. */
-function renderDoc(rule, why, answer, correction) {
-	return (
-		"# " +
-		rule +
-		"\n\n**Why:** " +
-		(why || "Recorded from a correction in chat.") +
-		"\n\n**Recorded:** " +
-		new Date().toISOString() +
-		(convId ? "\n\n**Conversation:** " + convId : "") +
-		"\n\n## What the agent said\n\n" +
-		clampEnd(answer, MAX_ANSWER_CHARS) +
-		"\n\n## What the user replied\n\n" +
-		clampEnd(correction, MAX_CORRECTION_CHARS) +
-		"\n"
-	);
 }

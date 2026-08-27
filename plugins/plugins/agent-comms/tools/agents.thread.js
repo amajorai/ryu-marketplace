@@ -12,6 +12,7 @@
 // conversations. There is deliberately no "read agent X's mailbox" argument.
 
 const MAX_MESSAGES = 12;
+const AGENT_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
 
 async function readJson(key, fallback) {
 	const raw = await host.storage.get(key);
@@ -27,18 +28,19 @@ async function readJson(key, fallback) {
 }
 
 function threadKey(a, b) {
-	return a < b ? `thread:${a}|${b}` : `thread:${b}|${a}`;
+	const pair = [a, b].sort().map((value) => encodeURIComponent(value));
+	return `thread:${pair[0]}|${pair[1]}`;
 }
 
-const me =
-	String(caller.agent_id ?? "").trim() || String(input.from ?? "").trim();
-if (me === "") {
-	throw new Error(
-		"agents.thread: the calling agent could not be identified, and no 'from' was supplied"
-	);
+const me = String(caller.agent_id ?? "").trim();
+if (!AGENT_ID.test(me)) {
+	throw new Error("agents.thread: the calling agent could not be identified");
 }
 
 const peer = String(input.with ?? "").trim();
+if (peer !== "" && !AGENT_ID.test(peer)) {
+	throw new Error("agents.thread: 'with' must be a bounded agent id");
+}
 
 // No peer named → which agents has this one talked to at all. Derived from the
 // key set, so it lists real history rather than the node's whole roster (that is
@@ -55,10 +57,11 @@ if (peer === "") {
 		if (pair.length !== 2) {
 			continue;
 		}
-		if (pair[0] === me && !peers.includes(pair[1])) {
-			peers.push(pair[1]);
-		} else if (pair[1] === me && !peers.includes(pair[0])) {
-			peers.push(pair[0]);
+		const decoded = pair.map((value) => decodeURIComponent(value));
+		if (decoded[0] === me && !peers.includes(decoded[1])) {
+			peers.push(decoded[1]);
+		} else if (decoded[1] === me && !peers.includes(decoded[0])) {
+			peers.push(decoded[0]);
 		}
 	}
 	return {

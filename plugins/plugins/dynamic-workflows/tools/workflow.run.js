@@ -37,8 +37,8 @@ const delegates = tasks.map((task, index) => {
 	if (task.preset !== undefined && !presets.has(task.preset)) {
 		throw new Error(`workflow.run: task ${index + 1} has an unknown preset`);
 	}
-	if (task.tools !== undefined && (!Array.isArray(task.tools) || task.tools.some((tool) => typeof tool !== "string"))) {
-		throw new Error(`workflow.run: task ${index + 1} 'tools' must be an array of strings`);
+	if (task.tools !== undefined) {
+		throw new Error("workflow.run: inline delegates are prompt-only; use a registered agent_id for tools");
 	}
 	const delegate = {
 		id,
@@ -46,14 +46,13 @@ const delegates = tasks.map((task, index) => {
 		preset: task.preset ?? "code_read",
 	};
 	if (task.agent_id !== undefined) delegate.agent_id = task.agent_id.trim();
-	if (task.system_prompt !== undefined || task.model !== undefined || task.tools !== undefined) {
+	if (task.system_prompt !== undefined || task.model !== undefined) {
 		if (typeof task.system_prompt !== "string" || task.system_prompt.trim().length === 0) {
 			throw new Error(`workflow.run: task ${index + 1} 'system_prompt' must be non-empty`);
 		}
 		delegate.inline = {
 			system_prompt: task.system_prompt?.trim() ?? "",
 			...(task.model === undefined ? {} : { model: task.model }),
-			...(task.tools === undefined ? {} : { tools: task.tools }),
 		};
 	}
 	return delegate;

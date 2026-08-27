@@ -4,6 +4,9 @@
 
 const RULES_OPEN = "<ryu-rules-context>";
 const RULES_CLOSE = "</ryu-rules-context>";
+const MAX_RULES = 32;
+const MAX_RULE_CHARS = 8000;
+const MAX_RULE_CONTEXT_CHARS = 24_000;
 const RULES_BLOCK = new RegExp(
 	`\\n*${RULES_OPEN.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\n[\\s\\S]*?${RULES_CLOSE}`,
 	"g",
@@ -129,13 +132,47 @@ function matchesSimpleGlob(value, glob) {
 	}
 }
 
-function matchesGlob(value, glob) {
+const MAX_GLOB_LENGTH = 512;
+const MAX_BRACE_GROUPS = 8;
+const MAX_GLOB_EXPANSIONS = 256;
+
+function expandBraces(glob) {
 	const source = String(glob || "");
-	const brace = source.match(/\{([^{}]+)\}/);
-	if (!brace) return matchesSimpleGlob(value, source);
-	return brace[1]
-		.split(",")
-		.some((choice) => matchesGlob(value, source.replace(brace[0], choice.trim())));
+	if (source.length === 0 || source.length > MAX_GLOB_LENGTH) return [];
+	const groups = source.match(/\{[^{}]+\}/g) || [];
+	if (groups.length > MAX_BRACE_GROUPS) return [];
+
+	const pending = [source];
+	const expanded = [];
+	let expansionCount = 0;
+	while (pending.length > 0) {
+		const pattern = pending.pop();
+		const brace = pattern.match(/\{([^{}]+)\}/);
+		if (!brace) {
+			expanded.push(pattern);
+			continue;
+		}
+		const choices = brace[1]
+			.split(",")
+			.map((choice) => choice.trim())
+			.filter(Boolean);
+		expansionCount += choices.length;
+		if (
+			choices.length === 0 ||
+			expansionCount > MAX_GLOB_EXPANSIONS ||
+			pending.length + choices.length > MAX_GLOB_EXPANSIONS
+		) {
+			return [];
+		}
+		for (const choice of choices) {
+			pending.push(pattern.replace(brace[0], choice));
+		}
+	}
+	return expanded;
+}
+
+function matchesGlob(value, glob) {
+	return expandBraces(glob).some((pattern) => matchesSimpleGlob(value, pattern));
 }
 
 function globList(rule) {
@@ -190,6 +227,35 @@ function latestUserText(messages, input) {
 
 function appendRuleBlock(text, ruleText) {
 	return `${cleanText(text)}\n\n${RULES_OPEN}\n${ruleText}\n${RULES_CLOSE}`;
+}
+
+function boundedRuleText(rules) {
+	const sections = [];
+	let used = 0;
+	let omitted = Math.max(0, rules.length - MAX_RULES);
+	for (const rule of rules.slice(0, MAX_RULES)) {
+		const header = `### ${rule.label} (${rule.id})\n`;
+		let body = String(rule.text || "");
+		if (body.length > MAX_RULE_CHARS) {
+			body = `${body.slice(0, MAX_RULE_CHARS)}\n[rule truncated to fit the context budget]`;
+		}
+		const remaining = MAX_RULE_CONTEXT_CHARS - used;
+		if (remaining <= header.length + 64) {
+			omitted += 1;
+			continue;
+		}
+		let section = `${header}${body}`;
+		if (section.length > remaining) {
+			const keep = Math.max(0, remaining - header.length - 48);
+			section = `${header}${body.slice(0, keep)}\n[rule truncated to fit the context budget]`;
+		}
+		sections.push(section);
+		used += section.length + 2;
+	}
+	if (omitted > 0) {
+		sections.push(`[${omitted} additional rules omitted to fit the context budget]`);
+	}
+	return sections.join("\n\n").slice(0, MAX_RULE_CONTEXT_CHARS);
 }
 
 let agentId = String(ctx?.agent_id || "default");
@@ -254,9 +320,7 @@ if (turnsPerPlan > 0 && ctx?.conversation_id) {
 	}
 }
 
-const ruleText = selected
-	.map((rule) => `### ${rule.label} (${rule.id})\n${rule.text}`)
-	.join("\n\n");
+const ruleText = boundedRuleText(selected);
 if (countKey) {
 	try {
 		await host.storage.set(countKey, String(count + 1));

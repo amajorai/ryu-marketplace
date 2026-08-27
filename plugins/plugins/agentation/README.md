@@ -15,7 +15,7 @@ Ryu ships the plugin install-on-demand. After the user installs and enables it,
 Core launches the local server lazily as:
 
 ```bash
-npx -y agentation-mcp server
+npx -y agentation-mcp@1.2.0 server
 ```
 
 Node.js is required. Add the `Agentation` toolbar to the web app being reviewed

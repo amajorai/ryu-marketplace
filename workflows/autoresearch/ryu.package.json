@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/workflow/autoresearch",
   "name": "Autoresearch",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "kind": "workflow",
   "artifacts": [
     "workflow.json"
@@ -15,9 +15,14 @@
   "scopes": [
     "workflow"
   ],
-  "requires": {},
+  "requires": {
+    "@ryu/research": ">=0.1.17",
+    "@ryu/rlm": ">=0.1.16"
+  },
   "capabilities": [
-    "workflow:git-ledger-loop"
+    "workflow:verified-experiment-loop",
+    "research:durable-campaigns",
+    "rlm:recursive-evidence"
   ],
   "source": {
     "type": "github",
@@ -32,15 +37,16 @@
     "redacted": false
   },
   "metadata": {
-    "description": "Requires the Research app (@ryu/research) to be enabled — it provides the research__* tools this loop drives, and they do not exist on a node where the app is off. A researcher agent iterates on an experiment via those tools, keeping only improvements — a git-versioned autoresearch loop.",
+    "description": "Runs one durable Research campaign with snapshot-bound proposals, automatic recursive RLM analysis, engine-owned winner selection, and policy-based stopping.",
     "category": "research",
-    "pattern": "git-ledger-loop",
+    "pattern": "verified-experiment-loop",
     "icon": "FlaskConical",
-    "nodeCount": 3,
+    "nodeCount": 5,
     "tags": [
       "research",
+      "experiments",
       "loop",
-      "agent",
+      "rlm",
       "durable"
     ]
   }

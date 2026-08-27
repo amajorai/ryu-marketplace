@@ -17,7 +17,7 @@ const EXT_TOKEN = (env.RYU_EXT_TOKEN || "").trim();
 const CHATGPT_ORIGIN = "https://chatgpt.com";
 const TEMPORARY_CHAT_URL = `${CHATGPT_ORIGIN}/?temporary-chat=true`;
 const BROWSER_CAPABILITY_URL = CORE_PORT
-	? `http://127.0.0.1:${CORE_PORT}/api/host/capability/browser.control`
+	? `http://127.0.0.1:${CORE_PORT}/api/host/capability/browser.session`
 	: "";
 
 const DEFAULT_MODELS = [
@@ -46,7 +46,6 @@ const POLL_MS = 500;
 
 let hostContext = null;
 let activeTabId = null;
-let modelPreferenceCache = null;
 let completionQueue = Promise.resolve();
 
 class BridgeError extends Error {
@@ -116,34 +115,35 @@ function modelIdsFromPreference(value) {
 	if (typeof value !== "string") {
 		return DEFAULT_MODELS;
 	}
-	const ids = value
-		.split(",")
-		.map((item) => item.trim())
-		.filter((item) => /^[a-z0-9._/-]+$/i.test(item))
-		.slice(0, 12);
+	const ids = [];
+	for (const item of value.split(",")) {
+		const key = modelKey(item);
+		if (!Object.hasOwn(MODEL_PROFILES, key)) {
+			continue;
+		}
+		const id = `chatgpt-web/${key}`;
+		if (!ids.includes(id)) {
+			ids.push(id);
+		}
+	}
 	return ids.length > 0 ? ids : DEFAULT_MODELS;
 }
 
 async function configuredModels() {
-	if (modelPreferenceCache) {
-		return modelPreferenceCache;
-	}
 	if (!hostContext?.host?.call) {
-		modelPreferenceCache = DEFAULT_MODELS;
-		return modelPreferenceCache;
+		return DEFAULT_MODELS;
 	}
 	try {
 		const preference = await hostContext.host.call("preferences.get", {
 			key: "chatgpt-web.models",
 		});
-		modelPreferenceCache = modelIdsFromPreference(preference);
+		return modelIdsFromPreference(preference);
 	} catch (error) {
 		log("warn", "model preference unavailable; using defaults", {
 			error: error instanceof Error ? error.message : "unknown error",
 		});
-		modelPreferenceCache = DEFAULT_MODELS;
+		return DEFAULT_MODELS;
 	}
-	return modelPreferenceCache;
 }
 
 function jsonError(error) {

@@ -21,7 +21,7 @@
       "displayName": "Expect",
       "mcp": {
         "expect": {
-          "description": "Expect — test the current agent changes in a real browser with Playwright. Launched via `npx -y expect-cli@latest mcp`; requires Node.js and downloads the CLI on first use. Ask the agent to run the Expect workflow after making UI changes."
+          "description": "Expect — test the current agent changes in a real browser with Playwright. Launched via `npx -y expect-cli@0.1.3 mcp`; requires Node.js and downloads the pinned CLI on first use. Ask the agent to run the Expect workflow after making UI changes."
         }
       }
     }

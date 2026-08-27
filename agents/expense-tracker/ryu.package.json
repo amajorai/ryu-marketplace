@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/expense-tracker",
+  "name": "Expense Tracker",
+  "version": "0.2.1",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Record expenses",
+    "Summarize spending",
+    "Correct ledger entries"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/expense-tracker",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Keep a clear, local record of where your money went.",
+    "category": "Productivity",
+    "description": "Records and summarizes personal expenses through Ryu's local Expenses ledger, with a visual app available when you want to inspect the entries.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Record $18.40 for lunch today in Food.",
+      "How much did I spend on Transport this month?"
+    ],
+    "featuredRank": 118
+  }
+}

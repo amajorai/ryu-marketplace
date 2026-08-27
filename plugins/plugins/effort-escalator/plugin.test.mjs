@@ -4,9 +4,11 @@ import path from "node:path";
 import { test } from "node:test";
 
 const ROOT = path.resolve(import.meta.dirname);
-const manifest = JSON.parse(await readFile(path.join(ROOT, "manifest.json"), "utf8"));
+const manifest = JSON.parse(
+	await readFile(path.join(ROOT, "manifest.json"), "utf8")
+);
 const usagePacer = JSON.parse(
-	await readFile(path.join(ROOT, "../usage-pacer/manifest.json"), "utf8"),
+	await readFile(path.join(ROOT, "../usage-pacer/manifest.json"), "utf8")
 );
 
 async function hydratedHooks(source) {
@@ -14,12 +16,12 @@ async function hydratedHooks(source) {
 		(source.contributes?.turn_hooks ?? []).map(async (hook) => ({
 			...hook,
 			code: await readFile(path.join(ROOT, hook.code_file), "utf8"),
-		})),
+		}))
 	);
 }
 
 async function runHook(hook, ctx, host) {
-	const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+	const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
 	return new AsyncFunction("ctx", "host", hook.code)(ctx, host);
 }
 
@@ -39,11 +41,15 @@ function stuckHost(enabled = "true", onSet = () => {}, options = {}) {
 			},
 		},
 		async getPreference({ key }) {
-			if (key === "effort-escalator-enabled") return enabled;
+			if (key === "effort-escalator-enabled") {
+				return enabled;
+			}
 			if (key === "effort-escalator-rules") {
 				return JSON.stringify({
 					global: {
-						...(maxEscalations === undefined ? {} : { max_escalations: maxEscalations }),
+						...(maxEscalations === undefined
+							? {}
+							: { max_escalations: maxEscalations }),
 						ladder,
 					},
 				});
@@ -53,8 +59,15 @@ function stuckHost(enabled = "true", onSet = () => {}, options = {}) {
 	};
 }
 
-function judgeHost({ escalations, maxEscalations, onSet = () => {} }) {
-	let state = { checked_at: Date.now() - 31 * 60 * 1000, escalations };
+function judgeHost({
+	escalations,
+	maxEscalations,
+	afterMinutes,
+	checkedAgoMs = 31 * 60 * 1000,
+	onJudge = () => {},
+	onSet = () => {},
+}) {
+	let state = { checked_at: Date.now() - checkedAgoMs, escalations };
 	return {
 		storage: {
 			async get() {
@@ -66,11 +79,18 @@ function judgeHost({ escalations, maxEscalations, onSet = () => {} }) {
 			},
 		},
 		async getPreference({ key }) {
-			if (key === "effort-escalator-enabled") return "true";
+			if (key === "effort-escalator-enabled") {
+				return "true";
+			}
 			if (key === "effort-escalator-rules") {
 				return JSON.stringify({
 					global: {
-						...(maxEscalations === undefined ? {} : { max_escalations: maxEscalations }),
+						...(maxEscalations === undefined
+							? {}
+							: { max_escalations: maxEscalations }),
+						...(afterMinutes === undefined
+							? {}
+							: { after_minutes: afterMinutes }),
 						ladder: [
 							{ from: "gpt-4o-mini", to: "gpt-4o" },
 							{ from: "gpt-4o", to: "o3" },
@@ -82,6 +102,7 @@ function judgeHost({ escalations, maxEscalations, onSet = () => {} }) {
 			return "true";
 		},
 		async sideModel() {
+			onJudge();
 			return "STUCK: yes\nThe worker is not making progress.";
 		},
 	};
@@ -89,21 +110,25 @@ function judgeHost({ escalations, maxEscalations, onSet = () => {} }) {
 
 test("declares explicit precedence over Usage Pacer", () => {
 	const hooks = [
-		...manifest.contributes.turn_hooks.filter((hook) => hook.on === "pre_model_select").map((hook) => ({
-			plugin: manifest.id,
-			id: hook.id,
-			priority: hook.priority ?? 0,
-		})),
-		...usagePacer.contributes.turn_hooks.filter((hook) => hook.on === "pre_model_select").map((hook) => ({
-			plugin: usagePacer.id,
-			id: hook.id,
-			priority: hook.priority ?? 0,
-		})),
+		...manifest.contributes.turn_hooks
+			.filter((hook) => hook.on === "pre_model_select")
+			.map((hook) => ({
+				plugin: manifest.id,
+				id: hook.id,
+				priority: hook.priority ?? 0,
+			})),
+		...usagePacer.contributes.turn_hooks
+			.filter((hook) => hook.on === "pre_model_select")
+			.map((hook) => ({
+				plugin: usagePacer.id,
+				id: hook.id,
+				priority: hook.priority ?? 0,
+			})),
 	].sort(
 		(left, right) =>
 			right.priority - left.priority ||
 			left.plugin.localeCompare(right.plugin) ||
-			left.id.localeCompare(right.id),
+			left.id.localeCompare(right.id)
 	);
 
 	assert.equal(hooks[0].plugin, manifest.id);
@@ -122,7 +147,7 @@ test("step.effort is a select_model request field, not only a reason", async () 
 			agent_id: "agent-1",
 			event: { model: "gpt-4o" },
 		},
-		stuckHost("true", (...write) => writes.push(write)),
+		stuckHost("true", (...write) => writes.push(write))
 	);
 
 	assert.deepEqual(directive, {
@@ -131,10 +156,15 @@ test("step.effort is a select_model request field, not only a reason", async () 
 		effort: "high",
 		reason: "stuck-task escalation 1; effort high",
 	});
-	assert.deepEqual(writes, [["effort-escalator:conversation-1", {
-		stuck: false,
-		escalations: 1,
-	}]]);
+	assert.deepEqual(writes, [
+		[
+			"effort-escalator:conversation-1",
+			{
+				stuck: false,
+				escalations: 1,
+			},
+		],
+	]);
 });
 
 test("does not escalate a stuck conversation when disabled", async () => {
@@ -147,7 +177,7 @@ test("does not escalate a stuck conversation when disabled", async () => {
 			agent_id: "agent-1",
 			event: { model: "gpt-4o" },
 		},
-		stuckHost("false"),
+		stuckHost("false")
 	);
 
 	assert.deepEqual(directive, { kind: "none" });
@@ -163,7 +193,7 @@ test("allows one pending escalation when max_escalations is one", async () => {
 			agent_id: "agent-1",
 			event: { model: "gpt-4o" },
 		},
-		stuckHost("true", () => {}, { maxEscalations: 1 }),
+		stuckHost("true", () => {}, { maxEscalations: 1 })
 	);
 
 	assert.equal(directive.kind, "select_model");
@@ -180,7 +210,7 @@ test("does not select a pending escalation above max_escalations", async () => {
 			agent_id: "agent-1",
 			event: { model: "gpt-4o" },
 		},
-		stuckHost("true", () => {}, { escalations: 2, maxEscalations: 1 }),
+		stuckHost("true", () => {}, { escalations: 2, maxEscalations: 1 })
 	);
 
 	assert.deepEqual(directive, { kind: "none" });
@@ -203,7 +233,7 @@ test("allows the third pending escalation with the default maximum", async () =>
 				{ from: "gpt-4o", to: "o3" },
 				{ from: "o3", to: "claude-sonnet" },
 			],
-		}),
+		})
 	);
 
 	assert.equal(directive.kind, "select_model");
@@ -221,7 +251,11 @@ test("judge increments to the configured maximum without exceeding it", async ()
 			agent_id: "agent-1",
 			transcript: [{ role: "user", content: "Please continue the task." }],
 		},
-		judgeHost({ escalations: 0, maxEscalations: 1, onSet: (...write) => writes.push(write) }),
+		judgeHost({
+			escalations: 0,
+			maxEscalations: 1,
+			onSet: (...write) => writes.push(write),
+		})
 	);
 
 	assert.equal(directive.kind, "note");
@@ -240,7 +274,11 @@ test("judge does not increment an escalation count already at the cap", async ()
 			agent_id: "agent-1",
 			transcript: [{ role: "user", content: "Please continue the task." }],
 		},
-		judgeHost({ escalations: 1, maxEscalations: 1, onSet: (...write) => writes.push(write) }),
+		judgeHost({
+			escalations: 1,
+			maxEscalations: 1,
+			onSet: (...write) => writes.push(write),
+		})
 	);
 
 	assert.deepEqual(directive, { kind: "none" });
@@ -258,10 +296,87 @@ test("judge permits the default maximum of three", async () => {
 			agent_id: "agent-1",
 			transcript: [{ role: "user", content: "Please continue the task." }],
 		},
-		judgeHost({ escalations: 2, onSet: (...write) => writes.push(write) }),
+		judgeHost({ escalations: 2, onSet: (...write) => writes.push(write) })
 	);
 
 	assert.equal(directive.kind, "note");
 	assert.match(directive.text, /escalation 3/);
 	assert.equal(writes.at(-1)[1].escalations, 3);
+});
+
+test("judge defaults a nonnumeric delay instead of running every turn", async () => {
+	const hook = (await hydratedHooks(manifest)).find(
+		(entry) => entry.id === "effort-escalator.judge"
+	);
+	let judgeCalls = 0;
+	const directive = await runHook(
+		hook,
+		{
+			conversation_id: "conversation-invalid-delay",
+			agent_id: "agent-1",
+			transcript: [{ role: "user", content: "Please continue the task." }],
+		},
+		judgeHost({
+			escalations: 0,
+			afterMinutes: "not-a-number",
+			checkedAgoMs: 60_000,
+			onJudge: () => {
+				judgeCalls += 1;
+			},
+		})
+	);
+
+	assert.deepEqual(directive, { kind: "none" });
+	assert.equal(judgeCalls, 0);
+});
+
+test("judge clamps negative and huge delays to safe bounds", async () => {
+	const hook = (await hydratedHooks(manifest)).find(
+		(entry) => entry.id === "effort-escalator.judge"
+	);
+	let judgeCalls = 0;
+	for (const [conversationId, afterMinutes, checkedAgoMs] of [
+		["negative-delay", -50, 30_000],
+		["huge-delay", 1e12, 23 * 60 * 60 * 1000],
+	]) {
+		const directive = await runHook(
+			hook,
+			{
+				conversation_id: conversationId,
+				agent_id: "agent-1",
+				transcript: [{ role: "user", content: "Please continue the task." }],
+			},
+			judgeHost({
+				escalations: 0,
+				afterMinutes,
+				checkedAgoMs,
+				onJudge: () => {
+					judgeCalls += 1;
+				},
+			})
+		);
+		assert.deepEqual(directive, { kind: "none" });
+	}
+	assert.equal(judgeCalls, 0);
+});
+
+test("judge clamps malformed escalation caps to the configured ladder", async () => {
+	const hook = (await hydratedHooks(manifest)).find(
+		(entry) => entry.id === "effort-escalator.judge"
+	);
+	for (const [conversationId, maxEscalations] of [
+		["invalid-cap", "not-a-number"],
+		["negative-cap", -99],
+	]) {
+		const directive = await runHook(
+			hook,
+			{
+				conversation_id: conversationId,
+				agent_id: "agent-1",
+				transcript: [{ role: "user", content: "Please continue the task." }],
+			},
+			judgeHost({ escalations: 3, maxEscalations })
+		);
+		assert.deepEqual(directive, { kind: "none" });
+	}
 });

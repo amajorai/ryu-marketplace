@@ -6,7 +6,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/expect",
   "name": "Expect",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "stability": "experimental",
   "description": "Browser-based QA for agent code. Expect reads the current changes, creates a test plan, and runs it in a real browser with Playwright to catch regressions in behavior, performance, security, and design.",
   "homepage": "https://www.expect.dev/",
@@ -30,8 +30,8 @@
   "mcp_servers": {
     "expect": {
       "command": "npx",
-      "args": ["-y", "expect-cli@latest", "mcp"],
-      "description": "Expect — test the current agent changes in a real browser with Playwright. Launched via `npx -y expect-cli@latest mcp`; requires Node.js and downloads the CLI on first use. Ask the agent to run the Expect workflow after making UI changes."
+      "args": ["-y", "expect-cli@0.1.3", "mcp"],
+      "description": "Expect — test the current agent changes in a real browser with Playwright. Launched via `npx -y expect-cli@0.1.3 mcp`; requires Node.js and downloads the pinned CLI on first use. Ask the agent to run the Expect workflow after making UI changes."
     }
   }
 }

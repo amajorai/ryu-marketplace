@@ -21,7 +21,7 @@
       "displayName": "Agentation",
       "mcp": {
         "agentation": {
-          "description": "Agentation — receive and act on UI annotations from the Agentation toolbar. Exposes tools to list sessions, read pending feedback, acknowledge or resolve annotations, reply to threads, and watch for new annotations. Launched via `npx -y agentation-mcp server`; requires Node.js and an Agentation toolbar connected to the local server."
+          "description": "Agentation — receive and act on UI annotations from the Agentation toolbar. Exposes tools to list sessions, read pending feedback, acknowledge or resolve annotations, reply to threads, and watch for new annotations. Launched via `npx -y agentation-mcp@1.2.0 server`; requires Node.js and an Agentation toolbar connected to the local server."
         }
       }
     }

@@ -7,11 +7,11 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/sample-widget",
   "name": "Sample Widget",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "stability": "experimental",
   "hidden": true,
   "category": "Developer Tools",
-  "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget.render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
+  "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget.render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). The approved mcp:server grant lets a Community plugin register the server; contributes.widgets plus widget:render authorize promotion into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
   "tagline": "Reference plugin: an inline chat widget",
   "keywords": ["example", "reference", "developer", "widget", "mcp"],
   "icon": "puzzle",
@@ -28,7 +28,7 @@
   },
   "engines": { "ryu": ">=0.1.0" },
   "runnables": [],
-  "permission_grants": ["widget:render"],
+  "permission_grants": ["mcp:server", "widget:render"],
   "mcp_servers": {
     "sample_widget": {
       "command": "node",

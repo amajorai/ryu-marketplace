@@ -17,7 +17,7 @@ test("declares the default Agentation MCP server", () => {
 	const server = manifest.mcp_servers?.agentation;
 	assert.ok(server);
 	assert.equal(server.command, "npx");
-	assert.deepEqual(server.args, ["-y", "agentation-mcp", "server"]);
+	assert.deepEqual(server.args, ["-y", "agentation-mcp@1.2.0", "server"]);
 	assert.equal(server.url, undefined);
 	assert.equal(server.env, undefined);
 });

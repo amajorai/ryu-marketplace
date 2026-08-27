@@ -87,6 +87,28 @@ test("registers the tool as exactly `Task`", () => {
 	);
 });
 
+test("reviewer persona cannot claim shell access", () => {
+	const source = readFileSync(
+		join(HERE, manifest.contributes.pi_extensions[0].file),
+		"utf8"
+	);
+	const reviewer = source.slice(
+		source.indexOf("reviewer: {"),
+		source.indexOf("worker: {")
+	);
+	assert.doesNotMatch(reviewer, /tools: \[[^\]]*"bash"/);
+	assert.match(reviewer, /no shell or network tool/i);
+});
+
+test("asks the model for human-readable task names", () => {
+	const source = readFileSync(
+		join(HERE, manifest.contributes.pi_extensions[0].file),
+		"utf8"
+	);
+	assert.match(source, /Short, specific 3-6 word task name shown to the user/);
+	assert.match(source, /never put a persona name or generic label/);
+});
+
 test("surfaces every spawned child as a nested Agent lifecycle transaction", () => {
 	const source = readFileSync(
 		join(HERE, manifest.contributes.pi_extensions[0].file),

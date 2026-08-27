@@ -49,14 +49,19 @@ async function waitForHealthy(port) {
 
 test("serves an OpenAI completion through the managed browser capability hop", async () => {
 	let submittedPrompt = "";
+	let modelPreference =
+		"chatgpt-web/instant,chatgpt-web/not-real,HIGH,chatgpt-web/instant";
 	const browserCalls = [];
 	const core = createServer(async (request, response) => {
 		const body = await readBody(request);
 		if (request.url === "/api/host/rpc") {
-			sendJson(response, 200, { result: null });
+			const envelope = JSON.parse(body);
+			assert.equal(envelope.method, "preferences.get");
+			assert.deepEqual(envelope.args, { key: "chatgpt-web.models" });
+			sendJson(response, 200, { result: modelPreference });
 			return;
 		}
-		if (request.url !== "/api/host/capability/browser.control") {
+		if (request.url !== "/api/host/capability/browser.session") {
 			sendJson(response, 404, { error: "not found" });
 			return;
 		}
@@ -143,7 +148,23 @@ test("serves an OpenAI completion through the managed browser capability hop", a
 			headers: { authorization: "Bearer test-token" },
 		});
 		assert.equal(models.status, 200);
-		assert.equal((await models.json()).data.length, 5);
+		assert.deepEqual(
+			(await models.json()).data.map((model) => model.id),
+			["chatgpt-web/instant", "chatgpt-web/high"]
+		);
+
+		modelPreference = "chatgpt-web/pro";
+		const refreshedModels = await fetch(
+			`http://127.0.0.1:${hostPort}/v1/models`,
+			{ headers: { authorization: "Bearer test-token" } }
+		);
+		assert.equal(refreshedModels.status, 200);
+		assert.deepEqual(
+			(await refreshedModels.json()).data.map((model) => model.id),
+			["chatgpt-web/pro"]
+		);
+
+		modelPreference = "chatgpt-web/instant";
 
 		const completion = await fetch(
 			`http://127.0.0.1:${hostPort}/v1/chat/completions`,

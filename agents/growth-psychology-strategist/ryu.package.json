@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/growth-psychology-strategist",
+  "name": "Growth Psychology Strategist",
+  "version": "0.2.1",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Offer and pricing strategy",
+    "Sales copy and objection handling",
+    "Behavioral-science messaging",
+    "Growth experiments"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/growth-psychology-strategist",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Use behavioral science to build clearer offers, stronger sales copy, and ethical growth experiments.",
+    "category": "Marketing",
+    "description": "Sales and marketing strategist who uses behavioral science to clarify offers, improve conversion, and design ethical growth experiments.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Reframe this offer with an honest anchor and three pricing options.",
+      "Audit this landing page for behavioral friction and propose a measurable experiment.",
+      "Turn these sales objections into a clear, trust-preserving follow-up sequence."
+    ],
+    "featuredRank": 138
+  }
+}

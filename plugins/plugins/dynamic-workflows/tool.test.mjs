@@ -16,7 +16,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 // is the failure mode this whole pipeline exists to prevent.
 let defineToolTests;
 try {
-	({ defineToolTests } = await import("../../tools/toolsmith/harness.mjs"));
+	({ defineToolTests } = await import("../../../tools/toolsmith/harness.mjs"));
 } catch {
 	test("toolsmith harness is absent — cases did NOT run (satellite checkout?)", {
 		skip: "harness not resolvable from this tree",

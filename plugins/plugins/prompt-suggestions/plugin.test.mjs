@@ -1,20 +1,27 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
-import test from "node:test";
+import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const manifest = JSON.parse(await readFile(join(here, "manifest.json"), "utf8"));
+const manifest = JSON.parse(readFileSync(join(here, "manifest.json"), "utf8"));
 
-test("declares the prompt suggestions plugin", () => {
-  assert.equal(manifest.id, "@ryu/prompt-suggestions");
-  assert.equal(manifest.contributes.settings_tabs[0].fields[0].pref_key, "chat-suggestions-enabled");
-  assert.equal(manifest.contributes.settings_tabs[0].fields[1].pref_key, "chat-suggestions-model");
+test("declares the host-owned prompt suggestions surface", () => {
+	assert.equal(manifest.id, "@ryu/prompt-suggestions");
+	assert.equal(
+		manifest.contributes.settings_tabs[0].fields[0].pref_key,
+		"chat-suggestions-enabled"
+	);
+	assert.equal(
+		manifest.contributes.settings_tabs[0].fields[1].pref_key,
+		"chat-suggestions-model"
+	);
+	assert.deepEqual(manifest.permission_grants, []);
+	assert.deepEqual(manifest.contributes.turn_hooks ?? [], []);
 });
 
-test("ships executable turn-hook code", async () => {
-  const hook = await readFile(join(here, manifest.contributes.turn_hooks[0].code_file), "utf8");
-  assert.match(hook, /host\.sideModel/);
-  assert.match(hook, /host\.storage\.set/);
+test("does not run a duplicate side-model hook", () => {
+	assert.deepEqual(manifest.runnables, []);
+	assert.equal(manifest.contributes.turn_hooks, undefined);
 });

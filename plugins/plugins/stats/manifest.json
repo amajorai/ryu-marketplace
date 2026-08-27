@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/stats",
   "name": "Session Stats",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "stability": "experimental",
   "category": "Productivity",
   "description": "Show provider-neutral session tokens, cache efficiency, throughput, context, compactions, cost, and usage windows in chat.",

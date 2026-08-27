@@ -118,3 +118,34 @@ test("failure fallback describes the command without requiring the model", async
 	assert.equal(out.question, "Can I run Bash now?");
 	assert.match(out.summary, /Bash npm test failed/);
 });
+
+test("redacts credentials embedded in command and URL strings before side-model calls", async () => {
+	const secrets = [
+		"Authorization: Basic dXNlcjpwYXNz",
+		"Cookie: session=super-secret",
+		"https://alice:password@example.com/private",
+		"https://example.com/hook?api_key=vendor-secret&ok=1",
+		"-----BEGIN PRIVATE KEY-----\nsecret-material\n-----END PRIVATE KEY-----",
+	];
+	for (const secret of secrets) {
+		const host = makeHost();
+		await loadHook()(
+			{
+				action: {
+					id: "call-secret",
+					kind: "tool",
+					name: "Bash",
+					input: { command: secret },
+					status: "completed",
+					sequence: 0,
+				},
+			},
+			host
+		);
+		assert.equal(host.calls.sideModel.length, 1);
+		assert.doesNotMatch(
+			host.calls.sideModel[0].prompt,
+			/dXNlcjpwYXNz|super-secret|password@example|vendor-secret|secret-material/
+		);
+	}
+});

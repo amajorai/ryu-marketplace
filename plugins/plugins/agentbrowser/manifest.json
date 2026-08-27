@@ -7,10 +7,10 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/agentbrowser",
   "name": "Agent Browser",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "system": true,
   "builtin": true,
-  "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream, so selecting it re-points the stable `browser.*` tools at agent-browser without changing what agents call. Launched via `npx agent-browser mcp --tools all`; needs Node on PATH.",
+  "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream, so selecting it re-points the stable `browser.*` tools at agent-browser without changing what agents call. Launched from the audited `agent-browser@0.34.0` package; needs Node on PATH.",
   "icon": "ai-browser",
   "iconDither": { "from": 3, "to": "transparent", "direction": "down" },
   "tagline": "A second real browser for the browser.control layer",
@@ -45,21 +45,25 @@
         },
         "browser.click": {
           "tool": "agentbrowser.agent_browser_click",
-          "args": {
-            "ref": "selector",
-            "tab_id": ""
+          "adapter": {
+            "tools": ["agentbrowser.agent_browser_tab_switch"],
+            "code_file": "adapters/browser.click.js"
           }
         },
         "browser.scroll": {
           "tool": "agentbrowser.agent_browser_scroll",
-          "args": {
-            "tab_id": ""
+          "adapter": {
+            "tools": ["agentbrowser.agent_browser_tab_switch"],
+            "code_file": "adapters/browser.scroll.js"
           }
         },
         "browser.type": {
           "tool": "agentbrowser.agent_browser_type",
           "adapter": {
-            "tools": ["agentbrowser.agent_browser_press"],
+            "tools": [
+              "agentbrowser.agent_browser_press",
+              "agentbrowser.agent_browser_tab_switch"
+            ],
             "code_file": "adapters/browser.type.js"
           }
         },
@@ -84,8 +88,8 @@
   "mcp_servers": {
     "agentbrowser": {
       "command": "npx",
-      "args": ["-y", "agent-browser", "mcp", "--tools", "all"],
-      "description": "Agent Browser — browser automation, recording, and screenshot tools over MCP. Launched via `npx -y agent-browser mcp --tools all`; unavailable until Node is installed and the package can be fetched."
+      "args": ["-y", "agent-browser@0.34.0", "mcp", "--tools", "all"],
+      "description": "Agent Browser — browser automation, recording, and screenshot tools over MCP. Launched via `npx -y agent-browser@0.34.0 mcp --tools all`; unavailable until Node is installed and the pinned package can be fetched."
     }
   }
 }

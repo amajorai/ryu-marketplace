@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/docs",
   "name": "Ryu Docs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "system": true,
   "builtin": true,
   "category": "Developer Tools",

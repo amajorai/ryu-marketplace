@@ -10,6 +10,7 @@
 // deadlock the turn. It never edits manifest.json.
 
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
@@ -105,4 +106,38 @@ test("never registers a slash command", () => {
 		!source.includes("registerCommand("),
 		"a registered slash command would deadlock the turn that invoked it"
 	);
+});
+
+test("rejects catastrophic regexes and bounds a no-newline megabyte line", () => {
+	const modulePath = join(HERE, manifest.contributes.pi_extensions[0].file);
+	const script = `
+		import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+		import { join } from "node:path";
+		const source = readFileSync(${JSON.stringify(modulePath)}, "utf8")
+			.replace(/^import type .*?;\\n/m, "")
+			.replace(/^import \\{ Type \\} from "typebox";\\n/m, "")
+			.replace("export default function", "function")
+			.replace("function (pi: ExtensionAPI)", "function extension(pi)")
+			.replace("export { compileUntil, makeLineSink };", "");
+		const directory = mkdtempSync(join(process.env.TMPDIR ?? "/tmp", "ryu-monitor-test-"));
+		const modulePath = join(directory, "monitor.ts");
+		writeFileSync(modulePath, source + "\\nexport { compileUntil, makeLineSink };\\n");
+		const { compileUntil, makeLineSink } = await import(modulePath);
+		let rejected = false;
+		try { compileUntil("(a+)+$"); } catch { rejected = true; }
+		const sink = makeLineSink(() => {}, () => {}, compileUntil("error|done"));
+		sink.chunk("a".repeat(2_000_000));
+		sink.finish();
+		console.log(JSON.stringify({ rejected, dropped: sink.dropped, length: sink.lines[0]?.length ?? 0 }));
+		rmSync(directory, { force: true, recursive: true });
+	`;
+	const result = spawnSync("bun", ["-e", script], {
+		encoding: "utf8",
+		timeout: 5000,
+	});
+	assert.equal(result.status, 0, result.stderr);
+	const proof = JSON.parse(result.stdout.trim());
+	assert.equal(proof.rejected, true);
+	assert.ok(proof.dropped > 1_000_000);
+	assert.ok(proof.length <= 16 * 1024);
 });

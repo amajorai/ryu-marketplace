@@ -17,7 +17,7 @@ test("declares the default Expect MCP server", () => {
 	const server = manifest.mcp_servers?.expect;
 	assert.ok(server);
 	assert.equal(server.command, "npx");
-	assert.deepEqual(server.args, ["-y", "expect-cli@latest", "mcp"]);
+	assert.deepEqual(server.args, ["-y", "expect-cli@0.1.3", "mcp"]);
 	assert.equal(server.url, undefined);
 	assert.equal(server.env, undefined);
 });

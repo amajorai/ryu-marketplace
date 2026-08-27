@@ -2,7 +2,7 @@
 // Zero-dependency, runnable with: node --test plugin.test.mjs
 //
 // agentbrowser is a manifest-only plugin: it contributes an MCP server
-// (`npx -y agent-browser mcp`) and has no inline turn_hooks, so there is no
+// (`npx -y agent-browser@0.34.0 mcp`) and has no inline turn_hooks, so there is no
 // executable hook code to run. The strongest honest coverage is therefore
 // structural validation of the manifest contract Core relies on:
 //   - manifest.json parses as valid JSON
@@ -28,6 +28,27 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
+const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
+
+async function executeAdapter(code, input) {
+	const calls = [];
+	const callTool = async (args) => {
+		calls.push(["tool", args]);
+		return { called: true };
+	};
+	const callNamed = async (id, args) => {
+		calls.push(["named", id, args]);
+		return { called: true };
+	};
+	const result = await new AsyncFunction(
+		"input",
+		"defaults",
+		"callTool",
+		"callNamed",
+		code
+	)(input, {}, callTool, callNamed);
+	return { calls, result };
+}
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
@@ -108,7 +129,13 @@ test("mcp_servers.agentbrowser is a well-formed command spec", () => {
 	for (const arg of server.args) {
 		assert.equal(typeof arg, "string", "every arg must be a string");
 	}
-	assert.deepEqual(server.args, ["-y", "agent-browser", "mcp", "--tools", "all"]);
+	assert.deepEqual(server.args, [
+		"-y",
+		"agent-browser@0.34.0",
+		"mcp",
+		"--tools",
+		"all",
+	]);
 
 	// description, if present, must be a non-empty string
 	if (server.description !== undefined) {
@@ -179,7 +206,10 @@ test("the full MCP profile carries recording controls", () => {
 		"agent_browser_record_stop",
 		"agent_browser_record_restart",
 	]) {
-		assert.ok(REAL_MCP_TOOLS.has(tool), `${tool} must be exposed by --tools all`);
+		assert.ok(
+			REAL_MCP_TOOLS.has(tool),
+			`${tool} must be exposed by --tools all`
+		);
 	}
 });
 
@@ -229,26 +259,98 @@ test("verbs agent-browser cannot express in ONE call are adapted, not faked", ()
 		(p) => p.capability === "browser.control"
 	).tools;
 
-	// `submit` means "press Enter after typing" — a second call. And the canonical
-	// verb REPLACES the field's contents, which agent-browser's type only does
-	// with `clear`.
+	// `submit` means "press Enter after typing" — a second call. The canonical
+	// verb appends by default and only replaces when asked, which maps onto
+	// agent-browser's `clear` argument.
 	const type = tools["browser.type"];
-	assert.ok(
-		type.adapter,
-		"browser.type needs an adapter for submit + replace"
-	);
-	assert.match(type.adapter.code, /clear:\s*true/);
-	assert.deepEqual(type.adapter.tools, ["agentbrowser.agent_browser_press"]);
+	assert.ok(type.adapter, "browser.type needs an adapter for submit + replace");
+	assert.match(type.adapter.code, /clear:\s*input\.replace\s*===\s*true/);
+	assert.deepEqual(type.adapter.tools, [
+		"agentbrowser.agent_browser_press",
+		"agentbrowser.agent_browser_tab_switch",
+	]);
 
 	// agent-browser has no per-call tab argument, so honouring the canonical
 	// tab_id means switching tabs first rather than ignoring it.
-	for (const verb of ["browser.snapshot", "browser.screenshot"]) {
+	for (const verb of [
+		"browser.click",
+		"browser.scroll",
+		"browser.snapshot",
+		"browser.screenshot",
+	]) {
 		assert.ok(tools[verb].adapter, `${verb} must honour tab_id explicitly`);
 		assert.deepEqual(tools[verb].adapter.tools, [
 			"agentbrowser.agent_browser_tab_switch",
 		]);
 		assert.match(tools[verb].adapter.code, /input\.tab_id/);
 	}
+});
+
+test("browser.type preserves append, replace, and submit semantics", async () => {
+	const m = parseManifest();
+	const type = m.provides.find((p) => p.capability === "browser.control").tools[
+		"browser.type"
+	];
+	const appended = await executeAdapter(type.adapter.code, {
+		ref: "@e1",
+		text: "more",
+	});
+	assert.deepEqual(appended.calls, [
+		["tool", { selector: "@e1", text: "more", clear: false }],
+	]);
+	assert.equal(appended.result.submitted, false);
+
+	const replaced = await executeAdapter(type.adapter.code, {
+		ref: "@e2",
+		text: "new",
+		replace: true,
+	});
+	assert.deepEqual(replaced.calls, [
+		["tool", { selector: "@e2", text: "new", clear: true }],
+	]);
+
+	const submitted = await executeAdapter(type.adapter.code, {
+		ref: "@e3",
+		text: "go",
+		submit: true,
+		tab_id: "tab-3",
+	});
+	assert.deepEqual(submitted.calls, [
+		["named", "agentbrowser.agent_browser_tab_switch", { tab: "tab-3" }],
+		["tool", { selector: "@e3", text: "go", clear: false }],
+		["named", "agentbrowser.agent_browser_press", { key: "Enter" }],
+	]);
+	assert.equal(submitted.result.submitted, true);
+});
+
+test("browser.click and browser.scroll act on the requested tab", async () => {
+	const tools = parseManifest().provides.find(
+		(p) => p.capability === "browser.control"
+	).tools;
+	const clicked = await executeAdapter(tools["browser.click"].adapter.code, {
+		ref: "@e4",
+		tab_id: "tab-click",
+	});
+	assert.deepEqual(clicked.calls, [
+		["named", "agentbrowser.agent_browser_tab_switch", { tab: "tab-click" }],
+		["tool", { selector: "@e4" }],
+	]);
+
+	const scrolled = await executeAdapter(tools["browser.scroll"].adapter.code, {
+		direction: "down",
+		amount: 240,
+		tab_id: "tab-scroll",
+	});
+	assert.deepEqual(scrolled.calls, [
+		["named", "agentbrowser.agent_browser_tab_switch", { tab: "tab-scroll" }],
+		["tool", { direction: "down", amount: 240 }],
+	]);
+
+	const activeTabScroll = await executeAdapter(
+		tools["browser.scroll"].adapter.code,
+		{ direction: "up" }
+	);
+	assert.deepEqual(activeTabScroll.calls, [["tool", { direction: "up" }]]);
 });
 
 test("shipping adapter code is grant-gated", () => {

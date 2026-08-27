@@ -91,8 +91,13 @@ function redact(value, key) {
 		return value
 			.slice(0, 8000)
 			.replace(/(Bearer\s+)[A-Za-z0-9._~+/=-]+/gi, "$1[redacted]")
+			.replace(/(Basic\s+)[A-Za-z0-9+/=]+/gi, "$1[redacted]")
+			.replace(/(\b(?:cookie|set-cookie)\s*[:=]\s*)([^\s;]+)/gi, "$1[redacted]")
+			.replace(/(\bhttps?:\/\/)([^\s/@]+):([^\s/@]+)@/gi, "$1[redacted]:[redacted]@")
+			.replace(/([?&](?:api[_-]?key|access[_-]?token|auth(?:orization)?|password|secret|token)=)[^&#\s]+/gi, "$1[redacted]")
+			.replace(/-----BEGIN [^-]+-----[\s\S]*?-----END [^-]+-----/gi, "[redacted PEM]")
 			.replace(/\b(?:sk|ghp|gho|xoxb|xoxp|AIza)[A-Za-z0-9_-]{12,}\b/g, "[redacted]")
-			.replace(/\b([A-Z][A-Z0-9_]*(?:TOKEN|KEY|SECRET|PASSWORD)[A-Z0-9_]*)=([^\s]+)/g, "$1=[redacted]");
+			.replace(/\b([A-Z][A-Z0-9_]*(?:TOKEN|KEY|SECRET|PASSWORD|COOKIE|AUTH)[A-Z0-9_]*)=([^\s]+)/g, "$1=[redacted]");
 	}
 	if (Array.isArray(value)) {
 		return value.slice(0, 64).map((item) => redact(item, key));

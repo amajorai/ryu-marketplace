@@ -6,11 +6,11 @@
   </picture>
 </p>
 
-Notices when you correct the agent, writes the lesson down as a one-line rule in a Space,
-and hands every later session that rule list before the first word is generated — so a
-mistake you have already fixed once stops coming back. Each rule is an ordinary Space
-document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from
-the chat.
+Notices when you correct the agent and proposes a one-line lesson for your confirmation.
+Nothing from the model is saved automatically: use `/mistakes add <rule>` to confirm a
+proposal. Only confirmed rules are handed to later sessions before the first word is
+generated. Each rule is an ordinary Space document you can read, edit or delete, and
+`/mistakes` lists, adds and forgets them from the chat.
 
 Definition lives in `manifest.json`, its sandboxed hook bodies in `hooks/capture.js`,
 `hooks/brief.js` and `hooks/command.js`; Core compiles all four in from this package
@@ -25,7 +25,7 @@ user turn, and a captured correction costs a side-model call on top.
 
 | Hook | Phase | Fires |
 | --- | --- | --- |
-| `no-more-mistakes.capture` | `pre_user_turn` | Every turn; returns before any host call unless the message matches a correction pattern **and** there is an answer to learn from. |
+| `no-more-mistakes.capture` | `pre_user_turn` | Every turn; returns before any host call unless the message matches a correction pattern **and** there is an answer to learn from. A match produces a proposal note, never a persisted rule. |
 | `no-more-mistakes.brief` | `session_start` | Once per conversation, injecting the rule list. |
 | `no-more-mistakes.command` | `pre_user_turn` | Only on a message starting with `/mistakes` (a `match.commands` gate, evaluated in Rust — no sandbox spawn otherwise). |
 
@@ -36,9 +36,9 @@ not been typed yet, so the hook would be judging an answer nobody has objected t
 phase `ctx.input` is the pending message and `ctx.transcript` still holds the answer it is
 objecting to — the pair the rule has to be derived from.
 
-It returns `inject`, never `replace`. Rewriting the user's own words to smuggle a rule in
-would change what gets persisted as their message; `inject` appends to the outgoing turn
-only, so the rule is in force immediately and the transcript still shows what they typed.
+It returns a proposal `note`, never `replace` or an automatic `inject`. Rewriting the
+user's own words to smuggle a rule in would change what gets persisted as their message;
+`/mistakes add` is the explicit confirmation step that makes a proposal durable.
 
 ### Why the briefing is an injection and not retrieval
 

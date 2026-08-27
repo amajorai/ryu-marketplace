@@ -13,8 +13,9 @@ through the existing workflow delegation engine. The token cap is bounded to
 32,768 per delegate.
 
 The tool is opt-in because a call consumes model budget. Delegates default to the
-read-only `code_read` preset. The available presets describe clean-context
-reasoning modes; they do not grant a tool loop. Use a registered `agent_id` when
-the delegate must execute tools. The inline sandbox has a manifest-configured
-10-minute ceiling, while the fan-out itself defaults to Core's 120-second
+read-only `code_read` preset. Inline delegates are prompt-only: the `tools` field
+is rejected because it cannot create a real allowlisted tool loop. Use a registered
+`agent_id` when the delegate must execute tools. The available presets describe
+clean-context reasoning modes and do not override the registered agent's policy.
+The inline sandbox has a manifest-configured 10-minute ceiling, while the fan-out itself defaults to Core's 120-second
 per-delegate cap.

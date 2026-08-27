@@ -9,9 +9,12 @@ const manifest = JSON.parse(readFileSync(join(here, "manifest.json"), "utf8"));
 
 test("manifest registers the bounded workflow tool", () => {
 	assert.equal(manifest.id, "@ryu/dynamic-workflows");
+	assert.deepEqual(manifest.engines, { ryu: ">=0.1.0" });
 	assert.ok(manifest.permission_grants.includes("tool:execute"));
 	assert.ok(manifest.permission_grants.includes("hook:run-agent"));
-	const tool = manifest.runnables.find((entry) => entry.name === "workflow.run");
+	const tool = manifest.runnables.find(
+		(entry) => entry.name === "workflow.run"
+	);
 	assert.ok(tool);
 	assert.equal(tool.kind, "tool");
 	assert.equal(tool.config.backend, "inline_deno");

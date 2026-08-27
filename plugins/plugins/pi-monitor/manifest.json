@@ -14,7 +14,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/pi-monitor",
   "name": "Monitor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "stability": "experimental",
   "category": "Developer Tools",
   "description": "Adds the monitor tool to the managed Pi agent, so it can watch a command or WebSocket in the background and react when events arrive.",

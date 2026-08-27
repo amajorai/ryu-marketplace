@@ -16,7 +16,9 @@ It does not modify the Codex desktop app, read browser cookies, extract a ChatGP
 
 ## Enable it
 
-1. Install and enable the Ryu Browser app.
+1. Install and enable the Ryu Browser app. ChatGPT Web uses that app's signed-in
+   `browser.session` even when another provider is selected for the general
+   `browser.control` layer.
 2. Sign in to [ChatGPT Web](https://chatgpt.com) in that browser.
 3. Enable Ryu's experimental plugin runtime (`ryu:experimental-plugin-runtime=true`).
 4. Allow the `sidecar:process` grant in the Gateway policy; this is an explicit opt-in because managed Node sidecars are unsandboxed in this Ryu build. Preserve your existing allowlist entries when adding `sidecar:process`, `browser:control`, and `preferences:read`.
@@ -31,7 +33,7 @@ The provider advertises these model ids:
 - `chatgpt-web/extra-high`
 - `chatgpt-web/pro`
 
-The model list can be narrowed in the plugin's **ChatGPT Web** settings tab with a comma-separated list of ids.
+The model list can be narrowed in the plugin's **ChatGPT Web** settings tab with a comma-separated list of ids. The setting accepts the five built-in profile ids with or without the `chatgpt-web/` prefix. Unsupported and duplicate entries are ignored, and changes apply to the running provider on its next request.
 
 ## Scope of this first version
 

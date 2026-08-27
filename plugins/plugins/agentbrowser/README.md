@@ -6,7 +6,7 @@
   </picture>
 </p>
 
-Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream. Launched via `npx agent-browser mcp --tools all`; needs Node on PATH.
+Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream. Launched from the audited `agent-browser@0.34.0` package; needs Node on PATH.
 
 The desktop shell reads `agent-browser stream status --json` and follows the returned
 WebSocket frames in the shared live-media PiP/lightbox surface. Recording is exposed

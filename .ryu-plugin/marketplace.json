@@ -13,7 +13,7 @@
     {
       "name": "action-summary",
       "displayName": "Action Summary",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -67,7 +67,7 @@
     {
       "name": "activity",
       "displayName": "Activity",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -117,7 +117,7 @@
     {
       "name": "advisor",
       "displayName": "Advisor",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -167,7 +167,7 @@
     {
       "name": "agent-comms",
       "displayName": "Switchboard",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -221,7 +221,7 @@
     {
       "name": "agent-status",
       "displayName": "Agent Status",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -269,7 +269,7 @@
     {
       "name": "agentation",
       "displayName": "Agentation",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -320,7 +320,7 @@
     {
       "name": "agentbrowser",
       "displayName": "Agent Browser",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -345,7 +345,7 @@
         }
       ],
       "tagline": "A second real browser for the browser.control layer",
-      "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream, so selecting it re-points the stable `browser.*` tools at agent-browser without changing what agents call. Launched via `npx agent-browser mcp --tools all`; needs Node on PATH.",
+      "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream, so selecting it re-points the stable `browser.*` tools at agent-browser without changing what agents call. Launched from the audited `agent-browser@0.34.0` package; needs Node on PATH.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -387,7 +387,7 @@
     {
       "name": "agents-md-tail",
       "displayName": "AGENTS.md Tail",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -441,7 +441,7 @@
     {
       "name": "ambient-elevator",
       "displayName": "Ambient Elevator",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -489,7 +489,7 @@
     {
       "name": "approvals",
       "displayName": "Approvals",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -539,7 +539,7 @@
     {
       "name": "auto-continue",
       "displayName": "Auto Continue",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -591,9 +591,53 @@
       }
     },
     {
+      "name": "backstage",
+      "displayName": "Backstage",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "amajorai/backstage",
+      "official": true,
+      "system": false,
+      "developer": "A Major",
+      "tagline": "Make thumbnails with your own creative workspace and Ryu AI",
+      "description": "A local-first YouTube thumbnail studio that keeps its editor while using Ryu for governed model and image generation.",
+      "author": {
+        "name": "A Major",
+        "url": "https://amajorai.com"
+      },
+      "repository": "https://github.com/amajorai/backstage",
+      "category": "Creative",
+      "keywords": [
+        "youtube",
+        "thumbnails",
+        "creative",
+        "design",
+        "images",
+        "editor"
+      ],
+      "icon": "ai-image",
+      "iconDither": {
+        "from": 225,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/backstage",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop",
+        "island",
+        "web"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.2.0"
+      }
+    },
+    {
       "name": "bitwarden",
       "displayName": "Bitwarden Secrets Manager",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -647,7 +691,7 @@
     {
       "name": "blueprint",
       "displayName": "Blueprint",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -714,7 +758,7 @@
     {
       "name": "bookmarks",
       "displayName": "Bookmarks",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -762,7 +806,7 @@
     {
       "name": "brave",
       "displayName": "Brave Search",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -822,13 +866,21 @@
     {
       "name": "browser",
       "displayName": "Browser",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
       "system": true,
       "developer": "Ryu",
       "layers": [
+        {
+          "capability": "browser.session",
+          "title": "Browser session",
+          "toolkit": false,
+          "selectable": false,
+          "target": "local-machine",
+          "verbs": []
+        },
         {
           "capability": "browser.control",
           "title": "Browser",
@@ -897,7 +949,7 @@
     {
       "name": "bytebot",
       "displayName": "Bytebot Desktop",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -965,7 +1017,7 @@
     {
       "name": "calendar",
       "displayName": "Calendar",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1015,7 +1067,7 @@
     {
       "name": "canvas",
       "displayName": "Canvas",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1067,7 +1119,7 @@
     {
       "name": "chat-broadcast",
       "displayName": "Chat Broadcast",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1114,7 +1166,7 @@
     {
       "name": "chat-title",
       "displayName": "Chat Title",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1166,7 +1218,7 @@
     {
       "name": "chatgpt-web",
       "displayName": "ChatGPT Web",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1204,7 +1256,7 @@
     {
       "name": "checks",
       "displayName": "Tests",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1253,7 +1305,7 @@
     {
       "name": "clangd-lsp",
       "displayName": "Clangd (C/C++)",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1307,7 +1359,7 @@
     {
       "name": "clips",
       "displayName": "Clips",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1359,7 +1411,7 @@
     {
       "name": "cloudflare-browser-run",
       "displayName": "Cloudflare Browser Run",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1436,7 +1488,7 @@
     {
       "name": "composio-connect",
       "displayName": "Composio Connect",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1485,9 +1537,60 @@
       }
     },
     {
+      "name": "content",
+      "displayName": "Content",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Shape ideas into a repeatable publishing system",
+      "description": "A list-only catalog preview for planned local-first content projects, schedules, and performance signals.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-content",
+      "category": "Creative",
+      "keywords": [
+        "content",
+        "creator",
+        "publishing",
+        "scheduling",
+        "analytics"
+      ],
+      "tags": [
+        "content",
+        "creator",
+        "publishing",
+        "scheduling",
+        "analytics"
+      ],
+      "icon": "film-01",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-content",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "crm",
       "displayName": "Harbor",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1540,7 +1643,7 @@
     {
       "name": "csharp-lsp",
       "displayName": "C# LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1594,7 +1697,7 @@
     {
       "name": "dashboards",
       "displayName": "Dashboards",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1645,7 +1748,7 @@
     {
       "name": "desktop",
       "displayName": "Virtual Desktop",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1697,7 +1800,7 @@
     {
       "name": "dictation",
       "displayName": "Dictation",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1749,7 +1852,7 @@
     {
       "name": "docling",
       "displayName": "Docling",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1818,7 +1921,7 @@
     {
       "name": "docs",
       "displayName": "Ryu Docs",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1868,7 +1971,7 @@
     {
       "name": "double-check",
       "displayName": "Double Check",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1920,7 +2023,7 @@
     {
       "name": "drafts",
       "displayName": "Drafts",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1973,7 +2076,7 @@
     {
       "name": "dynamic-workflows",
       "displayName": "dynamic-workflows",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1997,12 +2100,15 @@
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/dynamic-workflows",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
-      "stability": "experimental"
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "effort-escalator",
       "displayName": "Effort Escalator",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2056,7 +2162,7 @@
     {
       "name": "ego-browser",
       "displayName": "Ego Browser",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2070,8 +2176,8 @@
           "selectable": true,
           "target": "local-machine",
           "verbs": [
-            "browser.navigate",
             "browser.tabs",
+            "browser.navigate",
             "browser.snapshot",
             "browser.click",
             "browser.type",
@@ -2081,7 +2187,7 @@
         }
       ],
       "tagline": "Swap browser control onto Ego lite Spaces",
-      "description": "Ego lite (https://github.com/citrolabs/ego-lite) as an optional provider for Ryu's swappable browser.control layer. Each call launches the installed ego-browser CLI in a conversation-scoped Ego Space, while agents keep using the stable browser.navigate, browser.tabs, browser.snapshot, browser.click, browser.type, browser.scroll, and browser.screenshot verbs. Requires the Ego lite macOS app and ego-browser on PATH; Ryu does not install Ego lite or copy browser login state.",
+      "description": "Ego lite (https://github.com/citrolabs/ego-lite) as an optional provider for Ryu's swappable browser.control layer. One sealed dispatcher launches the installed ego-browser CLI in a conversation-scoped Ego Space, while small adapters keep agents on the stable browser.navigate, browser.tabs, browser.snapshot, browser.click, browser.type, browser.scroll, and browser.screenshot verbs. Requires the Ego lite macOS app and ego-browser on PATH; Ryu does not install Ego lite or copy browser login state.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -2123,7 +2229,7 @@
     {
       "name": "exa",
       "displayName": "Exa Search",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2182,7 +2288,7 @@
     {
       "name": "expanded-composer",
       "displayName": "Expanded Composer",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2229,7 +2335,7 @@
     {
       "name": "expect",
       "displayName": "Expect",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2278,9 +2384,119 @@
       }
     },
     {
+      "name": "expenses",
+      "displayName": "Expenses",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "A clear view of where the month went",
+      "description": "A local-first expense ledger for Ryu: record spending through an agent or the companion, then see totals, categories, and recent entries in one visual view. The node owns the records; no bank connection or exchange-rate conversion is included.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-expenses",
+      "category": "Productivity",
+      "keywords": [
+        "expenses",
+        "budget",
+        "spending",
+        "ledger",
+        "finance"
+      ],
+      "tags": [
+        "expenses",
+        "finance",
+        "ledger",
+        "spending",
+        "money"
+      ],
+      "icon": "money-03",
+      "iconDither": {
+        "from": 186,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-expenses",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "feedback-board",
+      "displayName": "Feedback Board",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Listen in public. Build with Ryu.",
+      "description": "A public feedback board and private Ryu product workspace: collect requests, votes, and comments, turn demand into a roadmap, and use configurable Ryu workflows to prepare or build what users ask for.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-feedback-board",
+      "category": "Productivity",
+      "keywords": [
+        "feedback",
+        "feature requests",
+        "roadmap",
+        "voting",
+        "product management",
+        "changelog",
+        "ai"
+      ],
+      "tags": [
+        "feedback",
+        "product",
+        "roadmap",
+        "feature requests",
+        "voting",
+        "changelog",
+        "ai"
+      ],
+      "icon": "comment-01",
+      "iconDither": {
+        "from": 211,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-feedback-board",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "finetune",
       "displayName": "Fine-tuning",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -2333,7 +2549,7 @@
     {
       "name": "firecrawl",
       "displayName": "Firecrawl",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2415,7 +2631,7 @@
     {
       "name": "firewall",
       "displayName": "Gateway Firewall",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2469,7 +2685,7 @@
     {
       "name": "ghost",
       "displayName": "Ghost",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2533,7 +2749,7 @@
     {
       "name": "ghost-chats",
       "displayName": "Temporary Chats",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2582,7 +2798,7 @@
     {
       "name": "goal",
       "displayName": "Goal",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2634,7 +2850,7 @@
     {
       "name": "gopls-lsp",
       "displayName": "Go LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2688,7 +2904,7 @@
     {
       "name": "headroom",
       "displayName": "Headroom Compression",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2736,7 +2952,7 @@
     {
       "name": "healing",
       "displayName": "Self-Healing",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -2786,9 +3002,50 @@
       }
     },
     {
+      "name": "help-center",
+      "displayName": "Help Center",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Resolve support questions with your whole team",
+      "description": "A Ryu support workspace for resolving tickets, improving knowledge, and reviewing AI assistance.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-help-center",
+      "category": "Communication",
+      "keywords": [
+        "support",
+        "tickets",
+        "knowledge",
+        "help center"
+      ],
+      "tags": [
+        "support",
+        "tickets",
+        "knowledge",
+        "ai"
+      ],
+      "icon": "customer-service-01",
+      "homepage": "https://github.com/amajorai/ryu-help-center",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "honcho",
       "displayName": "Honcho",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2856,7 +3113,7 @@
     {
       "name": "hook-observers",
       "displayName": "Hook Observers",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2908,7 +3165,7 @@
     {
       "name": "hook-session-context",
       "displayName": "Session Context",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2960,7 +3217,7 @@
     {
       "name": "jdtls-lsp",
       "displayName": "Java LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3014,7 +3271,7 @@
     {
       "name": "kotlin-lsp",
       "displayName": "Kotlin LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3068,7 +3325,7 @@
     {
       "name": "learning",
       "displayName": "Learning",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3118,7 +3375,7 @@
     {
       "name": "lua-lsp",
       "displayName": "Lua LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3170,7 +3427,7 @@
     {
       "name": "mail",
       "displayName": "Mail",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3221,7 +3478,7 @@
     {
       "name": "markitdown",
       "displayName": "MarkItDown",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3288,7 +3545,7 @@
     {
       "name": "meetings",
       "displayName": "Meetings",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3339,7 +3596,7 @@
     {
       "name": "mem0",
       "displayName": "Mem0",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3405,7 +3662,7 @@
     {
       "name": "mineru",
       "displayName": "MinerU",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3474,7 +3731,7 @@
     {
       "name": "mission-control",
       "displayName": "Mission Control",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3527,7 +3784,7 @@
     {
       "name": "monitors",
       "displayName": "Monitors",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3576,9 +3833,62 @@
       }
     },
     {
+      "name": "mpp",
+      "displayName": "Payments",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Governed machine payments with receipts you can audit",
+      "description": "Discover services that speak the Machine Payments Protocol, review exact Tempo testnet charges, enforce per-request and daily budgets, make explicitly approved paid requests, and keep a local receipt ledger. Signing keys use Ryu's per-app encrypted custody and never enter chat, app state, logs, or receipt records.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-mpp",
+      "category": "Developer Tools",
+      "keywords": [
+        "payments",
+        "mpp",
+        "tempo",
+        "services",
+        "receipts"
+      ],
+      "tags": [
+        "payments",
+        "mpp",
+        "tempo",
+        "services",
+        "receipts"
+      ],
+      "icon": "wallet-cards",
+      "iconDither": {
+        "from": 156,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://mpp.dev",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "news",
       "displayName": "Wire",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3645,7 +3955,7 @@
     {
       "name": "no-ai-slop",
       "displayName": "No AI Slop",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3699,14 +4009,14 @@
     {
       "name": "no-more-mistakes",
       "displayName": "No More Mistakes",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
       "system": false,
       "developer": "Ryu",
       "tagline": "Correct it once, not every week",
-      "description": "Notices when you correct the agent, writes the lesson down as a one-line rule in a Space, and hands every later session that rule list before the first word is generated — so a mistake you have already fixed once stops coming back. Each rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
+      "description": "Notices when you correct the agent, proposes a one-line lesson for your confirmation, and hands only explicitly saved rules to later sessions before the first word is generated. Each confirmed rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -3753,7 +4063,7 @@
     {
       "name": "observer-agents",
       "displayName": "Observer Agents",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3807,7 +4117,7 @@
     {
       "name": "output-styles",
       "displayName": "Output Styles",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3861,7 +4171,7 @@
     {
       "name": "parallel",
       "displayName": "Parallel Search",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3933,7 +4243,7 @@
     {
       "name": "php-lsp",
       "displayName": "PHP LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3985,7 +4295,7 @@
     {
       "name": "pi-monitor",
       "displayName": "Monitor",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4041,7 +4351,7 @@
     {
       "name": "pi-shell",
       "displayName": "Background Bash",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4093,7 +4403,7 @@
     {
       "name": "pi-subagent",
       "displayName": "Subagents",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4145,7 +4455,7 @@
     {
       "name": "plan-continue",
       "displayName": "Plan Continue",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4197,7 +4507,7 @@
     {
       "name": "predict",
       "displayName": "Autocomplete",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4249,7 +4559,7 @@
     {
       "name": "prompt-suggestions",
       "displayName": "Prompt Suggestions",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4303,7 +4613,7 @@
     {
       "name": "proof",
       "displayName": "Proof of Work",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4355,7 +4665,7 @@
     {
       "name": "pull-requests",
       "displayName": "Pull Requests",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4409,7 +4719,7 @@
     {
       "name": "pxpipe",
       "displayName": "pxpipe",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4463,7 +4773,7 @@
     {
       "name": "pyright-lsp",
       "displayName": "Python LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4517,7 +4827,7 @@
     {
       "name": "quests",
       "displayName": "Quests",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4568,7 +4878,7 @@
     {
       "name": "reactions",
       "displayName": "Message Reactions",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4619,7 +4929,7 @@
     {
       "name": "reasoning",
       "displayName": "Automated Reasoning",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4686,7 +4996,7 @@
     {
       "name": "recap",
       "displayName": "Recap",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4740,7 +5050,7 @@
     {
       "name": "receipts",
       "displayName": "Receipts",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4798,7 +5108,7 @@
     {
       "name": "recipes",
       "displayName": "Recipes",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4850,7 +5160,7 @@
     {
       "name": "reconnect-retry",
       "displayName": "Reconnect Retry",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4899,7 +5209,7 @@
     {
       "name": "reelfarm",
       "displayName": "Sprout Studio",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4952,14 +5262,14 @@
     {
       "name": "research",
       "displayName": "Research",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
       "system": false,
       "developer": "Ryu",
-      "tagline": "Multi-step web research with cited sources",
-      "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports. Declares the out-of-process ryu-research sidecar (a thin Rust proxy that forwards /api/research/* to the Python autoresearch engine on :8087); Core reaches it via the generic ext-proxy loader.",
+      "tagline": "Run experiments, keep winners, and reason over the full history",
+      "description": "Run durable autoresearch campaigns with one-shot proposals, direction-aware winners, bounded budgets, policy-based stopping, and automatic recursive analysis for oversized history.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -4968,9 +5278,9 @@
       "category": "Research",
       "keywords": [
         "research",
-        "web",
-        "reports",
-        "sources"
+        "autoresearch",
+        "experiments",
+        "rlm"
       ],
       "tags": [
         "research",
@@ -5004,7 +5314,7 @@
     {
       "name": "rlm",
       "displayName": "Recursive Language Model",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5019,7 +5329,7 @@
         }
       ],
       "tagline": "Ask a question of more text than a model can hold",
-      "description": "Answer questions about a corpus far larger than any model's context window — without putting it in a prompt. The usual options all degrade: truncate and you lose the answer, embed-and-retrieve and you get fragments without their argument, buy a bigger window and attention over the middle of it thins out anyway. This app does the other thing. Your documents are held here as a variable. A root model plans over an outline of them — chunk ids, sources, line spans, headings — and reaches the text only through operators that summarise before returning: `grep` to locate, `map` to run a cheap model over the chunks that matter in parallel and fold the answers back, `recurse` to give a sub-question its own plan over a subset. The root model never sees the corpus, so its context stays roughly the same size whether you point it at 40 KB or 40 MB, and the answer does not get worse as the input gets bigger. Every answer carries `path:line` citations read back out of the chunks it rests on, and every run keeps a full trace — each operator, each sub-call, what it cost — that you can open and replay. Depth, step, call and wall-clock budgets are hard: a run that hits one says so and returns what it had, rather than quietly shortening the answer. Agents get the same engine as tools, and `grep` and `peek` need no model at all, so a workflow can branch on a deterministic search of a 40 MB corpus.",
+      "description": "Answer questions about a corpus far larger than any model's context window — without putting it in a prompt. The usual options all degrade: truncate and you lose the answer, embed-and-retrieve and you get fragments without their argument, buy a bigger window and attention over the middle of it thins out anyway. This app does the other thing. Your documents are held here as a variable. A root model plans over an outline of them — chunk ids, sources, line spans, headings — and reaches the text only through operators that summarise before returning: `grep` to locate, `map` to run a cheap model over the chunks that matter in parallel and fold the answers back, `recurse` to give a sub-question its own plan over a subset. The root model never sees the corpus, so its context stays roughly the same size whether you point it at 40 KB or 40 MB, and the answer does not get worse as the input gets bigger. Every answer carries `path:line` citations read back out of the chunks it rests on, and every run keeps a full trace — each operator, each sub-call, what it cost — that you can open and replay. Depth, step, call and wall-clock budgets are hard: a run that hits one says so and returns what it had, rather than quietly shortening the answer. Agents get the same engine as tools, and `grep` and `peek` need no model at all, so a workflow can branch on a deterministic search of a 40 MB corpus. Capability callers may query an existing context or submit bounded inline documents that are persisted as a context and analyzed in the same recursive run.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -5071,7 +5381,7 @@
     {
       "name": "rtk",
       "displayName": "RTK (Rust Token Killer)",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5123,7 +5433,7 @@
     {
       "name": "ruby-lsp",
       "displayName": "Ruby LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5177,7 +5487,7 @@
     {
       "name": "rules",
       "displayName": "Rules",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5231,7 +5541,7 @@
     {
       "name": "rust-analyzer-lsp",
       "displayName": "Rust LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5281,9 +5591,65 @@
       }
     },
     {
+      "name": "safe-actions",
+      "displayName": "Safe Actions",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Prove the plan, review the risk, keep the receipt",
+      "description": "Review and govern typed tool plans before they can touch the world. Safe Actions shows the exact sequence, parallel branches, conditions, effects, and resources a verified agent proposed; explains every deterministic policy finding and counterexample; lets an authorized reviewer approve or deny plans that require judgment; and preserves hash-bound execution receipts without exposing raw secrets. It is the control surface for Core's generic fail-closed verified-plan gate: approval resumes the persisted plan, while the Companion itself never invokes a tool or executes an action.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-safe-actions",
+      "category": "Security",
+      "keywords": [
+        "security",
+        "verification",
+        "tool-plans",
+        "policy",
+        "approvals",
+        "receipts"
+      ],
+      "tags": [
+        "security",
+        "verification",
+        "tool-plans",
+        "policy",
+        "approvals",
+        "receipts",
+        "human-in-the-loop"
+      ],
+      "icon": "shield-key",
+      "iconDither": {
+        "from": 208,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-safe-actions",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "sample",
       "displayName": "Research Assistant",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5336,14 +5702,14 @@
     {
       "name": "sample-widget",
       "displayName": "Sample Widget",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
       "system": false,
       "developer": "Ryu",
       "tagline": "Reference plugin: an inline chat widget",
-      "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget.render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
+      "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget.render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). The approved mcp:server grant lets a Community plugin register the server; contributes.widgets plus widget:render authorize promotion into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -5391,7 +5757,7 @@
     {
       "name": "scrapling",
       "displayName": "Scrapling",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5409,7 +5775,7 @@
         }
       ],
       "tagline": "Anti-bot page extraction, no API key",
-      "description": "Adaptive web-page extraction via the Scrapling MCP server (https://scrapling.readthedocs.io), a BYO local install. Provides the swappable `web.extract` layer as a THIRD provider alongside the local `spider` CLI and the hosted BYOK services, so selecting it re-points the stable `web.extract` tool at a fetcher that impersonates a real browser TLS fingerprint. No API key. Requires `pip install \"scrapling[ai]\"` and the `scrapling` binary on PATH; until then the MCP server does not start and the layer falls back to whichever other provider you select. Deliberately provides NO `web.crawl`: neither the MCP server nor the CLI follows links — only Scrapling's Python `Spider` class crawls, and it is not reachable over MCP.",
+      "description": "Adaptive web-page extraction via the Scrapling MCP server (https://scrapling.readthedocs.io), a BYO local install. Provides the swappable `web.extract` layer as a THIRD provider alongside the local `spider` CLI and the hosted BYOK services, so selecting it re-points the stable `web.extract` tool at a fetcher that impersonates a real browser TLS fingerprint. No API key. Requires `pip install \"scrapling[ai]\"` and the `scrapling` binary on PATH; selecting Scrapling before that makes `web.extract` unavailable until you install it or select a working provider. Deliberately provides NO `web.crawl`: neither the MCP server nor the CLI follows links — only Scrapling's Python `Spider` class crawls, and it is not reachable over MCP.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -5453,7 +5819,7 @@
     {
       "name": "security-guidance",
       "displayName": "Security Guidance",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5505,7 +5871,7 @@
     {
       "name": "security-scanner",
       "displayName": "Security Scanner",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5563,7 +5929,7 @@
     {
       "name": "serper",
       "displayName": "Serper",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5635,7 +6001,7 @@
     {
       "name": "shadow",
       "displayName": "Shadow",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5682,7 +6048,7 @@
     {
       "name": "side-chats",
       "displayName": "Side Chats",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5736,7 +6102,7 @@
     {
       "name": "simulator",
       "displayName": "Simulators",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5794,9 +6160,53 @@
       }
     },
     {
+      "name": "sites",
+      "displayName": "Sites",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Make every public route explainable",
+      "description": "A local-first Sites control surface for previewing projects, public-edge routes, domains, quotas, and Help Center widgets.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-sites",
+      "category": "Developer Tools",
+      "keywords": [
+        "sites",
+        "publishing",
+        "hosting",
+        "domains",
+        "public edge",
+        "widgets"
+      ],
+      "tags": [
+        "sites",
+        "publishing",
+        "hosting",
+        "domains",
+        "public edge"
+      ],
+      "icon": "browser",
+      "homepage": "https://github.com/amajorai/ryu-sites",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "skill-editor",
       "displayName": "Skill Editor",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5844,9 +6254,53 @@
       }
     },
     {
+      "name": "slides",
+      "displayName": "Slides",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Make the frame, then make it clear",
+      "description": "Create, edit, organize, and export visual slides and thumbnails locally with Ryu's media tools.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "category": "Creative",
+      "keywords": [
+        "slides",
+        "thumbnails",
+        "images",
+        "video",
+        "editor",
+        "carousel"
+      ],
+      "icon": "ai-image",
+      "iconDither": {
+        "from": 225,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "social",
       "displayName": "Outpost",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5899,7 +6353,7 @@
     {
       "name": "spider",
       "displayName": "Spider",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5967,7 +6421,7 @@
     {
       "name": "spidercloud",
       "displayName": "Spider Cloud",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6029,7 +6483,7 @@
     {
       "name": "stats",
       "displayName": "Session Stats",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6084,7 +6538,7 @@
     {
       "name": "subtitles",
       "displayName": "Subtitles",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6140,7 +6594,7 @@
     {
       "name": "swift-lsp",
       "displayName": "Swift LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6194,7 +6648,7 @@
     {
       "name": "tavily",
       "displayName": "Tavily Search",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6265,7 +6719,7 @@
     {
       "name": "teams",
       "displayName": "Teams",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6317,7 +6771,7 @@
     {
       "name": "timeline",
       "displayName": "Timeline",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6367,7 +6821,7 @@
     {
       "name": "token-table",
       "displayName": "Token Table",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6411,7 +6865,7 @@
     {
       "name": "tokenmaxxing",
       "displayName": "Tokenmaxxing",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6448,7 +6902,7 @@
     {
       "name": "tool-firewall",
       "displayName": "Tool Firewall",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6500,7 +6954,7 @@
     {
       "name": "toolsmith-example",
       "displayName": "toolsmith-example",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6530,7 +6984,7 @@
     {
       "name": "tuition",
       "displayName": "Tuition",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6597,7 +7051,7 @@
     {
       "name": "typescript-lsp",
       "displayName": "TypeScript & JavaScript LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6653,7 +7107,7 @@
     {
       "name": "ugc",
       "displayName": "UGC",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6706,7 +7160,7 @@
     {
       "name": "unstructured",
       "displayName": "Unstructured",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6770,7 +7224,7 @@
     {
       "name": "usage-pacer",
       "displayName": "Usage Pacer",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6826,7 +7280,7 @@
     {
       "name": "voice",
       "displayName": "Voice",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6880,7 +7334,7 @@
     {
       "name": "warmup",
       "displayName": "Warmup",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6931,7 +7385,7 @@
     {
       "name": "webhooks",
       "displayName": "Webhooks",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6982,7 +7436,7 @@
     {
       "name": "whatsapp",
       "displayName": "WhatsApp",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7034,7 +7488,7 @@
     {
       "name": "whiteboard",
       "displayName": "Whiteboard",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7085,7 +7539,7 @@
     {
       "name": "workflows",
       "displayName": "Workflows",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7139,7 +7593,7 @@
       "name": "adversarial-verification",
       "displayName": "Adversarial Verification",
       "id": "ryu/workflow/adversarial-verification",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7183,14 +7637,14 @@
         "sub-agents"
       ],
       "icon": "ShieldCheck",
-      "checksum": "98a0728badf846c9e4ca0bc5cbc91aac25098a2aca6c503c24401ecae0ac4def",
+      "checksum": "db3de19dc08b0f09a4415da87fed4c2b7bed30108f21ce2941cf804e7b441a8a",
       "ref": "main"
     },
     {
       "name": "animator",
       "displayName": "Animator",
       "id": "ryu/animator",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -7238,14 +7692,14 @@
       ],
       "featuredRank": 122,
       "developer": "Ryu",
-      "checksum": "fc0820e82b3467f044b629d4f286506e757a064f1aa5eab10098a5939a9e1cbf",
+      "checksum": "65b8d7e47facfcca11942bd24776e6cb47c8252464bfa5ab4728ea53bd28b64f",
       "ref": "main"
     },
     {
       "name": "autonomous-agent",
       "displayName": "Autonomous Agent",
       "id": "ryu/workflow/autonomous-agent",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7289,14 +7743,14 @@
         "tools"
       ],
       "icon": "Bot",
-      "checksum": "adf9fb2d73f1fa30bf0beb016a0cba47bed77f1d4753a9b977275b379fd50e67",
+      "checksum": "efeb914201d11ef9a742a413ece577f4e042a8a4fe355ff5bb04ba6cb705798e",
       "ref": "main"
     },
     {
       "name": "autoresearch",
       "displayName": "Autoresearch",
       "id": "ryu/workflow/autoresearch",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7318,9 +7772,14 @@
       "scopes": [
         "workflow"
       ],
-      "requires": {},
+      "requires": {
+        "@ryu/research": ">=0.1.17",
+        "@ryu/rlm": ">=0.1.16"
+      },
       "capabilities": [
-        "workflow:git-ledger-loop"
+        "workflow:verified-experiment-loop",
+        "research:durable-campaigns",
+        "rlm:recursive-evidence"
       ],
       "security": {
         "containsSecrets": false,
@@ -7331,23 +7790,24 @@
       "artifacts": [
         "workflow.json"
       ],
-      "description": "Requires the Research app (@ryu/research) to be enabled — it provides the research__* tools this loop drives, and they do not exist on a node where the app is off. A researcher agent iterates on an experiment via those tools, keeping only improvements — a git-versioned autoresearch loop.",
+      "description": "Runs one durable Research campaign with snapshot-bound proposals, automatic recursive RLM analysis, engine-owned winner selection, and policy-based stopping.",
       "category": "research",
       "tags": [
         "research",
+        "experiments",
         "loop",
-        "agent",
+        "rlm",
         "durable"
       ],
       "icon": "FlaskConical",
-      "checksum": "683b409e3bceb2b3b4baf245084e5d79998ddb15e208e52633fb7e3904898978",
+      "checksum": "5b8ea666c8bba8477fd69949a12c6fa2e0dc66a867de77ea038ea806e5013e3e",
       "ref": "main"
     },
     {
       "name": "brand-presence",
       "displayName": "Brand Presence",
       "id": "ryu/brand-presence",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -7394,14 +7854,14 @@
       ],
       "featuredRank": 120,
       "developer": "Ryu",
-      "checksum": "63d8f5cd18de92332f2216e37bba5ebb65a139b670913e40e813840543e25844",
+      "checksum": "753d6e30a65333fdddb28c4f9bdbd78f52f84efe335eea5fb293794dd15337cd",
       "ref": "main"
     },
     {
       "name": "classify-and-act",
       "displayName": "Classify & Act",
       "id": "ryu/workflow/classify-and-act",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7444,14 +7904,14 @@
         "agents"
       ],
       "icon": "ListTree",
-      "checksum": "c5abdced5b20a409291cc5409a42ede3d1ea13ddace77bd87ccb285b0b85cb58",
+      "checksum": "727c56326a76ec39c8665a3ce21e3489f84bc5fa447c1993b22f8a64472afa55",
       "ref": "main"
     },
     {
       "name": "codex-quota-reset-watch",
       "displayName": "Codex Quota Reset Watch",
       "id": "ryu/codex-quota-reset-watch",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -7498,14 +7958,14 @@
       ],
       "featuredRank": 128,
       "developer": "Ryu",
-      "checksum": "b493eb6045aab2635448e6a8c11a94c29aa601b71a5d567a39c897a5697caca4",
+      "checksum": "bb6e7962b0b118fe0ca2fbf12f54e06418437ac229ff186fac582224eb704299",
       "ref": "main"
     },
     {
       "name": "design-director",
       "displayName": "Design Director",
       "id": "ryu/design-director",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -7555,14 +8015,14 @@
       ],
       "featuredRank": 135,
       "developer": "Ryu",
-      "checksum": "236cbf917743d3502e835e0f7c40c35e785e663a841d1708223891d871de3bd5",
+      "checksum": "42dc923271cc6823f7d7de4329951d8e7922312e30648bbe61cfcfee68436c51",
       "ref": "main"
     },
     {
       "name": "evaluator-optimizer",
       "displayName": "Evaluator–Optimizer",
       "id": "ryu/workflow/evaluator-optimizer",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7606,14 +8066,68 @@
         "quality"
       ],
       "icon": "Gauge",
-      "checksum": "c24555b182c625d8d25eebea12dbd2b1fc12a30752d8be1a58b7d218ab4a4f58",
+      "checksum": "c5be3e9741e57ea5ba05366a25cbfb63f42731b17b829d4f1276c8b3da0030dc",
+      "ref": "main"
+    },
+    {
+      "name": "expense-tracker",
+      "displayName": "Expense Tracker",
+      "id": "ryu/expense-tracker",
+      "version": "0.2.1",
+      "type": "agent",
+      "kind": "agent",
+      "package": true,
+      "packageKind": "agent",
+      "artifactKinds": [
+        "agent.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/agents/expense-tracker",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "ryu-desktop",
+        "ryu-cli"
+      ],
+      "scopes": [
+        "agent"
+      ],
+      "requires": {},
+      "capabilities": [
+        "Record expenses",
+        "Summarize spending",
+        "Correct ledger entries"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "agent.json"
+      ],
+      "tagline": "Keep a clear, local record of where your money went.",
+      "description": "Records and summarizes personal expenses through Ryu's local Expenses ledger, with a visual app available when you want to inspect the entries.",
+      "category": "Productivity",
+      "author": "Ryu",
+      "examplePrompts": [
+        "Record $18.40 for lunch today in Food.",
+        "How much did I spend on Transport this month?"
+      ],
+      "featuredRank": 118,
+      "developer": "Ryu",
+      "checksum": "42145f5301b5af24799c5a518d081a0c0276a4710e3a721592d5e74fa5d9d39f",
       "ref": "main"
     },
     {
       "name": "expiry-date-tracker",
       "displayName": "Expiry Date Tracker",
       "id": "ryu/expiry-date-tracker",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -7660,14 +8174,14 @@
       ],
       "featuredRank": 130,
       "developer": "Ryu",
-      "checksum": "6b313aeafb8e0bd6ab205a47cad5ae0023b0c3fd7f91ae3831b2a689539d0a1a",
+      "checksum": "9e754a24f2abc191c74b2d031459077443dfca4c784fd7a4ad27fa12e2a50c6d",
       "ref": "main"
     },
     {
       "name": "fan-out-synthesize",
       "displayName": "Fan-out / Synthesize",
       "id": "ryu/workflow/fan-out-synthesize",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7710,14 +8224,14 @@
         "sub-agents"
       ],
       "icon": "GitFork",
-      "checksum": "2748d55025825116f40d22061bc80720ac4bedfae7269e29f97e20120addbfbc",
+      "checksum": "0e33b8395b08fc5de6012f5444e70912317652481096efb3b92d25e78fe351af",
       "ref": "main"
     },
     {
       "name": "generate-and-filter",
       "displayName": "Generate & Filter",
       "id": "ryu/workflow/generate-and-filter",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7761,14 +8275,70 @@
         "best-of-n"
       ],
       "icon": "Filter",
-      "checksum": "eb447ce349b6503f56fcf7746e064b412763e8550f0631376ef97b05a2fe830e",
+      "checksum": "60b6e9ac48b4c6bbb479051bbb75af6e8b2e8cb23fdcd4938f3d4d1c2c3f9c85",
+      "ref": "main"
+    },
+    {
+      "name": "growth-psychology-strategist",
+      "displayName": "Growth Psychology Strategist",
+      "id": "ryu/growth-psychology-strategist",
+      "version": "0.2.1",
+      "type": "agent",
+      "kind": "agent",
+      "package": true,
+      "packageKind": "agent",
+      "artifactKinds": [
+        "agent.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/agents/growth-psychology-strategist",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "ryu-desktop",
+        "ryu-cli"
+      ],
+      "scopes": [
+        "agent"
+      ],
+      "requires": {},
+      "capabilities": [
+        "Offer and pricing strategy",
+        "Sales copy and objection handling",
+        "Behavioral-science messaging",
+        "Growth experiments"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "agent.json"
+      ],
+      "tagline": "Use behavioral science to build clearer offers, stronger sales copy, and ethical growth experiments.",
+      "description": "Sales and marketing strategist who uses behavioral science to clarify offers, improve conversion, and design ethical growth experiments.",
+      "category": "Marketing",
+      "author": "Ryu",
+      "examplePrompts": [
+        "Reframe this offer with an honest anchor and three pricing options.",
+        "Audit this landing page for behavioral friction and propose a measurable experiment.",
+        "Turn these sales objections into a clear, trust-preserving follow-up sequence."
+      ],
+      "featuredRank": 138,
+      "developer": "Ryu",
+      "checksum": "357e6d208f9320ad5040224d1820960f9563db57abae4d1e1fed63519fd8e4be",
       "ref": "main"
     },
     {
       "name": "marketing-studio",
       "displayName": "Marketing Studio",
       "id": "ryu/marketing-studio",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -7815,14 +8385,14 @@
       ],
       "featuredRank": 115,
       "developer": "Ryu",
-      "checksum": "4350e8c3b77c5f5405602191ed6b18e844732f17d91293829db4c545d7757a3a",
+      "checksum": "5fbca5aaadcd73da85fb3ec39f99e1f2c9085d073be1bc8034421dcbab1e6682",
       "ref": "main"
     },
     {
       "name": "orchestrator-workers",
       "displayName": "Orchestrator–Workers",
       "id": "ryu/workflow/orchestrator-workers",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7865,14 +8435,14 @@
         "sub-agents"
       ],
       "icon": "Workflow",
-      "checksum": "b4e3ec216ba26fc2e201ebea336eb3670d0ded69b9632560cc855df6b5ccce4a",
+      "checksum": "5d977584af7a7ecaf3e5a84452608575c3347059e55648e95bc89f139a9c1d75",
       "ref": "main"
     },
     {
       "name": "parallelization",
       "displayName": "Parallelization",
       "id": "ryu/workflow/parallelization",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7915,14 +8485,14 @@
         "sub-agents"
       ],
       "icon": "Network",
-      "checksum": "13120f52b734d93f098ba392690c71897673ad8220a2665f6f2ecff38557ce14",
+      "checksum": "c556577a679baa6032b2cb0a0bb4772d92c8bfd7dcd6daecd89cdee086267b7d",
       "ref": "main"
     },
     {
       "name": "prompt-chaining",
       "displayName": "Prompt Chaining",
       "id": "ryu/workflow/prompt-chaining",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7965,14 +8535,14 @@
         "decomposition"
       ],
       "icon": "Link",
-      "checksum": "e0bad33f3f863714b409552c7c0e40006bae8c8969d1ef4e0965a880e622da38",
+      "checksum": "4ad0b9cb14419d411a7943f954fede0cc6c924a9710f59d22422353e60d32ad5",
       "ref": "main"
     },
     {
       "name": "routing",
       "displayName": "Routing",
       "id": "ryu/workflow/routing",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8015,14 +8585,14 @@
         "branch"
       ],
       "icon": "Split",
-      "checksum": "9d910c1ae021daccfed57f4de832c4ad955ac58c1dde068e3bb8ee042261a172",
+      "checksum": "d41af79ae9977bd796da4f951a79f5c9e748627c78ae6603b4dcf3427327cc07",
       "ref": "main"
     },
     {
       "name": "security-guard",
       "displayName": "Security Guard",
       "id": "ryu/security-guard",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8069,14 +8639,14 @@
       ],
       "featuredRank": 125,
       "developer": "Ryu",
-      "checksum": "444b5c1f0fe22cc26bb316b66830ea48b568bafdfca26e305639e1ff282abf02",
+      "checksum": "b352180893cec541e59f06c6042c48042792726035f42319337e51fe9b926977",
       "ref": "main"
     },
     {
       "name": "tournament",
       "displayName": "Tournament",
       "id": "ryu/workflow/tournament",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8119,7 +8689,7 @@
         "best-of-n"
       ],
       "icon": "Trophy",
-      "checksum": "d24a5d64430f13608403024cfae7c15e38cb5b50205309f5b5e3e5da29565775",
+      "checksum": "248c32bdf631720f3b0e19b0111819c536691ed9b4e3482c6acc68f331f9dd59",
       "ref": "main"
     }
   ],
@@ -8127,7 +8697,7 @@
     {
       "name": "action-summary",
       "displayName": "Action Summary",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8181,7 +8751,7 @@
     {
       "name": "activity",
       "displayName": "Activity",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -8232,7 +8802,7 @@
       "name": "adversarial-verification",
       "displayName": "Adversarial Verification",
       "id": "ryu/workflow/adversarial-verification",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8276,13 +8846,13 @@
         "sub-agents"
       ],
       "icon": "ShieldCheck",
-      "checksum": "98a0728badf846c9e4ca0bc5cbc91aac25098a2aca6c503c24401ecae0ac4def",
+      "checksum": "db3de19dc08b0f09a4415da87fed4c2b7bed30108f21ce2941cf804e7b441a8a",
       "ref": "main"
     },
     {
       "name": "advisor",
       "displayName": "Advisor",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8332,7 +8902,7 @@
     {
       "name": "agent-comms",
       "displayName": "Switchboard",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8386,7 +8956,7 @@
     {
       "name": "agent-status",
       "displayName": "Agent Status",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -8434,7 +9004,7 @@
     {
       "name": "agentation",
       "displayName": "Agentation",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8485,7 +9055,7 @@
     {
       "name": "agentbrowser",
       "displayName": "Agent Browser",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8510,7 +9080,7 @@
         }
       ],
       "tagline": "A second real browser for the browser.control layer",
-      "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream, so selecting it re-points the stable `browser.*` tools at agent-browser without changing what agents call. Launched via `npx agent-browser mcp --tools all`; needs Node on PATH.",
+      "description": "Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream, so selecting it re-points the stable `browser.*` tools at agent-browser without changing what agents call. Launched from the audited `agent-browser@0.34.0` package; needs Node on PATH.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -8552,7 +9122,7 @@
     {
       "name": "agents-md-tail",
       "displayName": "AGENTS.md Tail",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8606,7 +9176,7 @@
     {
       "name": "ambient-elevator",
       "displayName": "Ambient Elevator",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8655,7 +9225,7 @@
       "name": "animator",
       "displayName": "Animator",
       "id": "ryu/animator",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8703,13 +9273,13 @@
       ],
       "featuredRank": 122,
       "developer": "Ryu",
-      "checksum": "fc0820e82b3467f044b629d4f286506e757a064f1aa5eab10098a5939a9e1cbf",
+      "checksum": "65b8d7e47facfcca11942bd24776e6cb47c8252464bfa5ab4728ea53bd28b64f",
       "ref": "main"
     },
     {
       "name": "approvals",
       "displayName": "Approvals",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -8759,7 +9329,7 @@
     {
       "name": "auto-continue",
       "displayName": "Auto Continue",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8814,7 +9384,7 @@
       "name": "autonomous-agent",
       "displayName": "Autonomous Agent",
       "id": "ryu/workflow/autonomous-agent",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8858,14 +9428,14 @@
         "tools"
       ],
       "icon": "Bot",
-      "checksum": "adf9fb2d73f1fa30bf0beb016a0cba47bed77f1d4753a9b977275b379fd50e67",
+      "checksum": "efeb914201d11ef9a742a413ece577f4e042a8a4fe355ff5bb04ba6cb705798e",
       "ref": "main"
     },
     {
       "name": "autoresearch",
       "displayName": "Autoresearch",
       "id": "ryu/workflow/autoresearch",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8887,9 +9457,14 @@
       "scopes": [
         "workflow"
       ],
-      "requires": {},
+      "requires": {
+        "@ryu/research": ">=0.1.17",
+        "@ryu/rlm": ">=0.1.16"
+      },
       "capabilities": [
-        "workflow:git-ledger-loop"
+        "workflow:verified-experiment-loop",
+        "research:durable-campaigns",
+        "rlm:recursive-evidence"
       ],
       "security": {
         "containsSecrets": false,
@@ -8900,22 +9475,67 @@
       "artifacts": [
         "workflow.json"
       ],
-      "description": "Requires the Research app (@ryu/research) to be enabled — it provides the research__* tools this loop drives, and they do not exist on a node where the app is off. A researcher agent iterates on an experiment via those tools, keeping only improvements — a git-versioned autoresearch loop.",
+      "description": "Runs one durable Research campaign with snapshot-bound proposals, automatic recursive RLM analysis, engine-owned winner selection, and policy-based stopping.",
       "category": "research",
       "tags": [
         "research",
+        "experiments",
         "loop",
-        "agent",
+        "rlm",
         "durable"
       ],
       "icon": "FlaskConical",
-      "checksum": "683b409e3bceb2b3b4baf245084e5d79998ddb15e208e52633fb7e3904898978",
+      "checksum": "5b8ea666c8bba8477fd69949a12c6fa2e0dc66a867de77ea038ea806e5013e3e",
       "ref": "main"
+    },
+    {
+      "name": "backstage",
+      "displayName": "Backstage",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "amajorai/backstage",
+      "official": true,
+      "system": false,
+      "developer": "A Major",
+      "tagline": "Make thumbnails with your own creative workspace and Ryu AI",
+      "description": "A local-first YouTube thumbnail studio that keeps its editor while using Ryu for governed model and image generation.",
+      "author": {
+        "name": "A Major",
+        "url": "https://amajorai.com"
+      },
+      "repository": "https://github.com/amajorai/backstage",
+      "category": "Creative",
+      "keywords": [
+        "youtube",
+        "thumbnails",
+        "creative",
+        "design",
+        "images",
+        "editor"
+      ],
+      "icon": "ai-image",
+      "iconDither": {
+        "from": 225,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/backstage",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop",
+        "island",
+        "web"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.2.0"
+      }
     },
     {
       "name": "bitwarden",
       "displayName": "Bitwarden Secrets Manager",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8969,7 +9589,7 @@
     {
       "name": "blueprint",
       "displayName": "Blueprint",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9036,7 +9656,7 @@
     {
       "name": "bookmarks",
       "displayName": "Bookmarks",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9085,7 +9705,7 @@
       "name": "brand-presence",
       "displayName": "Brand Presence",
       "id": "ryu/brand-presence",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -9132,13 +9752,13 @@
       ],
       "featuredRank": 120,
       "developer": "Ryu",
-      "checksum": "63d8f5cd18de92332f2216e37bba5ebb65a139b670913e40e813840543e25844",
+      "checksum": "753d6e30a65333fdddb28c4f9bdbd78f52f84efe335eea5fb293794dd15337cd",
       "ref": "main"
     },
     {
       "name": "brave",
       "displayName": "Brave Search",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9198,13 +9818,21 @@
     {
       "name": "browser",
       "displayName": "Browser",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
       "system": true,
       "developer": "Ryu",
       "layers": [
+        {
+          "capability": "browser.session",
+          "title": "Browser session",
+          "toolkit": false,
+          "selectable": false,
+          "target": "local-machine",
+          "verbs": []
+        },
         {
           "capability": "browser.control",
           "title": "Browser",
@@ -9273,7 +9901,7 @@
     {
       "name": "bytebot",
       "displayName": "Bytebot Desktop",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9341,7 +9969,7 @@
     {
       "name": "calendar",
       "displayName": "Calendar",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9391,7 +10019,7 @@
     {
       "name": "canvas",
       "displayName": "Canvas",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9443,7 +10071,7 @@
     {
       "name": "chat-broadcast",
       "displayName": "Chat Broadcast",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9490,7 +10118,7 @@
     {
       "name": "chat-title",
       "displayName": "Chat Title",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9542,7 +10170,7 @@
     {
       "name": "chatgpt-web",
       "displayName": "ChatGPT Web",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9580,7 +10208,7 @@
     {
       "name": "checks",
       "displayName": "Tests",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9629,7 +10257,7 @@
     {
       "name": "clangd-lsp",
       "displayName": "Clangd (C/C++)",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9684,7 +10312,7 @@
       "name": "classify-and-act",
       "displayName": "Classify & Act",
       "id": "ryu/workflow/classify-and-act",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -9727,13 +10355,13 @@
         "agents"
       ],
       "icon": "ListTree",
-      "checksum": "c5abdced5b20a409291cc5409a42ede3d1ea13ddace77bd87ccb285b0b85cb58",
+      "checksum": "727c56326a76ec39c8665a3ce21e3489f84bc5fa447c1993b22f8a64472afa55",
       "ref": "main"
     },
     {
       "name": "clips",
       "displayName": "Clips",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9785,7 +10413,7 @@
     {
       "name": "cloudflare-browser-run",
       "displayName": "Cloudflare Browser Run",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9863,7 +10491,7 @@
       "name": "codex-quota-reset-watch",
       "displayName": "Codex Quota Reset Watch",
       "id": "ryu/codex-quota-reset-watch",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -9910,13 +10538,13 @@
       ],
       "featuredRank": 128,
       "developer": "Ryu",
-      "checksum": "b493eb6045aab2635448e6a8c11a94c29aa601b71a5d567a39c897a5697caca4",
+      "checksum": "bb6e7962b0b118fe0ca2fbf12f54e06418437ac229ff186fac582224eb704299",
       "ref": "main"
     },
     {
       "name": "composio-connect",
       "displayName": "Composio Connect",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9965,9 +10593,60 @@
       }
     },
     {
+      "name": "content",
+      "displayName": "Content",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Shape ideas into a repeatable publishing system",
+      "description": "A list-only catalog preview for planned local-first content projects, schedules, and performance signals.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-content",
+      "category": "Creative",
+      "keywords": [
+        "content",
+        "creator",
+        "publishing",
+        "scheduling",
+        "analytics"
+      ],
+      "tags": [
+        "content",
+        "creator",
+        "publishing",
+        "scheduling",
+        "analytics"
+      ],
+      "icon": "film-01",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-content",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "crm",
       "displayName": "Harbor",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10020,7 +10699,7 @@
     {
       "name": "csharp-lsp",
       "displayName": "C# LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10074,7 +10753,7 @@
     {
       "name": "dashboards",
       "displayName": "Dashboards",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10126,7 +10805,7 @@
       "name": "design-director",
       "displayName": "Design Director",
       "id": "ryu/design-director",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -10176,13 +10855,13 @@
       ],
       "featuredRank": 135,
       "developer": "Ryu",
-      "checksum": "236cbf917743d3502e835e0f7c40c35e785e663a841d1708223891d871de3bd5",
+      "checksum": "42dc923271cc6823f7d7de4329951d8e7922312e30648bbe61cfcfee68436c51",
       "ref": "main"
     },
     {
       "name": "desktop",
       "displayName": "Virtual Desktop",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10234,7 +10913,7 @@
     {
       "name": "dictation",
       "displayName": "Dictation",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10286,7 +10965,7 @@
     {
       "name": "docling",
       "displayName": "Docling",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10355,7 +11034,7 @@
     {
       "name": "docs",
       "displayName": "Ryu Docs",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10405,7 +11084,7 @@
     {
       "name": "double-check",
       "displayName": "Double Check",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10457,7 +11136,7 @@
     {
       "name": "drafts",
       "displayName": "Drafts",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10510,7 +11189,7 @@
     {
       "name": "dynamic-workflows",
       "displayName": "dynamic-workflows",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10534,12 +11213,15 @@
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/dynamic-workflows",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
-      "stability": "experimental"
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "effort-escalator",
       "displayName": "Effort Escalator",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10593,7 +11275,7 @@
     {
       "name": "ego-browser",
       "displayName": "Ego Browser",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10607,8 +11289,8 @@
           "selectable": true,
           "target": "local-machine",
           "verbs": [
-            "browser.navigate",
             "browser.tabs",
+            "browser.navigate",
             "browser.snapshot",
             "browser.click",
             "browser.type",
@@ -10618,7 +11300,7 @@
         }
       ],
       "tagline": "Swap browser control onto Ego lite Spaces",
-      "description": "Ego lite (https://github.com/citrolabs/ego-lite) as an optional provider for Ryu's swappable browser.control layer. Each call launches the installed ego-browser CLI in a conversation-scoped Ego Space, while agents keep using the stable browser.navigate, browser.tabs, browser.snapshot, browser.click, browser.type, browser.scroll, and browser.screenshot verbs. Requires the Ego lite macOS app and ego-browser on PATH; Ryu does not install Ego lite or copy browser login state.",
+      "description": "Ego lite (https://github.com/citrolabs/ego-lite) as an optional provider for Ryu's swappable browser.control layer. One sealed dispatcher launches the installed ego-browser CLI in a conversation-scoped Ego Space, while small adapters keep agents on the stable browser.navigate, browser.tabs, browser.snapshot, browser.click, browser.type, browser.scroll, and browser.screenshot verbs. Requires the Ego lite macOS app and ego-browser on PATH; Ryu does not install Ego lite or copy browser login state.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -10661,7 +11343,7 @@
       "name": "evaluator-optimizer",
       "displayName": "Evaluator–Optimizer",
       "id": "ryu/workflow/evaluator-optimizer",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -10705,13 +11387,13 @@
         "quality"
       ],
       "icon": "Gauge",
-      "checksum": "c24555b182c625d8d25eebea12dbd2b1fc12a30752d8be1a58b7d218ab4a4f58",
+      "checksum": "c5be3e9741e57ea5ba05366a25cbfb63f42731b17b829d4f1276c8b3da0030dc",
       "ref": "main"
     },
     {
       "name": "exa",
       "displayName": "Exa Search",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10770,7 +11452,7 @@
     {
       "name": "expanded-composer",
       "displayName": "Expanded Composer",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10817,7 +11499,7 @@
     {
       "name": "expect",
       "displayName": "Expect",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10866,10 +11548,117 @@
       }
     },
     {
+      "name": "expense-tracker",
+      "displayName": "Expense Tracker",
+      "id": "ryu/expense-tracker",
+      "version": "0.2.1",
+      "type": "agent",
+      "kind": "agent",
+      "package": true,
+      "packageKind": "agent",
+      "artifactKinds": [
+        "agent.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/agents/expense-tracker",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "ryu-desktop",
+        "ryu-cli"
+      ],
+      "scopes": [
+        "agent"
+      ],
+      "requires": {},
+      "capabilities": [
+        "Record expenses",
+        "Summarize spending",
+        "Correct ledger entries"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "agent.json"
+      ],
+      "tagline": "Keep a clear, local record of where your money went.",
+      "description": "Records and summarizes personal expenses through Ryu's local Expenses ledger, with a visual app available when you want to inspect the entries.",
+      "category": "Productivity",
+      "author": "Ryu",
+      "examplePrompts": [
+        "Record $18.40 for lunch today in Food.",
+        "How much did I spend on Transport this month?"
+      ],
+      "featuredRank": 118,
+      "developer": "Ryu",
+      "checksum": "42145f5301b5af24799c5a518d081a0c0276a4710e3a721592d5e74fa5d9d39f",
+      "ref": "main"
+    },
+    {
+      "name": "expenses",
+      "displayName": "Expenses",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "A clear view of where the month went",
+      "description": "A local-first expense ledger for Ryu: record spending through an agent or the companion, then see totals, categories, and recent entries in one visual view. The node owns the records; no bank connection or exchange-rate conversion is included.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-expenses",
+      "category": "Productivity",
+      "keywords": [
+        "expenses",
+        "budget",
+        "spending",
+        "ledger",
+        "finance"
+      ],
+      "tags": [
+        "expenses",
+        "finance",
+        "ledger",
+        "spending",
+        "money"
+      ],
+      "icon": "money-03",
+      "iconDither": {
+        "from": 186,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-expenses",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "expiry-date-tracker",
       "displayName": "Expiry Date Tracker",
       "id": "ryu/expiry-date-tracker",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -10916,14 +11705,14 @@
       ],
       "featuredRank": 130,
       "developer": "Ryu",
-      "checksum": "6b313aeafb8e0bd6ab205a47cad5ae0023b0c3fd7f91ae3831b2a689539d0a1a",
+      "checksum": "9e754a24f2abc191c74b2d031459077443dfca4c784fd7a4ad27fa12e2a50c6d",
       "ref": "main"
     },
     {
       "name": "fan-out-synthesize",
       "displayName": "Fan-out / Synthesize",
       "id": "ryu/workflow/fan-out-synthesize",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -10966,13 +11755,70 @@
         "sub-agents"
       ],
       "icon": "GitFork",
-      "checksum": "2748d55025825116f40d22061bc80720ac4bedfae7269e29f97e20120addbfbc",
+      "checksum": "0e33b8395b08fc5de6012f5444e70912317652481096efb3b92d25e78fe351af",
       "ref": "main"
+    },
+    {
+      "name": "feedback-board",
+      "displayName": "Feedback Board",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Listen in public. Build with Ryu.",
+      "description": "A public feedback board and private Ryu product workspace: collect requests, votes, and comments, turn demand into a roadmap, and use configurable Ryu workflows to prepare or build what users ask for.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-feedback-board",
+      "category": "Productivity",
+      "keywords": [
+        "feedback",
+        "feature requests",
+        "roadmap",
+        "voting",
+        "product management",
+        "changelog",
+        "ai"
+      ],
+      "tags": [
+        "feedback",
+        "product",
+        "roadmap",
+        "feature requests",
+        "voting",
+        "changelog",
+        "ai"
+      ],
+      "icon": "comment-01",
+      "iconDither": {
+        "from": 211,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-feedback-board",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "finetune",
       "displayName": "Fine-tuning",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11025,7 +11871,7 @@
     {
       "name": "firecrawl",
       "displayName": "Firecrawl",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11107,7 +11953,7 @@
     {
       "name": "firewall",
       "displayName": "Gateway Firewall",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11162,7 +12008,7 @@
       "name": "generate-and-filter",
       "displayName": "Generate & Filter",
       "id": "ryu/workflow/generate-and-filter",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -11206,13 +12052,13 @@
         "best-of-n"
       ],
       "icon": "Filter",
-      "checksum": "eb447ce349b6503f56fcf7746e064b412763e8550f0631376ef97b05a2fe830e",
+      "checksum": "60b6e9ac48b4c6bbb479051bbb75af6e8b2e8cb23fdcd4938f3d4d1c2c3f9c85",
       "ref": "main"
     },
     {
       "name": "ghost",
       "displayName": "Ghost",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11276,7 +12122,7 @@
     {
       "name": "ghost-chats",
       "displayName": "Temporary Chats",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11325,7 +12171,7 @@
     {
       "name": "goal",
       "displayName": "Goal",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11377,7 +12223,7 @@
     {
       "name": "gopls-lsp",
       "displayName": "Go LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11429,9 +12275,65 @@
       }
     },
     {
+      "name": "growth-psychology-strategist",
+      "displayName": "Growth Psychology Strategist",
+      "id": "ryu/growth-psychology-strategist",
+      "version": "0.2.1",
+      "type": "agent",
+      "kind": "agent",
+      "package": true,
+      "packageKind": "agent",
+      "artifactKinds": [
+        "agent.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/agents/growth-psychology-strategist",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "ryu-desktop",
+        "ryu-cli"
+      ],
+      "scopes": [
+        "agent"
+      ],
+      "requires": {},
+      "capabilities": [
+        "Offer and pricing strategy",
+        "Sales copy and objection handling",
+        "Behavioral-science messaging",
+        "Growth experiments"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "agent.json"
+      ],
+      "tagline": "Use behavioral science to build clearer offers, stronger sales copy, and ethical growth experiments.",
+      "description": "Sales and marketing strategist who uses behavioral science to clarify offers, improve conversion, and design ethical growth experiments.",
+      "category": "Marketing",
+      "author": "Ryu",
+      "examplePrompts": [
+        "Reframe this offer with an honest anchor and three pricing options.",
+        "Audit this landing page for behavioral friction and propose a measurable experiment.",
+        "Turn these sales objections into a clear, trust-preserving follow-up sequence."
+      ],
+      "featuredRank": 138,
+      "developer": "Ryu",
+      "checksum": "357e6d208f9320ad5040224d1820960f9563db57abae4d1e1fed63519fd8e4be",
+      "ref": "main"
+    },
+    {
       "name": "headroom",
       "displayName": "Headroom Compression",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11479,7 +12381,7 @@
     {
       "name": "healing",
       "displayName": "Self-Healing",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11529,9 +12431,50 @@
       }
     },
     {
+      "name": "help-center",
+      "displayName": "Help Center",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Resolve support questions with your whole team",
+      "description": "A Ryu support workspace for resolving tickets, improving knowledge, and reviewing AI assistance.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-help-center",
+      "category": "Communication",
+      "keywords": [
+        "support",
+        "tickets",
+        "knowledge",
+        "help center"
+      ],
+      "tags": [
+        "support",
+        "tickets",
+        "knowledge",
+        "ai"
+      ],
+      "icon": "customer-service-01",
+      "homepage": "https://github.com/amajorai/ryu-help-center",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "honcho",
       "displayName": "Honcho",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11599,7 +12542,7 @@
     {
       "name": "hook-observers",
       "displayName": "Hook Observers",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11651,7 +12594,7 @@
     {
       "name": "hook-session-context",
       "displayName": "Session Context",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11703,7 +12646,7 @@
     {
       "name": "jdtls-lsp",
       "displayName": "Java LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11757,7 +12700,7 @@
     {
       "name": "kotlin-lsp",
       "displayName": "Kotlin LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11811,7 +12754,7 @@
     {
       "name": "learning",
       "displayName": "Learning",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11861,7 +12804,7 @@
     {
       "name": "lua-lsp",
       "displayName": "Lua LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11913,7 +12856,7 @@
     {
       "name": "mail",
       "displayName": "Mail",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11965,7 +12908,7 @@
       "name": "marketing-studio",
       "displayName": "Marketing Studio",
       "id": "ryu/marketing-studio",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -12012,13 +12955,13 @@
       ],
       "featuredRank": 115,
       "developer": "Ryu",
-      "checksum": "4350e8c3b77c5f5405602191ed6b18e844732f17d91293829db4c545d7757a3a",
+      "checksum": "5fbca5aaadcd73da85fb3ec39f99e1f2c9085d073be1bc8034421dcbab1e6682",
       "ref": "main"
     },
     {
       "name": "markitdown",
       "displayName": "MarkItDown",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12085,7 +13028,7 @@
     {
       "name": "meetings",
       "displayName": "Meetings",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12136,7 +13079,7 @@
     {
       "name": "mem0",
       "displayName": "Mem0",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12202,7 +13145,7 @@
     {
       "name": "mineru",
       "displayName": "MinerU",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12271,7 +13214,7 @@
     {
       "name": "mission-control",
       "displayName": "Mission Control",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12324,7 +13267,7 @@
     {
       "name": "monitors",
       "displayName": "Monitors",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12373,9 +13316,62 @@
       }
     },
     {
+      "name": "mpp",
+      "displayName": "Payments",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Governed machine payments with receipts you can audit",
+      "description": "Discover services that speak the Machine Payments Protocol, review exact Tempo testnet charges, enforce per-request and daily budgets, make explicitly approved paid requests, and keep a local receipt ledger. Signing keys use Ryu's per-app encrypted custody and never enter chat, app state, logs, or receipt records.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-mpp",
+      "category": "Developer Tools",
+      "keywords": [
+        "payments",
+        "mpp",
+        "tempo",
+        "services",
+        "receipts"
+      ],
+      "tags": [
+        "payments",
+        "mpp",
+        "tempo",
+        "services",
+        "receipts"
+      ],
+      "icon": "wallet-cards",
+      "iconDither": {
+        "from": 156,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://mpp.dev",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "news",
       "displayName": "Wire",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12442,7 +13438,7 @@
     {
       "name": "no-ai-slop",
       "displayName": "No AI Slop",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12496,14 +13492,14 @@
     {
       "name": "no-more-mistakes",
       "displayName": "No More Mistakes",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
       "system": false,
       "developer": "Ryu",
       "tagline": "Correct it once, not every week",
-      "description": "Notices when you correct the agent, writes the lesson down as a one-line rule in a Space, and hands every later session that rule list before the first word is generated — so a mistake you have already fixed once stops coming back. Each rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
+      "description": "Notices when you correct the agent, proposes a one-line lesson for your confirmation, and hands only explicitly saved rules to later sessions before the first word is generated. Each confirmed rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -12550,7 +13546,7 @@
     {
       "name": "observer-agents",
       "displayName": "Observer Agents",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12605,7 +13601,7 @@
       "name": "orchestrator-workers",
       "displayName": "Orchestrator–Workers",
       "id": "ryu/workflow/orchestrator-workers",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -12648,13 +13644,13 @@
         "sub-agents"
       ],
       "icon": "Workflow",
-      "checksum": "b4e3ec216ba26fc2e201ebea336eb3670d0ded69b9632560cc855df6b5ccce4a",
+      "checksum": "5d977584af7a7ecaf3e5a84452608575c3347059e55648e95bc89f139a9c1d75",
       "ref": "main"
     },
     {
       "name": "output-styles",
       "displayName": "Output Styles",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12708,7 +13704,7 @@
     {
       "name": "parallel",
       "displayName": "Parallel Search",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12781,7 +13777,7 @@
       "name": "parallelization",
       "displayName": "Parallelization",
       "id": "ryu/workflow/parallelization",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -12824,13 +13820,13 @@
         "sub-agents"
       ],
       "icon": "Network",
-      "checksum": "13120f52b734d93f098ba392690c71897673ad8220a2665f6f2ecff38557ce14",
+      "checksum": "c556577a679baa6032b2cb0a0bb4772d92c8bfd7dcd6daecd89cdee086267b7d",
       "ref": "main"
     },
     {
       "name": "php-lsp",
       "displayName": "PHP LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12882,7 +13878,7 @@
     {
       "name": "pi-monitor",
       "displayName": "Monitor",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12938,7 +13934,7 @@
     {
       "name": "pi-shell",
       "displayName": "Background Bash",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12990,7 +13986,7 @@
     {
       "name": "pi-subagent",
       "displayName": "Subagents",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13042,7 +14038,7 @@
     {
       "name": "plan-continue",
       "displayName": "Plan Continue",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13094,7 +14090,7 @@
     {
       "name": "predict",
       "displayName": "Autocomplete",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13147,7 +14143,7 @@
       "name": "prompt-chaining",
       "displayName": "Prompt Chaining",
       "id": "ryu/workflow/prompt-chaining",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -13190,13 +14186,13 @@
         "decomposition"
       ],
       "icon": "Link",
-      "checksum": "e0bad33f3f863714b409552c7c0e40006bae8c8969d1ef4e0965a880e622da38",
+      "checksum": "4ad0b9cb14419d411a7943f954fede0cc6c924a9710f59d22422353e60d32ad5",
       "ref": "main"
     },
     {
       "name": "prompt-suggestions",
       "displayName": "Prompt Suggestions",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13250,7 +14246,7 @@
     {
       "name": "proof",
       "displayName": "Proof of Work",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13302,7 +14298,7 @@
     {
       "name": "pull-requests",
       "displayName": "Pull Requests",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13356,7 +14352,7 @@
     {
       "name": "pxpipe",
       "displayName": "pxpipe",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13410,7 +14406,7 @@
     {
       "name": "pyright-lsp",
       "displayName": "Python LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13464,7 +14460,7 @@
     {
       "name": "quests",
       "displayName": "Quests",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13515,7 +14511,7 @@
     {
       "name": "reactions",
       "displayName": "Message Reactions",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13566,7 +14562,7 @@
     {
       "name": "reasoning",
       "displayName": "Automated Reasoning",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13633,7 +14629,7 @@
     {
       "name": "recap",
       "displayName": "Recap",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13687,7 +14683,7 @@
     {
       "name": "receipts",
       "displayName": "Receipts",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13745,7 +14741,7 @@
     {
       "name": "recipes",
       "displayName": "Recipes",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13797,7 +14793,7 @@
     {
       "name": "reconnect-retry",
       "displayName": "Reconnect Retry",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13846,7 +14842,7 @@
     {
       "name": "reelfarm",
       "displayName": "Sprout Studio",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13899,14 +14895,14 @@
     {
       "name": "research",
       "displayName": "Research",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
       "system": false,
       "developer": "Ryu",
-      "tagline": "Multi-step web research with cited sources",
-      "description": "Deep research: multi-step web research runs backed by the autoresearch sidecar, with sources, findings, and RAG-searchable reports. Declares the out-of-process ryu-research sidecar (a thin Rust proxy that forwards /api/research/* to the Python autoresearch engine on :8087); Core reaches it via the generic ext-proxy loader.",
+      "tagline": "Run experiments, keep winners, and reason over the full history",
+      "description": "Run durable autoresearch campaigns with one-shot proposals, direction-aware winners, bounded budgets, policy-based stopping, and automatic recursive analysis for oversized history.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -13915,9 +14911,9 @@
       "category": "Research",
       "keywords": [
         "research",
-        "web",
-        "reports",
-        "sources"
+        "autoresearch",
+        "experiments",
+        "rlm"
       ],
       "tags": [
         "research",
@@ -13951,7 +14947,7 @@
     {
       "name": "rlm",
       "displayName": "Recursive Language Model",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13966,7 +14962,7 @@
         }
       ],
       "tagline": "Ask a question of more text than a model can hold",
-      "description": "Answer questions about a corpus far larger than any model's context window — without putting it in a prompt. The usual options all degrade: truncate and you lose the answer, embed-and-retrieve and you get fragments without their argument, buy a bigger window and attention over the middle of it thins out anyway. This app does the other thing. Your documents are held here as a variable. A root model plans over an outline of them — chunk ids, sources, line spans, headings — and reaches the text only through operators that summarise before returning: `grep` to locate, `map` to run a cheap model over the chunks that matter in parallel and fold the answers back, `recurse` to give a sub-question its own plan over a subset. The root model never sees the corpus, so its context stays roughly the same size whether you point it at 40 KB or 40 MB, and the answer does not get worse as the input gets bigger. Every answer carries `path:line` citations read back out of the chunks it rests on, and every run keeps a full trace — each operator, each sub-call, what it cost — that you can open and replay. Depth, step, call and wall-clock budgets are hard: a run that hits one says so and returns what it had, rather than quietly shortening the answer. Agents get the same engine as tools, and `grep` and `peek` need no model at all, so a workflow can branch on a deterministic search of a 40 MB corpus.",
+      "description": "Answer questions about a corpus far larger than any model's context window — without putting it in a prompt. The usual options all degrade: truncate and you lose the answer, embed-and-retrieve and you get fragments without their argument, buy a bigger window and attention over the middle of it thins out anyway. This app does the other thing. Your documents are held here as a variable. A root model plans over an outline of them — chunk ids, sources, line spans, headings — and reaches the text only through operators that summarise before returning: `grep` to locate, `map` to run a cheap model over the chunks that matter in parallel and fold the answers back, `recurse` to give a sub-question its own plan over a subset. The root model never sees the corpus, so its context stays roughly the same size whether you point it at 40 KB or 40 MB, and the answer does not get worse as the input gets bigger. Every answer carries `path:line` citations read back out of the chunks it rests on, and every run keeps a full trace — each operator, each sub-call, what it cost — that you can open and replay. Depth, step, call and wall-clock budgets are hard: a run that hits one says so and returns what it had, rather than quietly shortening the answer. Agents get the same engine as tools, and `grep` and `peek` need no model at all, so a workflow can branch on a deterministic search of a 40 MB corpus. Capability callers may query an existing context or submit bounded inline documents that are persisted as a context and analyzed in the same recursive run.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -14019,7 +15015,7 @@
       "name": "routing",
       "displayName": "Routing",
       "id": "ryu/workflow/routing",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -14062,13 +15058,13 @@
         "branch"
       ],
       "icon": "Split",
-      "checksum": "9d910c1ae021daccfed57f4de832c4ad955ac58c1dde068e3bb8ee042261a172",
+      "checksum": "d41af79ae9977bd796da4f951a79f5c9e748627c78ae6603b4dcf3427327cc07",
       "ref": "main"
     },
     {
       "name": "rtk",
       "displayName": "RTK (Rust Token Killer)",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14120,7 +15116,7 @@
     {
       "name": "ruby-lsp",
       "displayName": "Ruby LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14174,7 +15170,7 @@
     {
       "name": "rules",
       "displayName": "Rules",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14228,7 +15224,7 @@
     {
       "name": "rust-analyzer-lsp",
       "displayName": "Rust LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14278,9 +15274,65 @@
       }
     },
     {
+      "name": "safe-actions",
+      "displayName": "Safe Actions",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Prove the plan, review the risk, keep the receipt",
+      "description": "Review and govern typed tool plans before they can touch the world. Safe Actions shows the exact sequence, parallel branches, conditions, effects, and resources a verified agent proposed; explains every deterministic policy finding and counterexample; lets an authorized reviewer approve or deny plans that require judgment; and preserves hash-bound execution receipts without exposing raw secrets. It is the control surface for Core's generic fail-closed verified-plan gate: approval resumes the persisted plan, while the Companion itself never invokes a tool or executes an action.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-safe-actions",
+      "category": "Security",
+      "keywords": [
+        "security",
+        "verification",
+        "tool-plans",
+        "policy",
+        "approvals",
+        "receipts"
+      ],
+      "tags": [
+        "security",
+        "verification",
+        "tool-plans",
+        "policy",
+        "approvals",
+        "receipts",
+        "human-in-the-loop"
+      ],
+      "icon": "shield-key",
+      "iconDither": {
+        "from": 208,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-safe-actions",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "sample",
       "displayName": "Research Assistant",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14333,14 +15385,14 @@
     {
       "name": "sample-widget",
       "displayName": "Sample Widget",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
       "system": false,
       "developer": "Ryu",
       "tagline": "Reference plugin: an inline chat widget",
-      "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget.render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). contributes.widgets binds the tool to that resource; the widget:render grant + this manifest are the consent gate that lets Core promote the tool's result into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
+      "description": "Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one render tool (sample_widget.render) that returns structured data AND serves a self-contained skybridge HTML resource (ui://widget/sample.html). The approved mcp:server grant lets a Community plugin register the server; contributes.widgets plus widget:render authorize promotion into an inline chat widget. Copy this directory as the starting point for your own widget plugin.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -14388,7 +15440,7 @@
     {
       "name": "scrapling",
       "displayName": "Scrapling",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14406,7 +15458,7 @@
         }
       ],
       "tagline": "Anti-bot page extraction, no API key",
-      "description": "Adaptive web-page extraction via the Scrapling MCP server (https://scrapling.readthedocs.io), a BYO local install. Provides the swappable `web.extract` layer as a THIRD provider alongside the local `spider` CLI and the hosted BYOK services, so selecting it re-points the stable `web.extract` tool at a fetcher that impersonates a real browser TLS fingerprint. No API key. Requires `pip install \"scrapling[ai]\"` and the `scrapling` binary on PATH; until then the MCP server does not start and the layer falls back to whichever other provider you select. Deliberately provides NO `web.crawl`: neither the MCP server nor the CLI follows links — only Scrapling's Python `Spider` class crawls, and it is not reachable over MCP.",
+      "description": "Adaptive web-page extraction via the Scrapling MCP server (https://scrapling.readthedocs.io), a BYO local install. Provides the swappable `web.extract` layer as a THIRD provider alongside the local `spider` CLI and the hosted BYOK services, so selecting it re-points the stable `web.extract` tool at a fetcher that impersonates a real browser TLS fingerprint. No API key. Requires `pip install \"scrapling[ai]\"` and the `scrapling` binary on PATH; selecting Scrapling before that makes `web.extract` unavailable until you install it or select a working provider. Deliberately provides NO `web.crawl`: neither the MCP server nor the CLI follows links — only Scrapling's Python `Spider` class crawls, and it is not reachable over MCP.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -14451,7 +15503,7 @@
       "name": "security-guard",
       "displayName": "Security Guard",
       "id": "ryu/security-guard",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -14498,13 +15550,13 @@
       ],
       "featuredRank": 125,
       "developer": "Ryu",
-      "checksum": "444b5c1f0fe22cc26bb316b66830ea48b568bafdfca26e305639e1ff282abf02",
+      "checksum": "b352180893cec541e59f06c6042c48042792726035f42319337e51fe9b926977",
       "ref": "main"
     },
     {
       "name": "security-guidance",
       "displayName": "Security Guidance",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14556,7 +15608,7 @@
     {
       "name": "security-scanner",
       "displayName": "Security Scanner",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14614,7 +15666,7 @@
     {
       "name": "serper",
       "displayName": "Serper",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14686,7 +15738,7 @@
     {
       "name": "shadow",
       "displayName": "Shadow",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14733,7 +15785,7 @@
     {
       "name": "side-chats",
       "displayName": "Side Chats",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14787,7 +15839,7 @@
     {
       "name": "simulator",
       "displayName": "Simulators",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14845,9 +15897,53 @@
       }
     },
     {
+      "name": "sites",
+      "displayName": "Sites",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Make every public route explainable",
+      "description": "A local-first Sites control surface for previewing projects, public-edge routes, domains, quotas, and Help Center widgets.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-sites",
+      "category": "Developer Tools",
+      "keywords": [
+        "sites",
+        "publishing",
+        "hosting",
+        "domains",
+        "public edge",
+        "widgets"
+      ],
+      "tags": [
+        "sites",
+        "publishing",
+        "hosting",
+        "domains",
+        "public edge"
+      ],
+      "icon": "browser",
+      "homepage": "https://github.com/amajorai/ryu-sites",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "skill-editor",
       "displayName": "Skill Editor",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14895,9 +15991,53 @@
       }
     },
     {
+      "name": "slides",
+      "displayName": "Slides",
+      "version": "0.2.1",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Make the frame, then make it clear",
+      "description": "Create, edit, organize, and export visual slides and thumbnails locally with Ryu's media tools.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "category": "Creative",
+      "keywords": [
+        "slides",
+        "thumbnails",
+        "images",
+        "video",
+        "editor",
+        "carousel"
+      ],
+      "icon": "ai-image",
+      "iconDither": {
+        "from": 225,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "social",
       "displayName": "Outpost",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14950,7 +16090,7 @@
     {
       "name": "spider",
       "displayName": "Spider",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15018,7 +16158,7 @@
     {
       "name": "spidercloud",
       "displayName": "Spider Cloud",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15080,7 +16220,7 @@
     {
       "name": "stats",
       "displayName": "Session Stats",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15135,7 +16275,7 @@
     {
       "name": "subtitles",
       "displayName": "Subtitles",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15191,7 +16331,7 @@
     {
       "name": "swift-lsp",
       "displayName": "Swift LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15245,7 +16385,7 @@
     {
       "name": "tavily",
       "displayName": "Tavily Search",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15316,7 +16456,7 @@
     {
       "name": "teams",
       "displayName": "Teams",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15368,7 +16508,7 @@
     {
       "name": "timeline",
       "displayName": "Timeline",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15418,7 +16558,7 @@
     {
       "name": "token-table",
       "displayName": "Token Table",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15462,7 +16602,7 @@
     {
       "name": "tokenmaxxing",
       "displayName": "Tokenmaxxing",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15499,7 +16639,7 @@
     {
       "name": "tool-firewall",
       "displayName": "Tool Firewall",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15551,7 +16691,7 @@
     {
       "name": "toolsmith-example",
       "displayName": "toolsmith-example",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15582,7 +16722,7 @@
       "name": "tournament",
       "displayName": "Tournament",
       "id": "ryu/workflow/tournament",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -15625,13 +16765,13 @@
         "best-of-n"
       ],
       "icon": "Trophy",
-      "checksum": "d24a5d64430f13608403024cfae7c15e38cb5b50205309f5b5e3e5da29565775",
+      "checksum": "248c32bdf631720f3b0e19b0111819c536691ed9b4e3482c6acc68f331f9dd59",
       "ref": "main"
     },
     {
       "name": "tuition",
       "displayName": "Tuition",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15698,7 +16838,7 @@
     {
       "name": "typescript-lsp",
       "displayName": "TypeScript & JavaScript LSP",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15754,7 +16894,7 @@
     {
       "name": "ugc",
       "displayName": "UGC",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15807,7 +16947,7 @@
     {
       "name": "unstructured",
       "displayName": "Unstructured",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15871,7 +17011,7 @@
     {
       "name": "usage-pacer",
       "displayName": "Usage Pacer",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15927,7 +17067,7 @@
     {
       "name": "voice",
       "displayName": "Voice",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15981,7 +17121,7 @@
     {
       "name": "warmup",
       "displayName": "Warmup",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16032,7 +17172,7 @@
     {
       "name": "webhooks",
       "displayName": "Webhooks",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16083,7 +17223,7 @@
     {
       "name": "whatsapp",
       "displayName": "WhatsApp",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16135,7 +17275,7 @@
     {
       "name": "whiteboard",
       "displayName": "Whiteboard",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16186,7 +17326,7 @@
     {
       "name": "workflows",
       "displayName": "Workflows",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "type": "app",
       "source": "builtin",
       "official": true,

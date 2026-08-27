@@ -42,7 +42,8 @@ const manifest = {
 	engines: { ryu: ">=0.1.0" },
 	runnables: [],
 	requires: {
-		capabilities: [{ capability: "browser.control", min_version: "1.0.0" }],
+		apps: [{ id: "@ryu/browser", min_version: "0.1.15" }],
+		capabilities: [{ capability: "browser.session", min_version: "1.0.0" }],
 		grants: ["browser:control"],
 	},
 	permission_grants: ["sidecar:process", "browser:control", "preferences:read"],
@@ -58,7 +59,7 @@ const manifest = {
 						pref_key: "chatgpt-web.models",
 						label: "Enabled profiles",
 						description:
-							"Comma-separated profile ids. Defaults to instant, medium, high, extra-high, and pro.",
+							"Comma-separated profile ids. Unsupported and duplicate ids are ignored. Defaults to instant, medium, high, extra-high, and pro when none are valid.",
 						default:
 							"chatgpt-web/instant,chatgpt-web/medium,chatgpt-web/high,chatgpt-web/extra-high,chatgpt-web/pro",
 					},

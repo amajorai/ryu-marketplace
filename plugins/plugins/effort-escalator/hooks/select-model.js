@@ -11,10 +11,17 @@ if (!state?.stuck || !Number(state.escalations)) return { kind: "none" };
 let rules;
 try { rules = JSON.parse(String(await host.getPreference({ key: "effort-escalator-rules" }) ?? "{}")); } catch (_error) { return { kind: "none" }; }
 const rule = rules?.agents?.[ctx.agent_id] ?? rules?.global;
-const hasMaxEscalations = rule?.max_escalations != null;
-const maxEscalations = Number(rule?.max_escalations);
-if (!rule?.ladder?.length || (hasMaxEscalations && Number(state.escalations) > maxEscalations)) return { kind: "none" };
-const step = rule?.ladder?.[Number(state.escalations) - 1];
+if (!rule?.ladder?.length) return { kind: "none" };
+const ladderLength = rule.ladder.length;
+const parsedEscalations = Number(state.escalations);
+if (!Number.isFinite(parsedEscalations)) return { kind: "none" };
+const escalations = Math.max(0, Math.floor(parsedEscalations));
+const parsedMax = Number(rule.max_escalations);
+const maxEscalations = rule.max_escalations == null || !Number.isFinite(parsedMax)
+  ? ladderLength
+  : Math.min(ladderLength, Math.max(0, Math.floor(parsedMax)));
+if (escalations === 0 || escalations > ladderLength || escalations > maxEscalations) return { kind: "none" };
+const step = rule.ladder[escalations - 1];
 if (!step) return { kind: "none" };
 const from = String(step.from ?? "").toLowerCase();
 if (from && !requested.toLowerCase().includes(from)) return { kind: "none" };
@@ -27,5 +34,5 @@ return {
   kind: "select_model",
   model: target,
   effort: effort || undefined,
-  reason: `stuck-task escalation ${state.escalations}${effort ? `; effort ${effort}` : ""}`,
+  reason: `stuck-task escalation ${escalations}${effort ? `; effort ${effort}` : ""}`,
 };

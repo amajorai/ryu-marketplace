@@ -14,7 +14,7 @@ regressions.
 Ryu ships the plugin install-on-demand. After the user installs and enables it, Core launches the server lazily as:
 
 ```bash
-npx -y expect-cli@latest mcp
+npx -y expect-cli@0.1.3 mcp
 ```
 
 Node.js and network access for the first `npx` download are required. Once the

@@ -403,12 +403,11 @@ const BUILTIN_AGENTS: Record<string, AgentConfig> = {
 	reviewer: {
 		description:
 			"Code review specialist for quality, correctness and security analysis",
-		tools: ["read", "grep", "find", "ls", "bash"],
+		tools: ["read", "grep", "find", "ls"],
 		systemPrompt: [
 			"You are a senior code reviewer. Analyze code for quality, security and maintainability.",
 			"",
-			"Bash is for READ-ONLY commands only (git diff, git log, git show). Do NOT modify files and do NOT run builds.",
-			"Assume tool permissions are not perfectly enforceable; keep all bash usage strictly read-only.",
+			"You have no shell or network tool. Use only the read-only file and search tools exposed to you.",
 			"",
 			"Strategy:",
 			"1. Run git diff to see recent changes, if applicable",
@@ -1172,7 +1171,8 @@ async function mapWithConcurrencyLimit<TIn, TOut>(
  */
 const TaskItem = Type.Object({
 	description: Type.String({
-		description: "Short (3-6 word) description of this child's job.",
+		description:
+			"Short, specific 3-6 word task name shown to the user. Name the concrete work, not the persona (for example, 'Trace stats data flow').",
 	}),
 	prompt: Type.String({
 		description:
@@ -1200,7 +1200,7 @@ const TaskItem = Type.Object({
 const TaskParams = Type.Object({
 	description: Type.String({
 		description:
-			"Short (3-6 word) description of the delegated work, shown to the user as the task's subtitle.",
+			"Short, specific 3-6 word task name shown to the user. Name the concrete work, not the persona (for example, 'Trace stats data flow').",
 	}),
 	prompt: Type.String({
 		description:
@@ -1280,6 +1280,7 @@ export default async function (pi: ExtensionAPI) {
 		promptGuidelines: [
 			"Use Task to delegate open-ended search or multi-step investigation whose intermediate output would bloat the conversation; do not use it for a single file read or one grep you can run directly.",
 			"A subagent shares none of this conversation and cannot ask follow-up questions, so put everything it needs in `prompt` and state exactly what it should return.",
+			"Write `description` as a specific 3-6 word task name with a concrete action and object. It is the primary label people use to track the subagent, so never put a persona name or generic label such as 'worker' there.",
 			"Use the `tasks` array only for jobs that are independent of each other; anything that needs a previous child's output must be a second Task call.",
 		],
 		parameters: TaskParams,

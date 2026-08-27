@@ -174,6 +174,12 @@ const MAX_LINE_UPDATE_CHARS = 16 * 1024;
 /** Ceiling on one coalesced `onUpdate` batch. */
 const MAX_UPDATE_CHARS = 32 * 1024;
 
+/** Bound model-supplied regex syntax and the text any one regex sees. Native
+ * RegExp runs synchronously, so an unsafe pattern can otherwise block the event
+ * loop before the watch timeout has a chance to fire. */
+const MAX_UNTIL_PATTERN_CHARS = 256;
+const MAX_RETAINED_LINE_CHARS = 16 * 1024;
+
 /**
  * WebSocket messages larger than this end the watch (Claude Code's monitor
  * behaves the same way); the caller sees a closing summary, not the payload.
@@ -244,6 +250,19 @@ function compileUntil(raw: string | undefined): RegExp | undefined {
 	const literal = raw.match(/^\/([\s\S]*)\/([a-z]*)$/);
 	const source = literal ? literal[1] : raw;
 	const flags = literal ? literal[2] : "";
+	if (source.length > MAX_UNTIL_PATTERN_CHARS) {
+		throw new Error(
+			`monitor: \`until\` regex is ${source.length} characters (max ${MAX_UNTIL_PATTERN_CHARS})`
+		);
+	}
+	if (/[()]/.test(source) || /\\[1-9]/.test(source)) {
+		throw new Error(
+			"monitor: `until` uses a grouped or backreference expression; use the safe subset (literals, classes, alternation, anchors, and simple quantifiers)"
+		);
+	}
+	if (/[^imsu]/.test(flags)) {
+		throw new Error("monitor: `until` flags may contain only i, m, s, or u");
+	}
 	try {
 		const re = new RegExp(source, flags);
 		re.lastIndex = 0;
@@ -354,10 +373,17 @@ function makeLineSink(
 	const pending: string[] = [];
 	let scheduled = false;
 
-	const handle = (line: string): void => {
+	const handle = (line: string): string => {
+		const originalBytes = Buffer.byteLength(line, "utf8");
+		const retained =
+			line.length > MAX_RETAINED_LINE_CHARS
+				? line.slice(-MAX_RETAINED_LINE_CHARS)
+				: line;
+		const retainedBytes = Buffer.byteLength(retained, "utf8");
+		dropped += originalBytes - retainedBytes;
 		events++;
-		lines.push(line);
-		bytes += Buffer.byteLength(line, "utf8");
+		lines.push(retained);
+		bytes += retainedBytes;
 		while (bytes > TAIL_CAP_BYTES && lines.length > 1) {
 			const evicted = lines.shift() ?? "";
 			bytes -= Buffer.byteLength(evicted, "utf8");
@@ -365,10 +391,11 @@ function makeLineSink(
 		}
 		if (until) {
 			until.lastIndex = 0;
-			if (until.test(line)) {
-				onMatch(line);
+			if (until.test(retained)) {
+				onMatch(retained);
 			}
 		}
+		return retained;
 	};
 
 	const flush = (): void => {
@@ -423,22 +450,27 @@ function makeLineSink(
 			if (closed) {
 				return;
 			}
-			const decoded = decoder.write(chunk);
+			const decoded = `${partial}${decoder.write(chunk)}`;
 			const fragments = decoded.split("\n");
 			const complete = fragments.slice(0, -1);
 			for (const fragment of complete) {
-				handle(fragment);
-				pending.push(fragment);
+				pending.push(handle(fragment));
 			}
 			scheduleFlush();
 			partial = fragments.at(-1) ?? "";
+			if (partial.length > MAX_RETAINED_LINE_CHARS) {
+				const retained = partial.slice(-MAX_RETAINED_LINE_CHARS);
+				dropped +=
+					Buffer.byteLength(partial, "utf8") -
+					Buffer.byteLength(retained, "utf8");
+				partial = retained;
+			}
 		},
 		push: (line) => {
 			if (closed) {
 				return;
 			}
-			handle(line);
-			pending.push(line);
+			pending.push(handle(line));
 			scheduleFlush();
 		},
 		finish: () => {
@@ -449,13 +481,14 @@ function makeLineSink(
 			const tailDecoder = decoder.end();
 			const last = tailDecoder ? `${partial}${tailDecoder}` : partial;
 			if (last) {
-				handle(last);
-				pending.push(last);
+				pending.push(handle(last));
 			}
 			flush();
 		},
 	};
 }
+
+export { compileUntil, makeLineSink };
 
 // ── Command source ──────────────────────────────────────────────────────────
 

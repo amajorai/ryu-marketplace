@@ -13,6 +13,9 @@ const manifestPath = join(here, "manifest.json");
 const backendPath = join(here, "backend.js");
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 const backend = readFileSync(backendPath, "utf8");
+const browserManifest = JSON.parse(
+	readFileSync(join(here, "../../../apps-store/browser/manifest.json"), "utf8")
+);
 
 test("manifest identity and backend integrity are valid", () => {
 	assert.equal(manifest.id, "@ryu/chatgpt-web");
@@ -28,7 +31,10 @@ test("manifest identity and backend integrity are valid", () => {
 
 test("the plugin consumes Ryu Browser and declares the required grants", () => {
 	assert.deepEqual(manifest.requires.capabilities, [
-		{ capability: "browser.control", min_version: "1.0.0" },
+		{ capability: "browser.session", min_version: "1.0.0" },
+	]);
+	assert.deepEqual(manifest.requires.apps, [
+		{ id: "@ryu/browser", min_version: "0.1.15" },
 	]);
 	assert.ok(manifest.requires.grants.includes("browser:control"));
 	assert.deepEqual(manifest.permission_grants, [
@@ -40,6 +46,18 @@ test("the plugin consumes Ryu Browser and declares the required grants", () => {
 		"browser:control",
 		"preferences:read",
 	]);
+	const sessionProvider = browserManifest.provides.find(
+		(entry) => entry.capability === "browser.session"
+	);
+	assert.deepEqual(sessionProvider, {
+		capability: "browser.session",
+		version: "1.0.0",
+		title: "Browser session",
+		sidecar: "browser",
+		route: "/",
+		grant: "browser:control",
+		target: "local-machine",
+	});
 });
 
 test("the managed sidecar exposes a provider and only declared HTTP routes", () => {

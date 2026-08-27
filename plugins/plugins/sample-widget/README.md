@@ -12,8 +12,9 @@ your own. It shows the smallest thing that works end-to-end:
 - a tiny local **MCP server** (`server.mjs`, Node, zero dependencies) that
   - exposes one **render tool** returning structured data, and
   - serves the widget HTML as an **MCP resource**;
-- a **manifest** (`manifest.json`) that binds the tool to the widget and holds the
-  `widget:render` consent grant;
+- a **manifest** (`manifest.json`) that binds the tool to the widget, requests the
+  reserved `mcp:server` registration grant, and holds the `widget:render` consent
+  grant;
 - a **self-contained skybridge widget** (`sample.html`) that reads the tool output
   and renders a greeting + an interactive counter.
 
@@ -86,7 +87,8 @@ and the server must serve that uri via `resources/list` + `resources/read`.
 
 `tool:call` / `ui:send_message` grants are **auto-derived** from
 `widgetAccessible` at emit time — you do **not** list them in `permission_grants`.
-`widget:render` is the only grant you declare.
+`mcp:server` lets this Community plugin register its stdio server after operator
+approval; `widget:render` authorizes inline promotion. Both are declared.
 
 ## The host CSP (why this must be one file)
 
@@ -102,14 +104,10 @@ resource's own `_meta` declares `resource_domains`; there is no other egress.
 
 ## Try it locally
 
-The widget renderer is **experimental and opt-in**, behind two gates:
-
-1. **Client flag** — the `AppWidget` renderer is behind the plugin-runtime
-   experimental flag. Off → the widget shows an inert placeholder and the host
-   context is withheld. Turn it on to see the sample render.
-2. **Core consent** — this plugin ships as a built-in fixture but is **opt-in**
-   (not in `CORE_PREINSTALLED`). Install/enable it so it holds `widget:render` and
-   its `contributes.widgets` entry is live.
+The widget is opt-in. Install the Community plugin, approve its reserved
+`mcp:server` grant through the Gateway's Marketplace grant policy, then enable it.
+The live record must hold both `mcp:server` and `widget:render`: the first registers
+the tool server and the second allows the declared widget to render.
 
 Sanity-check the server by hand (newline-delimited JSON-RPC on stdin):
 
@@ -128,16 +126,14 @@ You should see the tool (with its `_meta.outputTemplate`) and the HTML come back
 
 | File | Role |
 | --- | --- |
-| `manifest.json` | Manifest: mcp_servers + contributes.widgets + `widget:render`. |
+| `manifest.json` | Manifest: mcp_servers + contributes.widgets + `mcp:server` and `widget:render`. |
 | `server.mjs` | Zero-dep stdio MCP server: render tool + widget resource. |
 | `sample.html` | Self-contained skybridge widget UI. |
 
 ## Gotchas when you fork this
 
-- **Change the `id`.** This template's manifest is also compiled into Core as a
-  built-in, `include_str!`-ed straight from this package directory.
-  If you drop a copy into `~/.ryu/plugins/` **keeping `id: "sample-widget"`**, the
-  loader treats it as a **duplicate id** and skips your copy. Pick your own id
+- **Change the `id`.** This template is `@ryu/sample-widget`; a fork keeping that id
+  collides with any installed copy of the reference. Pick your own id
   (reverse-domain-ish is conventional, e.g. `com.acme.checklist`).
 - **Spawn cwd / the `node server.mjs` path.** `args: ["server.mjs"]` is relative;
   Core spawns the server from the installed plugin directory, so `server.mjs`

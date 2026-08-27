@@ -88,13 +88,27 @@ function makeHost({ storage = {}, runAgent = async () => "ok" } = {}) {
 				},
 				delete: async (key) => kv.delete(String(key)),
 				keys: async () => [...kv.keys()],
+				compareAndSet: async (key, expected, value) => {
+					const name = String(key);
+					const current = kv.has(name) ? kv.get(name) : null;
+					if (current !== (expected == null ? null : String(expected))) {
+						return false;
+					}
+					if (value == null) {
+						kv.delete(name);
+					} else {
+						kv.set(name, String(value));
+					}
+					return true;
+				},
 			},
 			log: () => {},
 		},
 	};
 }
 
-const inboxOf = (kv, agent) => JSON.parse(kv.get(`inbox:${agent}`) ?? "[]");
+const inboxOf = (kv, agent) =>
+	JSON.parse(kv.get(`inbox:${encodeURIComponent(agent)}`) ?? "[]");
 
 // ── manifest contract ─────────────────────────────────────────────────────────
 
@@ -194,17 +208,15 @@ test("the sender is the calling agent, not what the model wrote", async () => {
 	assert.equal(inboxOf(kv, "scout")[0].from, "ryu");
 });
 
-test("an agent-less caller may still name itself", async () => {
-	// Workflows, monitors and recipes dispatch with no agent at all; Core injects
-	// nulls. Refusing them outright would make the tool unusable from a workflow
-	// step, so `from` is honoured exactly there.
-	const { host, kv } = makeHost();
-	const result = await runTool("agents.send", {
-		input: { to: "scout", text: "nightly run failed", from: "monitors" },
-		host,
-	});
-	assert.equal(result.ok, true);
-	assert.equal(inboxOf(kv, "scout")[0].from, "monitors");
+test("an agent-less caller cannot impersonate a sender", async () => {
+	const { host } = makeHost();
+	await assert.rejects(
+		runTool("agents.send", {
+			input: { to: "scout", text: "nightly run failed", from: "monitors" },
+			host,
+		}),
+		/calling agent could not be identified/
+	);
 });
 
 test("send refuses a third hop", async () => {
@@ -241,8 +253,22 @@ test("send refuses a message to yourself and a message with no recipient", async
 			caller: { agent_id: "ryu" },
 			host,
 		}),
-		/'to' is required/
+		/bounded agent id/
 	);
+});
+
+test("send rejects unbounded or delimiter-bearing agent ids", async () => {
+	const { host } = makeHost();
+	for (const to of ["scout|other", "x".repeat(129)]) {
+		await assert.rejects(
+			runTool("agents.send", {
+				input: { to, text: "nope" },
+				caller: { agent_id: "ryu" },
+				host,
+			}),
+			/bounded agent id/
+		);
+	}
 });
 
 test("the inbox is capped, oldest first", async () => {
@@ -296,6 +322,22 @@ test("thread reads only the calling agent's own threads", async () => {
 		host,
 	});
 	assert.deepEqual(peers.peers, ["scout"]);
+});
+
+test("thread refuses agent-less and malformed peer identities", async () => {
+	const { host } = makeHost();
+	await assert.rejects(
+		runTool("agents.thread", { input: { from: "ryu" }, host }),
+		/calling agent could not be identified/
+	);
+	await assert.rejects(
+		runTool("agents.thread", {
+			input: { with: "scout|other" },
+			caller: { agent_id: "ryu" },
+			host,
+		}),
+		/bounded agent id/
+	);
 });
 
 // ── the delivery hook ─────────────────────────────────────────────────────────

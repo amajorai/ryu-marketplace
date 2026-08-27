@@ -72,8 +72,7 @@
         "tasks": [
           {
             "task": "Summarise the release note",
-            "system_prompt": "You are a concise release-note editor",
-            "tools": ["read_file"]
+            "system_prompt": "You are a concise release-note editor"
           }
         ]
       },
@@ -102,8 +101,7 @@
                 "task": "Summarise the release note",
                 "preset": "code_read",
                 "inline": {
-                  "system_prompt": "You are a concise release-note editor",
-                  "tools": ["read_file"]
+                  "system_prompt": "You are a concise release-note editor"
                 }
               }
             ],
@@ -153,6 +151,13 @@
         "max_tokens": 32769
       },
       "expectError": "max_tokens"
+    },
+    {
+      "name": "rejects inert inline tool lists",
+      "input": {
+        "tasks": [{ "task": "read the file", "tools": ["read_file"] }]
+      },
+      "expectError": "inline delegates are prompt-only"
     }
   ]
 }

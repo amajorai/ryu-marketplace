@@ -30,6 +30,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
+const readme = readFileSync(join(here, "README.md"), "utf8");
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
@@ -64,6 +65,12 @@ test("manifest.json is valid parseable JSON", () => {
 });
 
 const manifest = parseManifest();
+
+test("unavailable Scrapling copy does not promise provider fallback", () => {
+	assert.doesNotMatch(manifest.description, /falls? back/i);
+	assert.doesNotMatch(readme, /falls? back/i);
+	assert.match(manifest.description, /select a working provider/i);
+});
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/scrapling");

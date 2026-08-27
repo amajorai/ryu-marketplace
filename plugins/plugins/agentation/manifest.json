@@ -6,7 +6,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/agentation",
   "name": "Agentation",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "stability": "experimental",
   "description": "Visual feedback for coding agents. Agentation connects UI annotations from a running web app to an MCP server so agents can read, acknowledge, resolve, dismiss, and reply to feedback without copy-paste.",
   "homepage": "https://www.agentation.com/",
@@ -30,8 +30,8 @@
   "mcp_servers": {
     "agentation": {
       "command": "npx",
-      "args": ["-y", "agentation-mcp", "server"],
-      "description": "Agentation — receive and act on UI annotations from the Agentation toolbar. Exposes tools to list sessions, read pending feedback, acknowledge or resolve annotations, reply to threads, and watch for new annotations. Launched via `npx -y agentation-mcp server`; requires Node.js and an Agentation toolbar connected to the local server."
+      "args": ["-y", "agentation-mcp@1.2.0", "server"],
+      "description": "Agentation — receive and act on UI annotations from the Agentation toolbar. Exposes tools to list sessions, read pending feedback, acknowledge or resolve annotations, reply to threads, and watch for new annotations. Launched via `npx -y agentation-mcp@1.2.0 server`; requires Node.js and an Agentation toolbar connected to the local server."
     }
   }
 }
