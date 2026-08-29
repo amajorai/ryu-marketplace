@@ -53,8 +53,9 @@ const manifest = parseManifest();
 
 /** The hydrated `web.search` adapter body, which several tests assert against. */
 const adapterCode = () =>
-	manifest.provides.find((p) => p.capability === "web.search").tools["web.search"]
-		.adapter.code;
+	manifest.provides.find((p) => p.capability === "web.search").tools[
+		"web.search"
+	].adapter.code;
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/parallel");
@@ -250,7 +251,10 @@ test("web.search is bound, and through an adapter", () => {
 	assert.notEqual(entry.default, true);
 	const binding = entry.tools["web.search"];
 	assert.equal(binding.tool, "parallel.search", "the KEYED tool is primary");
-	assert.ok(binding.adapter, "one canonical query cannot fill two required args");
+	assert.ok(
+		binding.adapter,
+		"one canonical query cannot fill two required args"
+	);
 	// An adapter REPLACES the declarative mapping; keeping both would describe the
 	// same transformation twice and only one would run.
 	assert.equal(binding.args, undefined);

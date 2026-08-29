@@ -350,7 +350,8 @@ test("scroll clamps amount, and click does not clamp count", () => {
 });
 
 test("capture declares no response map", () => {
-	const binding = byCapability.get("computer.control").tools["computer.capture"];
+	const binding =
+		byCapability.get("computer.control").tools["computer.capture"];
 	// The payload IS the record and it is a base64 PNG. Any `response` map would
 	// rewrite it into {provider, results:[{…, raw}]}, duplicating a megabyte-scale
 	// string into the item AND its raw copy. The facade's untouched

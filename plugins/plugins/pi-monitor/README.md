@@ -1,10 +1,4 @@
 # Monitor
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="pi-monitor" width="96" />
-  </picture>
-</p>
 
 Adds the `monitor` tool to the managed Pi agent, so the flagship `ryu` agent can
 watch something in the background and react when it changes — the same idea as

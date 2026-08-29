@@ -3,7 +3,10 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const dispatcher = readFileSync(join(here, "tools/ego-browser.js"), "utf8");
+const dispatcher = readFileSync(
+	join(here, "tools/ego-browser.js"),
+	"utf8"
+).replace(/\r\n?/g, "\n");
 const operations = [
 	"tabs",
 	"navigate",

@@ -53,8 +53,8 @@ test("contributes three http tool runnables with namespaced native slugs", () =>
 	for (const r of manifest.runnables) {
 		assert.equal(r.kind, "tool");
 		assert.equal(r.config.backend, "http");
-	// A dotted slug registers under its NATIVE id rather than being wrapped in
-	// an `app.` alias, which is what makes the verb bindings below resolve.
+		// A dotted slug registers under its NATIVE id rather than being wrapped in
+		// an `app.` alias, which is what makes the verb bindings below resolve.
 		assert.ok(
 			r.config.slug.startsWith("mem0."),
 			`slug ${r.config.slug} not namespaced`

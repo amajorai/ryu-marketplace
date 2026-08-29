@@ -12,7 +12,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const backendPath = join(here, "backend.js");
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-const backend = readFileSync(backendPath, "utf8");
+const backend = readFileSync(backendPath, "utf8").replace(/\r\n?/g, "\n");
 const browserManifest = JSON.parse(
 	readFileSync(join(here, "../../../apps-store/browser/manifest.json"), "utf8")
 );

@@ -94,7 +94,17 @@
         },
         "category": { "type": "string" },
         "type": {
-          "enum": ["app", "plugin", "agent", "workflow", "theme", "space", "profile", "bundle", "package"],
+          "enum": [
+            "app",
+            "plugin",
+            "agent",
+            "workflow",
+            "theme",
+            "space",
+            "profile",
+            "bundle",
+            "package"
+          ],
           "description": "App (ships a Companion UI surface, or bundles other apps) vs plugin (tools/agents/channels/policies). Preferred over deriving app-ness from a Companion runnable."
         },
         "hasCompanion": {
@@ -164,7 +174,18 @@
     },
     "package": {
       "type": "object",
-      "required": ["id", "name", "version", "kind", "packageKind", "artifacts", "targets", "scopes", "source", "security"],
+      "required": [
+        "id",
+        "name",
+        "version",
+        "kind",
+        "packageKind",
+        "artifacts",
+        "targets",
+        "scopes",
+        "source",
+        "security"
+      ],
       "properties": {
         "id": { "type": "string" },
         "name": { "type": "string" },

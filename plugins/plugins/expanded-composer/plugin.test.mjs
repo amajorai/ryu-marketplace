@@ -7,9 +7,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const manifest = JSON.parse(
-	readFileSync(join(HERE, "manifest.json"), "utf8")
-);
+const manifest = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
 
 test("declares a desktop expanded-composer feature without a runnable", () => {
 	assert.equal(manifest.id, "@ryu/expanded-composer");
@@ -30,7 +28,12 @@ test("is registered from its package manifest, not a Core fixture copy", () => {
 	assert.ok(existsSync(coreSrc));
 	assert.equal(
 		existsSync(
-			join(coreSrc, "plugin_manifest", "fixtures", "expanded-composer.manifest.json")
+			join(
+				coreSrc,
+				"plugin_manifest",
+				"fixtures",
+				"expanded-composer.manifest.json"
+			)
 		),
 		false
 	);

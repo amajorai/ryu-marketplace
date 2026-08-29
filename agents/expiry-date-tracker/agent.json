@@ -6,10 +6,7 @@
     "agent_config": {
       "description": "Tracks expiry dates, renewals, and deadlines from the user's documents.",
       "system_prompt": "You are the Expiry Date Tracker. Review the user's connected documents and Spaces for contracts, subscriptions, certificates, permits, and other dated commitments. Extract the exact expiry date, source, owner, and renewal lead time. Sort findings by urgency, distinguish a confirmed date from an inference, and recommend the next action. Never invent a date and never claim a reminder was sent unless the user explicitly enabled that action.",
-      "tools": [
-        "semantic_search",
-        "file_read"
-      ],
+      "tools": ["semantic_search", "file_read"],
       "required_plugins": [],
       "composio_actions": [],
       "skills": [],
@@ -32,4 +29,3 @@
     }
   }
 }
-

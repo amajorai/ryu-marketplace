@@ -1,10 +1,4 @@
 # Kotlin LSP
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="kotlin-lsp" width="96" />
-  </picture>
-</p>
 
 Kotlin language server for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install kotlin-lsp; the plugin ships config.
 

@@ -404,7 +404,8 @@ test("extract normalizes Firecrawl's string|string[] title IN ITS OWN adapter", 
 	// scalar, so `["Foo"]` would be visible to the model as a difference between
 	// providers. This normalization used to live in Core's shared response mapper —
 	// one vendor's quirk in code every provider flows through. It belongs here.
-	const code = byCapability.get("web.extract").tools["web.extract"].adapter.code;
+	const code =
+		byCapability.get("web.extract").tools["web.extract"].adapter.code;
 	assert.match(
 		code,
 		/Array\.isArray\([^)]*\)\s*&&\s*[^?]*\.length\s*===\s*1/,
@@ -418,7 +419,8 @@ test("extract sends `url` and never forwards the canonical `format`", () => {
 	// canonical value would fail on one of its three legal values. Omitting it
 	// leaves Firecrawl's own default (`[{"type":"markdown"}]`), which is what the
 	// canonical default means anyway.
-	const code = byCapability.get("web.extract").tools["web.extract"].adapter.code;
+	const code =
+		byCapability.get("web.extract").tools["web.extract"].adapter.code;
 	assert.match(code, /callTool\(\s*\{\s*url:\s*input\.url\s*\}\s*\)/);
 	assert.doesNotMatch(code, /input\.format/);
 });

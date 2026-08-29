@@ -25,6 +25,8 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 
+const normalizeLineEndings = (value) => value.replace(/\r\n?/g, "\n");
+
 /** Every `inline_deno` runnable, paired with the source file it is sealed from. */
 export function inlineToolSources(manifest) {
 	return (manifest.runnables ?? [])
@@ -36,7 +38,7 @@ export function inlineToolSources(manifest) {
 export function seal(raw) {
 	const manifest = JSON.parse(raw);
 	for (const { slug, file } of inlineToolSources(manifest)) {
-		const body = readFileSync(join(HERE, file), "utf8");
+		const body = normalizeLineEndings(readFileSync(join(HERE, file), "utf8"));
 		const runnable = manifest.runnables.find((r) => r.config?.slug === slug);
 		runnable.config.code = body;
 	}
@@ -59,7 +61,10 @@ export function drifted(
 	const out = [];
 	for (const { slug, file } of inlineToolSources(manifest)) {
 		const runnable = manifest.runnables.find((r) => r.config?.slug === slug);
-		if ((runnable?.config?.code ?? "") !== read(file)) {
+		if (
+			normalizeLineEndings(runnable?.config?.code ?? "") !==
+			normalizeLineEndings(read(file))
+		) {
 			out.push(slug);
 		}
 	}

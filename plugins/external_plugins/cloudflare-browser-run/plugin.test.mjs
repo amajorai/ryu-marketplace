@@ -14,7 +14,7 @@ test("declares an external Browser Run provider", () => {
 	assert.equal(manifest.mcp_servers.cloudflare.type, "streamable-http");
 	assert.equal(
 		manifest.mcp_servers.cloudflare.url,
-		"https://browser.mcp.cloudflare.com/mcp",
+		"https://browser.mcp.cloudflare.com/mcp"
 	);
 	assert.deepEqual(manifest.mcp_servers.cloudflare.auth, { type: "oauth" });
 	assert.ok(manifest.permission_grants.includes("mcp:server"));
@@ -24,7 +24,7 @@ test("declares an external Browser Run provider", () => {
 test("participates in the Browser toolkit with honest URL-scoped verbs", () => {
 	const manifest = parseManifest();
 	const layer = manifest.provides.find(
-		(provided) => provided.capability === "browser.control",
+		(provided) => provided.capability === "browser.control"
 	);
 	assert.ok(layer);
 	assert.equal(layer.title, "Browser");

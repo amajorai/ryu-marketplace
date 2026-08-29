@@ -114,6 +114,7 @@ test("rejects catastrophic regexes and bounds a no-newline megabyte line", () =>
 		import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 		import { join } from "node:path";
 		const source = readFileSync(${JSON.stringify(modulePath)}, "utf8")
+			.replace(/\\r\\n?/g, "\\n")
 			.replace(/^import type .*?;\\n/m, "")
 			.replace(/^import \\{ Type \\} from "typebox";\\n/m, "")
 			.replace("export default function", "function")

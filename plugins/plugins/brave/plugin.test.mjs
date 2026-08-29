@@ -61,7 +61,7 @@ test("contributes one GET http tool runnable with a namespaced native slug", () 
 		// would ship every argument as a JSON body Brave does not read.
 		assert.equal(r.config.method, "GET");
 		// A slug containing `__` registers under its NATIVE id rather than being
-	// wrapped in `app.`, which is what makes the verb binding below resolve.
+		// wrapped in `app.`, which is what makes the verb binding below resolve.
 		assert.ok(
 			r.config.slug.startsWith("brave."),
 			`slug ${r.config.slug} not namespaced`
@@ -175,10 +175,7 @@ test("every declared argument is a real Brave query parameter", () => {
 	}
 	// `q` is the query parameter. It is NOT called `query`, which is precisely why
 	// the verb binding has to rename rather than pass through.
-	assert.equal(
-		bySlug.get("brave.search").config.input_schema.required[0],
-		"q"
-	);
+	assert.equal(bySlug.get("brave.search").config.input_schema.required[0], "q");
 });
 
 test("numeric bounds match the limits Brave documents", () => {

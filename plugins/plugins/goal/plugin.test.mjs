@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 const JUDGE_PREF_KEY = "goal-judge-model";
+const normalizeLineEndings = (value) => value.replace(/\r\n?/g, "\n");
 
 const raw = readFileSync(MANIFEST_PATH, "utf8");
 
@@ -169,8 +170,10 @@ test("declared contributes fields are well-formed", () => {
 	assert.equal(typeof tool.config.code, "string");
 	assert.ok(tool.config.code.includes("caller?.conversation_id"));
 	assert.equal(
-		tool.config.code,
-		readFileSync(join(HERE, "tools", "goal.set.js"), "utf8"),
+		normalizeLineEndings(tool.config.code),
+		normalizeLineEndings(
+			readFileSync(join(HERE, "tools", "goal.set.js"), "utf8")
+		),
 		"goal.set was edited without resealing — run: node plugins-store/plugins/goal/seal.mjs"
 	);
 

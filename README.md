@@ -324,33 +324,33 @@ Every package is an editable folder and can also be packed as a deterministic `.
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [animator](./agents/animator/) | 0.2.2 | `ccaf81e13a58…` | Expert animation director and creative technologist for technical explainers, data… |
+| [animator](./agents/animator/) | 0.2.2 | `4c054c5417c0…` | Expert animation director and creative technologist for technical explainers, data… |
 
 ### Design
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [design-director](./agents/design-director/) | 0.2.2 | `c8a2aaddbc4c…` | Expert product design director and design engineer for UI/UX, responsive systems, motion,… |
+| [design-director](./agents/design-director/) | 0.2.2 | `2cd735b10d60…` | Expert product design director and design engineer for UI/UX, responsive systems, motion,… |
 
 ### Marketing
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [brand-presence](./agents/brand-presence/) | 0.2.2 | `a557d645d846…` | Starts with a brand presence check and monitors the public web for new mentions, sentiment, and… |
-| [growth-psychology-strategist](./agents/growth-psychology-strategist/) | 0.2.2 | `9fbe6d232c14…` | Sales and marketing strategist who uses behavioral science to clarify offers, improve… |
-| [marketing-studio](./agents/marketing-studio/) | 0.2.2 | `b8eb19fe757a…` | Generates on-brand marketing content and production-ready visual directions with Hyperframes and… |
+| [brand-presence](./agents/brand-presence/) | 0.2.2 | `7cd937a2003a…` | Starts with a brand presence check and monitors the public web for new mentions, sentiment, and… |
+| [growth-psychology-strategist](./agents/growth-psychology-strategist/) | 0.2.2 | `d0432d895fc6…` | Sales and marketing strategist who uses behavioral science to clarify offers, improve… |
+| [marketing-studio](./agents/marketing-studio/) | 0.2.2 | `e8379d5d5bb1…` | Generates on-brand marketing content and production-ready visual directions with Hyperframes and… |
 
 ### Monitoring
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [codex-quota-reset-watch](./agents/codex-quota-reset-watch/) | 0.2.2 | `2a3cad033190…` | Checks willcodexquotareset.com every 30 minutes, remembers the last forecast, and sends a… |
+| [codex-quota-reset-watch](./agents/codex-quota-reset-watch/) | 0.2.2 | `79a5ceea6c3a…` | Checks willcodexquotareset.com every 30 minutes, remembers the last forecast, and sends a… |
 
 ### Operations
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [expiry-date-tracker](./agents/expiry-date-tracker/) | 0.2.2 | `7a512f39cec2…` | Reviews the dates in your connected documents and Spaces, then calls out what is expiring soon… |
+| [expiry-date-tracker](./agents/expiry-date-tracker/) | 0.2.2 | `489aaf38193c…` | Reviews the dates in your connected documents and Spaces, then calls out what is expiring soon… |
 
 ### Productivity
 
@@ -362,28 +362,28 @@ Every package is an editable folder and can also be packed as a deterministic `.
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [security-guard](./agents/security-guard/) | 0.2.2 | `b34ab5df5898…` | Runs a fast hourly configuration check and a deeper midnight diagnostic pass over Gateway and… |
+| [security-guard](./agents/security-guard/) | 0.2.2 | `523d67c389e9…` | Runs a fast hourly configuration check and a deeper midnight diagnostic pass over Gateway and… |
 
 ### orchestration
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [autonomous-agent](./workflows/autonomous-agent/) | 0.2.2 | `b06da12200f3…` | A tool-using agent runs its own loop, wrapped in a bounded durable loop until it is done. |
-| [classify-and-act](./workflows/classify-and-act/) | 0.2.2 | `34401d270cbe…` | Classify the request, then hand it to a specialized agent per class. |
-| [orchestrator-workers](./workflows/orchestrator-workers/) | 0.2.2 | `5965965e633c…` | An orchestrator LLM plans subtasks, delegates them to workers, then integrates the results. |
-| [parallelization](./workflows/parallelization/) | 0.2.2 | `b62c41e48847…` | Fan the task out to independent clean-context workers, then synthesize their results. |
-| [prompt-chaining](./workflows/prompt-chaining/) | 0.2.2 | `7e8045db23be…` | Decompose a task into a fixed sequence of LLM steps, each feeding the next (outline → draft →… |
-| [routing](./workflows/routing/) | 0.2.2 | `0391d7d521d1…` | Classify the input, then branch to the specialized handler for that class. |
+| [autonomous-agent](./workflows/autonomous-agent/) | 0.2.2 | `40e33d1aac35…` | A tool-using agent runs its own loop, wrapped in a bounded durable loop until it is done. |
+| [classify-and-act](./workflows/classify-and-act/) | 0.2.2 | `50121ad3c74d…` | Classify the request, then hand it to a specialized agent per class. |
+| [orchestrator-workers](./workflows/orchestrator-workers/) | 0.2.2 | `c7ab75d4b313…` | An orchestrator LLM plans subtasks, delegates them to workers, then integrates the results. |
+| [parallelization](./workflows/parallelization/) | 0.2.2 | `41110615bb2a…` | Fan the task out to independent clean-context workers, then synthesize their results. |
+| [prompt-chaining](./workflows/prompt-chaining/) | 0.2.2 | `af36354ad3b6…` | Decompose a task into a fixed sequence of LLM steps, each feeding the next (outline → draft →… |
+| [routing](./workflows/routing/) | 0.2.2 | `ea3d983a555f…` | Classify the input, then branch to the specialized handler for that class. |
 
 ### quality
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [adversarial-verification](./workflows/adversarial-verification/) | 0.2.2 | `a7182d640535…` | Generate an answer, have N independent verifiers vote, and accept on majority — else revise. |
-| [evaluator-optimizer](./workflows/evaluator-optimizer/) | 0.2.2 | `cc0d347b3f83…` | Generate a draft, then iteratively critique and rewrite it over several bounded passes. |
-| [fan-out-synthesize](./workflows/fan-out-synthesize/) | 0.2.2 | `635581225161…` | Fan work out over items to independent sub-agents, then merge their outputs into one result. |
-| [generate-and-filter](./workflows/generate-and-filter/) | 0.2.2 | `785ebf16b5d1…` | Generate N proposals in parallel, then score and select the best. |
-| [tournament](./workflows/tournament/) | 0.2.2 | `e505e68f4053…` | Generate N candidates in parallel, then pick a winner by pairwise comparison. |
+| [adversarial-verification](./workflows/adversarial-verification/) | 0.2.2 | `3bedd6545c3b…` | Generate an answer, have N independent verifiers vote, and accept on majority — else revise. |
+| [evaluator-optimizer](./workflows/evaluator-optimizer/) | 0.2.2 | `6a3e9dbbfd35…` | Generate a draft, then iteratively critique and rewrite it over several bounded passes. |
+| [fan-out-synthesize](./workflows/fan-out-synthesize/) | 0.2.2 | `74ab26bb7d49…` | Fan work out over items to independent sub-agents, then merge their outputs into one result. |
+| [generate-and-filter](./workflows/generate-and-filter/) | 0.2.2 | `ce704344bc11…` | Generate N proposals in parallel, then score and select the best. |
+| [tournament](./workflows/tournament/) | 0.2.2 | `45c735232852…` | Generate N candidates in parallel, then pick a winner by pairwise comparison. |
 
 ### research
 

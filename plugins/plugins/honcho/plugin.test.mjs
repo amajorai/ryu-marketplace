@@ -74,7 +74,7 @@ test("contributes five http tool runnables with namespaced native slugs", () => 
 		assert.equal(r.config.backend, "http");
 		assert.equal(r.config.method, "POST");
 		// A slug containing `__` registers under its NATIVE id rather than being
-	// wrapped in `app.`, which is what makes the verb bindings below resolve.
+		// wrapped in `app.`, which is what makes the verb bindings below resolve.
 		assert.ok(
 			r.config.slug.startsWith("honcho."),
 			`slug ${r.config.slug} not namespaced`

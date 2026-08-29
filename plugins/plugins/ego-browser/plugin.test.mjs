@@ -14,7 +14,10 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(readFileSync(join(here, "manifest.json"), "utf8"));
-const dispatcher = readFileSync(join(here, "tools/ego-browser.js"), "utf8");
+const dispatcher = readFileSync(
+	join(here, "tools/ego-browser.js"),
+	"utf8"
+).replace(/\r\n?/g, "\n");
 const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
 const operations = [
 	"tabs",

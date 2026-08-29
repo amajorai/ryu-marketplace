@@ -56,7 +56,9 @@ const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
 function loadHook(manifest) {
 	const hooks = manifest.contributes.turn_hooks;
 	const hook = hooks.find((h) => h.id === "security-guidance.review");
-	assert.ok(hook, "expected a turn hook with id security-guidance.review");
+	if (!hook) {
+		throw new Error("expected a turn hook with id security-guidance.review");
+	}
 	// The body runs with `ctx` and `host` in scope (Core injects them as the
 	// sandbox globals). Mirror that by taking them as function params.
 	const fn = new AsyncFunction("ctx", "host", hook.code);

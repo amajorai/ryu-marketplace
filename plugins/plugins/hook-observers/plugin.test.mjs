@@ -98,7 +98,9 @@ test("manifest declares contributes.turn_hooks (well-formed)", () => {
 	 *  mandatory `/` is also what makes an app event unable to collide with one of
 	 *  the bare-word Core phases above. */
 	const isAppEvent = (on) =>
-		/^(?:@[a-zA-Z0-9][a-zA-Z0-9._-]*\/)?[a-zA-Z0-9][a-zA-Z0-9._-]*#[a-z0-9][a-z0-9._-]*$/.test(on);
+		/^(?:@[a-zA-Z0-9][a-zA-Z0-9._-]*\/)?[a-zA-Z0-9][a-zA-Z0-9._-]*#[a-z0-9][a-z0-9._-]*$/.test(
+			on
+		);
 
 	for (const hook of hooks) {
 		assert.equal(typeof hook.id, "string");
@@ -130,7 +132,9 @@ test("manifest declares contributes.turn_hooks (well-formed)", () => {
 
 function hookById(id) {
 	const hook = manifest.contributes.turn_hooks.find((h) => h.id === id);
-	assert.ok(hook, `missing hook: ${id}`);
+	if (!hook) {
+		throw new Error(`missing hook: ${id}`);
+	}
 	return hook;
 }
 

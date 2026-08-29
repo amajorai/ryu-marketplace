@@ -208,7 +208,9 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 	// Registration seam: forgetting the include_str! leaves every other guard passing
 	// while the plugin simply does not exist at runtime. Compiled in via BUILTIN_MANIFESTS.
 	assert.ok(
-		mod.includes('include_str!("../../../../plugins-store/plugins/rtk/manifest.json")'),
+		mod.includes(
+			'include_str!("../../../../plugins-store/plugins/rtk/manifest.json")'
+		),
 		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });

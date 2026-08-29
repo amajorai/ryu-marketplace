@@ -21,6 +21,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 const raw = readFileSync(MANIFEST_PATH, "utf8");
 const manifest = JSON.parse(raw);
+const normalizeLineEndings = (value) => value.replace(/\r\n?/g, "\n");
 
 // Core wraps a body in an async IIFE where a bare `return` reports the value.
 // `AsyncFunction(...names, body)` reproduces that, and the parameter names are
@@ -148,8 +149,8 @@ test("every tool is routable, callable, and sealed from its source file", () => 
 			"utf8"
 		);
 		assert.equal(
-			runnable.config.code,
-			source,
+			normalizeLineEndings(runnable.config.code),
+			normalizeLineEndings(source),
 			`${runnable.config.slug} was edited without resealing — run: node plugins-store/plugins/agent-comms/seal.mjs`
 		);
 	}

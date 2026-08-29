@@ -1,10 +1,4 @@
 # Python LSP
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="pyright-lsp" width="96" />
-  </picture>
-</p>
 
 Python language server (Pyright) for the ryu agent: type checking plus definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install pyright-langserver; the plugin ships config.
 

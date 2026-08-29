@@ -14,7 +14,10 @@ const pluginId = "@ryu/chatgpt-web";
 const entry = "./backend.js";
 const port = 8301;
 
-const code = await readFile(join(here, "backend.js"), "utf8");
+const code = (await readFile(join(here, "backend.js"), "utf8")).replace(
+	/\r\n?/g,
+	"\n"
+);
 const backendSha256 = createHash("sha256").update(code, "utf8").digest("hex");
 
 const manifest = {

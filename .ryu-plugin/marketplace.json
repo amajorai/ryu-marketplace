@@ -7852,7 +7852,7 @@
         "sub-agents"
       ],
       "icon": "ShieldCheck",
-      "checksum": "a7182d6405352ed9952daf497aa2f7aed29f9d0936415d731e78013f63a62303",
+      "checksum": "3bedd6545c3b48ca7101e8d1899486506f849ad2a2a0a19a94944263bb9fbe36",
       "ref": "main"
     },
     {
@@ -7907,7 +7907,7 @@
       ],
       "featuredRank": 122,
       "developer": "Ryu",
-      "checksum": "ccaf81e13a5890941231614fb4569130bde230d38e38b9bb4be87c2dbfbc458a",
+      "checksum": "4c054c5417c0ca7a39a8bbe5a5744489795ddc47ce98121bc6862a123de5b482",
       "ref": "main"
     },
     {
@@ -7958,7 +7958,7 @@
         "tools"
       ],
       "icon": "Bot",
-      "checksum": "b06da12200f3f50dbed8106c62b23da2f575e65879a1f8e345552de196c691cb",
+      "checksum": "40e33d1aac35a04882616f9b2d9154e9a53d13ca19b225b7f84347ee7f9daa5e",
       "ref": "main"
     },
     {
@@ -8069,7 +8069,7 @@
       ],
       "featuredRank": 120,
       "developer": "Ryu",
-      "checksum": "a557d645d8469c5eea97da87e5a64c0773db114f38115423d3c2a7f031c5d2af",
+      "checksum": "7cd937a2003a9d415b85d550372ea6136662515134c43be9d5a6ef96d073b4e7",
       "ref": "main"
     },
     {
@@ -8119,7 +8119,7 @@
         "agents"
       ],
       "icon": "ListTree",
-      "checksum": "34401d270cbe18df12c03c723f8d486e7cfcdca1ac7556edd6980a760b77ce67",
+      "checksum": "50121ad3c74db87919234757fbd529b85847a2b412dd5898c0e9d910bcdf5c5b",
       "ref": "main"
     },
     {
@@ -8173,7 +8173,7 @@
       ],
       "featuredRank": 128,
       "developer": "Ryu",
-      "checksum": "2a3cad0331907ecb7700a6bd4056992b9a9da7fadb397f25e0b7853e653925be",
+      "checksum": "79a5ceea6c3ac96baea6734d6829354c6f011ef2449ef92d181ef0dcebbde4a0",
       "ref": "main"
     },
     {
@@ -8230,7 +8230,7 @@
       ],
       "featuredRank": 135,
       "developer": "Ryu",
-      "checksum": "c8a2aaddbc4c48addcefa395fcf43b773de25baf71997d0687243dad4e3c7502",
+      "checksum": "2cd735b10d60173bb64e31b4f33dbfb164494c5504f1787f469751247c12ca92",
       "ref": "main"
     },
     {
@@ -8281,7 +8281,7 @@
         "quality"
       ],
       "icon": "Gauge",
-      "checksum": "cc0d347b3f83725a0a62a881da08b83fd43348a12845f9fd88abac4f5e929812",
+      "checksum": "6a3e9dbbfd35a9d6cddb8a9f7301942ddc1e941d83de5ac38390b59e8259edc6",
       "ref": "main"
     },
     {
@@ -8389,7 +8389,7 @@
       ],
       "featuredRank": 130,
       "developer": "Ryu",
-      "checksum": "7a512f39cec2349e30dbcbc8fa2bd9fc0a373793618570282d223a33b486fcb6",
+      "checksum": "489aaf38193c758a440e61fbe0e73b10950417e6cbc4d9a00d47e2b731f44610",
       "ref": "main"
     },
     {
@@ -8439,7 +8439,7 @@
         "sub-agents"
       ],
       "icon": "GitFork",
-      "checksum": "635581225161b76307b1d36bc27bd7988a1277949edc8de574eee0882f3a38cf",
+      "checksum": "74ab26bb7d49165b4004896e44370a439efbf01a771dec5003bb8f811eda47fe",
       "ref": "main"
     },
     {
@@ -8490,7 +8490,7 @@
         "best-of-n"
       ],
       "icon": "Filter",
-      "checksum": "785ebf16b5d180b1825f35ced9523b7b4fba1a86999cbf0ac6a637f82d6873b2",
+      "checksum": "ce704344bc11be5cd21c2e7c0bb580f6169401aa88c43215696ef8f8a93e131b",
       "ref": "main"
     },
     {
@@ -8546,7 +8546,7 @@
       ],
       "featuredRank": 138,
       "developer": "Ryu",
-      "checksum": "9fbe6d232c1479a53fd880ed8117cbb1a5b801e68cad4fac436c30822ef3da9b",
+      "checksum": "d0432d895fc6b23f5e72338b4c44d767a0bbf5233b2e3866f71b699d17b47338",
       "ref": "main"
     },
     {
@@ -8600,7 +8600,7 @@
       ],
       "featuredRank": 115,
       "developer": "Ryu",
-      "checksum": "b8eb19fe757a2ea851de89742d5599d53649dd21236ab28c269db342096e5aa2",
+      "checksum": "e8379d5d5bb11c2cc669200b488afc6cc9fb289cfe7c39d8c3922b302760b45b",
       "ref": "main"
     },
     {
@@ -8650,7 +8650,7 @@
         "sub-agents"
       ],
       "icon": "Workflow",
-      "checksum": "5965965e633c6c242a5c0bb8ae1c96e6c66a4a6bbbe1a04f80127e981c2ef0af",
+      "checksum": "c7ab75d4b31301361834553795c4ed10e2baceaf4cc66f29fa42056091308b7f",
       "ref": "main"
     },
     {
@@ -8700,7 +8700,7 @@
         "sub-agents"
       ],
       "icon": "Network",
-      "checksum": "b62c41e48847979395716eb7be52acfa4fd9f30030eba14b0c23ef91f9066268",
+      "checksum": "41110615bb2aa6de9a4031853f63003a9f7b004d8356046408eede6225bead56",
       "ref": "main"
     },
     {
@@ -8750,7 +8750,7 @@
         "decomposition"
       ],
       "icon": "Link",
-      "checksum": "7e8045db23bee1fa9012e2a60972f7a351d24adf0ba68eb40e8a1af96fc82f5c",
+      "checksum": "af36354ad3b62e414afb75a842949cd9533c69890dc697756135fdbfd30ea9f6",
       "ref": "main"
     },
     {
@@ -8800,7 +8800,7 @@
         "branch"
       ],
       "icon": "Split",
-      "checksum": "0391d7d521d1e93158572915252fbf27a43af89cfa80a6b5b8127ac34e2178f0",
+      "checksum": "ea3d983a555fa18a3c16f4be82bbd38ba44088c4c782227dba0ac612fb7340ca",
       "ref": "main"
     },
     {
@@ -8854,7 +8854,7 @@
       ],
       "featuredRank": 125,
       "developer": "Ryu",
-      "checksum": "b34ab5df5898fa0383910a95fb66995b21f488a58aca58b9a1679204d41066b2",
+      "checksum": "523d67c389e9e83f547bf1ef84fb4ae05d4727a9bb4979f1002ba9bf0831c8a7",
       "ref": "main"
     },
     {
@@ -8904,7 +8904,7 @@
         "best-of-n"
       ],
       "icon": "Trophy",
-      "checksum": "e505e68f4053bd127cd7ba32c64d60d61abffc8517bc8ff5df4bac37c706ba0c",
+      "checksum": "45c7352328525742fee633cc21e37d060225b6c6f11d205cd4c0c80bd0297c14",
       "ref": "main"
     }
   ],
@@ -9061,7 +9061,7 @@
         "sub-agents"
       ],
       "icon": "ShieldCheck",
-      "checksum": "a7182d6405352ed9952daf497aa2f7aed29f9d0936415d731e78013f63a62303",
+      "checksum": "3bedd6545c3b48ca7101e8d1899486506f849ad2a2a0a19a94944263bb9fbe36",
       "ref": "main"
     },
     {
@@ -9488,7 +9488,7 @@
       ],
       "featuredRank": 122,
       "developer": "Ryu",
-      "checksum": "ccaf81e13a5890941231614fb4569130bde230d38e38b9bb4be87c2dbfbc458a",
+      "checksum": "4c054c5417c0ca7a39a8bbe5a5744489795ddc47ce98121bc6862a123de5b482",
       "ref": "main"
     },
     {
@@ -9643,7 +9643,7 @@
         "tools"
       ],
       "icon": "Bot",
-      "checksum": "b06da12200f3f50dbed8106c62b23da2f575e65879a1f8e345552de196c691cb",
+      "checksum": "40e33d1aac35a04882616f9b2d9154e9a53d13ca19b225b7f84347ee7f9daa5e",
       "ref": "main"
     },
     {
@@ -9967,7 +9967,7 @@
       ],
       "featuredRank": 120,
       "developer": "Ryu",
-      "checksum": "a557d645d8469c5eea97da87e5a64c0773db114f38115423d3c2a7f031c5d2af",
+      "checksum": "7cd937a2003a9d415b85d550372ea6136662515134c43be9d5a6ef96d073b4e7",
       "ref": "main"
     },
     {
@@ -10570,7 +10570,7 @@
         "agents"
       ],
       "icon": "ListTree",
-      "checksum": "34401d270cbe18df12c03c723f8d486e7cfcdca1ac7556edd6980a760b77ce67",
+      "checksum": "50121ad3c74db87919234757fbd529b85847a2b412dd5898c0e9d910bcdf5c5b",
       "ref": "main"
     },
     {
@@ -10753,7 +10753,7 @@
       ],
       "featuredRank": 128,
       "developer": "Ryu",
-      "checksum": "2a3cad0331907ecb7700a6bd4056992b9a9da7fadb397f25e0b7853e653925be",
+      "checksum": "79a5ceea6c3ac96baea6734d6829354c6f011ef2449ef92d181ef0dcebbde4a0",
       "ref": "main"
     },
     {
@@ -11070,7 +11070,7 @@
       ],
       "featuredRank": 135,
       "developer": "Ryu",
-      "checksum": "c8a2aaddbc4c48addcefa395fcf43b773de25baf71997d0687243dad4e3c7502",
+      "checksum": "2cd735b10d60173bb64e31b4f33dbfb164494c5504f1787f469751247c12ca92",
       "ref": "main"
     },
     {
@@ -11605,7 +11605,7 @@
         "quality"
       ],
       "icon": "Gauge",
-      "checksum": "cc0d347b3f83725a0a62a881da08b83fd43348a12845f9fd88abac4f5e929812",
+      "checksum": "6a3e9dbbfd35a9d6cddb8a9f7301942ddc1e941d83de5ac38390b59e8259edc6",
       "ref": "main"
     },
     {
@@ -11923,7 +11923,7 @@
       ],
       "featuredRank": 130,
       "developer": "Ryu",
-      "checksum": "7a512f39cec2349e30dbcbc8fa2bd9fc0a373793618570282d223a33b486fcb6",
+      "checksum": "489aaf38193c758a440e61fbe0e73b10950417e6cbc4d9a00d47e2b731f44610",
       "ref": "main"
     },
     {
@@ -11973,7 +11973,7 @@
         "sub-agents"
       ],
       "icon": "GitFork",
-      "checksum": "635581225161b76307b1d36bc27bd7988a1277949edc8de574eee0882f3a38cf",
+      "checksum": "74ab26bb7d49165b4004896e44370a439efbf01a771dec5003bb8f811eda47fe",
       "ref": "main"
     },
     {
@@ -12270,7 +12270,7 @@
         "best-of-n"
       ],
       "icon": "Filter",
-      "checksum": "785ebf16b5d180b1825f35ced9523b7b4fba1a86999cbf0ac6a637f82d6873b2",
+      "checksum": "ce704344bc11be5cd21c2e7c0bb580f6169401aa88c43215696ef8f8a93e131b",
       "ref": "main"
     },
     {
@@ -12545,7 +12545,7 @@
       ],
       "featuredRank": 138,
       "developer": "Ryu",
-      "checksum": "9fbe6d232c1479a53fd880ed8117cbb1a5b801e68cad4fac436c30822ef3da9b",
+      "checksum": "d0432d895fc6b23f5e72338b4c44d767a0bbf5233b2e3866f71b699d17b47338",
       "ref": "main"
     },
     {
@@ -13226,7 +13226,7 @@
       ],
       "featuredRank": 115,
       "developer": "Ryu",
-      "checksum": "b8eb19fe757a2ea851de89742d5599d53649dd21236ab28c269db342096e5aa2",
+      "checksum": "e8379d5d5bb11c2cc669200b488afc6cc9fb289cfe7c39d8c3922b302760b45b",
       "ref": "main"
     },
     {
@@ -13915,7 +13915,7 @@
         "sub-agents"
       ],
       "icon": "Workflow",
-      "checksum": "5965965e633c6c242a5c0bb8ae1c96e6c66a4a6bbbe1a04f80127e981c2ef0af",
+      "checksum": "c7ab75d4b31301361834553795c4ed10e2baceaf4cc66f29fa42056091308b7f",
       "ref": "main"
     },
     {
@@ -14144,7 +14144,7 @@
         "sub-agents"
       ],
       "icon": "Network",
-      "checksum": "b62c41e48847979395716eb7be52acfa4fd9f30030eba14b0c23ef91f9066268",
+      "checksum": "41110615bb2aa6de9a4031853f63003a9f7b004d8356046408eede6225bead56",
       "ref": "main"
     },
     {
@@ -14616,7 +14616,7 @@
         "decomposition"
       ],
       "icon": "Link",
-      "checksum": "7e8045db23bee1fa9012e2a60972f7a351d24adf0ba68eb40e8a1af96fc82f5c",
+      "checksum": "af36354ad3b62e414afb75a842949cd9533c69890dc697756135fdbfd30ea9f6",
       "ref": "main"
     },
     {
@@ -15488,7 +15488,7 @@
         "branch"
       ],
       "icon": "Split",
-      "checksum": "0391d7d521d1e93158572915252fbf27a43af89cfa80a6b5b8127ac34e2178f0",
+      "checksum": "ea3d983a555fa18a3c16f4be82bbd38ba44088c4c782227dba0ac612fb7340ca",
       "ref": "main"
     },
     {
@@ -15980,7 +15980,7 @@
       ],
       "featuredRank": 125,
       "developer": "Ryu",
-      "checksum": "b34ab5df5898fa0383910a95fb66995b21f488a58aca58b9a1679204d41066b2",
+      "checksum": "523d67c389e9e83f547bf1ef84fb4ae05d4727a9bb4979f1002ba9bf0831c8a7",
       "ref": "main"
     },
     {
@@ -17195,7 +17195,7 @@
         "best-of-n"
       ],
       "icon": "Trophy",
-      "checksum": "e505e68f4053bd127cd7ba32c64d60d61abffc8517bc8ff5df4bac37c706ba0c",
+      "checksum": "45c7352328525742fee633cc21e37d060225b6c6f11d205cd4c0c80bd0297c14",
       "ref": "main"
     },
     {

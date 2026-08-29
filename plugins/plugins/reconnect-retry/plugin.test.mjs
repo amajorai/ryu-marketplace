@@ -7,9 +7,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const manifest = JSON.parse(
-	readFileSync(join(HERE, "manifest.json"), "utf8")
-);
+const manifest = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
 
 test("declares one bounded host-rendered reconnect feature", () => {
 	assert.equal(manifest.id, "@ryu/reconnect-retry");

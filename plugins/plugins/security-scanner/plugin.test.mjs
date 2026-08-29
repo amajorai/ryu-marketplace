@@ -10,7 +10,9 @@ const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
 function manifest() {
 	const value = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
 	for (const hook of value.contributes.turn_hooks) {
-		assert.equal(typeof hook.code_file, "string");
+		if (typeof hook.code_file !== "string") {
+			throw new Error("hook code_file must be a string");
+		}
 		hook.code = readFileSync(join(HERE, hook.code_file), "utf8");
 	}
 	return value;
@@ -18,7 +20,9 @@ function manifest() {
 
 function loadHook(value, id) {
 	const hook = value.contributes.turn_hooks.find((entry) => entry.id === id);
-	assert.ok(hook, "missing hook " + id);
+	if (!hook) {
+		throw new Error(`missing hook ${id}`);
+	}
 	const fn = new AsyncFunction("ctx", "host", hook.code);
 	return (ctx, host) => fn(ctx, host);
 }
@@ -30,18 +34,23 @@ function makeHost() {
 		state,
 		calls,
 		host: {
-		getPreference: async ({ key }) => ({
-			"security-scanner-agent": "configured-agent",
-			"security-scanner-workers": "4",
-				"security-scanner-effort": "high",
-			})[key] ?? "",
+			getPreference: async ({ key }) =>
+				({
+					"security-scanner-agent": "configured-agent",
+					"security-scanner-workers": "4",
+					"security-scanner-effort": "high",
+				})[key] ?? "",
 			runFanout: async ({ delegates }) => {
-				calls.push(["runFanout", delegates.length, delegates.map((delegate) => delegate.agent_id)]);
+				calls.push([
+					"runFanout",
+					delegates.length,
+					delegates.map((delegate) => delegate.agent_id),
+				]);
 				return {
 					ok: true,
 					results: delegates.map((delegate) => ({
 						id: delegate.id,
-						output: "Evidence for " + delegate.id + " at src/example.ts:12.",
+						output: `Evidence for ${delegate.id} at src/example.ts:12.`,
 					})),
 				};
 			},
@@ -55,7 +64,11 @@ function makeHost() {
 			},
 			storage: {
 				get: async (key) => state.get(key) ?? null,
-				set: async (key, value) => state.set(key, typeof value === "string" ? value : JSON.stringify(value)),
+				set: async (key, value) =>
+					state.set(
+						key,
+						typeof value === "string" ? value : JSON.stringify(value)
+					),
 				delete: async (key) => state.delete(key),
 			},
 			log: () => {},
@@ -78,11 +91,16 @@ test("manifest wires both flat hooks and all required capabilities", () => {
 	assert.equal(value.id, "@ryu/security-scanner");
 	assert.deepEqual(
 		value.permission_grants.sort(),
-		["hook:run-agent", "hook:side-model", "preferences:read", "storage:kv"].sort(),
+		[
+			"hook:run-agent",
+			"hook:side-model",
+			"preferences:read",
+			"storage:kv",
+		].sort()
 	);
 	assert.deepEqual(
 		value.contributes.slash_commands.map((command) => command.command),
-		["/security-scan", "/security-verify", "/security-fix", "/security-clear"],
+		["/security-scan", "/security-verify", "/security-fix", "/security-clear"]
 	);
 	assert.match(value.contributes.turn_hooks[0].code, /runFanout/);
 	assert.match(value.contributes.turn_hooks[1].code, /sideModel/);
@@ -97,7 +115,11 @@ test("command hook runs scan, verification, proposal, and clear without writes",
 	assert.equal(scan.kind, "handled");
 	assert.match(scan.text, /Mode: quick/);
 	assert.match(scan.text, /Delegate coverage: 3\/3/);
-	assert.deepEqual(calls[0][2], ["configured-agent", "configured-agent", "configured-agent"]);
+	assert.deepEqual(calls[0][2], [
+		"configured-agent",
+		"configured-agent",
+		"configured-agent",
+	]);
 	assert.ok(state.has("security-scanner-test"));
 
 	const verification = await run(context("/security-verify F1"), host);
@@ -114,26 +136,27 @@ test("command hook runs scan, verification, proposal, and clear without writes",
 		text: "Security Scanner state cleared for this conversation.",
 	});
 	assert.equal(state.size, 0);
-	assert.deepEqual(calls.map(([kind]) => kind), [
-		"runFanout",
-		"sideModel",
-		"runFanout",
-		"sideModel",
-		"runAgent",
-	]);
+	assert.deepEqual(
+		calls.map(([kind]) => kind),
+		["runFanout", "sideModel", "runFanout", "sideModel", "runAgent"]
+	);
 });
 
 test("automatic review emits a static signal without an LLM finding", async () => {
 	const value = manifest();
 	const run = loadHook(value, "security-scanner.auto-review");
 	const { host } = makeHost();
-	const answer = "The config loader is shown below and needs review before deployment. cfg = yaml.load(open('config.yml')) and the object then flows into the application configuration layer.";
-	const result = await run({
-		conversation_id: "security-scanner-review",
-		agent_id: "test-agent",
-		transcript: [{ role: "assistant", content: answer }],
-		flags: { "io.ryu.security-scanner.auto-review": true },
-	}, host);
+	const answer =
+		"The config loader is shown below and needs review before deployment. cfg = yaml.load(open('config.yml')) and the object then flows into the application configuration layer.";
+	const result = await run(
+		{
+			conversation_id: "security-scanner-review",
+			agent_id: "test-agent",
+			transcript: [{ role: "assistant", content: answer }],
+			flags: { "io.ryu.security-scanner.auto-review": true },
+		},
+		host
+	);
 	assert.equal(result.kind, "note");
 	assert.match(result.text, /Static signals to validate/);
 	assert.match(result.text, /YAML/);

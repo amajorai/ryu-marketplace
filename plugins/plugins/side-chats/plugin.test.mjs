@@ -7,9 +7,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const manifest = JSON.parse(
-	readFileSync(join(HERE, "manifest.json"), "utf8")
-);
+const manifest = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
 
 test("declares a main-chat-context side-chat feature and /btw command", () => {
 	assert.equal(manifest.id, "@ryu/side-chats");
@@ -46,7 +44,9 @@ test("is registered from its package manifest, not a Core fixture copy", () => {
 	const coreSrc = join(HERE, "..", "..", "..", "apps", "core", "src");
 	assert.ok(existsSync(coreSrc));
 	assert.equal(
-		existsSync(join(coreSrc, "plugin_manifest", "fixtures", "side-chats.manifest.json")),
+		existsSync(
+			join(coreSrc, "plugin_manifest", "fixtures", "side-chats.manifest.json")
+		),
 		false
 	);
 	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");

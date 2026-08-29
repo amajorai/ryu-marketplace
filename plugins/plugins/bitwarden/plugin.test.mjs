@@ -113,11 +113,17 @@ test("list/get declare their required id arguments", () => {
 	assert.deepEqual(bySlug["bitwarden.list"].input_schema.required, [
 		"project_id",
 	]);
-	assert.equal(bySlug["bitwarden.list"].input_schema.properties.project_id.type, "string");
+	assert.equal(
+		bySlug["bitwarden.list"].input_schema.properties.project_id.type,
+		"string"
+	);
 	assert.deepEqual(bySlug["bitwarden.get"].input_schema.required, [
 		"secret_id",
 	]);
-	assert.equal(bySlug["bitwarden.get"].input_schema.properties.secret_id.type, "string");
+	assert.equal(
+		bySlug["bitwarden.get"].input_schema.properties.secret_id.type,
+		"string"
+	);
 });
 
 test("list/get/projects parse stdout as JSON; status returns raw text", () => {
@@ -130,7 +136,11 @@ test("list/get/projects parse stdout as JSON; status returns raw text", () => {
 test("bws receives the bootstrap token through command_env (env: source)", () => {
 	// The whole point of the Hermes port: the token is an env var the child reads,
 	// never a key in the manifest. Every authenticated tool must declare it.
-	for (const slug of ["bitwarden.projects", "bitwarden.list", "bitwarden.get"]) {
+	for (const slug of [
+		"bitwarden.projects",
+		"bitwarden.list",
+		"bitwarden.get",
+	]) {
 		assert.ok(bySlug[slug].command_env, `${slug} must declare command_env`);
 		assert.equal(
 			bySlug[slug].command_env.BWS_ACCESS_TOKEN,
