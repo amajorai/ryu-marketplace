@@ -1,10 +1,4 @@
 # Rules
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="rules" width="96" />
-  </picture>
-</p>
 
 Rules discovers project instruction files from the Cursor and Claude layouts and
 exposes them in the agent edit page. The desktop panel configures a per-agent
