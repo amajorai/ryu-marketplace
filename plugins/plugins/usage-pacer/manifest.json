@@ -14,7 +14,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/usage-pacer",
   "name": "Usage Pacer",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "stability": "experimental",
   "category": "Automation",
   "description": "Keeps subscription agents usable for the whole rolling window. It can pace usage down with a fallback ladder, then spend remaining quota on stronger models or ACP fast mode as a reset approaches.",

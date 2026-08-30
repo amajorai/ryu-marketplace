@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/output-styles",
   "name": "Output Styles",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "stability": "experimental",
   "category": "Productivity",
   "description": "The eleven built-in personality profiles \u2014 ELI5, I have ADHD, Explanatory, Learning, Proactive, Plain text, Plain Technical, No AI slop, No Hype, Bro and Gen Z. Assign a profile to each agent to shape how it talks \u2014 role, tone, default response shape \u2014 without changing what it knows, which tools it has, or which model runs. Browse profiles here and choose one in the agent editor.",

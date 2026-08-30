@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/workflow/generate-and-filter",
   "name": "Generate & Filter",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "kind": "workflow",
   "artifacts": [
     "workflow.json"

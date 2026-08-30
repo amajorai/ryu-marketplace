@@ -13,7 +13,7 @@
     {
       "name": "action-summary",
       "displayName": "Action Summary",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -67,7 +67,7 @@
     {
       "name": "activity",
       "displayName": "Activity",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -117,7 +117,7 @@
     {
       "name": "advisor",
       "displayName": "Advisor",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -167,7 +167,7 @@
     {
       "name": "agent-comms",
       "displayName": "Switchboard",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -221,7 +221,7 @@
     {
       "name": "agent-status",
       "displayName": "Agent Status",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -269,7 +269,7 @@
     {
       "name": "agentation",
       "displayName": "Agentation",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -320,7 +320,7 @@
     {
       "name": "agentbrowser",
       "displayName": "Agent Browser",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -387,7 +387,7 @@
     {
       "name": "agents-md-tail",
       "displayName": "AGENTS.md Tail",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -441,7 +441,7 @@
     {
       "name": "ambient-elevator",
       "displayName": "Ambient Elevator",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -487,9 +487,80 @@
       }
     },
     {
+      "name": "anydoc",
+      "displayName": "AnyDoc",
+      "version": "0.2.3",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "layers": [
+        {
+          "capability": "document.parse",
+          "title": "Document Parsing",
+          "toolkit": false,
+          "selectable": true,
+          "verbs": []
+        }
+      ],
+      "tagline": "Fast local document extraction and API service",
+      "description": "Document extraction through Firecrawl's MIT-licensed AnyDoc Rust library. It converts Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and text-based PDF files into GitHub-Flavored Markdown through the swappable `document.parse` capability. The local backend is fast and has no model or native-tool download, but it does not OCR scanned pages or fetch URLs. The same out-of-process backend also exposes an API-key-authenticated `/v1/extract` service for direct deployments.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-anydoc",
+      "category": "Documents",
+      "keywords": [
+        "document",
+        "parse",
+        "pdf",
+        "docx",
+        "pptx",
+        "xlsx",
+        "markdown",
+        "extraction",
+        "api"
+      ],
+      "tags": [
+        "document",
+        "parse",
+        "pdf",
+        "docx",
+        "pptx",
+        "xlsx",
+        "markdown",
+        "extraction",
+        "api"
+      ],
+      "icon": "document-attachment",
+      "iconDither": {
+        "from": 303,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-anydoc",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "approvals",
       "displayName": "Approvals",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -539,7 +610,7 @@
     {
       "name": "auto-continue",
       "displayName": "Auto Continue",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -593,7 +664,7 @@
     {
       "name": "backstage",
       "displayName": "Backstage",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "amajorai/backstage",
       "official": true,
@@ -637,7 +708,7 @@
     {
       "name": "bitwarden",
       "displayName": "Bitwarden Secrets Manager",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -691,7 +762,7 @@
     {
       "name": "blueprint",
       "displayName": "Blueprint",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -758,7 +829,7 @@
     {
       "name": "bookmarks",
       "displayName": "Bookmarks",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -806,7 +877,7 @@
     {
       "name": "brave",
       "displayName": "Brave Search",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -866,7 +937,7 @@
     {
       "name": "browser",
       "displayName": "Browser",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -949,7 +1020,7 @@
     {
       "name": "bytebot",
       "displayName": "Bytebot Desktop",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1017,7 +1088,7 @@
     {
       "name": "calendar",
       "displayName": "Calendar",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1067,7 +1138,7 @@
     {
       "name": "canvas",
       "displayName": "Canvas",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1119,7 +1190,7 @@
     {
       "name": "chat-broadcast",
       "displayName": "Chat Broadcast",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1166,7 +1237,7 @@
     {
       "name": "chat-title",
       "displayName": "Chat Title",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1218,7 +1289,7 @@
     {
       "name": "chatgpt-web",
       "displayName": "ChatGPT Web",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1256,7 +1327,7 @@
     {
       "name": "checks",
       "displayName": "Tests",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1305,7 +1376,7 @@
     {
       "name": "clangd-lsp",
       "displayName": "Clangd (C/C++)",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1359,7 +1430,7 @@
     {
       "name": "clips",
       "displayName": "Clips",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1411,7 +1482,7 @@
     {
       "name": "cloudflare-browser-run",
       "displayName": "Cloudflare Browser Run",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1488,7 +1559,7 @@
     {
       "name": "composio-connect",
       "displayName": "Composio Connect",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1539,7 +1610,7 @@
     {
       "name": "content",
       "displayName": "Content",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1590,7 +1661,7 @@
     {
       "name": "crm",
       "displayName": "Harbor",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1643,7 +1714,7 @@
     {
       "name": "csharp-lsp",
       "displayName": "C# LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1697,7 +1768,7 @@
     {
       "name": "dashboards",
       "displayName": "Dashboards",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1748,7 +1819,7 @@
     {
       "name": "desktop",
       "displayName": "Virtual Desktop",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1802,7 +1873,7 @@
     {
       "name": "dictation",
       "displayName": "Dictation",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1855,7 +1926,7 @@
     {
       "name": "docling",
       "displayName": "Docling",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -1924,7 +1995,7 @@
     {
       "name": "docs",
       "displayName": "Ryu Docs",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -1974,7 +2045,7 @@
     {
       "name": "double-check",
       "displayName": "Double Check",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2026,7 +2097,7 @@
     {
       "name": "drafts",
       "displayName": "Drafts",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -2079,7 +2150,7 @@
     {
       "name": "dynamic-workflows",
       "displayName": "dynamic-workflows",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2111,7 +2182,7 @@
     {
       "name": "effort-escalator",
       "displayName": "Effort Escalator",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2165,7 +2236,7 @@
     {
       "name": "ego-browser",
       "displayName": "Ego Browser",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2232,7 +2303,7 @@
     {
       "name": "exa",
       "displayName": "Exa Search",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2291,7 +2362,7 @@
     {
       "name": "expanded-composer",
       "displayName": "Expanded Composer",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2338,7 +2409,7 @@
     {
       "name": "expect",
       "displayName": "Expect",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2389,7 +2460,7 @@
     {
       "name": "expenses",
       "displayName": "Expenses",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -2442,7 +2513,7 @@
     {
       "name": "feedback-board",
       "displayName": "Feedback Board",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -2499,7 +2570,7 @@
     {
       "name": "finetune",
       "displayName": "Fine-tuning",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -2552,7 +2623,7 @@
     {
       "name": "firecrawl",
       "displayName": "Firecrawl",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2634,7 +2705,7 @@
     {
       "name": "firewall",
       "displayName": "Gateway Firewall",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2688,7 +2759,7 @@
     {
       "name": "ghost",
       "displayName": "Ghost",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2752,7 +2823,7 @@
     {
       "name": "ghost-chats",
       "displayName": "Temporary Chats",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2801,7 +2872,7 @@
     {
       "name": "goal",
       "displayName": "Goal",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2853,7 +2924,7 @@
     {
       "name": "gopls-lsp",
       "displayName": "Go LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2907,7 +2978,7 @@
     {
       "name": "headroom",
       "displayName": "Headroom Compression",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -2955,7 +3026,7 @@
     {
       "name": "healing",
       "displayName": "Self-Healing",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3007,7 +3078,7 @@
     {
       "name": "help-center",
       "displayName": "Help Center",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3048,7 +3119,7 @@
     {
       "name": "honcho",
       "displayName": "Honcho",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3116,7 +3187,7 @@
     {
       "name": "hook-observers",
       "displayName": "Hook Observers",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3168,7 +3239,7 @@
     {
       "name": "hook-session-context",
       "displayName": "Session Context",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3220,7 +3291,7 @@
     {
       "name": "invoices",
       "displayName": "Invoices",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3273,7 +3344,7 @@
     {
       "name": "jdtls-lsp",
       "displayName": "Java LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3327,7 +3398,7 @@
     {
       "name": "kotlin-lsp",
       "displayName": "Kotlin LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3381,7 +3452,7 @@
     {
       "name": "learning",
       "displayName": "Learning",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3431,7 +3502,7 @@
     {
       "name": "lua-lsp",
       "displayName": "Lua LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3483,7 +3554,7 @@
     {
       "name": "mail",
       "displayName": "Mail",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3534,7 +3605,7 @@
     {
       "name": "markitdown",
       "displayName": "MarkItDown",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3601,7 +3672,7 @@
     {
       "name": "meetings",
       "displayName": "Meetings",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3652,7 +3723,7 @@
     {
       "name": "mem0",
       "displayName": "Mem0",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -3718,7 +3789,7 @@
     {
       "name": "mineru",
       "displayName": "MinerU",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3787,7 +3858,7 @@
     {
       "name": "mission-control",
       "displayName": "Mission Control",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3840,7 +3911,7 @@
     {
       "name": "monitors",
       "displayName": "Monitors",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3891,7 +3962,7 @@
     {
       "name": "mpp",
       "displayName": "Payments",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -3944,7 +4015,7 @@
     {
       "name": "news",
       "displayName": "Wire",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4011,7 +4082,7 @@
     {
       "name": "no-ai-slop",
       "displayName": "No AI Slop",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4065,7 +4136,7 @@
     {
       "name": "no-more-mistakes",
       "displayName": "No More Mistakes",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4119,7 +4190,7 @@
     {
       "name": "observer-agents",
       "displayName": "Observer Agents",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4173,7 +4244,7 @@
     {
       "name": "output-styles",
       "displayName": "Output Styles",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4227,7 +4298,7 @@
     {
       "name": "outreach",
       "displayName": "Outreach",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4280,7 +4351,7 @@
     {
       "name": "parallel",
       "displayName": "Parallel Search",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4352,7 +4423,7 @@
     {
       "name": "people",
       "displayName": "People",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4405,7 +4476,7 @@
     {
       "name": "php-lsp",
       "displayName": "PHP LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4457,7 +4528,7 @@
     {
       "name": "pi-monitor",
       "displayName": "Monitor",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4513,7 +4584,7 @@
     {
       "name": "pi-shell",
       "displayName": "Background Bash",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4565,7 +4636,7 @@
     {
       "name": "pi-subagent",
       "displayName": "Subagents",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4617,7 +4688,7 @@
     {
       "name": "plan-continue",
       "displayName": "Plan Continue",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4669,7 +4740,7 @@
     {
       "name": "predict",
       "displayName": "Autocomplete",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4721,7 +4792,7 @@
     {
       "name": "projects",
       "displayName": "Projects",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4774,7 +4845,7 @@
     {
       "name": "prompt-suggestions",
       "displayName": "Prompt Suggestions",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4828,7 +4899,7 @@
     {
       "name": "proof",
       "displayName": "Proof of Work",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4880,7 +4951,7 @@
     {
       "name": "pull-requests",
       "displayName": "Pull Requests",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -4934,7 +5005,7 @@
     {
       "name": "pxpipe",
       "displayName": "pxpipe",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -4988,7 +5059,7 @@
     {
       "name": "pyright-lsp",
       "displayName": "Python LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5042,7 +5113,7 @@
     {
       "name": "quests",
       "displayName": "Quests",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5093,7 +5164,7 @@
     {
       "name": "reactions",
       "displayName": "Message Reactions",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5144,7 +5215,7 @@
     {
       "name": "reasoning",
       "displayName": "Automated Reasoning",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5211,7 +5282,7 @@
     {
       "name": "recap",
       "displayName": "Recap",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5265,7 +5336,7 @@
     {
       "name": "receipts",
       "displayName": "Receipts",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5323,7 +5394,7 @@
     {
       "name": "recipes",
       "displayName": "Recipes",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5375,7 +5446,7 @@
     {
       "name": "reconnect-retry",
       "displayName": "Reconnect Retry",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5424,7 +5495,7 @@
     {
       "name": "reelfarm",
       "displayName": "Sprout Studio",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5477,7 +5548,7 @@
     {
       "name": "research",
       "displayName": "Research",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5529,7 +5600,7 @@
     {
       "name": "rlm",
       "displayName": "Recursive Language Model",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5596,7 +5667,7 @@
     {
       "name": "rtk",
       "displayName": "RTK (Rust Token Killer)",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5648,7 +5719,7 @@
     {
       "name": "ruby-lsp",
       "displayName": "Ruby LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5702,7 +5773,7 @@
     {
       "name": "rules",
       "displayName": "Rules",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5756,7 +5827,7 @@
     {
       "name": "rust-analyzer-lsp",
       "displayName": "Rust LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5808,7 +5879,7 @@
     {
       "name": "safe-actions",
       "displayName": "Safe Actions",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -5864,7 +5935,7 @@
     {
       "name": "sample",
       "displayName": "Research Assistant",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5917,7 +5988,7 @@
     {
       "name": "sample-widget",
       "displayName": "Sample Widget",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -5972,7 +6043,7 @@
     {
       "name": "scrapling",
       "displayName": "Scrapling",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6034,7 +6105,7 @@
     {
       "name": "security-guidance",
       "displayName": "Security Guidance",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6086,7 +6157,7 @@
     {
       "name": "security-scanner",
       "displayName": "Security Scanner",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6144,7 +6215,7 @@
     {
       "name": "serper",
       "displayName": "Serper",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6216,7 +6287,7 @@
     {
       "name": "shadow",
       "displayName": "Shadow",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6263,7 +6334,7 @@
     {
       "name": "side-chats",
       "displayName": "Side Chats",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6317,7 +6388,7 @@
     {
       "name": "simulator",
       "displayName": "Simulators",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6377,7 +6448,7 @@
     {
       "name": "sites",
       "displayName": "Sites",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6421,7 +6492,7 @@
     {
       "name": "skill-editor",
       "displayName": "Skill Editor",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6471,7 +6542,7 @@
     {
       "name": "slides",
       "displayName": "Slides",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6515,7 +6586,7 @@
     {
       "name": "social",
       "displayName": "Outpost",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6568,7 +6639,7 @@
     {
       "name": "spider",
       "displayName": "Spider",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6636,7 +6707,7 @@
     {
       "name": "spidercloud",
       "displayName": "Spider Cloud",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6698,7 +6769,7 @@
     {
       "name": "stats",
       "displayName": "Session Stats",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6753,7 +6824,7 @@
     {
       "name": "subtitles",
       "displayName": "Subtitles",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6809,7 +6880,7 @@
     {
       "name": "swift-lsp",
       "displayName": "Swift LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6863,7 +6934,7 @@
     {
       "name": "tavily",
       "displayName": "Tavily Search",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -6934,7 +7005,7 @@
     {
       "name": "teams",
       "displayName": "Groups",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -6986,7 +7057,7 @@
     {
       "name": "timeline",
       "displayName": "Timeline",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7036,7 +7107,7 @@
     {
       "name": "token-table",
       "displayName": "Token Table",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7080,7 +7151,7 @@
     {
       "name": "tokenmaxxing",
       "displayName": "Tokenmaxxing",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -7117,7 +7188,7 @@
     {
       "name": "tool-firewall",
       "displayName": "Tool Firewall",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -7169,7 +7240,7 @@
     {
       "name": "toolsmith-example",
       "displayName": "toolsmith-example",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -7199,7 +7270,7 @@
     {
       "name": "tuition",
       "displayName": "Tuition",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7266,7 +7337,7 @@
     {
       "name": "typescript-lsp",
       "displayName": "TypeScript & JavaScript LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -7322,7 +7393,7 @@
     {
       "name": "ugc",
       "displayName": "UGC",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7375,7 +7446,7 @@
     {
       "name": "unstructured",
       "displayName": "Unstructured",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7439,7 +7510,7 @@
     {
       "name": "usage-pacer",
       "displayName": "Usage Pacer",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -7495,7 +7566,7 @@
     {
       "name": "voice",
       "displayName": "Voice",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7549,7 +7620,7 @@
     {
       "name": "warmup",
       "displayName": "Warmup",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7600,7 +7671,7 @@
     {
       "name": "webhooks",
       "displayName": "Webhooks",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7651,7 +7722,7 @@
     {
       "name": "whatsapp",
       "displayName": "WhatsApp",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7703,7 +7774,7 @@
     {
       "name": "whiteboard",
       "displayName": "Whiteboard",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7754,7 +7825,7 @@
     {
       "name": "workflows",
       "displayName": "Workflows",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -7808,7 +7879,7 @@
       "name": "adversarial-verification",
       "displayName": "Adversarial Verification",
       "id": "ryu/workflow/adversarial-verification",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7852,14 +7923,14 @@
         "sub-agents"
       ],
       "icon": "ShieldCheck",
-      "checksum": "3bedd6545c3b48ca7101e8d1899486506f849ad2a2a0a19a94944263bb9fbe36",
+      "checksum": "b297b4f68da353d2208478dccb9d694a183c659d7f9c12dab05a8ce416e51064",
       "ref": "main"
     },
     {
       "name": "animator",
       "displayName": "Animator",
       "id": "ryu/animator",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -7907,14 +7978,14 @@
       ],
       "featuredRank": 122,
       "developer": "Ryu",
-      "checksum": "4c054c5417c0ca7a39a8bbe5a5744489795ddc47ce98121bc6862a123de5b482",
+      "checksum": "8a4ef08f745e1821b2e83a7056c278d87823c5b1d7e820ad68c09926bbaed3f5",
       "ref": "main"
     },
     {
       "name": "autonomous-agent",
       "displayName": "Autonomous Agent",
       "id": "ryu/workflow/autonomous-agent",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -7958,14 +8029,14 @@
         "tools"
       ],
       "icon": "Bot",
-      "checksum": "40e33d1aac35a04882616f9b2d9154e9a53d13ca19b225b7f84347ee7f9daa5e",
+      "checksum": "4bc3d85c0c9a744621167679b7e33876262156aa1f0d9132b9ee2d9eee75e1fe",
       "ref": "main"
     },
     {
       "name": "autoresearch",
       "displayName": "Autoresearch",
       "id": "ryu/workflow/autoresearch",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8015,14 +8086,14 @@
         "durable"
       ],
       "icon": "FlaskConical",
-      "checksum": "4faa2af3423c3f5658382334b1df37c93bf2d31e1e3409ed29b38b75f397e983",
+      "checksum": "77d3392f6fcc190236998574c103ba5ed5ec6ff5050964d1595cfa025503c76b",
       "ref": "main"
     },
     {
       "name": "brand-presence",
       "displayName": "Brand Presence",
       "id": "ryu/brand-presence",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8069,14 +8140,14 @@
       ],
       "featuredRank": 120,
       "developer": "Ryu",
-      "checksum": "7cd937a2003a9d415b85d550372ea6136662515134c43be9d5a6ef96d073b4e7",
+      "checksum": "17c42343cea12d2917f4a5d9bb333c3db058b4d40594f9bb3880f7fce6d8da5a",
       "ref": "main"
     },
     {
       "name": "classify-and-act",
       "displayName": "Classify & Act",
       "id": "ryu/workflow/classify-and-act",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8119,14 +8190,14 @@
         "agents"
       ],
       "icon": "ListTree",
-      "checksum": "50121ad3c74db87919234757fbd529b85847a2b412dd5898c0e9d910bcdf5c5b",
+      "checksum": "ebeb851a47a81c291d57478193276286a619ff071f5f0e844da606dbde7fe599",
       "ref": "main"
     },
     {
       "name": "codex-quota-reset-watch",
       "displayName": "Codex Quota Reset Watch",
       "id": "ryu/codex-quota-reset-watch",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8173,14 +8244,14 @@
       ],
       "featuredRank": 128,
       "developer": "Ryu",
-      "checksum": "79a5ceea6c3ac96baea6734d6829354c6f011ef2449ef92d181ef0dcebbde4a0",
+      "checksum": "021334d3b4e8aaf45dcee4db28273cd531b7ebedb0a65d69a4001b5f818d0c10",
       "ref": "main"
     },
     {
       "name": "design-director",
       "displayName": "Design Director",
       "id": "ryu/design-director",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8230,14 +8301,14 @@
       ],
       "featuredRank": 135,
       "developer": "Ryu",
-      "checksum": "2cd735b10d60173bb64e31b4f33dbfb164494c5504f1787f469751247c12ca92",
+      "checksum": "38a11960c69a83c6d5f8bcdf7a538673dbca81c288886e81511f833eb07b0b21",
       "ref": "main"
     },
     {
       "name": "evaluator-optimizer",
       "displayName": "Evaluator–Optimizer",
       "id": "ryu/workflow/evaluator-optimizer",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8281,14 +8352,14 @@
         "quality"
       ],
       "icon": "Gauge",
-      "checksum": "6a3e9dbbfd35a9d6cddb8a9f7301942ddc1e941d83de5ac38390b59e8259edc6",
+      "checksum": "b66b6412b70267ed8db9d215e6aebc994e8b5315ae466900caa3eb9f6e22770a",
       "ref": "main"
     },
     {
       "name": "expense-tracker",
       "displayName": "Expense Tracker",
       "id": "ryu/expense-tracker",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8335,14 +8406,14 @@
       ],
       "featuredRank": 118,
       "developer": "Ryu",
-      "checksum": "2d99d0604058ac9c03ff7b9fd7b1d33284af5eaa6bc791b3a1d8f463ffe0ddcb",
+      "checksum": "fafc55478026d4e5f2d64e3524e6c54e3a1272ddb32f9a523e6333ab4264bfd7",
       "ref": "main"
     },
     {
       "name": "expiry-date-tracker",
       "displayName": "Expiry Date Tracker",
       "id": "ryu/expiry-date-tracker",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8389,14 +8460,14 @@
       ],
       "featuredRank": 130,
       "developer": "Ryu",
-      "checksum": "489aaf38193c758a440e61fbe0e73b10950417e6cbc4d9a00d47e2b731f44610",
+      "checksum": "c30b34b7644f00a8e4f0c677d17ab808779c2a013c62140cf2c4a1f938377ba2",
       "ref": "main"
     },
     {
       "name": "fan-out-synthesize",
       "displayName": "Fan-out / Synthesize",
       "id": "ryu/workflow/fan-out-synthesize",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8439,14 +8510,14 @@
         "sub-agents"
       ],
       "icon": "GitFork",
-      "checksum": "74ab26bb7d49165b4004896e44370a439efbf01a771dec5003bb8f811eda47fe",
+      "checksum": "a42cf999207686e7b2c65a45d252b572188033a687781334f69012a927c35901",
       "ref": "main"
     },
     {
       "name": "generate-and-filter",
       "displayName": "Generate & Filter",
       "id": "ryu/workflow/generate-and-filter",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8490,14 +8561,14 @@
         "best-of-n"
       ],
       "icon": "Filter",
-      "checksum": "ce704344bc11be5cd21c2e7c0bb580f6169401aa88c43215696ef8f8a93e131b",
+      "checksum": "c39e29398cf7b6a3a9e156386d384518116ab8c447203cedd59e9c5b67ec92ad",
       "ref": "main"
     },
     {
       "name": "growth-psychology-strategist",
       "displayName": "Growth Psychology Strategist",
       "id": "ryu/growth-psychology-strategist",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8546,14 +8617,14 @@
       ],
       "featuredRank": 138,
       "developer": "Ryu",
-      "checksum": "d0432d895fc6b23f5e72338b4c44d767a0bbf5233b2e3866f71b699d17b47338",
+      "checksum": "e154ec18ef8ca2a7f05c228d8ee1c2f64f113b42b0fde76c4f772c2dc75b0824",
       "ref": "main"
     },
     {
       "name": "marketing-studio",
       "displayName": "Marketing Studio",
       "id": "ryu/marketing-studio",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8600,14 +8671,14 @@
       ],
       "featuredRank": 115,
       "developer": "Ryu",
-      "checksum": "e8379d5d5bb11c2cc669200b488afc6cc9fb289cfe7c39d8c3922b302760b45b",
+      "checksum": "18abff91adf88b3c3539f8f17107866f724c21a62e157687cff8144f2af9652b",
       "ref": "main"
     },
     {
       "name": "orchestrator-workers",
       "displayName": "Orchestrator–Workers",
       "id": "ryu/workflow/orchestrator-workers",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8650,14 +8721,14 @@
         "sub-agents"
       ],
       "icon": "Workflow",
-      "checksum": "c7ab75d4b31301361834553795c4ed10e2baceaf4cc66f29fa42056091308b7f",
+      "checksum": "6f177c4c252f536c90df5dcadc66e068329995d3b28974a2680a60538e03cbe5",
       "ref": "main"
     },
     {
       "name": "parallelization",
       "displayName": "Parallelization",
       "id": "ryu/workflow/parallelization",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8700,14 +8771,14 @@
         "sub-agents"
       ],
       "icon": "Network",
-      "checksum": "41110615bb2aa6de9a4031853f63003a9f7b004d8356046408eede6225bead56",
+      "checksum": "1c8d18bfd50dc6f13c8710dcdbba81cc1c94b8051aca022e212117847a39619b",
       "ref": "main"
     },
     {
       "name": "prompt-chaining",
       "displayName": "Prompt Chaining",
       "id": "ryu/workflow/prompt-chaining",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8750,14 +8821,14 @@
         "decomposition"
       ],
       "icon": "Link",
-      "checksum": "af36354ad3b62e414afb75a842949cd9533c69890dc697756135fdbfd30ea9f6",
+      "checksum": "9543bfe38ba57baf8b25ab512388b6c113eea1ea192a0b166e36c5133008385e",
       "ref": "main"
     },
     {
       "name": "routing",
       "displayName": "Routing",
       "id": "ryu/workflow/routing",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8800,14 +8871,14 @@
         "branch"
       ],
       "icon": "Split",
-      "checksum": "ea3d983a555fa18a3c16f4be82bbd38ba44088c4c782227dba0ac612fb7340ca",
+      "checksum": "94fe6c9d63538415952a96251bab3f279914d44b0f143672d4976afe07e3c6cc",
       "ref": "main"
     },
     {
       "name": "security-guard",
       "displayName": "Security Guard",
       "id": "ryu/security-guard",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -8854,14 +8925,14 @@
       ],
       "featuredRank": 125,
       "developer": "Ryu",
-      "checksum": "523d67c389e9e83f547bf1ef84fb4ae05d4727a9bb4979f1002ba9bf0831c8a7",
+      "checksum": "d7be3eb0c3d1fe5afdd8e7e6c403bbcf82fd49072b8517f17c1bffabdae2c525",
       "ref": "main"
     },
     {
       "name": "tournament",
       "displayName": "Tournament",
       "id": "ryu/workflow/tournament",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -8904,7 +8975,7 @@
         "best-of-n"
       ],
       "icon": "Trophy",
-      "checksum": "45c7352328525742fee633cc21e37d060225b6c6f11d205cd4c0c80bd0297c14",
+      "checksum": "fe45926c8109f5489346d254ec70a9f72a2e115cc77d103861cdc6e8f1a4f2c4",
       "ref": "main"
     }
   ],
@@ -8912,7 +8983,7 @@
     {
       "name": "action-summary",
       "displayName": "Action Summary",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -8966,7 +9037,7 @@
     {
       "name": "activity",
       "displayName": "Activity",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9017,7 +9088,7 @@
       "name": "adversarial-verification",
       "displayName": "Adversarial Verification",
       "id": "ryu/workflow/adversarial-verification",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -9061,13 +9132,13 @@
         "sub-agents"
       ],
       "icon": "ShieldCheck",
-      "checksum": "3bedd6545c3b48ca7101e8d1899486506f849ad2a2a0a19a94944263bb9fbe36",
+      "checksum": "b297b4f68da353d2208478dccb9d694a183c659d7f9c12dab05a8ce416e51064",
       "ref": "main"
     },
     {
       "name": "advisor",
       "displayName": "Advisor",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9117,7 +9188,7 @@
     {
       "name": "agent-comms",
       "displayName": "Switchboard",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9171,7 +9242,7 @@
     {
       "name": "agent-status",
       "displayName": "Agent Status",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9219,7 +9290,7 @@
     {
       "name": "agentation",
       "displayName": "Agentation",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9270,7 +9341,7 @@
     {
       "name": "agentbrowser",
       "displayName": "Agent Browser",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9337,7 +9408,7 @@
     {
       "name": "agents-md-tail",
       "displayName": "AGENTS.md Tail",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9391,7 +9462,7 @@
     {
       "name": "ambient-elevator",
       "displayName": "Ambient Elevator",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9440,7 +9511,7 @@
       "name": "animator",
       "displayName": "Animator",
       "id": "ryu/animator",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -9488,13 +9559,84 @@
       ],
       "featuredRank": 122,
       "developer": "Ryu",
-      "checksum": "4c054c5417c0ca7a39a8bbe5a5744489795ddc47ce98121bc6862a123de5b482",
+      "checksum": "8a4ef08f745e1821b2e83a7056c278d87823c5b1d7e820ad68c09926bbaed3f5",
       "ref": "main"
+    },
+    {
+      "name": "anydoc",
+      "displayName": "AnyDoc",
+      "version": "0.2.3",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "layers": [
+        {
+          "capability": "document.parse",
+          "title": "Document Parsing",
+          "toolkit": false,
+          "selectable": true,
+          "verbs": []
+        }
+      ],
+      "tagline": "Fast local document extraction and API service",
+      "description": "Document extraction through Firecrawl's MIT-licensed AnyDoc Rust library. It converts Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and text-based PDF files into GitHub-Flavored Markdown through the swappable `document.parse` capability. The local backend is fast and has no model or native-tool download, but it does not OCR scanned pages or fetch URLs. The same out-of-process backend also exposes an API-key-authenticated `/v1/extract` service for direct deployments.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-anydoc",
+      "category": "Documents",
+      "keywords": [
+        "document",
+        "parse",
+        "pdf",
+        "docx",
+        "pptx",
+        "xlsx",
+        "markdown",
+        "extraction",
+        "api"
+      ],
+      "tags": [
+        "document",
+        "parse",
+        "pdf",
+        "docx",
+        "pptx",
+        "xlsx",
+        "markdown",
+        "extraction",
+        "api"
+      ],
+      "icon": "document-attachment",
+      "iconDither": {
+        "from": 303,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-anydoc",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "approvals",
       "displayName": "Approvals",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9544,7 +9686,7 @@
     {
       "name": "auto-continue",
       "displayName": "Auto Continue",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9599,7 +9741,7 @@
       "name": "autonomous-agent",
       "displayName": "Autonomous Agent",
       "id": "ryu/workflow/autonomous-agent",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -9643,14 +9785,14 @@
         "tools"
       ],
       "icon": "Bot",
-      "checksum": "40e33d1aac35a04882616f9b2d9154e9a53d13ca19b225b7f84347ee7f9daa5e",
+      "checksum": "4bc3d85c0c9a744621167679b7e33876262156aa1f0d9132b9ee2d9eee75e1fe",
       "ref": "main"
     },
     {
       "name": "autoresearch",
       "displayName": "Autoresearch",
       "id": "ryu/workflow/autoresearch",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -9700,13 +9842,13 @@
         "durable"
       ],
       "icon": "FlaskConical",
-      "checksum": "4faa2af3423c3f5658382334b1df37c93bf2d31e1e3409ed29b38b75f397e983",
+      "checksum": "77d3392f6fcc190236998574c103ba5ed5ec6ff5050964d1595cfa025503c76b",
       "ref": "main"
     },
     {
       "name": "backstage",
       "displayName": "Backstage",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "amajorai/backstage",
       "official": true,
@@ -9750,7 +9892,7 @@
     {
       "name": "bitwarden",
       "displayName": "Bitwarden Secrets Manager",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -9804,7 +9946,7 @@
     {
       "name": "blueprint",
       "displayName": "Blueprint",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9871,7 +10013,7 @@
     {
       "name": "bookmarks",
       "displayName": "Bookmarks",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -9920,7 +10062,7 @@
       "name": "brand-presence",
       "displayName": "Brand Presence",
       "id": "ryu/brand-presence",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -9967,13 +10109,13 @@
       ],
       "featuredRank": 120,
       "developer": "Ryu",
-      "checksum": "7cd937a2003a9d415b85d550372ea6136662515134c43be9d5a6ef96d073b4e7",
+      "checksum": "17c42343cea12d2917f4a5d9bb333c3db058b4d40594f9bb3880f7fce6d8da5a",
       "ref": "main"
     },
     {
       "name": "brave",
       "displayName": "Brave Search",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10033,7 +10175,7 @@
     {
       "name": "browser",
       "displayName": "Browser",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10116,7 +10258,7 @@
     {
       "name": "bytebot",
       "displayName": "Bytebot Desktop",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10184,7 +10326,7 @@
     {
       "name": "calendar",
       "displayName": "Calendar",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10234,7 +10376,7 @@
     {
       "name": "canvas",
       "displayName": "Canvas",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10286,7 +10428,7 @@
     {
       "name": "chat-broadcast",
       "displayName": "Chat Broadcast",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10333,7 +10475,7 @@
     {
       "name": "chat-title",
       "displayName": "Chat Title",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10385,7 +10527,7 @@
     {
       "name": "chatgpt-web",
       "displayName": "ChatGPT Web",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10423,7 +10565,7 @@
     {
       "name": "checks",
       "displayName": "Tests",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10472,7 +10614,7 @@
     {
       "name": "clangd-lsp",
       "displayName": "Clangd (C/C++)",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10527,7 +10669,7 @@
       "name": "classify-and-act",
       "displayName": "Classify & Act",
       "id": "ryu/workflow/classify-and-act",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -10570,13 +10712,13 @@
         "agents"
       ],
       "icon": "ListTree",
-      "checksum": "50121ad3c74db87919234757fbd529b85847a2b412dd5898c0e9d910bcdf5c5b",
+      "checksum": "ebeb851a47a81c291d57478193276286a619ff071f5f0e844da606dbde7fe599",
       "ref": "main"
     },
     {
       "name": "clips",
       "displayName": "Clips",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10628,7 +10770,7 @@
     {
       "name": "cloudflare-browser-run",
       "displayName": "Cloudflare Browser Run",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10706,7 +10848,7 @@
       "name": "codex-quota-reset-watch",
       "displayName": "Codex Quota Reset Watch",
       "id": "ryu/codex-quota-reset-watch",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -10753,13 +10895,13 @@
       ],
       "featuredRank": 128,
       "developer": "Ryu",
-      "checksum": "79a5ceea6c3ac96baea6734d6829354c6f011ef2449ef92d181ef0dcebbde4a0",
+      "checksum": "021334d3b4e8aaf45dcee4db28273cd531b7ebedb0a65d69a4001b5f818d0c10",
       "ref": "main"
     },
     {
       "name": "composio-connect",
       "displayName": "Composio Connect",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10810,7 +10952,7 @@
     {
       "name": "content",
       "displayName": "Content",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10861,7 +11003,7 @@
     {
       "name": "crm",
       "displayName": "Harbor",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -10914,7 +11056,7 @@
     {
       "name": "csharp-lsp",
       "displayName": "C# LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -10968,7 +11110,7 @@
     {
       "name": "dashboards",
       "displayName": "Dashboards",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11020,7 +11162,7 @@
       "name": "design-director",
       "displayName": "Design Director",
       "id": "ryu/design-director",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -11070,13 +11212,13 @@
       ],
       "featuredRank": 135,
       "developer": "Ryu",
-      "checksum": "2cd735b10d60173bb64e31b4f33dbfb164494c5504f1787f469751247c12ca92",
+      "checksum": "38a11960c69a83c6d5f8bcdf7a538673dbca81c288886e81511f833eb07b0b21",
       "ref": "main"
     },
     {
       "name": "desktop",
       "displayName": "Virtual Desktop",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11130,7 +11272,7 @@
     {
       "name": "dictation",
       "displayName": "Dictation",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11183,7 +11325,7 @@
     {
       "name": "docling",
       "displayName": "Docling",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11252,7 +11394,7 @@
     {
       "name": "docs",
       "displayName": "Ryu Docs",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11302,7 +11444,7 @@
     {
       "name": "double-check",
       "displayName": "Double Check",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11354,7 +11496,7 @@
     {
       "name": "drafts",
       "displayName": "Drafts",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11407,7 +11549,7 @@
     {
       "name": "dynamic-workflows",
       "displayName": "dynamic-workflows",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11439,7 +11581,7 @@
     {
       "name": "effort-escalator",
       "displayName": "Effort Escalator",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11493,7 +11635,7 @@
     {
       "name": "ego-browser",
       "displayName": "Ego Browser",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11561,7 +11703,7 @@
       "name": "evaluator-optimizer",
       "displayName": "Evaluator–Optimizer",
       "id": "ryu/workflow/evaluator-optimizer",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -11605,13 +11747,13 @@
         "quality"
       ],
       "icon": "Gauge",
-      "checksum": "6a3e9dbbfd35a9d6cddb8a9f7301942ddc1e941d83de5ac38390b59e8259edc6",
+      "checksum": "b66b6412b70267ed8db9d215e6aebc994e8b5315ae466900caa3eb9f6e22770a",
       "ref": "main"
     },
     {
       "name": "exa",
       "displayName": "Exa Search",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11670,7 +11812,7 @@
     {
       "name": "expanded-composer",
       "displayName": "Expanded Composer",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11717,7 +11859,7 @@
     {
       "name": "expect",
       "displayName": "Expect",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -11769,7 +11911,7 @@
       "name": "expense-tracker",
       "displayName": "Expense Tracker",
       "id": "ryu/expense-tracker",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -11816,13 +11958,13 @@
       ],
       "featuredRank": 118,
       "developer": "Ryu",
-      "checksum": "2d99d0604058ac9c03ff7b9fd7b1d33284af5eaa6bc791b3a1d8f463ffe0ddcb",
+      "checksum": "fafc55478026d4e5f2d64e3524e6c54e3a1272ddb32f9a523e6333ab4264bfd7",
       "ref": "main"
     },
     {
       "name": "expenses",
       "displayName": "Expenses",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -11876,7 +12018,7 @@
       "name": "expiry-date-tracker",
       "displayName": "Expiry Date Tracker",
       "id": "ryu/expiry-date-tracker",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -11923,14 +12065,14 @@
       ],
       "featuredRank": 130,
       "developer": "Ryu",
-      "checksum": "489aaf38193c758a440e61fbe0e73b10950417e6cbc4d9a00d47e2b731f44610",
+      "checksum": "c30b34b7644f00a8e4f0c677d17ab808779c2a013c62140cf2c4a1f938377ba2",
       "ref": "main"
     },
     {
       "name": "fan-out-synthesize",
       "displayName": "Fan-out / Synthesize",
       "id": "ryu/workflow/fan-out-synthesize",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -11973,13 +12115,13 @@
         "sub-agents"
       ],
       "icon": "GitFork",
-      "checksum": "74ab26bb7d49165b4004896e44370a439efbf01a771dec5003bb8f811eda47fe",
+      "checksum": "a42cf999207686e7b2c65a45d252b572188033a687781334f69012a927c35901",
       "ref": "main"
     },
     {
       "name": "feedback-board",
       "displayName": "Feedback Board",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12036,7 +12178,7 @@
     {
       "name": "finetune",
       "displayName": "Fine-tuning",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12089,7 +12231,7 @@
     {
       "name": "firecrawl",
       "displayName": "Firecrawl",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12171,7 +12313,7 @@
     {
       "name": "firewall",
       "displayName": "Gateway Firewall",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12226,7 +12368,7 @@
       "name": "generate-and-filter",
       "displayName": "Generate & Filter",
       "id": "ryu/workflow/generate-and-filter",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -12270,13 +12412,13 @@
         "best-of-n"
       ],
       "icon": "Filter",
-      "checksum": "ce704344bc11be5cd21c2e7c0bb580f6169401aa88c43215696ef8f8a93e131b",
+      "checksum": "c39e29398cf7b6a3a9e156386d384518116ab8c447203cedd59e9c5b67ec92ad",
       "ref": "main"
     },
     {
       "name": "ghost",
       "displayName": "Ghost",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12340,7 +12482,7 @@
     {
       "name": "ghost-chats",
       "displayName": "Temporary Chats",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12389,7 +12531,7 @@
     {
       "name": "goal",
       "displayName": "Goal",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12441,7 +12583,7 @@
     {
       "name": "gopls-lsp",
       "displayName": "Go LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12496,7 +12638,7 @@
       "name": "growth-psychology-strategist",
       "displayName": "Growth Psychology Strategist",
       "id": "ryu/growth-psychology-strategist",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -12545,13 +12687,13 @@
       ],
       "featuredRank": 138,
       "developer": "Ryu",
-      "checksum": "d0432d895fc6b23f5e72338b4c44d767a0bbf5233b2e3866f71b699d17b47338",
+      "checksum": "e154ec18ef8ca2a7f05c228d8ee1c2f64f113b42b0fde76c4f772c2dc75b0824",
       "ref": "main"
     },
     {
       "name": "headroom",
       "displayName": "Headroom Compression",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12599,7 +12741,7 @@
     {
       "name": "healing",
       "displayName": "Self-Healing",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12651,7 +12793,7 @@
     {
       "name": "help-center",
       "displayName": "Help Center",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12692,7 +12834,7 @@
     {
       "name": "honcho",
       "displayName": "Honcho",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12760,7 +12902,7 @@
     {
       "name": "hook-observers",
       "displayName": "Hook Observers",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12812,7 +12954,7 @@
     {
       "name": "hook-session-context",
       "displayName": "Session Context",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12864,7 +13006,7 @@
     {
       "name": "invoices",
       "displayName": "Invoices",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -12917,7 +13059,7 @@
     {
       "name": "jdtls-lsp",
       "displayName": "Java LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -12971,7 +13113,7 @@
     {
       "name": "kotlin-lsp",
       "displayName": "Kotlin LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13025,7 +13167,7 @@
     {
       "name": "learning",
       "displayName": "Learning",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13075,7 +13217,7 @@
     {
       "name": "lua-lsp",
       "displayName": "Lua LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13127,7 +13269,7 @@
     {
       "name": "mail",
       "displayName": "Mail",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13179,7 +13321,7 @@
       "name": "marketing-studio",
       "displayName": "Marketing Studio",
       "id": "ryu/marketing-studio",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -13226,13 +13368,13 @@
       ],
       "featuredRank": 115,
       "developer": "Ryu",
-      "checksum": "e8379d5d5bb11c2cc669200b488afc6cc9fb289cfe7c39d8c3922b302760b45b",
+      "checksum": "18abff91adf88b3c3539f8f17107866f724c21a62e157687cff8144f2af9652b",
       "ref": "main"
     },
     {
       "name": "markitdown",
       "displayName": "MarkItDown",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13299,7 +13441,7 @@
     {
       "name": "meetings",
       "displayName": "Meetings",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13350,7 +13492,7 @@
     {
       "name": "mem0",
       "displayName": "Mem0",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13416,7 +13558,7 @@
     {
       "name": "mineru",
       "displayName": "MinerU",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13485,7 +13627,7 @@
     {
       "name": "mission-control",
       "displayName": "Mission Control",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13538,7 +13680,7 @@
     {
       "name": "monitors",
       "displayName": "Monitors",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13589,7 +13731,7 @@
     {
       "name": "mpp",
       "displayName": "Payments",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13642,7 +13784,7 @@
     {
       "name": "news",
       "displayName": "Wire",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -13709,7 +13851,7 @@
     {
       "name": "no-ai-slop",
       "displayName": "No AI Slop",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13763,7 +13905,7 @@
     {
       "name": "no-more-mistakes",
       "displayName": "No More Mistakes",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13817,7 +13959,7 @@
     {
       "name": "observer-agents",
       "displayName": "Observer Agents",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13872,7 +14014,7 @@
       "name": "orchestrator-workers",
       "displayName": "Orchestrator–Workers",
       "id": "ryu/workflow/orchestrator-workers",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -13915,13 +14057,13 @@
         "sub-agents"
       ],
       "icon": "Workflow",
-      "checksum": "c7ab75d4b31301361834553795c4ed10e2baceaf4cc66f29fa42056091308b7f",
+      "checksum": "6f177c4c252f536c90df5dcadc66e068329995d3b28974a2680a60538e03cbe5",
       "ref": "main"
     },
     {
       "name": "output-styles",
       "displayName": "Output Styles",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -13975,7 +14117,7 @@
     {
       "name": "outreach",
       "displayName": "Outreach",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14028,7 +14170,7 @@
     {
       "name": "parallel",
       "displayName": "Parallel Search",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14101,7 +14243,7 @@
       "name": "parallelization",
       "displayName": "Parallelization",
       "id": "ryu/workflow/parallelization",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -14144,13 +14286,13 @@
         "sub-agents"
       ],
       "icon": "Network",
-      "checksum": "41110615bb2aa6de9a4031853f63003a9f7b004d8356046408eede6225bead56",
+      "checksum": "1c8d18bfd50dc6f13c8710dcdbba81cc1c94b8051aca022e212117847a39619b",
       "ref": "main"
     },
     {
       "name": "people",
       "displayName": "People",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14203,7 +14345,7 @@
     {
       "name": "php-lsp",
       "displayName": "PHP LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14255,7 +14397,7 @@
     {
       "name": "pi-monitor",
       "displayName": "Monitor",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14311,7 +14453,7 @@
     {
       "name": "pi-shell",
       "displayName": "Background Bash",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14363,7 +14505,7 @@
     {
       "name": "pi-subagent",
       "displayName": "Subagents",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14415,7 +14557,7 @@
     {
       "name": "plan-continue",
       "displayName": "Plan Continue",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14467,7 +14609,7 @@
     {
       "name": "predict",
       "displayName": "Autocomplete",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14519,7 +14661,7 @@
     {
       "name": "projects",
       "displayName": "Projects",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14573,7 +14715,7 @@
       "name": "prompt-chaining",
       "displayName": "Prompt Chaining",
       "id": "ryu/workflow/prompt-chaining",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -14616,13 +14758,13 @@
         "decomposition"
       ],
       "icon": "Link",
-      "checksum": "af36354ad3b62e414afb75a842949cd9533c69890dc697756135fdbfd30ea9f6",
+      "checksum": "9543bfe38ba57baf8b25ab512388b6c113eea1ea192a0b166e36c5133008385e",
       "ref": "main"
     },
     {
       "name": "prompt-suggestions",
       "displayName": "Prompt Suggestions",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14676,7 +14818,7 @@
     {
       "name": "proof",
       "displayName": "Proof of Work",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14728,7 +14870,7 @@
     {
       "name": "pull-requests",
       "displayName": "Pull Requests",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14782,7 +14924,7 @@
     {
       "name": "pxpipe",
       "displayName": "pxpipe",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14836,7 +14978,7 @@
     {
       "name": "pyright-lsp",
       "displayName": "Python LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14890,7 +15032,7 @@
     {
       "name": "quests",
       "displayName": "Quests",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -14941,7 +15083,7 @@
     {
       "name": "reactions",
       "displayName": "Message Reactions",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -14992,7 +15134,7 @@
     {
       "name": "reasoning",
       "displayName": "Automated Reasoning",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15059,7 +15201,7 @@
     {
       "name": "recap",
       "displayName": "Recap",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15113,7 +15255,7 @@
     {
       "name": "receipts",
       "displayName": "Receipts",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15171,7 +15313,7 @@
     {
       "name": "recipes",
       "displayName": "Recipes",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15223,7 +15365,7 @@
     {
       "name": "reconnect-retry",
       "displayName": "Reconnect Retry",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15272,7 +15414,7 @@
     {
       "name": "reelfarm",
       "displayName": "Sprout Studio",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15325,7 +15467,7 @@
     {
       "name": "research",
       "displayName": "Research",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15377,7 +15519,7 @@
     {
       "name": "rlm",
       "displayName": "Recursive Language Model",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15445,7 +15587,7 @@
       "name": "routing",
       "displayName": "Routing",
       "id": "ryu/workflow/routing",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -15488,13 +15630,13 @@
         "branch"
       ],
       "icon": "Split",
-      "checksum": "ea3d983a555fa18a3c16f4be82bbd38ba44088c4c782227dba0ac612fb7340ca",
+      "checksum": "94fe6c9d63538415952a96251bab3f279914d44b0f143672d4976afe07e3c6cc",
       "ref": "main"
     },
     {
       "name": "rtk",
       "displayName": "RTK (Rust Token Killer)",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15546,7 +15688,7 @@
     {
       "name": "ruby-lsp",
       "displayName": "Ruby LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15600,7 +15742,7 @@
     {
       "name": "rules",
       "displayName": "Rules",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15654,7 +15796,7 @@
     {
       "name": "rust-analyzer-lsp",
       "displayName": "Rust LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15706,7 +15848,7 @@
     {
       "name": "safe-actions",
       "displayName": "Safe Actions",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -15762,7 +15904,7 @@
     {
       "name": "sample",
       "displayName": "Research Assistant",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15815,7 +15957,7 @@
     {
       "name": "sample-widget",
       "displayName": "Sample Widget",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15870,7 +16012,7 @@
     {
       "name": "scrapling",
       "displayName": "Scrapling",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -15933,7 +16075,7 @@
       "name": "security-guard",
       "displayName": "Security Guard",
       "id": "ryu/security-guard",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "agent",
       "kind": "agent",
       "package": true,
@@ -15980,13 +16122,13 @@
       ],
       "featuredRank": 125,
       "developer": "Ryu",
-      "checksum": "523d67c389e9e83f547bf1ef84fb4ae05d4727a9bb4979f1002ba9bf0831c8a7",
+      "checksum": "d7be3eb0c3d1fe5afdd8e7e6c403bbcf82fd49072b8517f17c1bffabdae2c525",
       "ref": "main"
     },
     {
       "name": "security-guidance",
       "displayName": "Security Guidance",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16038,7 +16180,7 @@
     {
       "name": "security-scanner",
       "displayName": "Security Scanner",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16096,7 +16238,7 @@
     {
       "name": "serper",
       "displayName": "Serper",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16168,7 +16310,7 @@
     {
       "name": "shadow",
       "displayName": "Shadow",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16215,7 +16357,7 @@
     {
       "name": "side-chats",
       "displayName": "Side Chats",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16269,7 +16411,7 @@
     {
       "name": "simulator",
       "displayName": "Simulators",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16329,7 +16471,7 @@
     {
       "name": "sites",
       "displayName": "Sites",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16373,7 +16515,7 @@
     {
       "name": "skill-editor",
       "displayName": "Skill Editor",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16423,7 +16565,7 @@
     {
       "name": "slides",
       "displayName": "Slides",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16467,7 +16609,7 @@
     {
       "name": "social",
       "displayName": "Outpost",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16520,7 +16662,7 @@
     {
       "name": "spider",
       "displayName": "Spider",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16588,7 +16730,7 @@
     {
       "name": "spidercloud",
       "displayName": "Spider Cloud",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16650,7 +16792,7 @@
     {
       "name": "stats",
       "displayName": "Session Stats",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16705,7 +16847,7 @@
     {
       "name": "subtitles",
       "displayName": "Subtitles",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16761,7 +16903,7 @@
     {
       "name": "swift-lsp",
       "displayName": "Swift LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16815,7 +16957,7 @@
     {
       "name": "tavily",
       "displayName": "Tavily Search",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -16886,7 +17028,7 @@
     {
       "name": "teams",
       "displayName": "Groups",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16938,7 +17080,7 @@
     {
       "name": "timeline",
       "displayName": "Timeline",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -16988,7 +17130,7 @@
     {
       "name": "token-table",
       "displayName": "Token Table",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17032,7 +17174,7 @@
     {
       "name": "tokenmaxxing",
       "displayName": "Tokenmaxxing",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -17069,7 +17211,7 @@
     {
       "name": "tool-firewall",
       "displayName": "Tool Firewall",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -17121,7 +17263,7 @@
     {
       "name": "toolsmith-example",
       "displayName": "toolsmith-example",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -17152,7 +17294,7 @@
       "name": "tournament",
       "displayName": "Tournament",
       "id": "ryu/workflow/tournament",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "workflow",
       "kind": "workflow",
       "package": true,
@@ -17195,13 +17337,13 @@
         "best-of-n"
       ],
       "icon": "Trophy",
-      "checksum": "45c7352328525742fee633cc21e37d060225b6c6f11d205cd4c0c80bd0297c14",
+      "checksum": "fe45926c8109f5489346d254ec70a9f72a2e115cc77d103861cdc6e8f1a4f2c4",
       "ref": "main"
     },
     {
       "name": "tuition",
       "displayName": "Tuition",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17268,7 +17410,7 @@
     {
       "name": "typescript-lsp",
       "displayName": "TypeScript & JavaScript LSP",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -17324,7 +17466,7 @@
     {
       "name": "ugc",
       "displayName": "UGC",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17377,7 +17519,7 @@
     {
       "name": "unstructured",
       "displayName": "Unstructured",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17441,7 +17583,7 @@
     {
       "name": "usage-pacer",
       "displayName": "Usage Pacer",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "plugin",
       "source": "builtin",
       "official": true,
@@ -17497,7 +17639,7 @@
     {
       "name": "voice",
       "displayName": "Voice",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17551,7 +17693,7 @@
     {
       "name": "warmup",
       "displayName": "Warmup",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17602,7 +17744,7 @@
     {
       "name": "webhooks",
       "displayName": "Webhooks",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17653,7 +17795,7 @@
     {
       "name": "whatsapp",
       "displayName": "WhatsApp",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17705,7 +17847,7 @@
     {
       "name": "whiteboard",
       "displayName": "Whiteboard",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,
@@ -17756,7 +17898,7 @@
     {
       "name": "workflows",
       "displayName": "Workflows",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "type": "app",
       "source": "builtin",
       "official": true,

@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/clangd-lsp",
   "name": "Clangd (C/C++)",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "stability": "experimental",
   "category": "Developer Tools",
   "description": "C/C++ language server (clangd) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install clangd; the plugin ships config.",

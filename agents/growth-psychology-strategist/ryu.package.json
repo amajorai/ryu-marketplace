@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/growth-psychology-strategist",
   "name": "Growth Psychology Strategist",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "kind": "agent",
   "artifacts": [
     "agent.json"

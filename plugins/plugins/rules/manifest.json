@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/rules",
   "name": "Rules",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "stability": "experimental",
   "description": "Discover Cursor- and Claude-style project rules and apply them to agent context, with per-agent controls for automatic injection, matching mode, and plan-turn budgets.",
   "tagline": "Project rules that follow every agent",

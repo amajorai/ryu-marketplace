@@ -1,7 +1,7 @@
 {
   "id": "@ryu/tokenmaxxing",
   "name": "Tokenmaxxing",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "stability": "experimental",
   "description": "Opt-in notification when all delegated agents finish.",
   "tagline": "Know when the worker is done",

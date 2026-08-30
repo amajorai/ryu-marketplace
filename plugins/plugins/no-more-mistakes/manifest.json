@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/no-more-mistakes",
   "name": "No More Mistakes",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "stability": "experimental",
   "description": "Notices when you correct the agent, proposes a one-line lesson for your confirmation, and hands only explicitly saved rules to later sessions before the first word is generated. Each confirmed rule is an ordinary Space document you can read, edit or delete, and `/mistakes` lists, adds and forgets them from the chat.",
   "tagline": "Correct it once, not every week",
