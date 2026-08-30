@@ -1,4 +1,10 @@
 # Composio Connect
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="composio-connect" width="96" />
+  </picture>
+</p>
 
 Composio Connect is Ryu's first-party bridge to Composio's hosted **For You**
 MCP server. It gives an agent access to Composio's connected apps through one
