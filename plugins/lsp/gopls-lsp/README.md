@@ -1,10 +1,4 @@
 # Go LSP
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="gopls-lsp" width="96" />
-  </picture>
-</p>
 
 Go language server (gopls) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install gopls; the plugin ships config.
 
