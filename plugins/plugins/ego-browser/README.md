@@ -1,4 +1,10 @@
 # Ego Browser
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="ego-browser" width="96" />
+  </picture>
+</p>
 
 Ego Browser is an optional browser.control provider for Ryu, backed by [Ego
 lite](https://github.com/citrolabs/ego-lite). It lets agents keep using Ryu's

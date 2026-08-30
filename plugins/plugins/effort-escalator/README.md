@@ -1,4 +1,10 @@
 # Effort Escalator
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="effort-escalator" width="96" />
+  </picture>
+</p>
 
 Effort Escalator is an opt-in, per-conversation recovery policy. After the
 configured delay (30 minutes by default), a cheap read-only side model judges

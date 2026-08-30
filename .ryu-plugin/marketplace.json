@@ -5665,6 +5665,58 @@
       }
     },
     {
+      "name": "rooms",
+      "displayName": "Rooms",
+      "version": "0.2.3",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Share one model session across your devices",
+      "description": "Shared model rooms hosted by your active Ryu node. Start a Mesh LLM session on the node, invite phones or browsers by QR, and keep the transcript synchronized without exposing node credentials.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-rooms",
+      "category": "Communication",
+      "keywords": [
+        "rooms",
+        "chat",
+        "mesh-llm",
+        "multi-device",
+        "qr"
+      ],
+      "tags": [
+        "rooms",
+        "chat",
+        "mesh-llm",
+        "multi-device"
+      ],
+      "icon": "message-multiple-01",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-rooms",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "rtk",
       "displayName": "RTK (Rust Token Killer)",
       "version": "0.2.3",
@@ -15568,6 +15620,58 @@
         "direction": "down"
       },
       "homepage": "https://github.com/amajorai/ryu-rlm",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "rooms",
+      "displayName": "Rooms",
+      "version": "0.2.3",
+      "type": "app",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Share one model session across your devices",
+      "description": "Shared model rooms hosted by your active Ryu node. Start a Mesh LLM session on the node, invite phones or browsers by QR, and keep the transcript synchronized without exposing node credentials.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-rooms",
+      "category": "Communication",
+      "keywords": [
+        "rooms",
+        "chat",
+        "mesh-llm",
+        "multi-device",
+        "qr"
+      ],
+      "tags": [
+        "rooms",
+        "chat",
+        "mesh-llm",
+        "multi-device"
+      ],
+      "icon": "message-multiple-01",
+      "iconDither": {
+        "from": 198,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-rooms",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
       "surfaces": [

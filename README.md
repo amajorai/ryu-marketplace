@@ -27,7 +27,7 @@ edit the generator instead).
 - **Stability** — the manifest's `stability` maturity label (`stable`, `beta`, `alpha`, `rc`, or another declared value), not an update channel. An omitted value is shown as `stable`.
 - **Hidden** — kept out of the catalog listing; it does not install, enable, or uninstall anything by itself.
 
-## Apps (65)
+## Apps (66)
 
 Manifest-driven feature apps, grouped by their manifest `category`.
 
@@ -58,6 +58,7 @@ explicit repository use the `amajorai/ryu-<app>` satellite fallback.
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/help-center-dark.png" /><img src="./app-icons/help-center-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-help-center">Help Center</a></div> | ✓ | ✓ | – | ✓ | experimental | – | 0.2.3 | A Ryu support workspace for resolving tickets, improving knowledge, and reviewing AI assistance. |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/mail-dark.png" /><img src="./app-icons/mail-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-mail">Mail</a></div> | ✓ | ✓ | – | – | experimental | – | 0.2.3 | Agent Inboxes — email as a service for agents. Runs the out-of-process ryu-mail sidecar; Core… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/meetings-dark.png" /><img src="./app-icons/meetings-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-meetings">Meetings</a></div> | ✓ | ✓ | – | – | experimental | – | 0.2.3 | Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/rooms-dark.png" /><img src="./app-icons/rooms-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-rooms">Rooms</a></div> | ✓ | – | – | – | experimental | – | 0.2.3 | Shared model rooms hosted by your active Ryu node. Start a Mesh LLM session on the node, invite… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/teams-dark.png" /><img src="./app-icons/teams-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-teams">Groups</a></div> | ✓ | ✓ | – | – | experimental | – | 0.2.3 | Groups: named collections of agents you can address as one. Governance shell over the… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/whatsapp-dark.png" /><img src="./app-icons/whatsapp-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-whatsapp">WhatsApp</a></div> | ✓ | ✓ | – | ✓ | experimental | – | 0.2.3 | Connect WhatsApp Personal or WhatsApp Business (Cloud API) to a Ryu agent or team from a native… |
 
