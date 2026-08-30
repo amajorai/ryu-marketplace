@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/workflow/adversarial-verification",
   "name": "Adversarial Verification",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "kind": "workflow",
   "artifacts": [
     "workflow.json"

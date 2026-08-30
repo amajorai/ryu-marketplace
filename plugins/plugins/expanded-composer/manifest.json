@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/expanded-composer",
   "name": "Expanded Composer",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "stability": "experimental",
   "category": "Productivity",
   "description": "Expand the current chat composer in place while keeping the same draft, attachments, and send controls.",

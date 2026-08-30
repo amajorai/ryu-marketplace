@@ -10,7 +10,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/ego-browser",
   "name": "Ego Browser",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "stability": "experimental",
   "description": "Ego lite (https://github.com/citrolabs/ego-lite) as an optional provider for Ryu's swappable browser.control layer. One sealed dispatcher launches the installed ego-browser CLI in a conversation-scoped Ego Space, while small adapters keep agents on the stable browser.navigate, browser.tabs, browser.snapshot, browser.click, browser.type, browser.scroll, and browser.screenshot verbs. Requires the Ego lite macOS app and ego-browser on PATH; Ryu does not install Ego lite or copy browser login state.",
   "icon": "ai-browser",

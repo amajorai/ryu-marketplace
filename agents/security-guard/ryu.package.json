@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/security-guard",
   "name": "Security Guard",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "kind": "agent",
   "artifacts": [
     "agent.json"

@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/ambient-elevator",
   "name": "Ambient Elevator",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "stability": "experimental",
   "description": "Plays one low-volume elevator track while any Ryu agent is actively working, then stops when the last working run ends or needs input.",
   "tagline": "One shared elevator track for active agent runs",
