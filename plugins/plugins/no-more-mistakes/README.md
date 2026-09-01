@@ -1,10 +1,4 @@
 # No More Mistakes
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="no-more-mistakes" width="96" />
-  </picture>
-</p>
 
 Notices when you correct the agent and proposes a one-line lesson for your confirmation.
 Nothing from the model is saved automatically: use `/mistakes add <rule>` to confirm a
