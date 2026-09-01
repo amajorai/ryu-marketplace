@@ -1,4 +1,10 @@
 # AGENTS.md Tail
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="agents-md-tail" width="96" />
+  </picture>
+</p>
 
 AGENTS.md Tail is an experimental, opt-in context hook. On every model turn it
 removes stale copies of its own hidden tail block and appends the current

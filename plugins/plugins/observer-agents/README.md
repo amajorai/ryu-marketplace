@@ -1,4 +1,10 @@
 # Observer Agents
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="observer-agents" width="96" />
+  </picture>
+</p>
 
 An opt-in, quiet watchdog for long-running work. When **Observer** is enabled,
 the plugin sends the latest bounded transcript activity to an independent side

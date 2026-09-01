@@ -1,4 +1,10 @@
 # ChatGPT Web for Ryu
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="chatgpt-web" width="96" />
+  </picture>
+</p>
 
 This plugin exposes a ChatGPT Web subscription as an OpenAI-compatible Ryu model provider. It uses the Ryu Browser app as the browser boundary:
 
