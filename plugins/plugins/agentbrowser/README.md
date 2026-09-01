@@ -1,4 +1,10 @@
 # Agent Browser
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="agentbrowser" width="96" />
+  </picture>
+</p>
 
 Browser automation via the `agent-browser` CLI's MCP server (https://agent-browser.dev). Provides the swappable `browser.control` layer, recording tools, and the documented localhost live stream. Launched from the audited `agent-browser@0.34.0` package; needs Node on PATH.
 
