@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/toolsmith-example",
   "name": "toolsmith-example",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "stability": "experimental",
   "description": "Worked example for tools/toolsmith — a real, verified inline_deno tool. Not registered with Core and not shipped; it exists so the scaffold → verify pipeline has an end-to-end regression test.",
   "category": "Developer Tools",

@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/lua-lsp",
   "name": "Lua LSP",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "stability": "experimental",
   "category": "Developer Tools",
   "description": "Lua language server (lua-language-server) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install lua-language-server; the plugin ships config.",

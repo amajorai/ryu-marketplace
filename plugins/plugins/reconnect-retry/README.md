@@ -1,10 +1,4 @@
 # Reconnect Retry
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="reconnect-retry" width="96" />
-  </picture>
-</p>
 
 Reconnect Retry is an opt-in host-rendered chat feature for Ryu. When the selected
 node or the browser's network connection goes away, it remembers conversations that

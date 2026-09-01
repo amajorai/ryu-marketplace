@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/ghost-chats",
   "name": "Temporary Chats",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "stability": "experimental",
   "category": "Productivity",
   "description": "Start a private temporary chat that stays in the current tab and leaves no conversation history, drafts, presence, or reactions behind.",

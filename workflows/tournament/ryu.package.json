@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/workflow/tournament",
   "name": "Tournament",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "kind": "workflow",
   "artifacts": [
     "workflow.json"

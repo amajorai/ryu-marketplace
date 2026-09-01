@@ -1,4 +1,10 @@
-# Publish a package to the Ryu marketplace
+# Contributing to Ryu Marketplace
+
+The Marketplace repository accepts pull requests. Open one there for corrections to the catalog,
+schemas, documentation, or package sources. The repository is generated from Ryu's monorepo, so
+maintainers port accepted changes into the source tree before a later sync.
+
+The package publishing workflow is below.
 
 GitHub is the package and release source of truth. You keep the repository,
 tags, issues, and release assets in your own GitHub account. Ryu stores the

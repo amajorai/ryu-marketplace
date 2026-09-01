@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/agents-md-tail",
   "name": "AGENTS.md Tail",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "stability": "experimental",
   "description": "Experimental context hook that keeps the active AGENTS.md instructions at the head and repeats the latest copy at the tail of each model turn without adding either injection to chat history.",
   "tagline": "Keep project instructions fresh at the end of every turn",

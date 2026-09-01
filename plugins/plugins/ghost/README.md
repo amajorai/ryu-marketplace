@@ -1,10 +1,4 @@
 # Ghost
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="ghost" width="96" />
-  </picture>
-</p>
 
 Desktop automation: 29 screen perception and input control tools. Cross-platform (Windows, macOS, Linux).
 
