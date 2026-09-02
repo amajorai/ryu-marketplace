@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/spider",
   "name": "Spider",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "stability": "experimental",
   "description": "High-performance web crawling and content extraction via the Spider CLI (https://spider.cloud), exposed as a declarative `command` tool that shells out to the locally-installed `spider` binary. No API key.",
   "iconUrl": "https://avatars.githubusercontent.com/u/112983871?v=4",

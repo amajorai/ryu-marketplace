@@ -1,7 +1,7 @@
 {
   "id": "@ryu/chatgpt-web",
   "name": "ChatGPT Web",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "stability": "experimental",
   "description": "Use a ChatGPT Web subscription through Ryu's signed-in Browser app as an OpenAI-compatible model provider.",
   "tagline": "ChatGPT Web, routed through Ryu",
@@ -47,13 +47,13 @@
     "apps": [
       {
         "id": "@ryu/browser",
-        "min_version": "0.2.5"
+        "min_version": "0.2.6"
       }
     ],
     "capabilities": [
       {
         "capability": "browser.session",
-        "min_version": "0.2.5"
+        "min_version": "0.2.6"
       }
     ],
     "grants": ["browser:control"]

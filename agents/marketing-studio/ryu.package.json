@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/marketing-studio",
   "name": "Marketing Studio",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "kind": "agent",
   "artifacts": [
     "agent.json"

@@ -5,7 +5,7 @@
   "homepage": "https://composio.dev/for-you",
   "id": "@ryu/composio-connect",
   "name": "Composio Connect",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "system": true,
   "builtin": true,
   "external": true,
