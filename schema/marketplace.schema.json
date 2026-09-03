@@ -194,6 +194,7 @@
         "type": { "type": "string" },
         "kind": { "type": "string" },
         "packageKind": { "type": "string" },
+        "languagePack": { "type": "object" },
         "artifactKinds": { "type": "array", "items": { "type": "string" } },
         "artifacts": { "type": "array", "items": { "type": "string" } },
         "targets": { "type": "array", "items": { "type": "string" } },
