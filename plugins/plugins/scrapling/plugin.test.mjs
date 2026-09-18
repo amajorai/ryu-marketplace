@@ -31,6 +31,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 const readme = readFileSync(join(here, "README.md"), "utf8");
+const coreSrc = resolve(here, "../../../apps/core/src");
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
@@ -335,6 +336,16 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 		),
 		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
+});
+
+test("production Core embeds the sandbox adapter body", () => {
+	const coreCode = readFileSync(
+		join(coreSrc, "plugin_manifest", "builtin_code.rs"),
+		"utf8"
+	);
+	const productionTable = coreCode.slice(coreCode.indexOf("#[cfg(not(test))]"));
+	assert.match(productionTable, /"@ryu\/scrapling"/);
+	assert.match(productionTable, /adapters\/web\.extract\.js/);
 });
 
 test("the plugin is Core-tier but NOT pre-installed", () => {

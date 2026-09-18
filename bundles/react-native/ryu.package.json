@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/react-native",
+  "name": "React Native",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:react-native"
+  ],
+  "includes": [
+    "skill:callstackincubator/react-native-best-practices",
+    "skill:emilkowalski/animate-expo",
+    "skill:ibelick/fixing-accessibility",
+    "skill:jakubkrehel/better-interface"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/react-native",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "React Native interfaces that feel native and stay fast.",
+    "category": "UI Skills",
+    "description": "The React Native topic collection from UI Skills for performance, Expo motion, accessibility, and interface quality.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/react-native"
+  }
+}

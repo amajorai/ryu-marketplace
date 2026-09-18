@@ -66,7 +66,8 @@ async function readInt(key) {
 async function nextSeq() {
 	for (let attempt = 0; attempt < MAX_CAS_RETRIES; attempt += 1) {
 		const raw = await host.storage.get("seq");
-		const next = readInt(raw) + 1;
+		const current = Number.parseInt(String(raw ?? "0"), 10);
+		const next = (Number.isFinite(current) && current > 0 ? current : 0) + 1;
 		if (await host.storage.compareAndSet("seq", raw, String(next))) {
 			return next;
 		}

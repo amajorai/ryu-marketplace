@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/video",
+  "name": "Video",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:video"
+  ],
+  "includes": [
+    "skill:antfu/slidev",
+    "skill:arifszn/slide-wright",
+    "skill:figma/figma-implement-motion",
+    "skill:remotion-dev/remotion-best-practices",
+    "skill:iart-ai/lottie-animation"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/video",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "From storyboard to a polished, programmable frame.",
+    "category": "UI Skills",
+    "description": "The Video topic collection from UI Skills for Slidev, presentations, motion handoff, Lottie, and Remotion production practices.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/video"
+  }
+}

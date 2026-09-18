@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/frontend",
+  "name": "Frontend",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:frontend"
+  ],
+  "includes": [
+    "skill:accesslint/accessibility-diff",
+    "skill:accesslint/accessibility-scan",
+    "skill:accesslint/audit-and-fix",
+    "skill:addyosmani/frontend-ui-engineering",
+    "skill:anthropics/frontend-design",
+    "skill:ibelick/fixing-accessibility",
+    "skill:jakubkrehel/better-interface",
+    "skill:vercel-labs/react-best-practices"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/frontend",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "A practical frontend foundation for building the real thing.",
+    "category": "UI Skills",
+    "description": "The Frontend topic collection from UI Skills for component architecture, responsive implementation, accessibility, and production-quality React work.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/frontend"
+  }
+}

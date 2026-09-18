@@ -1,0 +1,48 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/performance",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "addyosmani/core-web-vitals",
+      "name": "Core Web Vitals",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/performance",
+      "name": "Performance",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "callstackincubator/react-native-best-practices",
+      "name": "React Native Best Practices",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-lighting",
+      "name": "Threejs Lighting",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-loaders",
+      "name": "Threejs Loaders",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "ibelick/fixing-motion-performance",
+      "name": "Fixing Motion Performance",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "vercel-labs/react-best-practices",
+      "name": "React Best Practices",
+      "required": true
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.ripgrep",
+  "version": "0.1.14",
+  "description": "Fast local regular-expression search through ripgrep's `rg` binary, exposed as Ryu command tools. Respects .gitignore, skips hidden and binary files by default, and returns line-aware JSON Lines output. BYO install; no API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/BurntSushi/ripgrep",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ripgrep",
+  "license": "Unlicense OR MIT",
+  "keywords": [
+    "search",
+    "code",
+    "regex",
+    "grep",
+    "pattern"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/ripgrep",
+      "displayName": "ripgrep"
+    }
+  }
+}

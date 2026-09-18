@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/architecture",
+  "name": "Architecture",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:architecture"
+  ],
+  "includes": [
+    "skill:antfu/turborepo",
+    "skill:cursor/thermo-nuclear-code-quality-review",
+    "skill:emilkowalski/pick-ui-library",
+    "skill:emilkowalski/write-swift",
+    "skill:jakubkrehel/better-interface",
+    "skill:jakubkrehel/better-layout",
+    "skill:mattpocock/codebase-design"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/architecture",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Choose boundaries and abstractions that hold up.",
+    "category": "UI Skills",
+    "description": "The Architecture topic collection from UI Skills for deep modules, component boundaries, stack choices, and maintainable frontend systems.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/architecture"
+  }
+}

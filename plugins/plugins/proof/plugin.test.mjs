@@ -317,6 +317,14 @@ test("active goal + VERIFIED:yes → confirmed note, goal cleared", async () => 
 		call.task.includes("I believe it is done now."),
 		"task carries the transcript claims"
 	);
+	assert.ok(
+		call.task.includes("formal/verification.json"),
+		"task discovers the optional Lean verification lane"
+	);
+	assert.ok(
+		call.task.includes("formal-model evidence"),
+		"task keeps formal-model proof separate from runtime evidence"
+	);
 });
 
 test("active goal + VERIFIED:no → continue with report, turns incremented, goal kept", async () => {

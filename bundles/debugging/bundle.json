@@ -1,0 +1,30 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/debugging",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "mattpocock/diagnosing-bugs",
+      "name": "Diagnosing Bugs",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "mattpocock/engineering",
+      "name": "Engineering",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/thermo-nuclear-code-quality-review",
+      "name": "Thermo Nuclear Code Quality Review",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "ibelick/improve-ui",
+      "name": "Improve UI",
+      "required": false
+    }
+  ]
+}

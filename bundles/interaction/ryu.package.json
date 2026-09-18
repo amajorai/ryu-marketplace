@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/interaction",
+  "name": "Interaction",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:interaction"
+  ],
+  "includes": [
+    "skill:0xdesign/design-lab",
+    "skill:accesslint/link-purpose",
+    "skill:anthropics/canvas-design",
+    "skill:cloudai-x/threejs-fundamentals",
+    "skill:cloudai-x/threejs-interaction",
+    "skill:emilkowalski/apple-design",
+    "skill:iart-ai/micro-interaction",
+    "skill:jakubantalik/transitions-dev",
+    "skill:jakubkrehel/better-interface"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/interaction",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Interfaces that respond with clarity and confidence.",
+    "category": "UI Skills",
+    "description": "The Interaction topic collection from UI Skills for controls, gesture feel, input behavior, transitions, and responsive feedback.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/interaction"
+  }
+}

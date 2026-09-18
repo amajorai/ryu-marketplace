@@ -1,0 +1,42 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/code-quality",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "aminblg/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/thermo-nuclear-code-quality-review",
+      "name": "Thermo Nuclear Code Quality Review",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/write-swift",
+      "name": "Write Swift",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/critique",
+      "name": "Critique",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/polish",
+      "name": "Polish",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "stephenturner/deslop",
+      "name": "Deslop",
+      "required": false
+    }
+  ]
+}

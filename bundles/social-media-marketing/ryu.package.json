@@ -1,0 +1,56 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/social-media-marketing",
+  "name": "Social Media Marketing",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:social-media-marketing"
+  ],
+  "includes": [
+    "app:@ryu/social",
+    "app:@ryu/content",
+    "app:@ryu/backstage",
+    "app:@ryu/studio",
+    "plugin:@ryu/serper",
+    "plugin:@ryu/exa",
+    "plugin:@ryu/firecrawl",
+    "agent:ryu/marketing-studio",
+    "agent:ryu/brand-presence",
+    "agent:ryu/growth-psychology-strategist",
+    "skill:aashaexo/humanize",
+    "skill:aminblg/simple-english",
+    "skill:emilkowalski/animate",
+    "skill:remotion-dev/remotion-best-practices"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/social-media-marketing",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Turn ideas into a consistent, measured content engine.",
+    "category": "Marketing",
+    "description": "Plan, research, write, animate, publish, and repurpose social content with Ryu's media and growth surfaces.",
+    "author": "Ryu",
+    "featuredRank": 20
+  }
+}

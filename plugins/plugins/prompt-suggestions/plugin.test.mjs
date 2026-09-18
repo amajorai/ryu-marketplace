@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -24,4 +24,5 @@ test("declares the host-owned prompt suggestions surface", () => {
 test("does not run a duplicate side-model hook", () => {
 	assert.deepEqual(manifest.runnables, []);
 	assert.equal(manifest.contributes.turn_hooks, undefined);
+	assert.equal(existsSync(join(here, "hooks", "turn.js")), false);
 });

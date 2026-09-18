@@ -3,7 +3,7 @@
 // Runner: `node --test` (zero dependencies — node:test + node:assert only).
 //   node --test plugins-store/plugins/output-styles/plugin.test.mjs
 //
-// This plugin carries no runnables and no sandboxed JS: it is eleven Markdown files
+// This plugin carries no runnables and no sandboxed JS: it is twelve Markdown files
 // plus a declarative Store tab. So every way it can break is a REFERENCE going
 // stale — a manifest row naming a file that is not there, a file nothing declares,
 // frontmatter Core cannot parse, or a body pasted into manifest.json instead of
@@ -51,12 +51,13 @@ test("declares no runnables, no sandboxed code and no capability grants", () => 
 
 // ── 2. Every declared style resolves to a file on disk ─────────────────────────
 
-test("declares the eleven built-in styles with unique ids", () => {
-	assert.equal(entries.length, 11);
+test("declares the twelve built-in styles with unique ids", () => {
+	assert.equal(entries.length, 12);
 	const ids = entries.map((e) => e.id);
 	assert.deepEqual(ids, [
 		"eli5",
 		"i-have-adhd",
+		"concise",
 		"explanatory",
 		"learning",
 		"proactive",
@@ -157,6 +158,43 @@ test("every declared style parses into frontmatter with a name and a body", () =
 			parsed.body.trim().length > 0,
 			`${entry.file} has an empty body — selecting it would change nothing`
 		);
+	}
+});
+
+test("ships the four Claude-compatible default profiles with their defining behavior", () => {
+	const expected = {
+		proactive: ["permission mode", "Auto mode", "routine decisions"],
+		concise: [
+			"Lead with the result",
+			"Default style",
+			"complete",
+			"error reports",
+			"security warnings",
+			"destructive actions",
+			"v2.1.237",
+		],
+		explanatory: ["Insights", "implementation choice", "codebase pattern"],
+		learning: ["Insights", "TODO(human)", "small, strategic pieces"],
+	};
+
+	for (const [id, phrases] of Object.entries(expected)) {
+		const entry = entries.find((candidate) => candidate.id === id);
+		assert.ok(entry, `${id} must be declared`);
+		const parsed = parseFrontmatter(
+			readFileSync(join(HERE, entry.file), "utf8")
+		);
+		assert.ok(parsed, `${id} must have parseable frontmatter`);
+		assert.equal(
+			parsed.keys["keep-coding-instructions"],
+			"true",
+			`${id} keeps the agent's engineering instructions`
+		);
+		for (const phrase of phrases) {
+			assert.ok(
+				parsed.body.includes(phrase),
+				`${id} is missing defining behavior: ${phrase}`
+			);
+		}
 	}
 });
 

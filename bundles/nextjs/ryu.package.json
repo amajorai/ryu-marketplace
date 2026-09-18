@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/nextjs",
+  "name": "Next.js",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:nextjs"
+  ],
+  "includes": [
+    "skill:vercel/next-cache-components",
+    "skill:vercel/next-cache-components-optimizer",
+    "skill:addyosmani/frontend-ui-engineering",
+    "skill:addyosmani/performance",
+    "skill:addyosmani/seo",
+    "skill:vercel-labs/react-best-practices"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/nextjs",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Build fast, resilient Next.js experiences.",
+    "category": "UI Skills",
+    "description": "The Next.js topic collection from UI Skills for cache components, frontend architecture, performance, SEO, and React implementation.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/next.js"
+  }
+}

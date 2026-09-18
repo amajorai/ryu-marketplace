@@ -24,11 +24,20 @@ the gateway plane's tool loop.
 | `agents.directory` | The other agents on this node: id, name, what each is for. Auto-discovery — call it when the user names an agent loosely, or to find out who is better placed to answer. |
 | `agents.send` | Leave a message in another agent's inbox and carry on. Delivered at the start of the recipient's next turn. |
 | `agents.thread` | What you and another agent have already said to each other, or the list of agents you have a thread with. |
+| `agents.react` | Add an emoji reaction to an exact persisted message in the current conversation, including a message authored by another agent. |
 
 Messages are deliberately asynchronous. `send` leaves a bounded handover in the
 recipient's inbox and costs nothing but a KV write; the recipient reads it at the
 start of its next turn. There is no tool in this plugin that starts another
 agent run or waits on another agent.
+
+`agents.react` is the lightweight reply form: it writes through Core's existing
+Message Reactions store and returns after the reaction is accepted. It takes the
+exact persisted `message_id` plus an `emoji`; the current conversation and the
+`agent:<id>` reaction actor come from Core's dispatch context. A message id from
+another conversation, a still-streaming client id, or a call without a current
+conversation is refused. The message author is not restricted, so agent-to-agent
+replies work in shared transcripts too.
 
 ## How a message is delivered
 
@@ -61,6 +70,10 @@ stops:
    peer's tool budget.
 3. **No self-addressing.** An agent asking itself is thinking; it does not need a
    tool.
+
+Message ids are `m` plus a node-wide sequence reserved with storage CAS. The
+sequence is allocated before the inbox and pair-history writes, so concurrent
+sends receive distinct monotonic ids even though delivery remains asynchronous.
 
 Hop-limit refusals come back as `{ok:false, refused:"hop_limit"}` — a result the
 model can act on, not an error it has to interpret.
@@ -104,7 +117,7 @@ controls apply to both bot threads and group-chat threads.
 
 | Path | What |
 | --- | --- |
-| `manifest.json` | The three tools, the two hooks, and the grants (`tool:execute`, `storage:kv`, `tool:http-egress:127.0.0.1`). |
+| `manifest.json` | The four tools, the two hooks, and the grants (`tool:execute`, `storage:kv`, `conversation:reactions`, `tool:http-egress:127.0.0.1`). |
 | `tools/*.js` | The `inline_deno` tool bodies — the SOURCE form. Sealed into the manifest's `code` strings. |
 | `hooks/deliver.js` | `pre_user_turn` — delivers the inbox. |
 | `hooks/directory.js` | `tool_result` — projects `agents.directory` down to id/name/description, so no other agent's `system_prompt` ever reaches the transcript. |

@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/advisor",
   "name": "Advisor",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "stability": "experimental",
   "category": "Research",
   "description": "Consult a stronger reviewer model for a second opinion — as an auto-review turn hook (toggle / `/advisor`) and as the model-callable `advisor.consult` tool, a declarative HTTP tool routed through Core's `/api/advisor/consult` bridge.",

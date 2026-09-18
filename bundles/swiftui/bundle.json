@@ -1,0 +1,24 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/swiftui",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "dimillian/swiftui-ui-patterns",
+      "name": "SwiftUI UI Patterns",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/write-swift",
+      "name": "Write Swift",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/apple-design",
+      "name": "Apple Design",
+      "required": false
+    }
+  ]
+}

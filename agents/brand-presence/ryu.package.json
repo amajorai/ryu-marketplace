@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/brand-presence",
   "name": "Brand Presence",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "kind": "agent",
   "artifacts": [
     "agent.json"

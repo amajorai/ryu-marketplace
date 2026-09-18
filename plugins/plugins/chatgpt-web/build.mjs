@@ -30,7 +30,7 @@ const manifest = {
 	tagline: "ChatGPT Web, routed through Ryu",
 	keywords: ["chatgpt", "browser", "model", "temporary-chat", "subscription"],
 	category: "Models",
-	icon: "ai-chat",
+	icon: "bubble-chat-edit",
 	iconDither: { from: 143, to: "transparent", direction: "down" },
 	surfaces: {
 		gateway: { support: "none" },

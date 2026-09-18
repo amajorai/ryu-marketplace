@@ -1,0 +1,54 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/testing",
+  "name": "Testing",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:testing"
+  ],
+  "includes": [
+    "skill:accesslint/accessibility-diff",
+    "skill:accesslint/accessibility-scan",
+    "skill:accesslint/audit-and-fix",
+    "skill:accesslint/contrast-checker",
+    "skill:accesslint/link-purpose",
+    "skill:accesslint/refactor",
+    "skill:accesslint/use-of-color",
+    "skill:addyosmani/web-quality-audit",
+    "skill:antfu/vitest",
+    "skill:antfu/vue-testing-best-practices",
+    "skill:cursor/thermo-nuclear-code-quality-review",
+    "skill:emilkowalski/improve-animations"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/testing",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Tests that catch regressions before users do.",
+    "category": "UI Skills",
+    "description": "The Testing topic collection from UI Skills for accessibility regression checks, quality audits, Vitest, Vue testing, and motion review.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/testing"
+  }
+}

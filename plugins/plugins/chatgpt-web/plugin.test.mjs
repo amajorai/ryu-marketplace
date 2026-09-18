@@ -11,8 +11,10 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const backendPath = join(here, "backend.js");
+const verificationViteConfigPath = join(here, "verification", "vite.config.ts");
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 const backend = readFileSync(backendPath, "utf8").replace(/\r\n?/g, "\n");
+const verificationViteConfig = readFileSync(verificationViteConfigPath, "utf8");
 const browserManifest = JSON.parse(
 	readFileSync(join(here, "../../../apps-store/browser/manifest.json"), "utf8")
 );
@@ -104,4 +106,16 @@ test("the provider refuses unsupported image and tool requests", () => {
 	assert.match(backend, /tools_not_supported/);
 	assert.match(backend, /login_required/);
 	assert.match(backend, /model_option_not_found/);
+});
+
+test("the verification bundle resolves dependencies from this checkout", () => {
+	assert.doesNotMatch(verificationViteConfig, /ryu-closed/);
+	assert.match(
+		verificationViteConfig,
+		/resolve\(repoRoot, "node_modules\/react\/index\.js"\)/
+	);
+	assert.match(
+		verificationViteConfig,
+		/resolve\(\s*repoRoot,\s*"apps\/desktop\/node_modules\/react-dom\/client\.js"\s*\)/
+	);
 });

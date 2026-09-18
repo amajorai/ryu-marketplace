@@ -1,0 +1,78 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/testing",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "accesslint/accessibility-diff",
+      "name": "Accessibility Diff",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/accessibility-scan",
+      "name": "Accessibility Scan",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/audit-and-fix",
+      "name": "Audit And Fix",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/contrast-checker",
+      "name": "Contrast Checker",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/link-purpose",
+      "name": "Link Purpose",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/refactor",
+      "name": "Refactor",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/use-of-color",
+      "name": "Use Of Color",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/web-quality-audit",
+      "name": "Web Quality Audit",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/vitest",
+      "name": "Vitest",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/vue-testing-best-practices",
+      "name": "Vue Testing Best Practices",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/thermo-nuclear-code-quality-review",
+      "name": "Thermo Nuclear Code Quality Review",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/improve-animations",
+      "name": "Improve Animations",
+      "required": false
+    }
+  ]
+}

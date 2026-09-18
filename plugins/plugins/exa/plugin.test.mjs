@@ -355,3 +355,58 @@ test("the adapter parses the SSE frame the endpoint actually returns", () => {
 	assert.match(code, /startsWith\("data: "\)/);
 	assert.match(code, /split\(\/\\n-\{3,\}\\n\/\)/);
 });
+
+// Execute the native fragment with Toolsmith's recorded, allowlisted effects.
+async function runAdapterCase(verb, fixture) {
+	const { runOnce } = await import("../../../tools/toolsmith/harness.mjs");
+	const directory = dirname(fileURLToPath(import.meta.url));
+	const source = JSON.parse(
+		readFileSync(join(directory, "manifest.json"), "utf8")
+	);
+	const binding = source.provides
+		.flatMap((entry) => Object.entries(entry.tools ?? {}))
+		.find(([id]) => id === verb)[1];
+	return runOnce({
+		kind: "adapter",
+		code: readFileSync(join(directory, binding.adapter.code_file), "utf8"),
+		adapterTools: binding.adapter.tools ?? [],
+		testCase: fixture,
+	});
+}
+
+test("free search preserves MCP errors even when they carry result-shaped content", async () => {
+	const rpc = {
+		result: {
+			isError: true,
+			structuredContent: { results: [] },
+			content: [
+				{
+					type: "text",
+					text: "Title: Failure\nURL: https://example.test\nHighlights: denied",
+				},
+			],
+		},
+	};
+	const raw = `event: message\ndata: ${JSON.stringify(rpc)}\n`;
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "hello" },
+		provider: {
+			call: [{ available: false }],
+			named: { "exa.free_search": [raw] },
+		},
+	});
+	assert.deepEqual(outcome.value, { raw });
+	assert.equal(outcome.calls.length, 2);
+});
+
+test("free search leaves unrecognized text visible instead of inventing a result", async () => {
+	const raw = `data: ${JSON.stringify({ result: { content: [{ type: "text", text: "rate limit exceeded" }] } })}\n`;
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "hello" },
+		provider: {
+			call: [{ available: false }],
+			named: { "exa.free_search": [raw] },
+		},
+	});
+	assert.deepEqual(outcome.value, { raw });
+});

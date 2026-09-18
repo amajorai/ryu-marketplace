@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/threejs",
+  "name": "Three.js",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:threejs"
+  ],
+  "includes": [
+    "skill:cloudai-x/threejs-animation",
+    "skill:cloudai-x/threejs-fundamentals",
+    "skill:cloudai-x/threejs-geometry",
+    "skill:cloudai-x/threejs-interaction",
+    "skill:cloudai-x/threejs-lighting",
+    "skill:cloudai-x/threejs-loaders",
+    "skill:cloudai-x/threejs-materials",
+    "skill:cloudai-x/threejs-postprocessing",
+    "skill:cloudai-x/threejs-shaders",
+    "skill:cloudai-x/threejs-textures",
+    "skill:flornkm/webgl-components"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/threejs",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "A grounded Three.js workflow from scene to shader.",
+    "category": "UI Skills",
+    "description": "The Three.js topic collection from UI Skills for scenes, geometry, materials, lighting, loaders, shaders, post-processing, and interaction.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/three.js"
+  }
+}

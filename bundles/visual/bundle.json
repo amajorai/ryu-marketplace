@@ -1,0 +1,60 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/visual",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "0xdesign/design-lab",
+      "name": "Design Lab",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/antfu-design",
+      "name": "Antfu Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/canvas-design",
+      "name": "Canvas Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/frontend-design",
+      "name": "Frontend Design",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "calicastle/signal-geometry",
+      "name": "Signal Geometry",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "dammyjay93/interface-design",
+      "name": "Interface Design",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "ibelick/improve-ui",
+      "name": "Improve UI",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/impeccable",
+      "name": "Impeccable",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/polish",
+      "name": "Polish",
+      "required": true
+    }
+  ]
+}

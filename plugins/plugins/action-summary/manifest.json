@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/action-summary",
   "name": "Action Summary",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "stability": "experimental",
   "description": "Explains streamed thinking blocks and tool calls in one plain-language line per action, using a configurable small side model.",
   "tagline": "Make agent actions easy to understand",

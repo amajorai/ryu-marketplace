@@ -52,23 +52,15 @@ const checks = [
 function App() {
 	return (
 		<main className="page-shell">
-			<div className="eyebrow">RYU PLUGIN VERIFICATION · 17 AUG 2026</div>
-			<section className="hero">
+			<header className="verification-header">
 				<div>
-					<div className="kicker">ChatGPT Web</div>
-					<h1>A browser-backed provider that stays inside Ryu.</h1>
+					<h1>ChatGPT Web verification</h1>
 					<p className="lede">
-						The plugin is installed as a managed Node sidecar, calls only Ryu’s
-						Browser capability, and exposes a normal OpenAI-compatible
-						completion contract.
+						Verify the managed sidecar route, capability handoff, completion
+						translation, and explicit sign-in behavior.
 					</p>
 				</div>
-				<div aria-hidden="true" className="hero-mark">
-					<span>◎</span>
-					<span>↗</span>
-					<span>▦</span>
-				</div>
-			</section>
+			</header>
 
 			<section aria-label="Verification summary" className="status-strip">
 				<div>
@@ -147,14 +139,10 @@ function App() {
         * { box-sizing: border-box; }
         body { margin: 0; min-width: 320px; }
         .page-shell { margin: 0 auto; max-width: 1180px; padding: 42px 34px 28px; }
-        .eyebrow, .panel-label, .kicker, .card-topline, footer, .status-strip { letter-spacing: .12em; text-transform: uppercase; }
-        .eyebrow { color: #a5a394; font-size: 11px; font-weight: 700; }
-        .hero { align-items: end; border-bottom: 1px solid #393a32; display: flex; gap: 30px; justify-content: space-between; padding: 48px 0 42px; }
-        .kicker { color: #c7f36b; font-size: 12px; font-weight: 800; margin-bottom: 16px; }
-        h1 { font-size: clamp(42px, 6vw, 76px); letter-spacing: -.065em; line-height: .96; margin: 0; max-width: 790px; }
-        .lede { color: #b8b6aa; font-size: 17px; line-height: 1.5; margin: 24px 0 0; max-width: 600px; }
-        .hero-mark { align-items: end; color: #c7f36b; display: flex; font-size: 32px; gap: 9px; padding-bottom: 4px; }
-        .hero-mark span:nth-child(2) { color: #f1a56d; font-size: 48px; transform: translateY(-7px); }
+        .panel-label, .card-topline, footer, .status-strip { letter-spacing: .12em; text-transform: uppercase; }
+        .verification-header { border-bottom: 1px solid #393a32; padding: 32px 0 28px; }
+        h1 { font-size: clamp(24px, 4vw, 40px); letter-spacing: -.045em; line-height: 1; margin: 0; max-width: 790px; }
+        .lede { color: #b8b6aa; font-size: 14px; line-height: 1.5; margin: 12px 0 0; max-width: 600px; }
         .status-strip { border-bottom: 1px solid #393a32; display: grid; font-size: 10px; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 18px 0; }
         .status-strip div { align-items: center; display: flex; flex-wrap: wrap; gap: 9px; }
         .status-strip strong { color: #f3efe7; font-size: 11px; letter-spacing: .08em; }
@@ -188,8 +176,7 @@ function App() {
         }
         @media (max-width: 680px) {
           .page-shell { padding: 28px 18px 20px; }
-          .hero { align-items: start; flex-direction: column; padding: 38px 0 30px; }
-          .hero-mark { display: none; }
+          .verification-header { padding: 28px 0 24px; }
           .status-strip, .lower-grid { grid-template-columns: 1fr; }
           .evidence-grid { grid-template-columns: 1fr; }
           .evidence-card:last-child { grid-column: auto; }

@@ -1,0 +1,42 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/3d",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-fundamentals",
+      "name": "Threejs Fundamentals",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-geometry",
+      "name": "Threejs Geometry",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-materials",
+      "name": "Threejs Materials",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "flornkm/webgl-components",
+      "name": "WebGL Components",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "mengto/cobejs",
+      "name": "Cobejs",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "oso95/scroll-world",
+      "name": "Scroll World",
+      "required": false
+    }
+  ]
+}

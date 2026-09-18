@@ -1,0 +1,32 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/vue",
+  "members": [
+    { "kind": "skill", "id": "antfu/vue", "name": "Vue", "required": true },
+    {
+      "kind": "skill",
+      "id": "antfu/vue-best-practices",
+      "name": "Vue Best Practices",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/vue-router-best-practices",
+      "name": "Vue Router Best Practices",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/vue-testing-best-practices",
+      "name": "Vue Testing Best Practices",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/vueuse-functions",
+      "name": "Vueuse Functions",
+      "required": false
+    },
+    { "kind": "skill", "id": "antfu/pinia", "name": "Pinia", "required": false }
+  ]
+}

@@ -1,7 +1,7 @@
 // Co-located, zero-dependency test for the `agent-comms` plugin.
 // Run with:  node --test plugins-store/plugins/agent-comms/plugin.test.mjs
 //
-// The plugin is five bodies — three `inline_deno` tools and two turn hooks — that
+// The plugin is six bodies — four `inline_deno` tools and two turn hooks — that
 // Core splices into a sandbox with a fixed set of injected globals. This test
 // reproduces each splice exactly (`input`/`caller`/`host` for a tool,
 // `ctx`/`host` for a hook), runs the real body against an in-memory KV, and
@@ -63,7 +63,11 @@ const runHook = (id, { ctx = {}, host }) =>
  * behaves as it does in Core (`plugin_storage` is a real store, not a queue).
  * `runAgent` is scripted per test and every call is recorded.
  */
-function makeHost({ storage = {}, runAgent = async () => "ok" } = {}) {
+function makeHost({
+	storage = {},
+	runAgent = async () => "ok",
+	addReaction = async (args) => ({ ok: true, ...args }),
+} = {}) {
 	const kv = new Map(Object.entries(storage));
 	const calls = [];
 	return {
@@ -73,6 +77,12 @@ function makeHost({ storage = {}, runAgent = async () => "ok" } = {}) {
 			runAgent: async (args) => {
 				calls.push({ path: "runAgent", args });
 				return runAgent(args);
+			},
+			reactions: {
+				add: async (args) => {
+					calls.push({ path: "reactions.add", args });
+					return addReaction(args);
+				},
 			},
 			sideModel: async () => {
 				throw new Error("this plugin must not call host.sideModel");
@@ -190,13 +200,31 @@ test("send queues a message under the recipient's inbox", async () => {
 	assert.equal(result.from, "ryu");
 	assert.equal(result.to, "scout");
 	assert.equal(result.hops, 1);
+	assert.equal(result.id, "m1");
 
 	const inbox = inboxOf(kv, "scout");
 	assert.equal(inbox.length, 1);
 	assert.equal(inbox[0].text, "the deploy finished");
 	assert.equal(inbox[0].from, "ryu");
+	assert.equal(inbox[0].seq, 1);
 	// The pair history is written from the same call for agents.thread.
 	assert.ok(kv.has("thread:ryu|scout"));
+});
+
+test("message ids remain monotonic across sends", async () => {
+	const { host } = makeHost();
+	const first = await runTool("agents.send", {
+		input: { to: "scout", text: "one" },
+		caller: { agent_id: "ryu" },
+		host,
+	});
+	const second = await runTool("agents.send", {
+		input: { to: "scout", text: "two" },
+		caller: { agent_id: "ryu" },
+		host,
+	});
+	assert.equal(first.id, "m1");
+	assert.equal(second.id, "m2");
 });
 
 test("the sender is the calling agent, not what the model wrote", async () => {
@@ -291,6 +319,76 @@ test("the synchronous delegation tool is not shipped", () => {
 	assert.equal(
 		manifest.runnables.some((r) => r.config?.slug === "agents.ask"),
 		false
+	);
+});
+
+// ── agents.react ─────────────────────────────────────────────────────────────
+
+test("react forwards the exact persisted message id and normalized emoji", async () => {
+	const { host, calls } = makeHost({
+		addReaction: async (args) => ({
+			ok: true,
+			...args,
+			from: "reviewer",
+		}),
+	});
+	const result = await runTool("agents.react", {
+		input: { message_id: "message-42", emoji: " ✅ " },
+		caller: { agent_id: "reviewer", conversation_id: "conv-42" },
+		host,
+	});
+
+	assert.deepEqual(calls, [
+		{
+			path: "reactions.add",
+			args: { message_id: "message-42", emoji: "✅" },
+		},
+	]);
+	assert.deepEqual(result, {
+		ok: true,
+		message_id: "message-42",
+		emoji: "✅",
+		from: "reviewer",
+	});
+});
+
+test("react rejects missing context, empty values, and oversized input", async () => {
+	const { host } = makeHost();
+	await assert.rejects(
+		runTool("agents.react", {
+			input: { message_id: "message-42", emoji: "✅" },
+			caller: { agent_id: "reviewer" },
+			host,
+		}),
+		/current conversation is required/
+	);
+	await assert.rejects(
+		runTool("agents.react", {
+			input: { message_id: "message-42", emoji: " " },
+			caller: { agent_id: "reviewer", conversation_id: "conv-42" },
+			host,
+		}),
+		/'emoji' is required/
+	);
+	await assert.rejects(
+		runTool("agents.react", {
+			input: { message_id: "x".repeat(201), emoji: "✅" },
+			caller: { agent_id: "reviewer", conversation_id: "conv-42" },
+			host,
+		}),
+		/'message_id' must be at most 200 bytes/
+	);
+});
+
+test("react cannot run without a verified calling agent", async () => {
+	const { host } = makeHost();
+	await assert.rejects(
+		runTool("agents.react", {
+			input: { message_id: "message-42", emoji: "👀" },
+			caller: { conversation_id: "conv-42" },
+			host,
+		}),
+		/calling agent could not be identified/
 	);
 });
 

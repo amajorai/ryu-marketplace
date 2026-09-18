@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/ghost",
   "name": "Ghost",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "system": true,
   "builtin": true,
   "category": "Automation",

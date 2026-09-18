@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/code-quality",
+  "name": "Code Quality",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:code-quality"
+  ],
+  "includes": [
+    "skill:aminblg/simple-english",
+    "skill:cursor/thermo-nuclear-code-quality-review",
+    "skill:emilkowalski/write-swift",
+    "skill:pbakaus/critique",
+    "skill:pbakaus/polish",
+    "skill:stephenturner/deslop"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/code-quality",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Readable code, sharper reviews, fewer surprises.",
+    "category": "UI Skills",
+    "description": "The Code Quality topic collection from UI Skills for review discipline, clear technical language, refactoring, and finishing quality.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/code-quality"
+  }
+}

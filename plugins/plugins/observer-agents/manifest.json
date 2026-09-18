@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/observer-agents",
   "name": "Observer Agents",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "stability": "experimental",
   "category": "Security",
   "description": "Adds an opt-in background reviewer that watches the latest agent activity and sends concise advisory reports when it spots drift, missed constraints, or shortcuts.",

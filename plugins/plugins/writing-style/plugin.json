@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.writing-style",
+  "version": "0.1.0",
+  "description": "Extract a content-agnostic writing-style guide from a small, user-approved sample of the connected apps already available to the calling agent. It produces a reviewable Markdown Agent Skill that can be activated alongside an Output Style; it never guesses unavailable connections or copies private sample text into the guide.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/writing-style",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/writing-style",
+  "keywords": [
+    "writing",
+    "style",
+    "stylometry",
+    "connections",
+    "personalization"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/writing-style",
+      "displayName": "Writing Style"
+    }
+  }
+}

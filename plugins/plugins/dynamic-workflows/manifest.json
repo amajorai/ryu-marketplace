@@ -11,8 +11,9 @@
   "id": "@ryu/dynamic-workflows",
   "name": "dynamic-workflows",
   "stability": "experimental",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "description": "Run a validated, bounded fan-out of clean-context delegates.",
+  "icon": "workflow-circle-06",
   "iconDither": {
     "from": 232,
     "to": "transparent",

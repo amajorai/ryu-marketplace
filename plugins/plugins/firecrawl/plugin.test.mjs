@@ -544,3 +544,76 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
 });
+
+for (const rejected of [
+	null,
+	{ available: false, reason: "denied" },
+	{ status: 429, body: "rate limited" },
+	{ status: "completed", success: false, data: [] },
+	{ status: "completed", data: {} },
+]) {
+	test(`crawl stops on a rejected or malformed status: ${JSON.stringify(rejected)}`, async () => {
+		const code = byCapability.get("web.crawl").tools["web.crawl"].adapter.code;
+		const calls = [];
+		const execute = new (Object.getPrototypeOf(async () => {}).constructor)(
+			"input",
+			"defaults",
+			"callTool",
+			"callNamed",
+			"setTimeout",
+			code
+		);
+		const result = await execute(
+			{ url: "https://example.test" },
+			{},
+			async (args) => {
+				calls.push(["start", args]);
+				return { id: "job-1" };
+			},
+			async (id, args) => {
+				calls.push([id, args]);
+				return rejected;
+			},
+			() => {
+				throw new Error("must not retry rejected status");
+			}
+		);
+		assert.deepEqual(result, { raw: rejected });
+		assert.deepEqual(calls, [
+			[
+				"start",
+				{
+					url: "https://example.test",
+					limit: undefined,
+					maxDiscoveryDepth: undefined,
+				},
+			],
+			["firecrawl.crawl_status", { id: "job-1" }],
+		]);
+	});
+}
+
+for (const status of ["completed", "failed", "cancelled"]) {
+	test(`crawl preserves a real terminal job: ${status}`, async () => {
+		const code = byCapability.get("web.crawl").tools["web.crawl"].adapter.code;
+		const execute = new (Object.getPrototypeOf(async () => {}).constructor)(
+			"input",
+			"defaults",
+			"callTool",
+			"callNamed",
+			code
+		);
+		const result = await execute(
+			{ url: "https://example.test" },
+			{},
+			async () => ({ id: "job-1" }),
+			async () => ({ status, total: 0, data: [] })
+		);
+		assert.deepEqual(result, {
+			status,
+			complete: status === "completed",
+			total: 0,
+			results: [],
+		});
+	});
+}

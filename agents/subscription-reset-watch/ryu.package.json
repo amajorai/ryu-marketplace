@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/subscription-reset-watch",
+  "name": "Subscription Reset Watch",
+  "version": "0.4.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Codex, Claude Code, Copilot, Grok, and GLM usage windows",
+    "Provider-aware reset calendar data",
+    "30-minute quiet monitoring",
+    "Owner-triggered reset checks",
+    "Fail-closed redemption policy"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/agents/subscription-reset-watch",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Know which AI window opens next.",
+    "category": "Monitoring",
+    "description": "A provider-neutral reset watch for Codex, Claude Code, Copilot, Grok, and GLM. It keeps a quiet account-aware calendar and checks a live reset before any explicitly authorized provider action.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "Set up my AI subscription reset watch.",
+      "Show my next Codex and Claude Code reset windows.",
+      "Use reset for Codex, but check my live account first."
+    ],
+    "featuredRank": 127
+  }
+}

@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/expiry-date-tracker",
   "name": "Expiry Date Tracker",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "kind": "agent",
   "artifacts": [
     "agent.json"

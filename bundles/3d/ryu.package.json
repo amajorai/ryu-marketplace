@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/3d",
+  "name": "3D",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:3d"
+  ],
+  "includes": [
+    "skill:cloudai-x/threejs-fundamentals",
+    "skill:cloudai-x/threejs-geometry",
+    "skill:cloudai-x/threejs-materials",
+    "skill:flornkm/webgl-components",
+    "skill:mengto/cobejs",
+    "skill:oso95/scroll-world"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/3d",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Spatial interfaces without losing the fundamentals.",
+    "category": "UI Skills",
+    "description": "The 3D topic collection from UI Skills for Three.js fundamentals, geometry, materials, WebGL components, and globe experiences.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/3d"
+  }
+}

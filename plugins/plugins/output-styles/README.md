@@ -6,8 +6,8 @@
   </picture>
 </p>
 
-The eleven built-in personality profiles. Fully declarative — no runnables, no sandboxed JS, no
-Core Rust: the plugin is a `contributes.output_styles[]` list pointing at eleven Markdown
+The twelve built-in personality profiles. Fully declarative — no runnables, no sandboxed JS, no
+Core Rust: the plugin is a `contributes.output_styles[]` list pointing at twelve Markdown
 files, plus one Store tab that browses whatever profiles the node has. Each agent chooses
 its own profile in the agent editor.
 
@@ -58,7 +58,7 @@ tool descriptions and the MCP preamble are assembled after it and never depend o
 The body is prose, never code — nothing in the pipeline evaluates it, which is why a
 style needs no capability grants at all. Same argument themes make.
 
-## The eleven
+## The twelve
 
 None of them is forced. An agent defaults to its own instructions and tone, so this
 plugin is inert until a profile is assigned to an agent.
@@ -67,6 +67,7 @@ plugin is inert until a profile is assigned to an agent.
 | --- | --- | --- |
 | **ELI5** | `true` | Small words, short sentences, 2 options max on a decision. Paths and commands stay exact. |
 | **I have ADHD** | `true` | Action first, numbered steps, state restated every turn, no preamble and no closers. |
+| **Concise** | `true` | Leads with the result, skips narration, keeps responses short, and preserves complete error, warning, and destructive-confirmation details. Adapted from Claude Code v2.1.237+. |
 | **Explanatory** | `true` | Short `Insight:` asides on the choices behind the code, interleaved with the work rather than lectured at the end. |
 | **Learning** | `true` | Leaves one `TODO(human)` per response (a small strategic piece with a real decision in it) for you to write. |
 | **Proactive** | `true` | Takes the conventional default and states the assumption instead of pausing for a routine question. Still stops for destructive or genuinely ambiguous work. |
@@ -112,7 +113,7 @@ working directory and the repo root, nearest wins.
 The styles in this package are read-only, because they are part of a signed package.
 Editing one in the UI forks it to your user root rather than mutating the package.
 
-Some things that make a style work, learned writing these eleven:
+Some things that make a style work, learned writing these twelve:
 
 - **Say what to do, not what not to do.** "Lead with the next action" beats "don't
   bury the answer" — a negative constraint leaves the shape unspecified.
@@ -149,7 +150,7 @@ path is Core-relative: this plugin has no sidecar, so nothing is proxied through
 `/api/ext/`, and the desktop renderer only fetches paths that pass its
 `isCoreApiPath` check.
 
-The tab lists every style on the node, not just the eleven here — a user or project style
+The tab lists every style on the node, not just the twelve here — a user or project style
 appears alongside them and is selectable the same way.
 
 ## Tests

@@ -1,0 +1,126 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/taste",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aboudjem/humanizer",
+      "name": "Humanizer",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "blader/humanizer",
+      "name": "Humanizer",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/unslop",
+      "name": "Unslop",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "ehmo/slopbeth",
+      "name": "Slopbeth",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "elithrar/anti-slop",
+      "name": "Anti-Slop",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/emil-design-eng",
+      "name": "Emil Design Eng",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "ericzakariasson/scandinavian-design",
+      "name": "Scandinavian Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "hardikpandya/stop-slop",
+      "name": "Stop Slop",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "jalaalrd/anti-ai-slop-writing",
+      "name": "Anti AI Slop Writing",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "leonxlnx/brutalist-skill",
+      "name": "Brutalist Skill",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "leonxlnx/minimalist-skill",
+      "name": "Minimalist UI",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "leonxlnx/soft-skill",
+      "name": "High End Visual Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "leonxlnx/stitch-skill",
+      "name": "Stitch Design Taste",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "leonxlnx/taste-skill",
+      "name": "Design Taste Frontend",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/bolder",
+      "name": "Bolder",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/critique",
+      "name": "Critique",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/delight",
+      "name": "Delight",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "petergyang/no-ai-slop",
+      "name": "No AI Slop",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "stephenturner/deslop",
+      "name": "Deslop",
+      "required": false
+    }
+  ]
+}

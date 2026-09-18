@@ -8,7 +8,7 @@ import { once } from "node:events";
 import { createServer } from "node:http";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const backend = join(here, "backend.js");
@@ -203,5 +203,92 @@ test("serves an OpenAI completion through the managed browser capability hop", a
 		}
 		core.close();
 		await once(core, "close");
+	}
+});
+
+test("browser deadline includes a stalled response body and releases the next request", {
+	timeout: 3000,
+}, async (t) => {
+	const previousFetch = globalThis.fetch;
+	const keys = ["RYU_CORE_PORT", "RYU_EXT_PLUGIN_ID", "RYU_EXT_TOKEN"];
+	const previousEnv = keys.map((key) => process.env[key]);
+	let handler;
+	let aborted = false;
+	let calls = 0;
+	t.mock.timers.enable({ apis: ["setTimeout"] });
+	try {
+		process.env.RYU_CORE_PORT = "1";
+		process.env.RYU_EXT_PLUGIN_ID = "@ryu/chatgpt-web";
+		process.env.RYU_EXT_TOKEN = "isolated-timeout-test";
+		globalThis.fetch = async (_url, { signal }) => {
+			calls += 1;
+			if (calls > 1) {
+				return Response.json(
+					{ error: "controlled unavailable browser" },
+					{ status: 503 }
+				);
+			}
+			return new Response(
+				new ReadableStream({
+					start(controller) {
+						signal.addEventListener(
+							"abort",
+							() => {
+								aborted = true;
+								controller.error(new DOMException("Aborted", "AbortError"));
+							},
+							{ once: true }
+						);
+					},
+				})
+			);
+		};
+		const { activate } = await import(
+			`${pathToFileURL(backend).href}?body-timeout`
+		);
+		await activate({
+			http: {
+				onRequest(callback) {
+					handler = callback;
+				},
+			},
+		});
+		const request = {
+			method: "POST",
+			path: "/v1/chat/completions",
+			body: JSON.stringify({
+				messages: [{ role: "user", content: "Timeout probe" }],
+				model: "chatgpt-web/instant",
+			}),
+		};
+		const pending = handler(request);
+		const queued = handler(request);
+		await new Promise((resolve) => setImmediate(resolve));
+		assert.equal(calls, 1);
+		t.mock.timers.tick(119_999);
+		assert.equal(aborted, false);
+		t.mock.timers.tick(2);
+		assert.equal(aborted, true);
+		const result = await pending;
+		assert.equal(result.status, 504);
+		assert.equal(result.json.error.code, "browser_timeout");
+		const resumed = await queued;
+		assert.equal(resumed.status, 502);
+		assert.equal(resumed.json.error.code, "browser_request_failed");
+		assert.equal(calls, 2);
+		globalThis.fetch = async () => Response.json({ tabs: [] });
+		const next = await handler({ method: "GET", path: "/status" });
+		assert.equal(next.json.ok, true);
+		assert.equal(next.json.browser.available, true);
+	} finally {
+		globalThis.fetch = previousFetch;
+		for (const [index, key] of keys.entries()) {
+			if (previousEnv[index] === undefined) {
+				delete process.env[key];
+			} else {
+				process.env[key] = previousEnv[index];
+			}
+		}
+		t.mock.timers.reset();
 	}
 });

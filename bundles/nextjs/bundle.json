@@ -1,0 +1,42 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/next.js",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "vercel/next-cache-components",
+      "name": "Next Cache Components",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "vercel/next-cache-components-optimizer",
+      "name": "Next Cache Components Optimizer",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/frontend-ui-engineering",
+      "name": "Frontend UI Engineering",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/performance",
+      "name": "Performance",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/seo",
+      "name": "SEO",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "vercel-labs/react-best-practices",
+      "name": "React Best Practices",
+      "required": true
+    }
+  ]
+}

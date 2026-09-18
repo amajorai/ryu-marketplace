@@ -1,0 +1,72 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/accessibility",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "accesslint/accessibility-diff",
+      "name": "Accessibility Diff",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/accessibility-scan",
+      "name": "Accessibility Scan",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/audit-and-fix",
+      "name": "Audit And Fix",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/contrast-checker",
+      "name": "Contrast Checker",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/link-purpose",
+      "name": "Link Purpose",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/use-of-color",
+      "name": "Use Of Color",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/accessibility",
+      "name": "Accessibility",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/web-quality-audit",
+      "name": "Web Quality Audit",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "ibelick/fixing-accessibility",
+      "name": "Fixing Accessibility",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-accessibility",
+      "name": "Better Accessibility",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "wshobson/wcag-audit-patterns",
+      "name": "WCAG Audit Patterns",
+      "required": false
+    }
+  ]
+}

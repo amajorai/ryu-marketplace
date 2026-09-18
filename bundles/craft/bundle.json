@@ -1,0 +1,78 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/craft",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "aboudjem/humanizer",
+      "name": "Humanizer",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/accessibility",
+      "name": "Accessibility",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/best-practices",
+      "name": "Best Practices",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/core-web-vitals",
+      "name": "Core Web Vitals",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/performance",
+      "name": "Performance",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/seo",
+      "name": "SEO",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/antfu-design",
+      "name": "Antfu Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/unslop",
+      "name": "Unslop",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/animate",
+      "name": "Animate",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/polish",
+      "name": "Polish",
+      "required": true
+    }
+  ]
+}

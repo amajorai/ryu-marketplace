@@ -1,0 +1,55 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/outreach",
+  "name": "Outreach",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:outreach"
+  ],
+  "includes": [
+    "app:@ryu/outreach",
+    "app:@ryu/crm",
+    "app:@ryu/people",
+    "app:@ryu/calendar",
+    "plugin:@ryu/composio-connect",
+    "plugin:@ryu/agent-comms",
+    "agent:ryu/brand-presence",
+    "agent:ryu/growth-psychology-strategist",
+    "agent:ryu/expiry-date-tracker",
+    "skill:aashaexo/humanize",
+    "skill:aminblg/simple-english",
+    "skill:elithrar/anti-slop",
+    "skill:pbakaus/critique"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/outreach",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Find the right people, write clearly, and follow up with context.",
+    "category": "Growth",
+    "description": "A focused outreach workspace for contacts, CRM context, calendar follow-up, agent communication, and clear writing.",
+    "author": "Ryu",
+    "featuredRank": 30
+  }
+}

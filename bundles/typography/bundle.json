@@ -1,0 +1,36 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/typography",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "danilaa1/compact-landing",
+      "name": "Compact Landing",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "ericzakariasson/scandinavian-design",
+      "name": "Scandinavian Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-typography",
+      "name": "Better Typography",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/typeset",
+      "name": "Typeset",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simple-english",
+      "name": "Simple English",
+      "required": true
+    }
+  ]
+}

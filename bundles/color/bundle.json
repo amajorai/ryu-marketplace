@@ -1,0 +1,36 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/color",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "accesslint/contrast-checker",
+      "name": "Contrast Checker",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/use-of-color",
+      "name": "Use Of Color",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "firebenders/sync-figma-token",
+      "name": "Sync Figma Token",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-colors",
+      "name": "Better Colors",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-accessibility",
+      "name": "Better Accessibility",
+      "required": false
+    }
+  ]
+}

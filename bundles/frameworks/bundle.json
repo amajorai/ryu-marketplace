@@ -1,0 +1,21 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/frameworks",
+  "members": [
+    { "kind": "skill", "id": "antfu/nuxt", "name": "Nuxt", "required": false },
+    { "kind": "skill", "id": "antfu/vue", "name": "Vue", "required": true },
+    { "kind": "skill", "id": "antfu/vite", "name": "Vite", "required": true },
+    {
+      "kind": "skill",
+      "id": "callstackincubator/react-native-best-practices",
+      "name": "React Native Best Practices",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "sveltejs/svelte-code-writer",
+      "name": "Svelte Code Writer",
+      "required": false
+    }
+  ]
+}

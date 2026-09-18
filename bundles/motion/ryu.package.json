@@ -1,0 +1,54 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/motion",
+  "name": "Motion",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:motion"
+  ],
+  "includes": [
+    "skill:cloudai-x/threejs-animation",
+    "skill:emilkowalski/animate",
+    "skill:emilkowalski/animate-expo",
+    "skill:emilkowalski/animation-vocabulary",
+    "skill:emilkowalski/find-animation-opportunities",
+    "skill:emilkowalski/improve-animations",
+    "skill:emilkowalski/review-animations",
+    "skill:iart-ai/accessible-animation",
+    "skill:iart-ai/micro-interaction",
+    "skill:iart-ai/page-transition-animation",
+    "skill:iart-ai/svg-animation",
+    "skill:jakubantalik/transitions-dev"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/motion",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Motion with purpose, feel, and a reduced-motion path.",
+    "category": "UI Skills",
+    "description": "The Motion topic collection from UI Skills for meaningful transitions, micro-interactions, animation systems, and accessible movement.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/motion"
+  }
+}

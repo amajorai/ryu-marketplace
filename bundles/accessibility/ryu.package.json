@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/accessibility",
+  "name": "Accessibility",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:accessibility"
+  ],
+  "includes": [
+    "skill:accesslint/accessibility-diff",
+    "skill:accesslint/accessibility-scan",
+    "skill:accesslint/audit-and-fix",
+    "skill:accesslint/contrast-checker",
+    "skill:accesslint/link-purpose",
+    "skill:accesslint/use-of-color",
+    "skill:addyosmani/accessibility",
+    "skill:addyosmani/web-quality-audit",
+    "skill:ibelick/fixing-accessibility",
+    "skill:jakubkrehel/better-accessibility",
+    "skill:wshobson/wcag-audit-patterns"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/accessibility",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Make every interface usable, operable, and perceivable.",
+    "category": "UI Skills",
+    "description": "The Accessibility topic collection from UI Skills, centered on WCAG audits, keyboard behavior, contrast, and inclusive interaction.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/accessibility"
+  }
+}

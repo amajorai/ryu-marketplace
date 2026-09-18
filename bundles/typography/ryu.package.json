@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/typography",
+  "name": "Typography",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:typography"
+  ],
+  "includes": [
+    "skill:danilaa1/compact-landing",
+    "skill:ericzakariasson/scandinavian-design",
+    "skill:jakubkrehel/better-typography",
+    "skill:pbakaus/typeset",
+    "skill:aminblg/simple-english"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/typography",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Hierarchy, rhythm, and words that earn their space.",
+    "category": "UI Skills",
+    "description": "The Typography topic collection from UI Skills for type systems, editorial hierarchy, readable copy, and restrained visual rhythm.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/typography"
+  }
+}

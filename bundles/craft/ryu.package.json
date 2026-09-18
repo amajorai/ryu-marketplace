@@ -1,0 +1,55 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/craft",
+  "name": "Craft",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:craft"
+  ],
+  "includes": [
+    "skill:aashaexo/humanize",
+    "skill:aboudjem/humanizer",
+    "skill:addyosmani/accessibility",
+    "skill:addyosmani/best-practices",
+    "skill:addyosmani/core-web-vitals",
+    "skill:addyosmani/performance",
+    "skill:addyosmani/seo",
+    "skill:aminblg/simple-english",
+    "skill:antfu/antfu-design",
+    "skill:cursor/unslop",
+    "skill:emilkowalski/animate",
+    "skill:pbakaus/polish"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/craft",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Production polish from first pass to final pixel.",
+    "category": "UI Skills",
+    "description": "The Craft topic collection from UI Skills: execution quality, accessibility, performance, clarity, and the finishing pass.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/craft",
+    "featuredRank": 40
+  }
+}

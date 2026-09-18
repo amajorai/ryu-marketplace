@@ -1,0 +1,54 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/frontend",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "accesslint/accessibility-diff",
+      "name": "Accessibility Diff",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/accessibility-scan",
+      "name": "Accessibility Scan",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/audit-and-fix",
+      "name": "Audit And Fix",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/frontend-ui-engineering",
+      "name": "Frontend UI Engineering",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/frontend-design",
+      "name": "Frontend Design",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "ibelick/fixing-accessibility",
+      "name": "Fixing Accessibility",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-interface",
+      "name": "Better Interface",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "vercel-labs/react-best-practices",
+      "name": "React Best Practices",
+      "required": true
+    }
+  ]
+}

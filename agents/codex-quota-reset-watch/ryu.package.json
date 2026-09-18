@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/codex-quota-reset-watch",
   "name": "Codex Quota Reset Watch",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "kind": "agent",
   "artifacts": [
     "agent.json"
@@ -17,9 +17,14 @@
   ],
   "requires": {},
   "capabilities": [
-    "Fetch a public web page",
-    "Detect forecast changes",
-    "Desktop notifications"
+    "Tibo announcement monitoring through Composio/X",
+    "Read-only Twitter/X integration actions",
+    "Composio Connect fallback",
+    "Reset-date backoff",
+    "Low-cost monitoring model selection",
+    "Persistent Quests task queue",
+    "Authorized Codex work coordination",
+    "Owner-triggered reset check before redemption"
   ],
   "source": {
     "type": "github",
@@ -34,13 +39,14 @@
     "redacted": false
   },
   "metadata": {
-    "tagline": "Know when the Codex reset forecast changes.",
+    "tagline": "Put confirmed reset windows to work.",
     "category": "Monitoring",
-    "description": "Checks willcodexquotareset.com every 30 minutes, remembers the last forecast, and sends a desktop alert only when the public reset signals materially change.",
+    "description": "Checks Tibo’s public announcements through read-only Composio/X integrations about every 30 minutes, pins a suitable low-cost monitoring model during setup, backs off to confirmed reset times, coordinates authorized Codex work from editable Quests presets, and checks the live account before an owner-triggered reset action.",
     "author": "Ryu",
     "examplePrompts": [
-      "Check the Codex quota reset forecast now.",
-      "What changed in the Codex reset forecast since the last check?"
+      "Set up reset monitoring and add the preset tasks to Quests.",
+      "Use my selected Codex agent for this approved queue before confirmed resets, including overnight.",
+      "Show the next check, announcement evidence, monitor model and active task."
     ],
     "featuredRank": 128
   }

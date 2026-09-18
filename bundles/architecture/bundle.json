@@ -1,0 +1,48 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/architecture",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "antfu/turborepo",
+      "name": "Turborepo",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/thermo-nuclear-code-quality-review",
+      "name": "Thermo Nuclear Code Quality Review",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/pick-ui-library",
+      "name": "Pick UI Library",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/write-swift",
+      "name": "Write Swift",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-interface",
+      "name": "Better Interface",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-layout",
+      "name": "Better Layout",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "mattpocock/codebase-design",
+      "name": "Codebase Design",
+      "required": true
+    }
+  ]
+}

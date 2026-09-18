@@ -198,6 +198,7 @@ async function browserCall(tool, args = {}, timeoutMs = RESPONSE_TIMEOUT_MS) {
 	const controller = new AbortController();
 	const timeout = setTimeout(() => controller.abort(), timeoutMs);
 	let response;
+	let raw;
 	try {
 		response = await fetch(BROWSER_CAPABILITY_URL, {
 			method: "POST",
@@ -210,6 +211,7 @@ async function browserCall(tool, args = {}, timeoutMs = RESPONSE_TIMEOUT_MS) {
 			body: JSON.stringify({ args, tool }),
 			signal: controller.signal,
 		});
+		raw = await response.text();
 	} catch (error) {
 		if (error?.name === "AbortError") {
 			throw new BridgeError(
@@ -227,7 +229,6 @@ async function browserCall(tool, args = {}, timeoutMs = RESPONSE_TIMEOUT_MS) {
 		clearTimeout(timeout);
 	}
 
-	const raw = await response.text();
 	let payload = {};
 	try {
 		payload = raw ? JSON.parse(raw) : {};

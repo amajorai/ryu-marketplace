@@ -1,0 +1,78 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/motion",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-animation",
+      "name": "Threejs Animation",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/animate",
+      "name": "Animate",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/animate-expo",
+      "name": "Animate Expo",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/animation-vocabulary",
+      "name": "Animation Vocabulary",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/find-animation-opportunities",
+      "name": "Find Animation Opportunities",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/improve-animations",
+      "name": "Improve Animations",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/review-animations",
+      "name": "Review Animations",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "iart-ai/accessible-animation",
+      "name": "Accessible Animation",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "iart-ai/micro-interaction",
+      "name": "Micro Interaction",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "iart-ai/page-transition-animation",
+      "name": "Page Transition Animation",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "iart-ai/svg-animation",
+      "name": "SVG Animation",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubantalik/transitions-dev",
+      "name": "Transitions Dev",
+      "required": false
+    }
+  ]
+}

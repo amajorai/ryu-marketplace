@@ -1,0 +1,73 @@
+{
+  "kind": "bundle",
+  "members": [
+    {
+      "kind": "app",
+      "id": "@ryu/outreach",
+      "name": "Outreach",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/crm", "name": "CRM", "required": true },
+    { "kind": "app", "id": "@ryu/people", "name": "People", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/calendar",
+      "name": "Calendar",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/agent-comms",
+      "name": "Agent Comms",
+      "required": true
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/brand-presence",
+      "name": "Brand Presence",
+      "required": true
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/growth-psychology-strategist",
+      "name": "Growth Psychology Strategist",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/expiry-date-tracker",
+      "name": "Expiry Date Tracker",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "elithrar/anti-slop",
+      "name": "Anti-Slop",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/critique",
+      "name": "Critique",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/debugging",
+  "name": "Debugging",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:debugging"
+  ],
+  "includes": [
+    "skill:mattpocock/diagnosing-bugs",
+    "skill:mattpocock/engineering",
+    "skill:cursor/thermo-nuclear-code-quality-review",
+    "skill:ibelick/improve-ui"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/debugging",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Reproduce, isolate, explain, and repair.",
+    "category": "UI Skills",
+    "description": "A focused debugging collection using the UI Skills engineering, diagnosis, interface audit, and code-quality guidance.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/debugging"
+  }
+}

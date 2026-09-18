@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/frameworks",
+  "name": "Frameworks",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:frameworks"
+  ],
+  "includes": [
+    "skill:antfu/nuxt",
+    "skill:antfu/vue",
+    "skill:antfu/vite",
+    "skill:callstackincubator/react-native-best-practices",
+    "skill:sveltejs/svelte-code-writer"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/frameworks",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Framework-specific guidance, one curated shelf.",
+    "category": "UI Skills",
+    "description": "A cross-framework collection from UI Skills covering Vue, Nuxt, Vite, React Native, and Svelte implementation patterns.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/frameworks"
+  }
+}

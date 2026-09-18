@@ -1,0 +1,79 @@
+{
+  "kind": "bundle",
+  "members": [
+    { "kind": "app", "id": "@ryu/social", "name": "Social", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/content",
+      "name": "Content",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/backstage",
+      "name": "Backstage",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/studio",
+      "name": "Studio",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/serper",
+      "name": "Serper",
+      "required": false
+    },
+    { "kind": "plugin", "id": "@ryu/exa", "name": "Exa", "required": false },
+    {
+      "kind": "plugin",
+      "id": "@ryu/firecrawl",
+      "name": "Firecrawl",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/marketing-studio",
+      "name": "Marketing Studio",
+      "required": true
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/brand-presence",
+      "name": "Brand Presence",
+      "required": true
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/growth-psychology-strategist",
+      "name": "Growth Psychology Strategist",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/animate",
+      "name": "Animate",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "remotion-dev/remotion-best-practices",
+      "name": "Remotion Best Practices",
+      "required": false
+    }
+  ]
+}

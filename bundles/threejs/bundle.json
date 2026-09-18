@@ -1,0 +1,72 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/three.js",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-animation",
+      "name": "Threejs Animation",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-fundamentals",
+      "name": "Threejs Fundamentals",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-geometry",
+      "name": "Threejs Geometry",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-interaction",
+      "name": "Threejs Interaction",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-lighting",
+      "name": "Threejs Lighting",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-loaders",
+      "name": "Threejs Loaders",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-materials",
+      "name": "Threejs Materials",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-postprocessing",
+      "name": "Threejs Postprocessing",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-shaders",
+      "name": "Threejs Shaders",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-textures",
+      "name": "Threejs Textures",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "flornkm/webgl-components",
+      "name": "WebGL Components",
+      "required": false
+    }
+  ]
+}

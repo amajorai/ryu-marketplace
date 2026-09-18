@@ -1,0 +1,60 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/systems",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "0xdesign/design-lab",
+      "name": "Design Lab",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/frontend-ui-engineering",
+      "name": "Frontend UI Engineering",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/pinia",
+      "name": "Pinia",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/frontend-design",
+      "name": "Frontend Design",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "edenspiekermann/apply-design-system",
+      "name": "Apply Design System",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "edenspiekermann/audit-design-system",
+      "name": "Audit Design System",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "ibelick/create-design-md",
+      "name": "Create Design Md",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-interface",
+      "name": "Better Interface",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-layout",
+      "name": "Better Layout",
+      "required": false
+    }
+  ]
+}

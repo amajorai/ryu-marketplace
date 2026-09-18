@@ -1,0 +1,73 @@
+{
+  "kind": "bundle",
+  "members": [
+    {
+      "kind": "app",
+      "id": "@ryu/projects",
+      "name": "Projects",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/blueprint",
+      "name": "Blueprint",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/checks", "name": "Checks", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/pull-requests",
+      "name": "Pull Requests",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/research",
+      "name": "Research",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/rtk",
+      "name": "Ryu Token Keeper",
+      "required": true
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/ripgrep",
+      "name": "Ripgrep",
+      "required": true
+    },
+    { "kind": "plugin", "id": "@ryu/proof", "name": "Proof", "required": true },
+    {
+      "kind": "plugin",
+      "id": "@ryu/security-scanner",
+      "name": "Security Scanner",
+      "required": true
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/design-director",
+      "name": "Design Director",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/thermo-nuclear-code-quality-review",
+      "name": "Thermo Nuclear Code Quality Review",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "addyosmani/best-practices",
+      "name": "Best Practices",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "vercel-labs/react-best-practices",
+      "name": "React Best Practices",
+      "required": false
+    }
+  ]
+}

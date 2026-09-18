@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/systems",
+  "name": "Systems",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:systems"
+  ],
+  "includes": [
+    "skill:0xdesign/design-lab",
+    "skill:addyosmani/frontend-ui-engineering",
+    "skill:antfu/pinia",
+    "skill:anthropics/frontend-design",
+    "skill:edenspiekermann/apply-design-system",
+    "skill:edenspiekermann/audit-design-system",
+    "skill:ibelick/create-design-md",
+    "skill:jakubkrehel/better-interface",
+    "skill:jakubkrehel/better-layout"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/systems",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Turn visual intent into a coherent design system.",
+    "category": "UI Skills",
+    "description": "The Systems topic collection from UI Skills for design exploration, component architecture, tokens, and maintainable interface systems.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/systems"
+  }
+}

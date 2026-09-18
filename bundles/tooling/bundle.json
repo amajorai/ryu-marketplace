@@ -1,0 +1,80 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/tooling",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aboudjem/humanizer",
+      "name": "Humanizer",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/antfu",
+      "name": "Antfu",
+      "required": false
+    },
+    { "kind": "skill", "id": "antfu/pnpm", "name": "Pnpm", "required": true },
+    {
+      "kind": "skill",
+      "id": "antfu/tsdown",
+      "name": "Tsdown",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/turborepo",
+      "name": "Turborepo",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/unocss",
+      "name": "Unocss",
+      "required": false
+    },
+    { "kind": "skill", "id": "antfu/vite", "name": "Vite", "required": true },
+    {
+      "kind": "skill",
+      "id": "antfu/vitepress",
+      "name": "Vitepress",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/vitest",
+      "name": "Vitest",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/vueuse-functions",
+      "name": "Vueuse Functions",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/unslop",
+      "name": "Unslop",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "elithrar/anti-slop",
+      "name": "Anti-Slop",
+      "required": false
+    }
+  ]
+}

@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/ruby-lsp",
   "name": "Ruby LSP",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "stability": "experimental",
   "category": "Developer Tools",
   "description": "Ruby language server (ruby-lsp) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install ruby-lsp; the plugin ships config.",

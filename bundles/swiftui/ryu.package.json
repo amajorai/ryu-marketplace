@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/swiftui",
+  "name": "SwiftUI",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:swiftui"
+  ],
+  "includes": [
+    "skill:dimillian/swiftui-ui-patterns",
+    "skill:emilkowalski/write-swift",
+    "skill:emilkowalski/apple-design"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/swiftui",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Native SwiftUI with modern interaction craft.",
+    "category": "UI Skills",
+    "description": "The SwiftUI topic collection from UI Skills for native patterns, Apple interaction language, and modern Swift implementation.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/swiftui"
+  }
+}

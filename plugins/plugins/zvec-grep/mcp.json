@@ -1,0 +1,15 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "zvec_grep": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@zvec/zvec-grep@0.2.1",
+        "server",
+        "--stdio"
+      ]
+    }
+  }
+}

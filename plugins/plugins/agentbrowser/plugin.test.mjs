@@ -383,3 +383,87 @@ test("no inline turn_hooks are declared (nothing to execute)", () => {
 		"agentbrowser declares no turn_hooks; add hook-execution tests if it starts to"
 	);
 });
+
+// Execute the native fragment with Toolsmith's recorded, allowlisted effects.
+async function runAdapterCase(verb, fixture) {
+	const { runOnce } = await import("../../../tools/toolsmith/harness.mjs");
+	const directory = dirname(fileURLToPath(import.meta.url));
+	const source = JSON.parse(
+		readFileSync(join(directory, "manifest.json"), "utf8")
+	);
+	const binding = source.provides
+		.flatMap((entry) => Object.entries(entry.tools ?? {}))
+		.find(([id]) => id === verb)[1];
+	return runOnce({
+		kind: "adapter",
+		code: readFileSync(join(directory, binding.adapter.code_file), "utf8"),
+		adapterTools: binding.adapter.tools ?? [],
+		testCase: fixture,
+	});
+}
+
+for (const verb of [
+	"browser.click",
+	"browser.type",
+	"browser.scroll",
+	"browser.snapshot",
+	"browser.screenshot",
+]) {
+	test(`${verb} stops before acting when tab selection fails`, async () => {
+		const error = {
+			isError: true,
+			content: [{ type: "text", text: "tab not found" }],
+		};
+		const outcome = await runAdapterCase(verb, {
+			input: {
+				tab_id: "missing",
+				ref: "@e1",
+				text: "hello",
+				submit: true,
+				direction: "down",
+			},
+			provider: { named: { "agentbrowser.agent_browser_tab_switch": [error] } },
+		});
+		assert.deepEqual(outcome.value, error);
+		assert.deepEqual(outcome.calls, [
+			{
+				path: "callNamed:agentbrowser.agent_browser_tab_switch",
+				args: { tab: "missing" },
+			},
+		]);
+	});
+}
+
+test("browser.type does not press Enter after a failed write", async () => {
+	const error = {
+		isError: true,
+		content: [{ type: "text", text: "element missing" }],
+	};
+	const outcome = await runAdapterCase("browser.type", {
+		input: { ref: "@e1", text: "hello", submit: true },
+		provider: { call: [error] },
+	});
+	assert.deepEqual(outcome.value, error);
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: { selector: "@e1", text: "hello", clear: false },
+		},
+	]);
+});
+
+test("browser.type preserves failed Enter instead of reporting submitted", async () => {
+	const error = {
+		isError: true,
+		content: [{ type: "text", text: "Enter failed" }],
+	};
+	const outcome = await runAdapterCase("browser.type", {
+		input: { ref: "@e1", text: "hello", submit: true },
+		provider: {
+			call: [{ content: [] }],
+			named: { "agentbrowser.agent_browser_press": [error] },
+		},
+	});
+	assert.deepEqual(outcome.value, error);
+	assert.equal(outcome.calls.length, 2);
+});

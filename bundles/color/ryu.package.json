@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/color",
+  "name": "Color",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:color"
+  ],
+  "includes": [
+    "skill:accesslint/contrast-checker",
+    "skill:accesslint/use-of-color",
+    "skill:firebenders/sync-figma-token",
+    "skill:jakubkrehel/better-colors",
+    "skill:jakubkrehel/better-accessibility"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/color",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Color systems that are expressive, legible, and intentional.",
+    "category": "UI Skills",
+    "description": "The Color topic collection from UI Skills for contrast, tokenized palettes, OKLCH workflows, and inclusive use of color.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/color"
+  }
+}

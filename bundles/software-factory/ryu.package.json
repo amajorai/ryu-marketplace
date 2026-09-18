@@ -1,0 +1,55 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/software-factory",
+  "name": "Software Factory",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:software-factory"
+  ],
+  "includes": [
+    "app:@ryu/projects",
+    "app:@ryu/blueprint",
+    "app:@ryu/checks",
+    "app:@ryu/pull-requests",
+    "app:@ryu/research",
+    "plugin:@ryu/rtk",
+    "plugin:@ryu/ripgrep",
+    "plugin:@ryu/proof",
+    "plugin:@ryu/security-scanner",
+    "agent:ryu/design-director",
+    "skill:cursor/thermo-nuclear-code-quality-review",
+    "skill:addyosmani/best-practices",
+    "skill:vercel-labs/react-best-practices"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/software-factory",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "A complete build-to-ship workstation for product teams.",
+    "category": "Productivity",
+    "description": "Project planning, implementation, review, research, proof, security, and design guidance in one install.",
+    "author": "Ryu",
+    "featuredRank": 10
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/nuxt",
+  "name": "Nuxt",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:nuxt"
+  ],
+  "includes": [
+    "skill:antfu/nuxt",
+    "skill:antfu/nitro",
+    "skill:antfu/vue",
+    "skill:antfu/pinia",
+    "skill:antfu/vue-router-best-practices",
+    "skill:antfu/vueuse-functions"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/nuxt",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Full-stack Vue with a sharp Nuxt workflow.",
+    "category": "UI Skills",
+    "description": "The Nuxt topic collection from UI Skills for SSR, Nitro routes, Vue state, routing, and composition patterns.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/nuxt"
+  }
+}

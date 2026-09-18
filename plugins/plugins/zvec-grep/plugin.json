@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.zvec-grep",
+  "version": "0.1.14",
+  "description": "Local-first hybrid workspace search through zvec-grep's `zg` MCP bridge. Use semantic and ranked retrieval over an explicitly indexed workspace, with local models by default and source-linked results. Requires Node.js 22+; no Ryu API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/zvec-ai/zvec-grep",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/zvec-grep",
+  "license": "Apache-2.0",
+  "keywords": [
+    "search",
+    "semantic",
+    "vector",
+    "bm25",
+    "workspace"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/zvec-grep",
+      "displayName": "zvec-grep",
+      "mcp": {
+        "zvec_grep": {
+          "description": "zvec-grep's pinned stdio bootstrap bridge. It starts or reuses the local zvec-grep daemon and proxies the default indexed-search MCP toolset over stdin/stdout; Node.js 22+ is required."
+        }
+      }
+    }
+  }
+}

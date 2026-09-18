@@ -471,3 +471,46 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 		"the adapter body is not embedded — web.search would fail to load at runtime"
 	);
 });
+
+// Execute the native fragment with Toolsmith's recorded, allowlisted effects.
+async function runAdapterCase(verb, fixture) {
+	const { runOnce } = await import("../../../tools/toolsmith/harness.mjs");
+	const directory = dirname(fileURLToPath(import.meta.url));
+	const source = JSON.parse(
+		readFileSync(join(directory, "manifest.json"), "utf8")
+	);
+	const binding = source.provides
+		.flatMap((entry) => Object.entries(entry.tools ?? {}))
+		.find(([id]) => id === verb)[1];
+	return runOnce({
+		kind: "adapter",
+		code: readFileSync(join(directory, binding.adapter.code_file), "utf8"),
+		adapterTools: binding.adapter.tools ?? [],
+		testCase: fixture,
+	});
+}
+
+test("free search preserves MCP errors even when they carry result-shaped content", async () => {
+	const rpc = {
+		result: {
+			isError: true,
+			structuredContent: { results: [] },
+			content: [
+				{
+					type: "text",
+					text: "Title: Failure\nURL: https://example.test\nHighlights: denied",
+				},
+			],
+		},
+	};
+	const raw = rpc;
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "hello" },
+		provider: {
+			call: [{ available: false }],
+			named: { "parallel.free_search": [raw] },
+		},
+	});
+	assert.deepEqual(outcome.value, { raw });
+	assert.equal(outcome.calls.length, 2);
+});

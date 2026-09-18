@@ -1,0 +1,24 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/remotion",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "remotion-dev/remotion-best-practices",
+      "name": "Remotion Best Practices",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/animate",
+      "name": "Animate",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "iart-ai/lottie-animation",
+      "name": "Lottie Animation",
+      "required": false
+    }
+  ]
+}

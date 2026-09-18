@@ -1,0 +1,63 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/taste",
+  "name": "Taste",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:taste"
+  ],
+  "includes": [
+    "skill:aashaexo/humanize",
+    "skill:aboudjem/humanizer",
+    "skill:blader/humanizer",
+    "skill:cursor/unslop",
+    "skill:ehmo/slopbeth",
+    "skill:elithrar/anti-slop",
+    "skill:emilkowalski/emil-design-eng",
+    "skill:ericzakariasson/scandinavian-design",
+    "skill:hardikpandya/stop-slop",
+    "skill:jalaalrd/anti-ai-slop-writing",
+    "skill:leonxlnx/brutalist-skill",
+    "skill:leonxlnx/minimalist-skill",
+    "skill:leonxlnx/soft-skill",
+    "skill:leonxlnx/stitch-skill",
+    "skill:leonxlnx/taste-skill",
+    "skill:pbakaus/bolder",
+    "skill:pbakaus/critique",
+    "skill:pbakaus/delight",
+    "skill:petergyang/no-ai-slop",
+    "skill:stephenturner/deslop"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/taste",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "A sharper visual point of view for every interface.",
+    "category": "UI Skills",
+    "description": "The Taste topic collection from UI Skills: aesthetic judgment, style direction, distinctive hierarchy, and anti-generic product design.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/taste",
+    "featuredRank": 50
+  }
+}

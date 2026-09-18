@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/performance",
+  "name": "Performance",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:ui-skills:performance"
+  ],
+  "includes": [
+    "skill:addyosmani/core-web-vitals",
+    "skill:addyosmani/performance",
+    "skill:callstackincubator/react-native-best-practices",
+    "skill:cloudai-x/threejs-lighting",
+    "skill:cloudai-x/threejs-loaders",
+    "skill:ibelick/fixing-motion-performance",
+    "skill:vercel-labs/react-best-practices"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/performance",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Make fast experiences a built-in design constraint.",
+    "category": "UI Skills",
+    "description": "The Performance topic collection from UI Skills for Web Vitals, React Native, motion performance, and efficient 3D loading.",
+    "author": "Ryu",
+    "sourceUrl": "https://www.ui-skills.com/skills/performance"
+  }
+}

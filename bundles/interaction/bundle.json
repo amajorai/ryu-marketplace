@@ -1,0 +1,60 @@
+{
+  "kind": "bundle",
+  "sourceUrl": "https://www.ui-skills.com/skills/interaction",
+  "members": [
+    {
+      "kind": "skill",
+      "id": "0xdesign/design-lab",
+      "name": "Design Lab",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "accesslint/link-purpose",
+      "name": "Link Purpose",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/canvas-design",
+      "name": "Canvas Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-fundamentals",
+      "name": "Threejs Fundamentals",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cloudai-x/threejs-interaction",
+      "name": "Threejs Interaction",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "emilkowalski/apple-design",
+      "name": "Apple Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "iart-ai/micro-interaction",
+      "name": "Micro Interaction",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "jakubantalik/transitions-dev",
+      "name": "Transitions Dev",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "jakubkrehel/better-interface",
+      "name": "Better Interface",
+      "required": true
+    }
+  ]
+}
