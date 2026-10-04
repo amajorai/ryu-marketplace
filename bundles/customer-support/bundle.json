@@ -1,0 +1,88 @@
+{
+  "kind": "bundle",
+  "members": [
+    {
+      "kind": "app",
+      "id": "@ryu/help-center",
+      "name": "Help Center",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/mail", "name": "Mail", "required": true },
+    { "kind": "app", "id": "@ryu/crm", "name": "CRM", "required": true },
+    { "kind": "app", "id": "@ryu/people", "name": "People", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/meetings",
+      "name": "Meetings",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/drafts", "name": "Drafts", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/activity",
+      "name": "Activity",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    { "kind": "plugin", "id": "@ryu/exa", "name": "Exa", "required": false },
+    {
+      "kind": "plugin",
+      "id": "@ryu/firecrawl",
+      "name": "Firecrawl",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/expiry-date-tracker",
+      "name": "Expiry Date Tracker",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "ai.backengine/backengine-mcp",
+      "name": "Backengine Customer Context",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "io.modelcontextprotocol/memory",
+      "name": "Memory MCP Server",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/knowledge-work-plugins/customer-escalation",
+      "name": "Customer Escalation",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "googleworkspace/cli/persona-customer-support",
+      "name": "Customer Support Persona",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simpleenglish/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/critique",
+      "name": "Critique",
+      "required": false
+    }
+  ]
+}

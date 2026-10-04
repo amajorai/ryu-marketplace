@@ -1,10 +1,4 @@
 # Parallel Search
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="parallel" width="96" />
-  </picture>
-</p>
 
 Objective-driven web search and content extraction for Ryu agents, powered by
 [Parallel](https://parallel.ai). Ships as a fully declarative plugin — three
@@ -19,8 +13,8 @@ Objective-driven web search and content extraction for Ryu agents, powered by
 | `parallel.extract`     | `POST https://api.parallel.ai/v1/extract` | `urls`           | yes    |
 
 `search` also accepts `objective` (a self-contained natural-language statement of
-what you are looking for), `mode` (`turbo` / `basic` / `advanced`; this plugin
-defaults to `basic`, Parallel's own default is `advanced`), and `max_chars_total`.
+what you are looking for), `mode` (`turbo` / `fast` / `basic` / `advanced`; this
+plugin defaults to `basic`, Parallel's own default is `advanced`), and `max_chars_total`.
 `extract` also accepts `objective`, `search_queries`, and `max_chars_total`, and
 sends `advanced_settings.full_content` so each record carries the whole page as
 markdown rather than objective-focused excerpts.

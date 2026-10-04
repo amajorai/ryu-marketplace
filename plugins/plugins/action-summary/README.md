@@ -1,10 +1,4 @@
 # Action Summary
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="action-summary" width="96" />
-  </picture>
-</p>
 
 Action Summary puts a first-person approval question above a plain-language
 summary for the agent's visible thinking blocks and tool calls for

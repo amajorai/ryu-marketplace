@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/education",
+  "name": "Education",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:education"
+  ],
+  "includes": [
+    "app:@ryu/tuition",
+    "app:@ryu/learning",
+    "app:@ryu/meetings",
+    "app:@ryu/calendar",
+    "app:@ryu/people",
+    "app:@ryu/drafts",
+    "app:@ryu/research",
+    "app:@ryu/teams",
+    "plugin:@ryu/composio-connect",
+    "plugin:@ryu/honcho",
+    "mcp:io.modelcontextprotocol/memory",
+    "skill:anthropics/skills/pdf",
+    "skill:anthropics/skills/docx",
+    "skill:anthropics/skills/canvas-design",
+    "skill:anthropics/knowledge-work-plugins/data-visualization",
+    "skill:aminblg/simpleenglish/simple-english",
+    "skill:aashaexo/humanize"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/education",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Teach, learn, and keep the whole learning loop in context.",
+    "category": "Education",
+    "description": "A learning workspace for tuition, study plans, meetings, schedules, people, research, documents, and reusable teaching materials.",
+    "author": "Ryu",
+    "featuredRank": 16
+  }
+}

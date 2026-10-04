@@ -1,10 +1,4 @@
 # Scrapling
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="scrapling" width="96" />
-  </picture>
-</p>
 
 Adaptive web-page extraction for Ryu, powered by
 [Scrapling](https://scrapling.readthedocs.io). Ships as a fully declarative plugin —

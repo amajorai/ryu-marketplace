@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.jina-reader",
+  "version": "0.1.0",
+  "description": "Direct page extraction through Jina Reader. Provides the swappable web.extract layer and works with or without a Jina API key; a key raises the upstream rate limit.",
+  "author": { "name": "Ryu", "url": "https://ryuhq.com" },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/jina-reader",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/jina-reader",
+  "keywords": ["web", "extract", "reader", "Jina"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/jina-reader",
+      "displayName": "Jina Reader"
+    }
+  }
+}

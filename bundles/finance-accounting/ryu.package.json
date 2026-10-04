@@ -1,0 +1,58 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/finance-accounting",
+  "name": "Finance & Accounting",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:finance-accounting"
+  ],
+  "includes": [
+    "app:@ryu/expenses",
+    "app:@ryu/invoices",
+    "app:@ryu/dashboards",
+    "app:@ryu/research",
+    "app:@ryu/mail",
+    "app:@ryu/calendar",
+    "plugin:@ryu/composio-connect",
+    "plugin:@ryu/exa",
+    "agent:ryu/expense-tracker",
+    "agent:ryu/expiry-date-tracker",
+    "mcp:io.modelcontextprotocol/memory",
+    "mcp:dev.mpp/services",
+    "skill:anthropics/skills/xlsx",
+    "skill:anthropics/skills/pdf",
+    "skill:anthropics/knowledge-work-plugins/data-visualization",
+    "skill:aminblg/simpleenglish/simple-english"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/finance-accounting",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Close the books, explain the numbers, and keep financial work moving.",
+    "category": "Finance",
+    "description": "A finance workspace for expenses, invoices, reporting, research, financial documents, and governed payment-aware integrations.",
+    "author": "Ryu",
+    "featuredRank": 20
+  }
+}

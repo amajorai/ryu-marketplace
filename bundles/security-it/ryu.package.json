@@ -1,0 +1,68 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/security-it",
+  "name": "Security & IT",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:security-it"
+  ],
+  "includes": [
+    "app:@ryu/security",
+    "app:@ryu/checks",
+    "app:@ryu/projects",
+    "app:@ryu/blueprint",
+    "app:@ryu/research",
+    "app:@ryu/monitors",
+    "app:@ryu/activity",
+    "app:@ryu/pull-requests",
+    "app:@ryu/feedback-board",
+    "plugin:@ryu/security-scanner",
+    "plugin:@ryu/rtk",
+    "plugin:@ryu/ripgrep",
+    "plugin:@ryu/proof",
+    "plugin:@ryu/spidercloud",
+    "plugin:@ryu/composio-connect",
+    "agent:ryu/security-guard",
+    "mcp:ai.aient/mcp",
+    "mcp:io.modelcontextprotocol/memory",
+    "skill:openai/skills/security-best-practices",
+    "skill:openai/skills/security-threat-model",
+    "skill:openai/skills/gh-fix-ci",
+    "skill:cursor/plugins/thermo-nuclear-code-quality-review",
+    "skill:cursor/plugins/typescript-best-practices",
+    "skill:cursor/plugins/blast-radius",
+    "skill:anthropics/skills/mcp-builder",
+    "skill:cursor/plugins/why"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/security-it",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Keep systems safer, checks sharper, and incidents easier to explain.",
+    "category": "Security & IT",
+    "description": "A security and IT workstation for checks, monitoring, incident research, CI fixes, MCP building, code quality, and reviewed remediation.",
+    "author": "Ryu",
+    "featuredRank": 10
+  }
+}

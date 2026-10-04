@@ -1,0 +1,60 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/customer-support",
+  "name": "Customer Support",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:customer-support"
+  ],
+  "includes": [
+    "app:@ryu/help-center",
+    "app:@ryu/mail",
+    "app:@ryu/crm",
+    "app:@ryu/people",
+    "app:@ryu/meetings",
+    "app:@ryu/drafts",
+    "app:@ryu/activity",
+    "plugin:@ryu/composio-connect",
+    "plugin:@ryu/exa",
+    "plugin:@ryu/firecrawl",
+    "agent:ryu/expiry-date-tracker",
+    "mcp:ai.backengine/backengine-mcp",
+    "mcp:io.modelcontextprotocol/memory",
+    "skill:anthropics/knowledge-work-plugins/customer-escalation",
+    "skill:googleworkspace/cli/persona-customer-support",
+    "skill:aminblg/simpleenglish/simple-english",
+    "skill:aashaexo/humanize",
+    "skill:pbakaus/critique"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/customer-support",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Resolve customer issues with context, empathy, and a clean handoff.",
+    "category": "Customer Support",
+    "description": "Triage support work, research customer context, draft replies, package escalations, and turn resolved issues into durable knowledge.",
+    "author": "Ryu",
+    "featuredRank": 19
+  }
+}

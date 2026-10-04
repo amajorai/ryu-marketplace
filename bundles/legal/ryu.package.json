@@ -1,0 +1,57 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/legal",
+  "name": "Legal",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:legal"
+  ],
+  "includes": [
+    "app:@ryu/anydoc",
+    "app:@ryu/drafts",
+    "app:@ryu/research",
+    "app:@ryu/mail",
+    "app:@ryu/meetings",
+    "app:@ryu/calendar",
+    "app:@ryu/people",
+    "app:@ryu/invoices",
+    "plugin:@ryu/composio-connect",
+    "plugin:@ryu/exa",
+    "plugin:@ryu/firecrawl",
+    "agent:ryu/expiry-date-tracker",
+    "skill:aashaexo/humanize",
+    "skill:aminblg/simple-english",
+    "skill:pbakaus/critique"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/legal",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Turn contracts and legal operations into a review-ready workspace.",
+    "category": "Legal",
+    "description": "Organize documents, research, meetings, correspondence, deadlines, and invoices in one legal-operations loadout. AI output is a starting point for qualified legal review, not legal advice.",
+    "author": "Ryu",
+    "featuredRank": 60
+  }
+}

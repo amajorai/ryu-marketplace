@@ -36,6 +36,13 @@ test("declares a main-chat-context side-chat feature and /btw command", () => {
 			label: "Explain",
 			order: 110,
 		},
+		{
+			args: { dispatch: "side-chat.selection", intent: "proofread" },
+			id: "side-chats.proofread-selection",
+			kind: "button",
+			label: "Fix grammar",
+			order: 120,
+		},
 	]);
 	assert.equal(manifest.contributes?.slash_commands?.[0]?.command, "/btw");
 });

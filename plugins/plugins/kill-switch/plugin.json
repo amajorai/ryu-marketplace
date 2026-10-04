@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.kill-switch",
+  "version": "0.1.0",
+  "description": "Stop running chats and bots on the selected node and pause new work until you resume execution.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "keywords": [
+    "kill switch",
+    "stop",
+    "pause",
+    "cancel",
+    "bots"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/kill-switch",
+      "displayName": "Kill Switch"
+    }
+  }
+}

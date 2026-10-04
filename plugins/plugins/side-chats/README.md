@@ -1,10 +1,4 @@
 # Side Chats
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="side-chats" width="96" />
-  </picture>
-</p>
 
 Adds `/btw` as a plugin-contributed chat command. The desktop sends the current
 main-chat transcript (including the latest in-flight messages) with the question,

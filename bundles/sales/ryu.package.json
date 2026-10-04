@@ -1,0 +1,57 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/sales",
+  "name": "Sales",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:sales"
+  ],
+  "includes": [
+    "app:@ryu/crm",
+    "app:@ryu/outreach",
+    "app:@ryu/people",
+    "app:@ryu/calendar",
+    "app:@ryu/mail",
+    "app:@ryu/meetings",
+    "app:@ryu/research",
+    "plugin:@ryu/composio-connect",
+    "plugin:@ryu/exa",
+    "agent:ryu/growth-psychology-strategist",
+    "agent:ryu/brand-presence",
+    "agent:ryu/expiry-date-tracker",
+    "skill:aashaexo/humanize",
+    "skill:aminblg/simple-english",
+    "skill:pbakaus/critique"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/sales",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Turn account context into better conversations and next steps.",
+    "category": "Sales",
+    "description": "Keep pipeline, contacts, meetings, correspondence, research, and follow-up in one context-rich sales workspace.",
+    "author": "Ryu",
+    "featuredRank": 40
+  }
+}

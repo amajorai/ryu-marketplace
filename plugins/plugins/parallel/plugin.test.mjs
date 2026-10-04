@@ -197,7 +197,12 @@ test("input schemas are well-formed JSON Schema objects with required keys", () 
 	// even though the MCP tool demands both. The schema states the endpoint's own
 	// contract; the adapter is what always sends both.
 	assert.deepEqual(s.required, ["search_queries"]);
-	assert.deepEqual(s.properties.mode.enum, ["turbo", "basic", "advanced"]);
+	assert.deepEqual(s.properties.mode.enum, [
+		"turbo",
+		"fast",
+		"basic",
+		"advanced",
+	]);
 
 	const e = bySlug.get("parallel.extract").config.input_schema;
 	assert.equal(e.type, "object");

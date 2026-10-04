@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/data-analytics",
+  "name": "Data & Analytics",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:data-analytics"
+  ],
+  "includes": [
+    "app:@ryu/dashboards",
+    "app:@ryu/research",
+    "app:@ryu/news",
+    "app:@ryu/monitors",
+    "app:@ryu/feedback-board",
+    "app:@ryu/anydoc",
+    "app:@ryu/activity",
+    "plugin:@ryu/exa",
+    "plugin:@ryu/serper",
+    "plugin:@ryu/firecrawl",
+    "plugin:@ryu/composio-connect",
+    "mcp:io.modelcontextprotocol/memory",
+    "skill:anthropics/knowledge-work-plugins/data-visualization",
+    "skill:anthropics/skills/xlsx",
+    "skill:mattpocock/skills/research",
+    "skill:firecrawl/firecrawl-workflows/firecrawl-deep-research",
+    "skill:aminblg/simpleenglish/simple-english"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/data-analytics",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Turn messy evidence into decisions people can act on.",
+    "category": "Data",
+    "description": "Query, research, visualize, monitor, and explain business data with dashboards, documents, and repeatable analysis workflows.",
+    "author": "Ryu",
+    "featuredRank": 15
+  }
+}

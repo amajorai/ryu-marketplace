@@ -1,0 +1,67 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/small-business",
+  "name": "Small Business",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:small-business"
+  ],
+  "includes": [
+    "app:@ryu/projects",
+    "app:@ryu/crm",
+    "app:@ryu/expenses",
+    "app:@ryu/invoices",
+    "app:@ryu/people",
+    "app:@ryu/calendar",
+    "app:@ryu/mail",
+    "app:@ryu/research",
+    "app:@ryu/dashboards",
+    "app:@ryu/drafts",
+    "plugin:@ryu/composio-connect",
+    "plugin:@ryu/exa",
+    "plugin:@ryu/serper",
+    "agent:ryu/expense-tracker",
+    "agent:ryu/expiry-date-tracker",
+    "agent:ryu/growth-psychology-strategist",
+    "mcp:dev.mpp/services",
+    "mcp:io.modelcontextprotocol/memory",
+    "skill:anthropics/skills/xlsx",
+    "skill:anthropics/skills/pdf",
+    "skill:openai/skills/linear",
+    "skill:coreyhaines31/marketingskills/customer-research",
+    "skill:aminblg/simpleenglish/simple-english",
+    "skill:aashaexo/humanize",
+    "skill:pbakaus/critique"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/small-business",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Run the business with one practical, context-rich workspace.",
+    "category": "Small Business",
+    "description": "A small-business loadout for projects, customers, money, scheduling, research, reporting, outreach, and everyday operations.",
+    "author": "Ryu",
+    "featuredRank": 9
+  }
+}

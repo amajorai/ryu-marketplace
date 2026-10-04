@@ -1,0 +1,136 @@
+{
+  "kind": "bundle",
+  "members": [
+    { "kind": "app", "id": "@ryu/social", "name": "Social", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/content",
+      "name": "Content",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/crm", "name": "CRM", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/expenses",
+      "name": "Expenses",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/invoices",
+      "name": "Invoices",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/dashboards",
+      "name": "Dashboards",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/monitors",
+      "name": "Monitors",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/mail", "name": "Mail", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/calendar",
+      "name": "Calendar",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/research",
+      "name": "Research",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/serper",
+      "name": "Serper",
+      "required": true
+    },
+    { "kind": "plugin", "id": "@ryu/exa", "name": "Exa", "required": false },
+    {
+      "kind": "plugin",
+      "id": "@ryu/firecrawl",
+      "name": "Firecrawl",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/marketing-studio",
+      "name": "Marketing Studio",
+      "required": true
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/growth-psychology-strategist",
+      "name": "Growth Psychology Strategist",
+      "required": true
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/brand-presence",
+      "name": "Brand Presence",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/expense-tracker",
+      "name": "Expense Tracker",
+      "required": false
+    },
+    { "kind": "mcp", "id": "com.x/mcp", "name": "X MCP", "required": false },
+    {
+      "kind": "mcp",
+      "id": "dev.mpp/services",
+      "name": "MPP Services",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "coreyhaines31/marketingskills/customer-research",
+      "name": "Customer Research",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "coreyhaines31/marketingskills/sales-enablement",
+      "name": "Sales Enablement",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/knowledge-work-plugins/data-visualization",
+      "name": "Data Visualization",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/figma-implement-design",
+      "name": "Figma Implement Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simpleenglish/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": false
+    }
+  ]
+}

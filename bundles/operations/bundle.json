@@ -1,0 +1,108 @@
+{
+  "kind": "bundle",
+  "members": [
+    {
+      "kind": "app",
+      "id": "@ryu/projects",
+      "name": "Projects",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/workflows",
+      "name": "Workflows",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/calendar",
+      "name": "Calendar",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/dashboards",
+      "name": "Dashboards",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/monitors",
+      "name": "Monitors",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/activity",
+      "name": "Activity",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/teams", "name": "Teams", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/feedback-board",
+      "name": "Feedback Board",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/proof",
+      "name": "Proof",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/expiry-date-tracker",
+      "name": "Expiry Date Tracker",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "ai.aient/mcp",
+      "name": "AI SRE MCP",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "io.modelcontextprotocol/memory",
+      "name": "Memory MCP Server",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/linear",
+      "name": "Linear",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/plugins/why",
+      "name": "Why",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/plugins/blast-radius",
+      "name": "Blast Radius",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "mattpocock/skills/research",
+      "name": "Research",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simpleenglish/simple-english",
+      "name": "Simple English",
+      "required": true
+    }
+  ]
+}

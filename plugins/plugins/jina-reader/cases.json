@@ -1,0 +1,180 @@
+{
+  "tool": "web.extract",
+  "kind": "adapter",
+  "code_file": "adapters/web.extract.js",
+  "adapter_tools": [],
+  "cases": [
+    {
+      "name": "maps a Reader JSON page to the canonical extract result",
+      "input": { "url": "https://example.com/article" },
+      "provider": {
+        "call": [
+          {
+            "code": 200,
+            "status": 20000,
+            "data": {
+              "url": "https://example.com/article",
+              "title": "Example",
+              "content": "# Example",
+              "usage": { "tokens": 3 }
+            }
+          }
+        ]
+      },
+      "expect": {
+        "results": [
+          {
+            "url": "https://example.com/article",
+            "title": "Example",
+            "content": "# Example",
+            "raw": {
+              "url": "https://example.com/article",
+              "title": "Example",
+              "content": "# Example",
+              "usage": { "tokens": 3 }
+            }
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/article",
+            "Accept": "application/json"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a blank but successful page remains a real result",
+      "input": { "url": "https://example.com/blank" },
+      "provider": { "call": [{ "code": 200, "data": { "content": "" } }] },
+      "expect": {
+        "results": [
+          {
+            "url": "https://example.com/blank",
+            "title": null,
+            "content": "",
+            "raw": { "content": "" }
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/blank",
+            "Accept": "application/json"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a cached snapshot warning does not hide a successful page",
+      "input": { "url": "https://example.com/" },
+      "provider": {
+        "call": [
+          {
+            "code": 200,
+            "data": {
+              "url": "https://example.com/",
+              "title": "Example Domain",
+              "content": "Example content",
+              "warning": "This is a cached snapshot"
+            }
+          }
+        ]
+      },
+      "expect": {
+        "results": [
+          {
+            "url": "https://example.com/",
+            "title": "Example Domain",
+            "content": "Example content",
+            "raw": {
+              "url": "https://example.com/",
+              "title": "Example Domain",
+              "content": "Example content",
+              "warning": "This is a cached snapshot"
+            }
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/",
+            "Accept": "application/json"
+          }
+        }
+      ]
+    },
+    {
+      "name": "an upstream target warning is surfaced rather than reported as extracted content",
+      "input": { "url": "https://example.com/missing" },
+      "provider": {
+        "call": [
+          {
+            "code": 200,
+            "data": {
+              "url": "https://example.com/missing",
+              "warning": "Target URL returned error 404",
+              "content": "Unknown."
+            }
+          }
+        ]
+      },
+      "expect": {
+        "raw": {
+          "code": 200,
+          "data": {
+            "url": "https://example.com/missing",
+            "warning": "Target URL returned error 404",
+            "content": "Unknown."
+          }
+        }
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/missing",
+            "Accept": "application/json"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a malformed URL is rejected before contacting Reader",
+      "input": { "url": "file:///etc/passwd" },
+      "expectError": "HTTP or HTTPS URL",
+      "expectCalls": []
+    },
+    {
+      "name": "a loopback target cannot be sent to the hosted Reader",
+      "input": { "url": "http://127.0.0.1:8080/secrets" },
+      "expectError": "local or private URL",
+      "expectCalls": []
+    },
+    {
+      "name": "a credential-bearing target is rejected before contacting Reader",
+      "input": { "url": "https://user:password@example.com/private" },
+      "expectError": "without credentials",
+      "expectCalls": []
+    },
+    {
+      "name": "an IPv6 loopback target cannot be sent to the hosted Reader",
+      "input": { "url": "http://[::1]/admin" },
+      "expectError": "local or private URL",
+      "expectCalls": []
+    },
+    {
+      "name": "an IPv4-mapped IPv6 target cannot evade the private URL guard",
+      "input": { "url": "http://[::ffff:127.0.0.1]/admin" },
+      "expectError": "local or private URL",
+      "expectCalls": []
+    }
+  ]
+}

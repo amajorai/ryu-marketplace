@@ -2273,7 +2273,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Sketch ideas and attach them to chat",
-      "description": "A lightweight sketching studio for Ryu with seven natural-feeling pens, area erasing, SVG or PNG export, plus chat dialogs for sketching or annotating visual references.",
+      "description": "A focused sketch surface for Ryu with a compact pen, highlighter, and eraser toolbar, plus chat dialogs for sketching or annotating visual references.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -2929,6 +2929,56 @@
       }
     },
     {
+      "name": "functiongemma",
+      "displayName": "FunctionGemma Local Planner",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Local function-calling for Shadow",
+      "description": "Run Google's license-gated FunctionGemma 270M model locally as a selectable Shadow computer-use planner. Ryu downloads a pinned Hugging Face snapshot using the user's Hugging Face token; the user must first accept Google's Gemma terms.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://huggingface.co/google/functiongemma-270m-it",
+      "category": "Models",
+      "keywords": [
+        "models",
+        "huggingface",
+        "local",
+        "computer-use",
+        "function-calling",
+        "gemma"
+      ],
+      "tags": [
+        "models",
+        "huggingface",
+        "local",
+        "computer-use",
+        "function-calling",
+        "gemma"
+      ],
+      "license": "Gemma",
+      "icon": "ai-brain-01",
+      "homepage": "https://huggingface.co/google/functiongemma-270m-it",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "ghost",
       "displayName": "Ghost",
       "version": "0.4.0",
@@ -3569,6 +3619,107 @@
       }
     },
     {
+      "name": "jina-reader",
+      "displayName": "Jina Reader",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "layers": [
+        {
+          "capability": "web.extract",
+          "title": "Extract",
+          "toolkit": true,
+          "selectable": true,
+          "verbs": [
+            "web.extract"
+          ]
+        }
+      ],
+      "tagline": "Read web pages as clean text for agents",
+      "description": "Direct page extraction through Jina Reader. Provides the swappable web.extract layer and works with or without a Jina API key; a key raises the upstream rate limit.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/jina-reader",
+      "category": "Search",
+      "keywords": [
+        "web",
+        "extract",
+        "reader",
+        "Jina"
+      ],
+      "tags": [
+        "web",
+        "extract",
+        "reader"
+      ],
+      "icon": "book-search",
+      "iconDither": {
+        "from": 190,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/jina-reader",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "kill-switch",
+      "displayName": "Kill Switch",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Stop chats and bots immediately",
+      "description": "Stop running chats and bots on the selected node and pause new work until you resume execution.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "category": "Productivity",
+      "keywords": [
+        "kill switch",
+        "stop",
+        "pause",
+        "cancel",
+        "bots"
+      ],
+      "tags": [
+        "chat",
+        "bots",
+        "safety",
+        "control"
+      ],
+      "icon": "stop-circle",
+      "surfaces": [
+        "core",
+        "desktop"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.4.0"
+      }
+    },
+    {
       "name": "kotlin-lsp",
       "displayName": "Kotlin LSP",
       "version": "0.4.0",
@@ -3608,6 +3759,61 @@
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/kotlin-lsp",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "laya",
+      "displayName": "Laya Local Decisions",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Fast local typed decisions for routing and guardrails",
+      "description": "Run Convai Innovations' Apache-2.0 Laya decision models locally through authenticated Ryu tools and as a selectable Shadow computer-use planner. Laya classifies text, email, tickets, and JSON into typed choice, score, and boolean answers; it does not generate text. The plugin provisions its Python sidecar and all three pinned Hugging Face checkpoints (about 2.37 GB / 2.21 GiB) inside the plugin runtime.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://huggingface.co/convaiinnovations/laya",
+      "category": "Models",
+      "keywords": [
+        "models",
+        "huggingface",
+        "local",
+        "classification",
+        "routing",
+        "guardrails"
+      ],
+      "tags": [
+        "models",
+        "huggingface",
+        "local",
+        "classification",
+        "routing",
+        "guardrails"
+      ],
+      "license": "Apache-2.0",
+      "icon": "ai-brain-01",
+      "iconDither": {
+        "from": 240,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://huggingface.co/convaiinnovations/laya",
       "surfaces": [
         "core",
         "desktop",
@@ -3716,6 +3922,62 @@
       "stability": "experimental",
       "engines": {
         "ryu": ">=0.3.1"
+      }
+    },
+    {
+      "name": "llm-wiki",
+      "displayName": "LLM Wiki",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Compound research in a Ryu Space",
+      "description": "Build and maintain an interlinked research wiki in a user-owned Ryu Space. The bundled skill orients from existing documents, captures source provenance, preserves contradictions, and files durable syntheses without using a private filesystem wiki.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/llm-wiki",
+      "category": "Knowledge & Memory",
+      "keywords": [
+        "wiki",
+        "knowledge base",
+        "research",
+        "Ryu Spaces",
+        "provenance",
+        "notes"
+      ],
+      "tags": [
+        "wiki",
+        "knowledge",
+        "research",
+        "spaces",
+        "notes",
+        "rag"
+      ],
+      "icon": "book-open-01",
+      "iconDither": {
+        "from": 208,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/llm-wiki",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
       }
     },
     {
@@ -4233,6 +4495,56 @@
       }
     },
     {
+      "name": "needle3",
+      "displayName": "Needle 3 Local Planner",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Tiny on-device tool-calling for Shadow",
+      "description": "Run Cactus Compute's Apache-2.0 Needle 3 tool-calling model locally as a selectable Shadow computer-use planner. The model weights are pinned and installed into the plugin runtime; the small cactus-needle runtime is installed separately.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://huggingface.co/Cactus-Compute/needle3",
+      "category": "Models",
+      "keywords": [
+        "models",
+        "huggingface",
+        "local",
+        "computer-use",
+        "tool-calling",
+        "needle"
+      ],
+      "tags": [
+        "models",
+        "huggingface",
+        "local",
+        "computer-use",
+        "tool-calling",
+        "needle"
+      ],
+      "license": "Apache-2.0",
+      "icon": "ai-brain-01",
+      "homepage": "https://huggingface.co/Cactus-Compute/needle3",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "news",
       "displayName": "Wire",
       "version": "0.4.0",
@@ -4598,7 +4910,7 @@
         }
       ],
       "tagline": "Objective-driven web search built for agent loops",
-      "description": "Web search and content extraction via Parallel (https://parallel.ai), exposed as three declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at Parallel without changing what agents call. Search works with NO key through Parallel's public Search MCP endpoint; a BYOK Parallel API key unlocks the higher-limit REST API and extraction.",
+      "description": "Web search and content extraction via Parallel (https://parallel.ai), exposed as three HTTP tool runnables plus one capability adapter. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at Parallel without changing what agents call. Search works without a key through Parallel's public Search MCP endpoint; a BYOK Parallel API key unlocks the higher-limit REST API and extraction.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -5171,15 +5483,15 @@
     },
     {
       "name": "pull-requests",
-      "displayName": "Pull Requests",
+      "displayName": "Code Review",
       "version": "0.4.0",
       "type": "app",
       "source": "builtin",
       "official": true,
       "system": false,
       "developer": "Ryu",
-      "tagline": "Review GitHub pull requests and issues without leaving Ryu",
-      "description": "A focused GitHub work inbox for Ryu. Browse pull requests and issues across repositories, inspect summaries and discussion, then review, manage stacked pull requests, merge changes, or close and comment on issues through the locally authenticated GitHub CLI.",
+      "tagline": "Review GitHub pull requests with your team and Ryu",
+      "description": "A unified GitHub code review workspace for Ryu. Triage pull requests across repositories, inspect changes and checks, discuss and submit reviews, manage stacks, and optionally ask your selected Ryu model for read-only review help.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -8995,7 +9307,7 @@
       ],
       "featuredRank": 128,
       "developer": "Ryu",
-      "checksum": "3b4b3e5e13bbd740d5fb08adb89bbc17e6c700a4f0e83c807ee5fa74c27dc875",
+      "checksum": "4cfa7a64ca7b4b28a9ef9e37665fa1adc3102b8f38039f4423102afe82c4bdf7",
       "ref": "main"
     },
     {
@@ -9113,6 +9425,139 @@
       "ref": "main"
     },
     {
+      "name": "customer-support",
+      "displayName": "Customer Support",
+      "id": "ryu/bundle/customer-support",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/customer-support",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:customer-support"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/help-center",
+        "app:@ryu/mail",
+        "app:@ryu/crm",
+        "app:@ryu/people",
+        "app:@ryu/meetings",
+        "app:@ryu/drafts",
+        "app:@ryu/activity",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:ai.backengine/backengine-mcp",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/knowledge-work-plugins/customer-escalation",
+        "skill:googleworkspace/cli/persona-customer-support",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Resolve customer issues with context, empathy, and a clean handoff.",
+      "description": "Triage support work, research customer context, draft replies, package escalations, and turn resolved issues into durable knowledge.",
+      "category": "Customer Support",
+      "author": "Ryu",
+      "featuredRank": 19,
+      "developer": "Ryu",
+      "checksum": "7363af7ba509dd4de834c4865ae82505732014bc35b055700d49ed199d353cec",
+      "ref": "main"
+    },
+    {
+      "name": "data-analytics",
+      "displayName": "Data & Analytics",
+      "id": "ryu/bundle/data-analytics",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/data-analytics",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:data-analytics"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/dashboards",
+        "app:@ryu/research",
+        "app:@ryu/news",
+        "app:@ryu/monitors",
+        "app:@ryu/feedback-board",
+        "app:@ryu/anydoc",
+        "app:@ryu/activity",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/serper",
+        "plugin:@ryu/firecrawl",
+        "plugin:@ryu/composio-connect",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:anthropics/skills/xlsx",
+        "skill:mattpocock/skills/research",
+        "skill:firecrawl/firecrawl-workflows/firecrawl-deep-research",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "Turn messy evidence into decisions people can act on.",
+      "description": "Query, research, visualize, monitor, and explain business data with dashboards, documents, and repeatable analysis workflows.",
+      "category": "Data",
+      "author": "Ryu",
+      "featuredRank": 15,
+      "developer": "Ryu",
+      "checksum": "8f2c006a96a63d9246f9c0c39c7af9133fbce1d946dd21b957dfcfea239c410f",
+      "ref": "main"
+    },
+    {
       "name": "debugging",
       "displayName": "Debugging",
       "id": "ryu/bundle/debugging",
@@ -9219,6 +9664,284 @@
       "featuredRank": 135,
       "developer": "Ryu",
       "checksum": "6205fc6000a35e7e87a2a77eca07a35df4c2689c0903a2461a8a09e476dc76e8",
+      "ref": "main"
+    },
+    {
+      "name": "ecommerce",
+      "displayName": "E-commerce",
+      "id": "ryu/bundle/ecommerce",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/ecommerce",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:ecommerce"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/social",
+        "app:@ryu/content",
+        "app:@ryu/crm",
+        "app:@ryu/expenses",
+        "app:@ryu/invoices",
+        "app:@ryu/dashboards",
+        "app:@ryu/monitors",
+        "app:@ryu/mail",
+        "app:@ryu/calendar",
+        "app:@ryu/research",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/serper",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/marketing-studio",
+        "agent:ryu/growth-psychology-strategist",
+        "agent:ryu/brand-presence",
+        "agent:ryu/expense-tracker",
+        "mcp:com.x/mcp",
+        "mcp:dev.mpp/services",
+        "skill:coreyhaines31/marketingskills/customer-research",
+        "skill:coreyhaines31/marketingskills/sales-enablement",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:openai/skills/figma-implement-design",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize"
+      ],
+      "tagline": "Connect demand, merchandising, customer context, and revenue signals.",
+      "description": "Research customers, create campaigns, manage relationships, watch performance, and keep commerce operations in one growth workspace.",
+      "category": "E-commerce",
+      "author": "Ryu",
+      "featuredRank": 11,
+      "developer": "Ryu",
+      "checksum": "c376b8890368cc9875dd16578b9514617ba1ed641464a88c5b553be142714311",
+      "ref": "main"
+    },
+    {
+      "name": "education",
+      "displayName": "Education",
+      "id": "ryu/bundle/education",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/education",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:education"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/tuition",
+        "app:@ryu/learning",
+        "app:@ryu/meetings",
+        "app:@ryu/calendar",
+        "app:@ryu/people",
+        "app:@ryu/drafts",
+        "app:@ryu/research",
+        "app:@ryu/teams",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/honcho",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/skills/pdf",
+        "skill:anthropics/skills/docx",
+        "skill:anthropics/skills/canvas-design",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize"
+      ],
+      "tagline": "Teach, learn, and keep the whole learning loop in context.",
+      "description": "A learning workspace for tuition, study plans, meetings, schedules, people, research, documents, and reusable teaching materials.",
+      "category": "Education",
+      "author": "Ryu",
+      "featuredRank": 16,
+      "developer": "Ryu",
+      "checksum": "2726659eb47f8fa17ebc6d371bda2b508114694a096e7fd451b96822ed6e80ae",
+      "ref": "main"
+    },
+    {
+      "name": "engineering",
+      "displayName": "Engineering",
+      "id": "ryu/bundle/engineering",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/engineering",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:engineering"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/projects",
+        "app:@ryu/blueprint",
+        "app:@ryu/checks",
+        "app:@ryu/pull-requests",
+        "app:@ryu/research",
+        "app:@ryu/security",
+        "app:@ryu/feedback-board",
+        "plugin:@ryu/rtk",
+        "plugin:@ryu/ripgrep",
+        "plugin:@ryu/proof",
+        "plugin:@ryu/security-scanner",
+        "agent:ryu/security-guard",
+        "agent:ryu/design-director",
+        "skill:cursor/thermo-nuclear-code-quality-review",
+        "skill:addyosmani/best-practices",
+        "skill:mattpocock/codebase-design",
+        "skill:mattpocock/engineering",
+        "skill:mattpocock/diagnosing-bugs",
+        "skill:vercel-labs/react-best-practices"
+      ],
+      "tagline": "Plan, build, verify, and ship with the whole engineering loop in view.",
+      "description": "A practical engineering workstation for planning, implementation, checks, review, security, research, and proof.",
+      "category": "Engineering",
+      "author": "Ryu",
+      "featuredRank": 30,
+      "developer": "Ryu",
+      "checksum": "7658521fc379471f7b99a5324491336e82f0138c4c5109672ecf3b83b65bdb97",
+      "ref": "main"
+    },
+    {
+      "name": "enterprise-search",
+      "displayName": "Enterprise Search",
+      "id": "ryu/bundle/enterprise-search",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/enterprise-search",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:enterprise-search"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/mail",
+        "app:@ryu/anydoc",
+        "app:@ryu/research",
+        "app:@ryu/meetings",
+        "app:@ryu/drafts",
+        "app:@ryu/people",
+        "app:@ryu/news",
+        "app:@ryu/bookmarks",
+        "plugin:@ryu/honcho",
+        "plugin:@ryu/mem0",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "mcp:io.modelcontextprotocol/memory",
+        "mcp:ai.backengine/backengine-mcp",
+        "skill:mattpocock/skills/research",
+        "skill:googleworkspace/cli/persona-researcher",
+        "skill:anthropics/skills/pdf",
+        "skill:anthropics/skills/docx",
+        "skill:openai/skills/openai-docs",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "Find the answer across company knowledge without changing tools.",
+      "description": "Search mail, documents, meetings, bookmarks, research, news, and memory through one evidence-oriented knowledge workflow.",
+      "category": "Enterprise Search",
+      "author": "Ryu",
+      "featuredRank": 14,
+      "developer": "Ryu",
+      "checksum": "d056e4c44d5a825bc555d95db7a5c0858137b47787c6850ff0baa93a7fe574d3",
       "ref": "main"
     },
     {
@@ -9428,6 +10151,71 @@
       ],
       "icon": "GitFork",
       "checksum": "9c464a5055554b78728b3a371d154646b1f6764a745a225ed007df1971de1cf7",
+      "ref": "main"
+    },
+    {
+      "name": "finance-accounting",
+      "displayName": "Finance & Accounting",
+      "id": "ryu/bundle/finance-accounting",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/finance-accounting",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:finance-accounting"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/expenses",
+        "app:@ryu/invoices",
+        "app:@ryu/dashboards",
+        "app:@ryu/research",
+        "app:@ryu/mail",
+        "app:@ryu/calendar",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "agent:ryu/expense-tracker",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:io.modelcontextprotocol/memory",
+        "mcp:dev.mpp/services",
+        "skill:anthropics/skills/xlsx",
+        "skill:anthropics/skills/pdf",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "Close the books, explain the numbers, and keep financial work moving.",
+      "description": "A finance workspace for expenses, invoices, reporting, research, financial documents, and governed payment-aware integrations.",
+      "category": "Finance",
+      "author": "Ryu",
+      "featuredRank": 20,
+      "developer": "Ryu",
+      "checksum": "51f1f14844bc4d2b8a5283aad008144339a403e8ace8dc3cab4df2e6154f1e0f",
       "ref": "main"
     },
     {
@@ -9647,6 +10435,71 @@
       "ref": "main"
     },
     {
+      "name": "hr-people",
+      "displayName": "HR & People",
+      "id": "ryu/bundle/hr-people",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/hr-people",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:hr-people"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/people",
+        "app:@ryu/teams",
+        "app:@ryu/calendar",
+        "app:@ryu/meetings",
+        "app:@ryu/mail",
+        "app:@ryu/drafts",
+        "app:@ryu/learning",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/honcho",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/skills/docx",
+        "skill:anthropics/skills/pdf",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Keep people programs, conversations, and commitments organized.",
+      "description": "A people-operations workspace for teams, meetings, correspondence, onboarding materials, learning, and deadline-aware follow-up.",
+      "category": "HR",
+      "author": "Ryu",
+      "featuredRank": 18,
+      "developer": "Ryu",
+      "checksum": "f1d6e2056a58b8473df28e3eb0a778963ed21b7dcd9bc09c2d55c1e1cf1ff3e6",
+      "ref": "main"
+    },
+    {
       "name": "interaction",
       "displayName": "Interaction",
       "id": "ryu/bundle/interaction",
@@ -9701,6 +10554,136 @@
       "author": "Ryu",
       "developer": "Ryu",
       "checksum": "c118e0d7db29117abf28aaf827810131cf6d0d18ebef231d5f8bf603cb772193",
+      "ref": "main"
+    },
+    {
+      "name": "legal",
+      "displayName": "Legal",
+      "id": "ryu/bundle/legal",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/legal",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:legal"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/anydoc",
+        "app:@ryu/drafts",
+        "app:@ryu/research",
+        "app:@ryu/mail",
+        "app:@ryu/meetings",
+        "app:@ryu/calendar",
+        "app:@ryu/people",
+        "app:@ryu/invoices",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/expiry-date-tracker",
+        "skill:aashaexo/humanize",
+        "skill:aminblg/simple-english",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Turn contracts and legal operations into a review-ready workspace.",
+      "description": "Organize documents, research, meetings, correspondence, deadlines, and invoices in one legal-operations loadout. AI output is a starting point for qualified legal review, not legal advice.",
+      "category": "Legal",
+      "author": "Ryu",
+      "featuredRank": 60,
+      "developer": "Ryu",
+      "checksum": "bbc411bec31919acb6ccc18158f7847376e89338e7cc91df1b85181cbebce5e9",
+      "ref": "main"
+    },
+    {
+      "name": "marketing",
+      "displayName": "Marketing",
+      "id": "ryu/bundle/marketing",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/marketing",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:marketing"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/social",
+        "app:@ryu/content",
+        "app:@ryu/research",
+        "app:@ryu/news",
+        "app:@ryu/backstage",
+        "app:@ryu/studio",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/serper",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/marketing-studio",
+        "agent:ryu/brand-presence",
+        "agent:ryu/growth-psychology-strategist",
+        "skill:aashaexo/humanize",
+        "skill:aminblg/simple-english",
+        "skill:emilkowalski/animate",
+        "skill:remotion-dev/remotion-best-practices"
+      ],
+      "tagline": "Build a consistent campaign engine from brief to measurement.",
+      "description": "Research audiences, shape positioning, produce content, publish campaigns, and learn from performance with one connected marketing workspace.",
+      "category": "Marketing",
+      "author": "Ryu",
+      "featuredRank": 50,
+      "developer": "Ryu",
+      "checksum": "71921535e376107642113b5bf55e1728ca32af857186f2d94bd915c0da4f41b9",
       "ref": "main"
     },
     {
@@ -9926,6 +10909,73 @@
       "ref": "main"
     },
     {
+      "name": "operations",
+      "displayName": "Operations",
+      "id": "ryu/bundle/operations",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/operations",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:operations"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/projects",
+        "app:@ryu/workflows",
+        "app:@ryu/calendar",
+        "app:@ryu/dashboards",
+        "app:@ryu/monitors",
+        "app:@ryu/activity",
+        "app:@ryu/teams",
+        "app:@ryu/feedback-board",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/proof",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:ai.aient/mcp",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:openai/skills/linear",
+        "skill:cursor/plugins/why",
+        "skill:cursor/plugins/blast-radius",
+        "skill:mattpocock/skills/research",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "Make recurring work visible, coordinated, and easier to improve.",
+      "description": "Coordinate projects, workflows, schedules, monitors, dashboards, teams, and operational knowledge in one install.",
+      "category": "Operations",
+      "author": "Ryu",
+      "featuredRank": 17,
+      "developer": "Ryu",
+      "checksum": "87f4d1e90dea98f2b99d129d70d97b047b3672e54d1af3f4d3a9147619b444ae",
+      "ref": "main"
+    },
+    {
       "name": "orchestrator-workers",
       "displayName": "Orchestrator–Workers",
       "id": "ryu/workflow/orchestrator-workers",
@@ -10143,6 +11193,76 @@
       "ref": "main"
     },
     {
+      "name": "product-management",
+      "displayName": "Product Management",
+      "id": "ryu/bundle/product-management",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/product-management",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:product-management"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/projects",
+        "app:@ryu/blueprint",
+        "app:@ryu/feedback-board",
+        "app:@ryu/research",
+        "app:@ryu/dashboards",
+        "app:@ryu/meetings",
+        "app:@ryu/calendar",
+        "app:@ryu/teams",
+        "app:@ryu/content",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/design-director",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:openai/skills/linear",
+        "skill:openai/skills/figma-implement-design",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:googleworkspace/cli/persona-researcher",
+        "skill:cursor/plugins/why",
+        "skill:pbakaus/critique",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "From user signal to a shippable product decision.",
+      "description": "Write specs, synthesize research, plan roadmaps, align stakeholders, design handoffs, and track product feedback in one workspace.",
+      "category": "Product Management",
+      "author": "Ryu",
+      "featuredRank": 13,
+      "developer": "Ryu",
+      "checksum": "cd513200dd89fe56939b4c949c0a5644944a74b14fadbd9764aacc5eac6639cc",
+      "ref": "main"
+    },
+    {
       "name": "prompt-chaining",
       "displayName": "Prompt Chaining",
       "id": "ryu/workflow/prompt-chaining",
@@ -10242,6 +11362,77 @@
       "author": "Ryu",
       "developer": "Ryu",
       "checksum": "de4077ea175789ef56d3edaf21eabd7b8cfc5f8668cd1292854c2a8b0857168e",
+      "ref": "main"
+    },
+    {
+      "name": "real-estate",
+      "displayName": "Real Estate",
+      "id": "ryu/bundle/real-estate",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/real-estate",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:real-estate"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/crm",
+        "app:@ryu/people",
+        "app:@ryu/outreach",
+        "app:@ryu/calendar",
+        "app:@ryu/mail",
+        "app:@ryu/meetings",
+        "app:@ryu/anydoc",
+        "app:@ryu/invoices",
+        "app:@ryu/dashboards",
+        "app:@ryu/research",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:ae.propick/propick",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/skills/pdf",
+        "skill:anthropics/skills/docx",
+        "skill:mattpocock/skills/research",
+        "skill:googleworkspace/cli/persona-sales-ops",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize"
+      ],
+      "tagline": "Keep listings, relationships, documents, and follow-up moving together.",
+      "description": "A real-estate workspace for property records, contacts, outreach, schedules, documents, market research, and pipeline reporting.",
+      "category": "Real Estate",
+      "author": "Ryu",
+      "featuredRank": 12,
+      "developer": "Ryu",
+      "checksum": "c38ad8398eeafc4fbe81fc5f0cf7cd3b5128504a420a60cd61178879f6879964",
       "ref": "main"
     },
     {
@@ -10346,6 +11537,70 @@
       "ref": "main"
     },
     {
+      "name": "sales",
+      "displayName": "Sales",
+      "id": "ryu/bundle/sales",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/sales",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:sales"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/crm",
+        "app:@ryu/outreach",
+        "app:@ryu/people",
+        "app:@ryu/calendar",
+        "app:@ryu/mail",
+        "app:@ryu/meetings",
+        "app:@ryu/research",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "agent:ryu/growth-psychology-strategist",
+        "agent:ryu/brand-presence",
+        "agent:ryu/expiry-date-tracker",
+        "skill:aashaexo/humanize",
+        "skill:aminblg/simple-english",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Turn account context into better conversations and next steps.",
+      "description": "Keep pipeline, contacts, meetings, correspondence, research, and follow-up in one context-rich sales workspace.",
+      "category": "Sales",
+      "author": "Ryu",
+      "featuredRank": 40,
+      "developer": "Ryu",
+      "checksum": "0e4ada4a89bed2b7497a7e622ddae2ef4832efa369e4418dfb7910e977f6a650",
+      "ref": "main"
+    },
+    {
       "name": "security-guard",
       "displayName": "Security Guard",
       "id": "ryu/security-guard",
@@ -10397,6 +11652,155 @@
       "featuredRank": 125,
       "developer": "Ryu",
       "checksum": "c10b24e91801b14c7901e0ac9295faed2a1bc921eb33e2415a1862d746aa1974",
+      "ref": "main"
+    },
+    {
+      "name": "security-it",
+      "displayName": "Security & IT",
+      "id": "ryu/bundle/security-it",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/security-it",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:security-it"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/security",
+        "app:@ryu/checks",
+        "app:@ryu/projects",
+        "app:@ryu/blueprint",
+        "app:@ryu/research",
+        "app:@ryu/monitors",
+        "app:@ryu/activity",
+        "app:@ryu/pull-requests",
+        "app:@ryu/feedback-board",
+        "plugin:@ryu/security-scanner",
+        "plugin:@ryu/rtk",
+        "plugin:@ryu/ripgrep",
+        "plugin:@ryu/proof",
+        "plugin:@ryu/spidercloud",
+        "plugin:@ryu/composio-connect",
+        "agent:ryu/security-guard",
+        "mcp:ai.aient/mcp",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:openai/skills/security-best-practices",
+        "skill:openai/skills/security-threat-model",
+        "skill:openai/skills/gh-fix-ci",
+        "skill:cursor/plugins/thermo-nuclear-code-quality-review",
+        "skill:cursor/plugins/typescript-best-practices",
+        "skill:cursor/plugins/blast-radius",
+        "skill:anthropics/skills/mcp-builder",
+        "skill:cursor/plugins/why"
+      ],
+      "tagline": "Keep systems safer, checks sharper, and incidents easier to explain.",
+      "description": "A security and IT workstation for checks, monitoring, incident research, CI fixes, MCP building, code quality, and reviewed remediation.",
+      "category": "Security & IT",
+      "author": "Ryu",
+      "featuredRank": 10,
+      "developer": "Ryu",
+      "checksum": "b1876b52a62f9e1d22ecb4c34ef94e7db09abdb2e559758b005c9456a5a1ef68",
+      "ref": "main"
+    },
+    {
+      "name": "small-business",
+      "displayName": "Small Business",
+      "id": "ryu/bundle/small-business",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/small-business",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:small-business"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/projects",
+        "app:@ryu/crm",
+        "app:@ryu/expenses",
+        "app:@ryu/invoices",
+        "app:@ryu/people",
+        "app:@ryu/calendar",
+        "app:@ryu/mail",
+        "app:@ryu/research",
+        "app:@ryu/dashboards",
+        "app:@ryu/drafts",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/serper",
+        "agent:ryu/expense-tracker",
+        "agent:ryu/expiry-date-tracker",
+        "agent:ryu/growth-psychology-strategist",
+        "mcp:dev.mpp/services",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/skills/xlsx",
+        "skill:anthropics/skills/pdf",
+        "skill:openai/skills/linear",
+        "skill:coreyhaines31/marketingskills/customer-research",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Run the business with one practical, context-rich workspace.",
+      "description": "A small-business loadout for projects, customers, money, scheduling, research, reporting, outreach, and everyday operations.",
+      "category": "Small Business",
+      "author": "Ryu",
+      "featuredRank": 9,
+      "developer": "Ryu",
+      "checksum": "49e80f09911181792038bc18fdf2c3155f2e23bdefaf25bc888ff40974adce1d",
       "ref": "main"
     },
     {
@@ -13408,7 +14812,7 @@
       ],
       "featuredRank": 128,
       "developer": "Ryu",
-      "checksum": "3b4b3e5e13bbd740d5fb08adb89bbc17e6c700a4f0e83c807ee5fa74c27dc875",
+      "checksum": "4cfa7a64ca7b4b28a9ef9e37665fa1adc3102b8f38039f4423102afe82c4bdf7",
       "ref": "main"
     },
     {
@@ -13794,6 +15198,73 @@
       }
     },
     {
+      "name": "customer-support",
+      "displayName": "Customer Support",
+      "id": "ryu/bundle/customer-support",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/customer-support",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:customer-support"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/help-center",
+        "app:@ryu/mail",
+        "app:@ryu/crm",
+        "app:@ryu/people",
+        "app:@ryu/meetings",
+        "app:@ryu/drafts",
+        "app:@ryu/activity",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:ai.backengine/backengine-mcp",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/knowledge-work-plugins/customer-escalation",
+        "skill:googleworkspace/cli/persona-customer-support",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Resolve customer issues with context, empathy, and a clean handoff.",
+      "description": "Triage support work, research customer context, draft replies, package escalations, and turn resolved issues into durable knowledge.",
+      "category": "Customer Support",
+      "author": "Ryu",
+      "featuredRank": 19,
+      "developer": "Ryu",
+      "checksum": "7363af7ba509dd4de834c4865ae82505732014bc35b055700d49ed199d353cec",
+      "ref": "main"
+    },
+    {
       "name": "dashboards",
       "displayName": "Dashboards",
       "version": "0.4.0",
@@ -13843,6 +15314,72 @@
       "engines": {
         "ryu": ">=0.1.0"
       }
+    },
+    {
+      "name": "data-analytics",
+      "displayName": "Data & Analytics",
+      "id": "ryu/bundle/data-analytics",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/data-analytics",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:data-analytics"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/dashboards",
+        "app:@ryu/research",
+        "app:@ryu/news",
+        "app:@ryu/monitors",
+        "app:@ryu/feedback-board",
+        "app:@ryu/anydoc",
+        "app:@ryu/activity",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/serper",
+        "plugin:@ryu/firecrawl",
+        "plugin:@ryu/composio-connect",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:anthropics/skills/xlsx",
+        "skill:mattpocock/skills/research",
+        "skill:firecrawl/firecrawl-workflows/firecrawl-deep-research",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "Turn messy evidence into decisions people can act on.",
+      "description": "Query, research, visualize, monitor, and explain business data with dashboards, documents, and repeatable analysis workflows.",
+      "category": "Data",
+      "author": "Ryu",
+      "featuredRank": 15,
+      "developer": "Ryu",
+      "checksum": "8f2c006a96a63d9246f9c0c39c7af9133fbce1d946dd21b957dfcfea239c410f",
+      "ref": "main"
     },
     {
       "name": "debugging",
@@ -14294,7 +15831,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Sketch ideas and attach them to chat",
-      "description": "A lightweight sketching studio for Ryu with seven natural-feeling pens, area erasing, SVG or PNG export, plus chat dialogs for sketching or annotating visual references.",
+      "description": "A focused sketch surface for Ryu with a compact pen, highlighter, and eraser toolbar, plus chat dialogs for sketching or annotating visual references.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -14369,6 +15906,147 @@
       "engines": {
         "ryu": ">=0.1.0"
       }
+    },
+    {
+      "name": "ecommerce",
+      "displayName": "E-commerce",
+      "id": "ryu/bundle/ecommerce",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/ecommerce",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:ecommerce"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/social",
+        "app:@ryu/content",
+        "app:@ryu/crm",
+        "app:@ryu/expenses",
+        "app:@ryu/invoices",
+        "app:@ryu/dashboards",
+        "app:@ryu/monitors",
+        "app:@ryu/mail",
+        "app:@ryu/calendar",
+        "app:@ryu/research",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/serper",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/marketing-studio",
+        "agent:ryu/growth-psychology-strategist",
+        "agent:ryu/brand-presence",
+        "agent:ryu/expense-tracker",
+        "mcp:com.x/mcp",
+        "mcp:dev.mpp/services",
+        "skill:coreyhaines31/marketingskills/customer-research",
+        "skill:coreyhaines31/marketingskills/sales-enablement",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:openai/skills/figma-implement-design",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize"
+      ],
+      "tagline": "Connect demand, merchandising, customer context, and revenue signals.",
+      "description": "Research customers, create campaigns, manage relationships, watch performance, and keep commerce operations in one growth workspace.",
+      "category": "E-commerce",
+      "author": "Ryu",
+      "featuredRank": 11,
+      "developer": "Ryu",
+      "checksum": "c376b8890368cc9875dd16578b9514617ba1ed641464a88c5b553be142714311",
+      "ref": "main"
+    },
+    {
+      "name": "education",
+      "displayName": "Education",
+      "id": "ryu/bundle/education",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/education",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:education"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/tuition",
+        "app:@ryu/learning",
+        "app:@ryu/meetings",
+        "app:@ryu/calendar",
+        "app:@ryu/people",
+        "app:@ryu/drafts",
+        "app:@ryu/research",
+        "app:@ryu/teams",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/honcho",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/skills/pdf",
+        "skill:anthropics/skills/docx",
+        "skill:anthropics/skills/canvas-design",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize"
+      ],
+      "tagline": "Teach, learn, and keep the whole learning loop in context.",
+      "description": "A learning workspace for tuition, study plans, meetings, schedules, people, research, documents, and reusable teaching materials.",
+      "category": "Education",
+      "author": "Ryu",
+      "featuredRank": 16,
+      "developer": "Ryu",
+      "checksum": "2726659eb47f8fa17ebc6d371bda2b508114694a096e7fd451b96822ed6e80ae",
+      "ref": "main"
     },
     {
       "name": "effort-escalator",
@@ -14490,6 +16168,143 @@
       "engines": {
         "ryu": ">=0.1.0"
       }
+    },
+    {
+      "name": "engineering",
+      "displayName": "Engineering",
+      "id": "ryu/bundle/engineering",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/engineering",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:engineering"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/projects",
+        "app:@ryu/blueprint",
+        "app:@ryu/checks",
+        "app:@ryu/pull-requests",
+        "app:@ryu/research",
+        "app:@ryu/security",
+        "app:@ryu/feedback-board",
+        "plugin:@ryu/rtk",
+        "plugin:@ryu/ripgrep",
+        "plugin:@ryu/proof",
+        "plugin:@ryu/security-scanner",
+        "agent:ryu/security-guard",
+        "agent:ryu/design-director",
+        "skill:cursor/thermo-nuclear-code-quality-review",
+        "skill:addyosmani/best-practices",
+        "skill:mattpocock/codebase-design",
+        "skill:mattpocock/engineering",
+        "skill:mattpocock/diagnosing-bugs",
+        "skill:vercel-labs/react-best-practices"
+      ],
+      "tagline": "Plan, build, verify, and ship with the whole engineering loop in view.",
+      "description": "A practical engineering workstation for planning, implementation, checks, review, security, research, and proof.",
+      "category": "Engineering",
+      "author": "Ryu",
+      "featuredRank": 30,
+      "developer": "Ryu",
+      "checksum": "7658521fc379471f7b99a5324491336e82f0138c4c5109672ecf3b83b65bdb97",
+      "ref": "main"
+    },
+    {
+      "name": "enterprise-search",
+      "displayName": "Enterprise Search",
+      "id": "ryu/bundle/enterprise-search",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/enterprise-search",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:enterprise-search"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/mail",
+        "app:@ryu/anydoc",
+        "app:@ryu/research",
+        "app:@ryu/meetings",
+        "app:@ryu/drafts",
+        "app:@ryu/people",
+        "app:@ryu/news",
+        "app:@ryu/bookmarks",
+        "plugin:@ryu/honcho",
+        "plugin:@ryu/mem0",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "mcp:io.modelcontextprotocol/memory",
+        "mcp:ai.backengine/backengine-mcp",
+        "skill:mattpocock/skills/research",
+        "skill:googleworkspace/cli/persona-researcher",
+        "skill:anthropics/skills/pdf",
+        "skill:anthropics/skills/docx",
+        "skill:openai/skills/openai-docs",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "Find the answer across company knowledge without changing tools.",
+      "description": "Search mail, documents, meetings, bookmarks, research, news, and memory through one evidence-oriented knowledge workflow.",
+      "category": "Enterprise Search",
+      "author": "Ryu",
+      "featuredRank": 14,
+      "developer": "Ryu",
+      "checksum": "d056e4c44d5a825bc555d95db7a5c0858137b47787c6850ff0baa93a7fe574d3",
+      "ref": "main"
     },
     {
       "name": "evaluator-optimizer",
@@ -14970,6 +16785,71 @@
       }
     },
     {
+      "name": "finance-accounting",
+      "displayName": "Finance & Accounting",
+      "id": "ryu/bundle/finance-accounting",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/finance-accounting",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:finance-accounting"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/expenses",
+        "app:@ryu/invoices",
+        "app:@ryu/dashboards",
+        "app:@ryu/research",
+        "app:@ryu/mail",
+        "app:@ryu/calendar",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "agent:ryu/expense-tracker",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:io.modelcontextprotocol/memory",
+        "mcp:dev.mpp/services",
+        "skill:anthropics/skills/xlsx",
+        "skill:anthropics/skills/pdf",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "Close the books, explain the numbers, and keep financial work moving.",
+      "description": "A finance workspace for expenses, invoices, reporting, research, financial documents, and governed payment-aware integrations.",
+      "category": "Finance",
+      "author": "Ryu",
+      "featuredRank": 20,
+      "developer": "Ryu",
+      "checksum": "51f1f14844bc4d2b8a5283aad008144339a403e8ace8dc3cab4df2e6154f1e0f",
+      "ref": "main"
+    },
+    {
       "name": "finetune",
       "displayName": "Fine-tuning",
       "version": "0.4.0",
@@ -15266,6 +17146,56 @@
       "developer": "Ryu",
       "checksum": "d18fc9e83036c37e1f28a3155e8b46103390d22410b07442df0fbd103c98ab8a",
       "ref": "main"
+    },
+    {
+      "name": "functiongemma",
+      "displayName": "FunctionGemma Local Planner",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Local function-calling for Shadow",
+      "description": "Run Google's license-gated FunctionGemma 270M model locally as a selectable Shadow computer-use planner. Ryu downloads a pinned Hugging Face snapshot using the user's Hugging Face token; the user must first accept Google's Gemma terms.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://huggingface.co/google/functiongemma-270m-it",
+      "category": "Models",
+      "keywords": [
+        "models",
+        "huggingface",
+        "local",
+        "computer-use",
+        "function-calling",
+        "gemma"
+      ],
+      "tags": [
+        "models",
+        "huggingface",
+        "local",
+        "computer-use",
+        "function-calling",
+        "gemma"
+      ],
+      "license": "Gemma",
+      "icon": "ai-brain-01",
+      "homepage": "https://huggingface.co/google/functiongemma-270m-it",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
     },
     {
       "name": "generate-and-filter",
@@ -15908,6 +17838,71 @@
       }
     },
     {
+      "name": "hr-people",
+      "displayName": "HR & People",
+      "id": "ryu/bundle/hr-people",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/hr-people",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:hr-people"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/people",
+        "app:@ryu/teams",
+        "app:@ryu/calendar",
+        "app:@ryu/meetings",
+        "app:@ryu/mail",
+        "app:@ryu/drafts",
+        "app:@ryu/learning",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/honcho",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/skills/docx",
+        "skill:anthropics/skills/pdf",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Keep people programs, conversations, and commitments organized.",
+      "description": "A people-operations workspace for teams, meetings, correspondence, onboarding materials, learning, and deadline-aware follow-up.",
+      "category": "HR",
+      "author": "Ryu",
+      "featuredRank": 18,
+      "developer": "Ryu",
+      "checksum": "f1d6e2056a58b8473df28e3eb0a778963ed21b7dcd9bc09c2d55c1e1cf1ff3e6",
+      "ref": "main"
+    },
+    {
       "name": "interaction",
       "displayName": "Interaction",
       "id": "ryu/bundle/interaction",
@@ -16072,6 +18067,107 @@
       }
     },
     {
+      "name": "jina-reader",
+      "displayName": "Jina Reader",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "layers": [
+        {
+          "capability": "web.extract",
+          "title": "Extract",
+          "toolkit": true,
+          "selectable": true,
+          "verbs": [
+            "web.extract"
+          ]
+        }
+      ],
+      "tagline": "Read web pages as clean text for agents",
+      "description": "Direct page extraction through Jina Reader. Provides the swappable web.extract layer and works with or without a Jina API key; a key raises the upstream rate limit.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/jina-reader",
+      "category": "Search",
+      "keywords": [
+        "web",
+        "extract",
+        "reader",
+        "Jina"
+      ],
+      "tags": [
+        "web",
+        "extract",
+        "reader"
+      ],
+      "icon": "book-search",
+      "iconDither": {
+        "from": 190,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/jina-reader",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "kill-switch",
+      "displayName": "Kill Switch",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Stop chats and bots immediately",
+      "description": "Stop running chats and bots on the selected node and pause new work until you resume execution.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "category": "Productivity",
+      "keywords": [
+        "kill switch",
+        "stop",
+        "pause",
+        "cancel",
+        "bots"
+      ],
+      "tags": [
+        "chat",
+        "bots",
+        "safety",
+        "control"
+      ],
+      "icon": "stop-circle",
+      "surfaces": [
+        "core",
+        "desktop"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.4.0"
+      }
+    },
+    {
       "name": "kotlin-lsp",
       "displayName": "Kotlin LSP",
       "version": "0.4.0",
@@ -16111,6 +18207,61 @@
       "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/lsp/kotlin-lsp",
       "privacyPolicyUrl": "https://ryuhq.com/privacy",
       "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "laya",
+      "displayName": "Laya Local Decisions",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Fast local typed decisions for routing and guardrails",
+      "description": "Run Convai Innovations' Apache-2.0 Laya decision models locally through authenticated Ryu tools and as a selectable Shadow computer-use planner. Laya classifies text, email, tickets, and JSON into typed choice, score, and boolean answers; it does not generate text. The plugin provisions its Python sidecar and all three pinned Hugging Face checkpoints (about 2.37 GB / 2.21 GiB) inside the plugin runtime.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://huggingface.co/convaiinnovations/laya",
+      "category": "Models",
+      "keywords": [
+        "models",
+        "huggingface",
+        "local",
+        "classification",
+        "routing",
+        "guardrails"
+      ],
+      "tags": [
+        "models",
+        "huggingface",
+        "local",
+        "classification",
+        "routing",
+        "guardrails"
+      ],
+      "license": "Apache-2.0",
+      "icon": "ai-brain-01",
+      "iconDither": {
+        "from": 240,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://huggingface.co/convaiinnovations/laya",
       "surfaces": [
         "core",
         "desktop",
@@ -16176,6 +18327,70 @@
       }
     },
     {
+      "name": "legal",
+      "displayName": "Legal",
+      "id": "ryu/bundle/legal",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/legal",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:legal"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/anydoc",
+        "app:@ryu/drafts",
+        "app:@ryu/research",
+        "app:@ryu/mail",
+        "app:@ryu/meetings",
+        "app:@ryu/calendar",
+        "app:@ryu/people",
+        "app:@ryu/invoices",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/expiry-date-tracker",
+        "skill:aashaexo/humanize",
+        "skill:aminblg/simple-english",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Turn contracts and legal operations into a review-ready workspace.",
+      "description": "Organize documents, research, meetings, correspondence, deadlines, and invoices in one legal-operations loadout. AI output is a starting point for qualified legal review, not legal advice.",
+      "category": "Legal",
+      "author": "Ryu",
+      "featuredRank": 60,
+      "developer": "Ryu",
+      "checksum": "bbc411bec31919acb6ccc18158f7847376e89338e7cc91df1b85181cbebce5e9",
+      "ref": "main"
+    },
+    {
       "name": "life-recorder",
       "displayName": "Life Recorder",
       "version": "0.4.0",
@@ -16219,6 +18434,62 @@
       "stability": "experimental",
       "engines": {
         "ryu": ">=0.3.1"
+      }
+    },
+    {
+      "name": "llm-wiki",
+      "displayName": "LLM Wiki",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Compound research in a Ryu Space",
+      "description": "Build and maintain an interlinked research wiki in a user-owned Ryu Space. The bundled skill orients from existing documents, captures source provenance, preserves contradictions, and files durable syntheses without using a private filesystem wiki.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/llm-wiki",
+      "category": "Knowledge & Memory",
+      "keywords": [
+        "wiki",
+        "knowledge base",
+        "research",
+        "Ryu Spaces",
+        "provenance",
+        "notes"
+      ],
+      "tags": [
+        "wiki",
+        "knowledge",
+        "research",
+        "spaces",
+        "notes",
+        "rag"
+      ],
+      "icon": "book-open-01",
+      "iconDither": {
+        "from": 208,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/llm-wiki",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
       }
     },
     {
@@ -16323,6 +18594,72 @@
       "engines": {
         "ryu": ">=0.1.0"
       }
+    },
+    {
+      "name": "marketing",
+      "displayName": "Marketing",
+      "id": "ryu/bundle/marketing",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/marketing",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:marketing"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/social",
+        "app:@ryu/content",
+        "app:@ryu/research",
+        "app:@ryu/news",
+        "app:@ryu/backstage",
+        "app:@ryu/studio",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/serper",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/marketing-studio",
+        "agent:ryu/brand-presence",
+        "agent:ryu/growth-psychology-strategist",
+        "skill:aashaexo/humanize",
+        "skill:aminblg/simple-english",
+        "skill:emilkowalski/animate",
+        "skill:remotion-dev/remotion-best-practices"
+      ],
+      "tagline": "Build a consistent campaign engine from brief to measurement.",
+      "description": "Research audiences, shape positioning, produce content, publish campaigns, and learn from performance with one connected marketing workspace.",
+      "category": "Marketing",
+      "author": "Ryu",
+      "featuredRank": 50,
+      "developer": "Ryu",
+      "checksum": "71921535e376107642113b5bf55e1728ca32af857186f2d94bd915c0da4f41b9",
+      "ref": "main"
     },
     {
       "name": "marketing-studio",
@@ -16850,6 +19187,56 @@
       }
     },
     {
+      "name": "needle3",
+      "displayName": "Needle 3 Local Planner",
+      "version": "0.4.0",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "developer": "Ryu",
+      "tagline": "Tiny on-device tool-calling for Shadow",
+      "description": "Run Cactus Compute's Apache-2.0 Needle 3 tool-calling model locally as a selectable Shadow computer-use planner. The model weights are pinned and installed into the plugin runtime; the small cactus-needle runtime is installed separately.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://huggingface.co/Cactus-Compute/needle3",
+      "category": "Models",
+      "keywords": [
+        "models",
+        "huggingface",
+        "local",
+        "computer-use",
+        "tool-calling",
+        "needle"
+      ],
+      "tags": [
+        "models",
+        "huggingface",
+        "local",
+        "computer-use",
+        "tool-calling",
+        "needle"
+      ],
+      "license": "Apache-2.0",
+      "icon": "ai-brain-01",
+      "homepage": "https://huggingface.co/Cactus-Compute/needle3",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
       "name": "news",
       "displayName": "Wire",
       "version": "0.4.0",
@@ -17187,6 +19574,73 @@
       }
     },
     {
+      "name": "operations",
+      "displayName": "Operations",
+      "id": "ryu/bundle/operations",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/operations",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:operations"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/projects",
+        "app:@ryu/workflows",
+        "app:@ryu/calendar",
+        "app:@ryu/dashboards",
+        "app:@ryu/monitors",
+        "app:@ryu/activity",
+        "app:@ryu/teams",
+        "app:@ryu/feedback-board",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/proof",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:ai.aient/mcp",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:openai/skills/linear",
+        "skill:cursor/plugins/why",
+        "skill:cursor/plugins/blast-radius",
+        "skill:mattpocock/skills/research",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "Make recurring work visible, coordinated, and easier to improve.",
+      "description": "Coordinate projects, workflows, schedules, monitors, dashboards, teams, and operational knowledge in one install.",
+      "category": "Operations",
+      "author": "Ryu",
+      "featuredRank": 17,
+      "developer": "Ryu",
+      "checksum": "87f4d1e90dea98f2b99d129d70d97b047b3672e54d1af3f4d3a9147619b444ae",
+      "ref": "main"
+    },
+    {
       "name": "orchestrator-workers",
       "displayName": "Orchestrator–Workers",
       "id": "ryu/workflow/orchestrator-workers",
@@ -17435,7 +19889,7 @@
         }
       ],
       "tagline": "Objective-driven web search built for agent loops",
-      "description": "Web search and content extraction via Parallel (https://parallel.ai), exposed as three declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at Parallel without changing what agents call. Search works with NO key through Parallel's public Search MCP endpoint; a BYOK Parallel API key unlocks the higher-limit REST API and extraction.",
+      "description": "Web search and content extraction via Parallel (https://parallel.ai), exposed as three HTTP tool runnables plus one capability adapter. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at Parallel without changing what agents call. Search works without a key through Parallel's public Search MCP endpoint; a BYOK Parallel API key unlocks the higher-limit REST API and extraction.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -17953,6 +20407,76 @@
       }
     },
     {
+      "name": "product-management",
+      "displayName": "Product Management",
+      "id": "ryu/bundle/product-management",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/product-management",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:product-management"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/projects",
+        "app:@ryu/blueprint",
+        "app:@ryu/feedback-board",
+        "app:@ryu/research",
+        "app:@ryu/dashboards",
+        "app:@ryu/meetings",
+        "app:@ryu/calendar",
+        "app:@ryu/teams",
+        "app:@ryu/content",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/design-director",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:openai/skills/linear",
+        "skill:openai/skills/figma-implement-design",
+        "skill:anthropics/knowledge-work-plugins/data-visualization",
+        "skill:googleworkspace/cli/persona-researcher",
+        "skill:cursor/plugins/why",
+        "skill:pbakaus/critique",
+        "skill:aminblg/simpleenglish/simple-english"
+      ],
+      "tagline": "From user signal to a shippable product decision.",
+      "description": "Write specs, synthesize research, plan roadmaps, align stakeholders, design handoffs, and track product feedback in one workspace.",
+      "category": "Product Management",
+      "author": "Ryu",
+      "featuredRank": 13,
+      "developer": "Ryu",
+      "checksum": "cd513200dd89fe56939b4c949c0a5644944a74b14fadbd9764aacc5eac6639cc",
+      "ref": "main"
+    },
+    {
       "name": "projects",
       "displayName": "Projects",
       "version": "0.4.0",
@@ -18163,15 +20687,15 @@
     },
     {
       "name": "pull-requests",
-      "displayName": "Pull Requests",
+      "displayName": "Code Review",
       "version": "0.4.0",
       "type": "app",
       "source": "builtin",
       "official": true,
       "system": false,
       "developer": "Ryu",
-      "tagline": "Review GitHub pull requests and issues without leaving Ryu",
-      "description": "A focused GitHub work inbox for Ryu. Browse pull requests and issues across repositories, inspect summaries and discussion, then review, manage stacked pull requests, merge changes, or close and comment on issues through the locally authenticated GitHub CLI.",
+      "tagline": "Review GitHub pull requests with your team and Ryu",
+      "description": "A unified GitHub code review workspace for Ryu. Triage pull requests across repositories, inspect changes and checks, discuss and submit reviews, manage stacks, and optionally ask your selected Ryu model for read-only review help.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -18476,6 +21000,77 @@
       "engines": {
         "ryu": ">=0.1.0"
       }
+    },
+    {
+      "name": "real-estate",
+      "displayName": "Real Estate",
+      "id": "ryu/bundle/real-estate",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/real-estate",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:real-estate"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/crm",
+        "app:@ryu/people",
+        "app:@ryu/outreach",
+        "app:@ryu/calendar",
+        "app:@ryu/mail",
+        "app:@ryu/meetings",
+        "app:@ryu/anydoc",
+        "app:@ryu/invoices",
+        "app:@ryu/dashboards",
+        "app:@ryu/research",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/firecrawl",
+        "agent:ryu/expiry-date-tracker",
+        "mcp:ae.propick/propick",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/skills/pdf",
+        "skill:anthropics/skills/docx",
+        "skill:mattpocock/skills/research",
+        "skill:googleworkspace/cli/persona-sales-ops",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize"
+      ],
+      "tagline": "Keep listings, relationships, documents, and follow-up moving together.",
+      "description": "A real-estate workspace for property records, contacts, outreach, schedules, documents, market research, and pipeline reporting.",
+      "category": "Real Estate",
+      "author": "Ryu",
+      "featuredRank": 12,
+      "developer": "Ryu",
+      "checksum": "c38ad8398eeafc4fbe81fc5f0cf7cd3b5128504a420a60cd61178879f6879964",
+      "ref": "main"
     },
     {
       "name": "reasoning",
@@ -19404,6 +21999,70 @@
       }
     },
     {
+      "name": "sales",
+      "displayName": "Sales",
+      "id": "ryu/bundle/sales",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/sales",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:sales"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/crm",
+        "app:@ryu/outreach",
+        "app:@ryu/people",
+        "app:@ryu/calendar",
+        "app:@ryu/mail",
+        "app:@ryu/meetings",
+        "app:@ryu/research",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "agent:ryu/growth-psychology-strategist",
+        "agent:ryu/brand-presence",
+        "agent:ryu/expiry-date-tracker",
+        "skill:aashaexo/humanize",
+        "skill:aminblg/simple-english",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Turn account context into better conversations and next steps.",
+      "description": "Keep pipeline, contacts, meetings, correspondence, research, and follow-up in one context-rich sales workspace.",
+      "category": "Sales",
+      "author": "Ryu",
+      "featuredRank": 40,
+      "developer": "Ryu",
+      "checksum": "0e4ada4a89bed2b7497a7e622ddae2ef4832efa369e4418dfb7910e977f6a650",
+      "ref": "main"
+    },
+    {
       "name": "sample",
       "displayName": "Research Assistant",
       "version": "0.4.0",
@@ -19732,6 +22391,81 @@
       "engines": {
         "ryu": ">=0.1.0"
       }
+    },
+    {
+      "name": "security-it",
+      "displayName": "Security & IT",
+      "id": "ryu/bundle/security-it",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/security-it",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:security-it"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/security",
+        "app:@ryu/checks",
+        "app:@ryu/projects",
+        "app:@ryu/blueprint",
+        "app:@ryu/research",
+        "app:@ryu/monitors",
+        "app:@ryu/activity",
+        "app:@ryu/pull-requests",
+        "app:@ryu/feedback-board",
+        "plugin:@ryu/security-scanner",
+        "plugin:@ryu/rtk",
+        "plugin:@ryu/ripgrep",
+        "plugin:@ryu/proof",
+        "plugin:@ryu/spidercloud",
+        "plugin:@ryu/composio-connect",
+        "agent:ryu/security-guard",
+        "mcp:ai.aient/mcp",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:openai/skills/security-best-practices",
+        "skill:openai/skills/security-threat-model",
+        "skill:openai/skills/gh-fix-ci",
+        "skill:cursor/plugins/thermo-nuclear-code-quality-review",
+        "skill:cursor/plugins/typescript-best-practices",
+        "skill:cursor/plugins/blast-radius",
+        "skill:anthropics/skills/mcp-builder",
+        "skill:cursor/plugins/why"
+      ],
+      "tagline": "Keep systems safer, checks sharper, and incidents easier to explain.",
+      "description": "A security and IT workstation for checks, monitoring, incident research, CI fixes, MCP building, code quality, and reviewed remediation.",
+      "category": "Security & IT",
+      "author": "Ryu",
+      "featuredRank": 10,
+      "developer": "Ryu",
+      "checksum": "b1876b52a62f9e1d22ecb4c34ef94e7db09abdb2e559758b005c9456a5a1ef68",
+      "ref": "main"
     },
     {
       "name": "security-scanner",
@@ -20161,6 +22895,80 @@
       "engines": {
         "ryu": ">=0.1.0"
       }
+    },
+    {
+      "name": "small-business",
+      "displayName": "Small Business",
+      "id": "ryu/bundle/small-business",
+      "version": "0.4.0",
+      "type": "bundle",
+      "kind": "bundle",
+      "package": true,
+      "packageKind": "bundle",
+      "artifactKinds": [
+        "bundle.json"
+      ],
+      "source": {
+        "type": "github",
+        "repository": "amajorai/ryu-closed",
+        "path": "marketplace-store/bundles/small-business",
+        "ref": "main"
+      },
+      "official": true,
+      "targets": [
+        "desktop"
+      ],
+      "scopes": [
+        "desktop"
+      ],
+      "requires": {},
+      "capabilities": [
+        "bundle:small-business"
+      ],
+      "security": {
+        "containsSecrets": false,
+        "permissions": [],
+        "privateContent": false,
+        "redacted": false
+      },
+      "artifacts": [
+        "bundle.json"
+      ],
+      "includes": [
+        "app:@ryu/projects",
+        "app:@ryu/crm",
+        "app:@ryu/expenses",
+        "app:@ryu/invoices",
+        "app:@ryu/people",
+        "app:@ryu/calendar",
+        "app:@ryu/mail",
+        "app:@ryu/research",
+        "app:@ryu/dashboards",
+        "app:@ryu/drafts",
+        "plugin:@ryu/composio-connect",
+        "plugin:@ryu/exa",
+        "plugin:@ryu/serper",
+        "agent:ryu/expense-tracker",
+        "agent:ryu/expiry-date-tracker",
+        "agent:ryu/growth-psychology-strategist",
+        "mcp:dev.mpp/services",
+        "mcp:io.modelcontextprotocol/memory",
+        "skill:anthropics/skills/xlsx",
+        "skill:anthropics/skills/pdf",
+        "skill:openai/skills/linear",
+        "skill:coreyhaines31/marketingskills/customer-research",
+        "skill:aminblg/simpleenglish/simple-english",
+        "skill:aashaexo/humanize",
+        "skill:pbakaus/critique"
+      ],
+      "tagline": "Run the business with one practical, context-rich workspace.",
+      "description": "A small-business loadout for projects, customers, money, scheduling, research, reporting, outreach, and everyday operations.",
+      "category": "Small Business",
+      "author": "Ryu",
+      "featuredRank": 9,
+      "developer": "Ryu",
+      "checksum": "49e80f09911181792038bc18fdf2c3155f2e23bdefaf25bc888ff40974adce1d",
+      "ref": "main"
     },
     {
       "name": "social",

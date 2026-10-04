@@ -96,7 +96,15 @@
       {
         "id": "chat-title.rename",
         "on": "post_assistant_turn",
-        "code_file": "hooks/rename.js"
+        "code_file": "hooks/rename.js",
+        "match": {
+          "reply_cadence": {
+            "every_pref": "auto-title-every-n",
+            "every_default": 5,
+            "first_pref": "auto-title-on-first-turn",
+            "enabled_pref": "auto-title-enabled"
+          }
+        }
       }
     ]
   }

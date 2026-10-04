@@ -1,0 +1,61 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/engineering",
+  "name": "Engineering",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:engineering"
+  ],
+  "includes": [
+    "app:@ryu/projects",
+    "app:@ryu/blueprint",
+    "app:@ryu/checks",
+    "app:@ryu/pull-requests",
+    "app:@ryu/research",
+    "app:@ryu/security",
+    "app:@ryu/feedback-board",
+    "plugin:@ryu/rtk",
+    "plugin:@ryu/ripgrep",
+    "plugin:@ryu/proof",
+    "plugin:@ryu/security-scanner",
+    "agent:ryu/security-guard",
+    "agent:ryu/design-director",
+    "skill:cursor/thermo-nuclear-code-quality-review",
+    "skill:addyosmani/best-practices",
+    "skill:mattpocock/codebase-design",
+    "skill:mattpocock/engineering",
+    "skill:mattpocock/diagnosing-bugs",
+    "skill:vercel-labs/react-best-practices"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/engineering",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Plan, build, verify, and ship with the whole engineering loop in view.",
+    "category": "Engineering",
+    "description": "A practical engineering workstation for planning, implementation, checks, review, security, research, and proof.",
+    "author": "Ryu",
+    "featuredRank": 30
+  }
+}

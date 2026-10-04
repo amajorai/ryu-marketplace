@@ -1,8 +1,8 @@
 // Co-located contract test for the `shadow` plugin.
 // Runner: `node --test` (zero dependencies).
 //
-// `shadow` is a declarative HTTP-tool plugin: it contributes four `tool`
-// runnables (search, semantic search, timeline, recent-context) that Core
+// `shadow` is a declarative HTTP-tool plugin: it contributes five `tool`
+// runnables (search, semantic search, timeline, recent-context, computer-use) that Core
 // proxies to the device-local Shadow sidecar on 127.0.0.1:7980 under
 // `/api/shadow/*`, injecting a server-side Authorization bearer. There are no
 // inline turn-hook `code` strings to execute, so this test validates the
@@ -24,6 +24,7 @@ const EXPECTED_SLUGS = [
 	"shadow.semantic_search",
 	"shadow.timeline",
 	"shadow.recent_context",
+	"shadow.computer_use",
 ];
 
 test("manifest.json is valid parseable JSON", () => {
@@ -41,22 +42,22 @@ test("has required top-level identity fields", () => {
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
 });
 
-test("contributes exactly four http GET tool runnables", () => {
+test("contributes five authenticated HTTP tool runnables", () => {
 	assert.ok(Array.isArray(manifest.runnables));
-	assert.equal(manifest.runnables.length, 4);
+	assert.equal(manifest.runnables.length, 5);
 	for (const r of manifest.runnables) {
 		assert.equal(r.kind, "tool");
 		assert.equal(typeof r.id, "string");
 		assert.equal(typeof r.name, "string");
 		assert.equal(r.config.backend, "http");
-		assert.equal(r.config.method, "GET");
+		assert.ok(["GET", "POST"].includes(r.config.method));
 	}
 });
 
 // Index runnables by their native tool slug for precise assertions.
 const bySlug = new Map(manifest.runnables.map((r) => [r.config.slug, r]));
 
-test("exposes the four native shadow.* tool ids, each namespaced", () => {
+test("exposes five native shadow.* tool ids, each namespaced", () => {
 	for (const slug of EXPECTED_SLUGS) {
 		assert.ok(bySlug.has(slug), `missing ${slug} slug`);
 	}
@@ -104,16 +105,19 @@ test("each tool routes to its expected Shadow sidecar path", () => {
 		"shadow.semantic_search": "/api/shadow/search/semantic",
 		"shadow.timeline": "/api/shadow/timeline",
 		"shadow.recent_context": "/api/shadow/context/recent",
+		"shadow.computer_use": "/api/shadow/computer-use/run",
 	};
 	for (const [slug, path] of Object.entries(pathBySlug)) {
 		assert.equal(new URL(bySlug.get(slug).config.url).pathname, path);
 	}
 });
 
-test("every tool is a fail_open, unwrap_body proxy", () => {
+test("read tools fail open while computer use reports action failures", () => {
 	// Cross-platform capture: when the sidecar is down the tool must fail open
 	// (report unavailable) rather than error the whole turn.
-	for (const r of manifest.runnables) {
+	for (const r of manifest.runnables.filter(
+		(item) => item.config.slug !== "shadow.computer_use"
+	)) {
 		assert.equal(r.config.fail_open, true, `${r.config.slug} not fail_open`);
 		assert.equal(
 			r.config.unwrap_body,
@@ -121,6 +125,22 @@ test("every tool is a fail_open, unwrap_body proxy", () => {
 			`${r.config.slug} not unwrap_body`
 		);
 	}
+	assert.equal(bySlug.get("shadow.computer_use").config.fail_open, false);
+	assert.equal(bySlug.get("shadow.computer_use").config.method, "POST");
+	assert.deepEqual(
+		bySlug.get("shadow.computer_use").config.input_schema.required,
+		["goal"]
+	);
+	assert.equal(
+		bySlug.get("shadow.computer_use").config.input_schema.properties.goal
+			.maxLength,
+		4096
+	);
+	assert.deepEqual(
+		bySlug.get("shadow.computer_use").config.output_schema.properties.planner
+			.enum,
+		["native", "jev", "laya"]
+	);
 });
 
 test("search + semantic-search require q; a positive-int limit is optional", () => {
@@ -178,6 +198,20 @@ test("permission_grants gate egress to loopback only, matching called hosts", ()
 			`${r.config.slug} should address Core via core:, whose resolved host is 127.0.0.1`
 		);
 	}
+});
+
+test("Jev credential has one encrypted plugin-secret declaration", () => {
+	const settings = manifest.contributes.settings_tabs.find(
+		(tab) => tab.id === "shadow.settings"
+	);
+	assert.ok(settings);
+	assert.ok(
+		settings.fields.some(
+			(field) =>
+				field.type === "secret" && field.pref_key === "SHADOW_JEV_API_KEY"
+		)
+	);
+	assert.equal(settings.view, "shadow");
 });
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {

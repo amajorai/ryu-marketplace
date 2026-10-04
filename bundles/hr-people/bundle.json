@@ -1,0 +1,81 @@
+{
+  "kind": "bundle",
+  "members": [
+    { "kind": "app", "id": "@ryu/people", "name": "People", "required": true },
+    { "kind": "app", "id": "@ryu/teams", "name": "Teams", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/calendar",
+      "name": "Calendar",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/meetings",
+      "name": "Meetings",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/mail", "name": "Mail", "required": false },
+    { "kind": "app", "id": "@ryu/drafts", "name": "Drafts", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/learning",
+      "name": "Learning",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/honcho",
+      "name": "Honcho",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/expiry-date-tracker",
+      "name": "Expiry Date Tracker",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "io.modelcontextprotocol/memory",
+      "name": "Memory MCP Server",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/skills/docx",
+      "name": "DOCX",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/skills/pdf",
+      "name": "PDF",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simpleenglish/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/critique",
+      "name": "Critique",
+      "required": false
+    }
+  ]
+}

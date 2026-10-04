@@ -1,0 +1,156 @@
+{
+  "kind": "bundle",
+  "members": [
+    {
+      "kind": "app",
+      "id": "@ryu/security",
+      "name": "Security",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/checks", "name": "Checks", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/projects",
+      "name": "Projects",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/blueprint",
+      "name": "Blueprint",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/research",
+      "name": "Research",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/monitors",
+      "name": "Monitors",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/activity",
+      "name": "Activity",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/pull-requests",
+      "name": "Pull Requests",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/feedback-board",
+      "name": "Feedback Board",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/security-scanner",
+      "name": "Security Scanner",
+      "required": true
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/rtk",
+      "name": "Ryu Token Keeper",
+      "required": true
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/ripgrep",
+      "name": "Ripgrep",
+      "required": true
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/proof",
+      "name": "Proof",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/spidercloud",
+      "name": "Spidercloud",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/security-guard",
+      "name": "Security Guard",
+      "required": true
+    },
+    {
+      "kind": "mcp",
+      "id": "ai.aient/mcp",
+      "name": "AI SRE MCP",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "io.modelcontextprotocol/memory",
+      "name": "Memory MCP Server",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/security-best-practices",
+      "name": "Security Best Practices",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/security-threat-model",
+      "name": "Security Threat Model",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/gh-fix-ci",
+      "name": "GitHub Fix CI",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/plugins/thermo-nuclear-code-quality-review",
+      "name": "Thermo Nuclear Code Quality Review",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/plugins/typescript-best-practices",
+      "name": "TypeScript Best Practices",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/plugins/blast-radius",
+      "name": "Blast Radius",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/skills/mcp-builder",
+      "name": "MCP Builder",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/plugins/why",
+      "name": "Why",
+      "required": false
+    }
+  ]
+}

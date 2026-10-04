@@ -1,10 +1,4 @@
 # Java LSP
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="jdtls-lsp" width="96" />
-  </picture>
-</p>
 
 Java language server (Eclipse JDT.LS) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install jdtls; the plugin ships config.
 

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.needle3",
+  "version": "0.1.0",
+  "description": "Run Cactus Compute's Apache-2.0 Needle 3 tool-calling model locally as a selectable Shadow computer-use planner. The model weights are pinned and installed into the plugin runtime; the small cactus-needle runtime is installed separately.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://huggingface.co/Cactus-Compute/needle3",
+  "repository": "https://huggingface.co/Cactus-Compute/needle3",
+  "license": "Apache-2.0",
+  "keywords": [
+    "models",
+    "huggingface",
+    "local",
+    "computer-use",
+    "tool-calling",
+    "needle"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/needle3",
+      "displayName": "Needle 3 Local Planner"
+    }
+  }
+}

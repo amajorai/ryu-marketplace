@@ -1,0 +1,130 @@
+{
+  "kind": "bundle",
+  "members": [
+    {
+      "kind": "app",
+      "id": "@ryu/projects",
+      "name": "Projects",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/crm", "name": "CRM", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/expenses",
+      "name": "Expenses",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/invoices",
+      "name": "Invoices",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/people", "name": "People", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/calendar",
+      "name": "Calendar",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/mail", "name": "Mail", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/research",
+      "name": "Research",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/dashboards",
+      "name": "Dashboards",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/drafts", "name": "Drafts", "required": false },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": true
+    },
+    { "kind": "plugin", "id": "@ryu/exa", "name": "Exa", "required": false },
+    {
+      "kind": "plugin",
+      "id": "@ryu/serper",
+      "name": "Serper",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/expense-tracker",
+      "name": "Expense Tracker",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/expiry-date-tracker",
+      "name": "Expiry Date Tracker",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/growth-psychology-strategist",
+      "name": "Growth Psychology Strategist",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "dev.mpp/services",
+      "name": "MPP Services",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "io.modelcontextprotocol/memory",
+      "name": "Memory MCP Server",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/skills/xlsx",
+      "name": "XLSX",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/skills/pdf",
+      "name": "PDF",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/linear",
+      "name": "Linear",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "coreyhaines31/marketingskills/customer-research",
+      "name": "Customer Research",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simpleenglish/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/critique",
+      "name": "Critique",
+      "required": false
+    }
+  ]
+}

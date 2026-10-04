@@ -1,0 +1,121 @@
+{
+  "kind": "bundle",
+  "members": [
+    {
+      "kind": "app",
+      "id": "@ryu/projects",
+      "name": "Projects",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/blueprint",
+      "name": "Blueprint",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/feedback-board",
+      "name": "Feedback Board",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/research",
+      "name": "Research",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/dashboards",
+      "name": "Dashboards",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/meetings",
+      "name": "Meetings",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/calendar",
+      "name": "Calendar",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/teams", "name": "Teams", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/content",
+      "name": "Content",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    { "kind": "plugin", "id": "@ryu/exa", "name": "Exa", "required": true },
+    {
+      "kind": "plugin",
+      "id": "@ryu/firecrawl",
+      "name": "Firecrawl",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/design-director",
+      "name": "Design Director",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "io.modelcontextprotocol/memory",
+      "name": "Memory MCP Server",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/linear",
+      "name": "Linear",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/figma-implement-design",
+      "name": "Figma Implement Design",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/knowledge-work-plugins/data-visualization",
+      "name": "Data Visualization",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "googleworkspace/cli/persona-researcher",
+      "name": "Researcher Persona",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "cursor/plugins/why",
+      "name": "Why",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/critique",
+      "name": "Critique",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simpleenglish/simple-english",
+      "name": "Simple English",
+      "required": true
+    }
+  ]
+}

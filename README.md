@@ -71,7 +71,7 @@ explicit repository use the `amajorai/ryu-<app>` satellite fallback.
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/backstage-dark.png" /><img src="./app-icons/backstage-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/backstage">Backstage</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | A local-first YouTube thumbnail studio that keeps its editor while using Ryu for governed model… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/canvas-dark.png" /><img src="./app-icons/canvas-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-canvas">Canvas</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | A node board for generative media: wire up image, video, chat, text-to-speech, speech-to-text,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/content-dark.png" /><img src="./app-icons/content-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-content">Content</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | A list-only catalog preview for planned local-first content projects, schedules, and performance… |
-| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/drawesome-dark.png" /><img src="./app-icons/drawesome-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-drawesome">Drawesome</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | A lightweight sketching studio for Ryu with seven natural-feeling pens, area erasing, SVG or PNG… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/drawesome-dark.png" /><img src="./app-icons/drawesome-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-drawesome">Drawesome</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | A focused sketch surface for Ryu with a compact pen, highlighter, and eraser toolbar, plus chat… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/reelfarm-dark.png" /><img src="./app-icons/reelfarm-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-reelfarm">Studio</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | A local-first content queue for short-form ideas, hooks, visual direction, and planned publish… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/slides-dark.png" /><img src="./app-icons/slides-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-slides">Slides</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | Create, edit, organize, preview, import, and export carousel frames locally with Ryu's media tools. |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/video-studio-dark.png" /><img src="./app-icons/video-studio-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-video-studio">Video Studio</a></div> | ✓ | – | – | – | experimental | – | 0.4.0 | Edit layered video timelines, review storyboards, add timed captions, and render finished videos… |
@@ -88,7 +88,7 @@ explicit repository use the `amajorai/ryu-<app>` satellite fallback.
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/healing-dark.png" /><img src="./app-icons/healing-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-healing">Self-Healing</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | Self-healing: failed runs are diagnosed by a Gateway side-model and proposed fixes are delivered… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/monitors-dark.png" /><img src="./app-icons/monitors-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-monitors">Monitors</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | Website monitors: price, stock, keyword, content, and uptime watches with cross-device… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/mpp-dark.png" /><img src="./app-icons/mpp-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-mpp">Payments</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | Discover services that speak the Machine Payments Protocol, review exact Tempo testnet charges,… |
-| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/pull-requests-dark.png" /><img src="./app-icons/pull-requests-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-pull-requests">Pull Requests</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | A focused GitHub work inbox for Ryu. Browse pull requests and issues across repositories,… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/pull-requests-dark.png" /><img src="./app-icons/pull-requests-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-pull-requests">Code Review</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | A unified GitHub code review workspace for Ryu. Triage pull requests across repositories,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/simulator-dark.png" /><img src="./app-icons/simulator-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-simulator">Simulators</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | Drive iOS Simulators (macOS + Xcode) and Android Emulators from a workspace tab. Ryu runs the… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/sites-dark.png" /><img src="./app-icons/sites-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-sites">Sites</a></div> | ✓ | ✓ | – | ✓ | experimental | – | 0.4.0 | Create, refine, save and deploy websites with private access, browser-local data and scoped Ryu… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./app-icons/skill-editor-dark.png" /><img src="./app-icons/skill-editor-light.png" width="32" alt="" /></picture><br /><a href="https://github.com/amajorai/ryu-skill-editor">Skill Editor</a></div> | ✓ | ✓ | – | – | experimental | – | 0.4.0 | Author a user-owned Agent Skill (SKILL.md): front-matter fields (name / description / allowed… |
@@ -178,7 +178,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (80)
+## First-party plugins (86)
 
 Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 
@@ -226,6 +226,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 | Plugin | Official | Built-in | System | Pre-installed | Stability | Hidden | Layer | Version | What it is |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/honcho/icon-dark.png" /><img src="./plugins/plugins/honcho/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/honcho/">Honcho</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Give the swappable `memory` layer a provider that MODELS the user instead of only storing rows,… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/llm-wiki/icon-dark.png" /><img src="./plugins/plugins/llm-wiki/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/llm-wiki/">LLM Wiki</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Build and maintain an interlinked research wiki in a user-owned Ryu Space. The bundled skill… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/mem0/icon-dark.png" /><img src="./plugins/plugins/mem0/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/mem0/">Mem0</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Read and write a hosted Mem0 memory project (https://mem0.ai) through the Mem0 Platform REST… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/no-more-mistakes/icon-dark.png" /><img src="./plugins/plugins/no-more-mistakes/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/no-more-mistakes/">No More Mistakes</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Notices when you correct the agent, proposes a one-line lesson for your confirmation, and hands… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/shadow/icon-dark.png" /><img src="./plugins/plugins/shadow/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/shadow/">Shadow</a></div> | ✓ | ✓ | ✓ | ✓ | stable | – | – | 0.4.0 | Search everything Shadow has captured (screen text, audio transcripts, input) and summarize… |
@@ -235,6 +236,9 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 | Plugin | Official | Built-in | System | Pre-installed | Stability | Hidden | Layer | Version | What it is |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/chatgpt-web/icon-dark.png" /><img src="./plugins/plugins/chatgpt-web/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/chatgpt-web/">ChatGPT Web</a></div> | ✓ | – | – | – | experimental | – | – | 0.4.0 | Use a ChatGPT Web subscription through Ryu's signed-in Browser app as an OpenAI-compatible model… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/functiongemma/icon-dark.png" /><img src="./plugins/plugins/functiongemma/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/functiongemma/">FunctionGemma Local Planner</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Run Google's license-gated FunctionGemma 270M model locally as a selectable Shadow computer-use… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/laya/icon-dark.png" /><img src="./plugins/plugins/laya/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/laya/">Laya Local Decisions</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Run Convai Innovations' Apache-2.0 Laya decision models locally through authenticated Ryu tools… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/needle3/icon-dark.png" /><img src="./plugins/plugins/needle3/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/needle3/">Needle 3 Local Planner</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Run Cactus Compute's Apache-2.0 Needle 3 tool-calling model locally as a selectable Shadow… |
 
 ### Productivity
 
@@ -247,6 +251,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/expanded-composer/icon-dark.png" /><img src="./plugins/plugins/expanded-composer/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/expanded-composer/">Expanded Composer</a></div> | ✓ | ✓ | – | ✓ | experimental | – | – | 0.4.0 | Expand the current chat composer in place while keeping the same draft, attachments, and send… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/ghost-chats/icon-dark.png" /><img src="./plugins/plugins/ghost-chats/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/ghost-chats/">Temporary Chats</a></div> | ✓ | ✓ | – | ✓ | experimental | – | – | 0.4.0 | Start a private temporary chat that stays in the current tab and leaves no conversation history,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/goal/icon-dark.png" /><img src="./plugins/plugins/goal/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/goal/">Goal</a></div> | ✓ | ✓ | – | ✓ | experimental | – | – | 0.4.0 | Give the agent a goal with `/goal` or let an agent set one with `goal.set`; it keeps working… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/kill-switch/icon-dark.png" /><img src="./plugins/plugins/kill-switch/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/kill-switch/">Kill Switch</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Stop running chats and bots on the selected node and pause new work until you resume execution. |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/no-ai-slop/icon-dark.png" /><img src="./plugins/plugins/no-ai-slop/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/no-ai-slop/">No AI Slop</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Bundles the `no-ai-slop` editing skill and runs it on every finished answer: a separate reviewer… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/output-styles/icon-dark.png" /><img src="./plugins/plugins/output-styles/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/output-styles/">Output Styles</a></div> | ✓ | ✓ | – | ✓ | experimental | – | – | 0.4.0 | The twelve built-in personality profiles — ELI5, I have ADHD, Concise, Explanatory, Learning,… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/plan-continue/icon-dark.png" /><img src="./plugins/plugins/plan-continue/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/plan-continue/">Plan Continue</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | While plan mode is on and the plan has not been accepted, this injects a follow-up turn after… |
@@ -272,7 +277,8 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/brave/icon-dark.png" /><img src="./plugins/plugins/brave/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/brave/">Brave Search</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Independent web search via the Brave Search API (https://brave.com/search/api/), exposed as one… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/exa/icon-dark.png" /><img src="./plugins/plugins/exa/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/exa/">Exa Search</a></div> | ✓ | ✓ | – | ✓ | experimental | – | – | 0.4.0 | Neural and keyword web search via the Exa API (https://exa.ai), exposed as two declarative HTTP… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/firecrawl/icon-dark.png" /><img src="./plugins/plugins/firecrawl/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/firecrawl/">Firecrawl</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Web search and page scraping via the Firecrawl v2 API (https://firecrawl.dev), exposed as two… |
-| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/parallel/icon-dark.png" /><img src="./plugins/plugins/parallel/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/parallel/">Parallel Search</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Web search and content extraction via Parallel (https://parallel.ai), exposed as three… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/jina-reader/icon-dark.png" /><img src="./plugins/plugins/jina-reader/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/jina-reader/">Jina Reader</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Direct page extraction through Jina Reader. Provides the swappable web.extract layer and works… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/parallel/icon-dark.png" /><img src="./plugins/plugins/parallel/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/parallel/">Parallel Search</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Web search and content extraction via Parallel (https://parallel.ai), exposed as three HTTP tool… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/ripgrep/icon-dark.png" /><img src="./plugins/plugins/ripgrep/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/ripgrep/">ripgrep</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Fast local regular-expression search through ripgrep's `rg` binary, exposed as Ryu command… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/scrapling/icon-dark.png" /><img src="./plugins/plugins/scrapling/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/scrapling/">Scrapling</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Adaptive web-page extraction via the Scrapling MCP server (https://scrapling.readthedocs.io), a… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/serper/icon-dark.png" /><img src="./plugins/plugins/serper/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/serper/">Serper</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.4.0 | Google's own search results as JSON via the Serper API (https://serper.dev), plus single-page… |
@@ -328,7 +334,7 @@ Hosted providers that connect Ryu's swappable layers to an outside service.
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/external_plugins/composio-connect/icon-dark.png" /><img src="./plugins/external_plugins/composio-connect/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/external_plugins/composio-connect/">Composio Connect</a></div> | ✓ | ✓ | ✓ | ✓ | stable | ✓ | – | 0.4.0 | Connect Ryu to Composio's hosted For You MCP server with OAuth. The connection exposes… |
 
-## Portable packages (51)
+## Portable packages (67)
 
 Every package is an editable folder and can also be packed as a deterministic `.ryupack` archive.
 
@@ -338,11 +344,53 @@ Every package is an editable folder and can also be packed as a deterministic `.
 | :---: | :---: | :---: | --- |
 | [animator](./agents/animator/) | 0.4.0 | `d422a1bd0579…` | Expert animation director and creative technologist for technical explainers, data… |
 
+### Customer Support
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [customer-support](./bundles/customer-support/) | 0.4.0 | `7363af7ba509…` | Triage support work, research customer context, draft replies, package escalations, and turn… |
+
+### Data
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [data-analytics](./bundles/data-analytics/) | 0.4.0 | `8f2c006a96a6…` | Query, research, visualize, monitor, and explain business data with dashboards, documents, and… |
+
 ### Design
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
 | [design-director](./agents/design-director/) | 0.4.0 | `6205fc6000a3…` | Expert product design director and design engineer for UI/UX, responsive systems, motion,… |
+
+### E-commerce
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [ecommerce](./bundles/ecommerce/) | 0.4.0 | `c376b8890368…` | Research customers, create campaigns, manage relationships, watch performance, and keep commerce… |
+
+### Education
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [education](./bundles/education/) | 0.4.0 | `2726659eb47f…` | A learning workspace for tuition, study plans, meetings, schedules, people, research, documents,… |
+
+### Engineering
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [engineering](./bundles/engineering/) | 0.4.0 | `7658521fc379…` | A practical engineering workstation for planning, implementation, checks, review, security,… |
+
+### Enterprise Search
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [enterprise-search](./bundles/enterprise-search/) | 0.4.0 | `d056e4c44d5a…` | Search mail, documents, meetings, bookmarks, research, news, and memory through one… |
+
+### Finance
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [finance-accounting](./bundles/finance-accounting/) | 0.4.0 | `51f1f14844bc…` | A finance workspace for expenses, invoices, reporting, research, financial documents, and… |
 
 ### Growth
 
@@ -350,12 +398,25 @@ Every package is an editable folder and can also be packed as a deterministic `.
 | :---: | :---: | :---: | --- |
 | [outreach](./bundles/outreach/) | 0.4.0 | `ca8dbbe36fe4…` | A focused outreach workspace for contacts, CRM context, calendar follow-up, agent communication,… |
 
+### HR
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [hr-people](./bundles/hr-people/) | 0.4.0 | `f1d6e2056a58…` | A people-operations workspace for teams, meetings, correspondence, onboarding materials,… |
+
+### Legal
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [legal](./bundles/legal/) | 0.4.0 | `bbc411bec319…` | Organize documents, research, meetings, correspondence, deadlines, and invoices in one… |
+
 ### Marketing
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
 | [brand-presence](./agents/brand-presence/) | 0.4.0 | `310ab350c594…` | Starts with a brand presence check and monitors the public web for new mentions, sentiment, and… |
 | [growth-psychology-strategist](./agents/growth-psychology-strategist/) | 0.4.0 | `7b9a1760df06…` | Sales and marketing strategist who uses behavioral science to clarify offers, improve… |
+| [marketing](./bundles/marketing/) | 0.4.0 | `71921535e376…` | Research audiences, shape positioning, produce content, publish campaigns, and learn from… |
 | [marketing-studio](./agents/marketing-studio/) | 0.4.0 | `efab9fc80c8d…` | Generates on-brand marketing content and production-ready visual directions with Hyperframes and… |
 | [social-media-marketing](./bundles/social-media-marketing/) | 0.4.0 | `e11edadf3900…` | Plan, research, write, animate, publish, and repurpose social content with Ryu's media and… |
 
@@ -363,7 +424,7 @@ Every package is an editable folder and can also be packed as a deterministic `.
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
-| [codex-quota-reset-watch](./agents/codex-quota-reset-watch/) | 0.4.0 | `3b4b3e5e13bb…` | Checks Tibo’s public announcements through read-only Composio/X integrations about every 30… |
+| [codex-quota-reset-watch](./agents/codex-quota-reset-watch/) | 0.4.0 | `4cfa7a64ca7b…` | Checks Tibo’s public announcements through read-only Composio/X integrations about every 30… |
 | [subscription-reset-watch](./agents/subscription-reset-watch/) | 0.4.0 | `f04dae291132…` | A provider-neutral reset watch for Codex, Claude Code, Copilot, Grok, and GLM. It keeps a quiet… |
 
 ### Operations
@@ -371,6 +432,13 @@ Every package is an editable folder and can also be packed as a deterministic `.
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
 | [expiry-date-tracker](./agents/expiry-date-tracker/) | 0.4.0 | `e7e5ed1c767a…` | Reviews the dates in your connected documents and Spaces, then calls out what is expiring soon… |
+| [operations](./bundles/operations/) | 0.4.0 | `87f4d1e90dea…` | Coordinate projects, workflows, schedules, monitors, dashboards, teams, and operational… |
+
+### Product Management
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [product-management](./bundles/product-management/) | 0.4.0 | `cd513200dd89…` | Write specs, synthesize research, plan roadmaps, align stakeholders, design handoffs, and track… |
 
 ### Productivity
 
@@ -379,11 +447,35 @@ Every package is an editable folder and can also be packed as a deterministic `.
 | [expense-tracker](./agents/expense-tracker/) | 0.4.0 | `1889aa55514f…` | Records and summarizes personal expenses through Ryu's local Expenses ledger, with a visual app… |
 | [software-factory](./bundles/software-factory/) | 0.4.0 | `da88df6bbe6d…` | Project planning, implementation, review, research, proof, security, and design guidance in one… |
 
+### Real Estate
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [real-estate](./bundles/real-estate/) | 0.4.0 | `c38ad8398eea…` | A real-estate workspace for property records, contacts, outreach, schedules, documents, market… |
+
+### Sales
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [sales](./bundles/sales/) | 0.4.0 | `0e4ada4a89be…` | Keep pipeline, contacts, meetings, correspondence, research, and follow-up in one context-rich… |
+
 ### Security
 
 | Package | Version | Checksum | What it is |
 | :---: | :---: | :---: | --- |
 | [security-guard](./agents/security-guard/) | 0.4.0 | `c10b24e91801…` | Runs a fast hourly configuration check and a deeper midnight diagnostic pass over Gateway and… |
+
+### Security & IT
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [security-it](./bundles/security-it/) | 0.4.0 | `b1876b52a62f…` | A security and IT workstation for checks, monitoring, incident research, CI fixes, MCP building,… |
+
+### Small Business
+
+| Package | Version | Checksum | What it is |
+| :---: | :---: | :---: | --- |
+| [small-business](./bundles/small-business/) | 0.4.0 | `49e80f099111…` | A small-business loadout for projects, customers, money, scheduling, research, reporting,… |
 
 ### UI Skills
 

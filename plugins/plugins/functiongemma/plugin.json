@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.functiongemma",
+  "version": "0.1.0",
+  "description": "Run Google's license-gated FunctionGemma 270M model locally as a selectable Shadow computer-use planner. Ryu downloads a pinned Hugging Face snapshot using the user's Hugging Face token; the user must first accept Google's Gemma terms.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://huggingface.co/google/functiongemma-270m-it",
+  "repository": "https://huggingface.co/google/functiongemma-270m-it",
+  "license": "Gemma",
+  "keywords": [
+    "models",
+    "huggingface",
+    "local",
+    "computer-use",
+    "function-calling",
+    "gemma"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/functiongemma",
+      "displayName": "FunctionGemma Local Planner"
+    }
+  }
+}

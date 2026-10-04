@@ -1,0 +1,92 @@
+{
+  "kind": "bundle",
+  "members": [
+    {
+      "kind": "app",
+      "id": "@ryu/dashboards",
+      "name": "Dashboards",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/research",
+      "name": "Research",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/news", "name": "News", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/monitors",
+      "name": "Monitors",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/feedback-board",
+      "name": "Feedback Board",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/anydoc", "name": "AnyDoc", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/activity",
+      "name": "Activity",
+      "required": false
+    },
+    { "kind": "plugin", "id": "@ryu/exa", "name": "Exa", "required": true },
+    {
+      "kind": "plugin",
+      "id": "@ryu/serper",
+      "name": "Serper",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/firecrawl",
+      "name": "Firecrawl",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    {
+      "kind": "mcp",
+      "id": "io.modelcontextprotocol/memory",
+      "name": "Memory MCP Server",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/knowledge-work-plugins/data-visualization",
+      "name": "Data Visualization",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/skills/xlsx",
+      "name": "XLSX",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "mattpocock/skills/research",
+      "name": "Research",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "firecrawl/firecrawl-workflows/firecrawl-deep-research",
+      "name": "Firecrawl Deep Research",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simpleenglish/simple-english",
+      "name": "Simple English",
+      "required": true
+    }
+  ]
+}

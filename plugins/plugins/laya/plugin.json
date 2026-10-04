@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.laya",
+  "version": "0.1.0",
+  "description": "Run Convai Innovations' Apache-2.0 Laya decision models locally through authenticated Ryu tools and as a selectable Shadow computer-use planner. Laya classifies text, email, tickets, and JSON into typed choice, score, and boolean answers; it does not generate text. The plugin provisions its Python sidecar and all three pinned Hugging Face checkpoints (about 2.37 GB / 2.21 GiB) inside the plugin runtime.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://huggingface.co/convaiinnovations/laya",
+  "repository": "https://huggingface.co/convaiinnovations/laya",
+  "license": "Apache-2.0",
+  "keywords": [
+    "models",
+    "huggingface",
+    "local",
+    "classification",
+    "routing",
+    "guardrails"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/laya",
+      "displayName": "Laya Local Decisions"
+    }
+  }
+}

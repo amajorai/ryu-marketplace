@@ -1,0 +1,70 @@
+{
+  "kind": "bundle",
+  "members": [
+    { "kind": "app", "id": "@ryu/anydoc", "name": "AnyDoc", "required": true },
+    { "kind": "app", "id": "@ryu/drafts", "name": "Drafts", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/research",
+      "name": "Research",
+      "required": true
+    },
+    { "kind": "app", "id": "@ryu/mail", "name": "Mail", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/meetings",
+      "name": "Meetings",
+      "required": false
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/calendar",
+      "name": "Calendar",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/people", "name": "People", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/invoices",
+      "name": "Invoices",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    { "kind": "plugin", "id": "@ryu/exa", "name": "Exa", "required": false },
+    {
+      "kind": "plugin",
+      "id": "@ryu/firecrawl",
+      "name": "Firecrawl",
+      "required": false
+    },
+    {
+      "kind": "agent",
+      "id": "ryu/expiry-date-tracker",
+      "name": "Expiry Date Tracker",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aashaexo/humanize",
+      "name": "Humanize",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simple-english",
+      "name": "Simple English",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "pbakaus/critique",
+      "name": "Critique",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.llm-wiki",
+  "version": "0.1.0",
+  "description": "Build and maintain an interlinked research wiki in a user-owned Ryu Space. The bundled skill orients from existing documents, captures source provenance, preserves contradictions, and files durable syntheses without using a private filesystem wiki.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/llm-wiki",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/llm-wiki",
+  "keywords": [
+    "wiki",
+    "knowledge base",
+    "research",
+    "Ryu Spaces",
+    "provenance",
+    "notes"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/llm-wiki",
+      "displayName": "LLM Wiki"
+    }
+  }
+}

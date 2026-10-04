@@ -1,0 +1,58 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/bundle/hr-people",
+  "name": "HR & People",
+  "version": "0.4.0",
+  "kind": "bundle",
+  "artifacts": [
+    "bundle.json"
+  ],
+  "targets": [
+    "desktop"
+  ],
+  "scopes": [
+    "desktop"
+  ],
+  "requires": {},
+  "capabilities": [
+    "bundle:hr-people"
+  ],
+  "includes": [
+    "app:@ryu/people",
+    "app:@ryu/teams",
+    "app:@ryu/calendar",
+    "app:@ryu/meetings",
+    "app:@ryu/mail",
+    "app:@ryu/drafts",
+    "app:@ryu/learning",
+    "plugin:@ryu/composio-connect",
+    "plugin:@ryu/honcho",
+    "agent:ryu/expiry-date-tracker",
+    "mcp:io.modelcontextprotocol/memory",
+    "skill:anthropics/skills/docx",
+    "skill:anthropics/skills/pdf",
+    "skill:aminblg/simpleenglish/simple-english",
+    "skill:aashaexo/humanize",
+    "skill:pbakaus/critique"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-closed",
+    "path": "marketplace-store/bundles/hr-people",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Keep people programs, conversations, and commitments organized.",
+    "category": "HR",
+    "description": "A people-operations workspace for teams, meetings, correspondence, onboarding materials, learning, and deadline-aware follow-up.",
+    "author": "Ryu",
+    "featuredRank": 18
+  }
+}

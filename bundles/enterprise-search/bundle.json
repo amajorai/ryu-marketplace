@@ -1,0 +1,90 @@
+{
+  "kind": "bundle",
+  "members": [
+    { "kind": "app", "id": "@ryu/mail", "name": "Mail", "required": true },
+    { "kind": "app", "id": "@ryu/anydoc", "name": "AnyDoc", "required": true },
+    {
+      "kind": "app",
+      "id": "@ryu/research",
+      "name": "Research",
+      "required": true
+    },
+    {
+      "kind": "app",
+      "id": "@ryu/meetings",
+      "name": "Meetings",
+      "required": false
+    },
+    { "kind": "app", "id": "@ryu/drafts", "name": "Drafts", "required": false },
+    { "kind": "app", "id": "@ryu/people", "name": "People", "required": false },
+    { "kind": "app", "id": "@ryu/news", "name": "News", "required": false },
+    {
+      "kind": "app",
+      "id": "@ryu/bookmarks",
+      "name": "Bookmarks",
+      "required": false
+    },
+    {
+      "kind": "plugin",
+      "id": "@ryu/honcho",
+      "name": "Honcho",
+      "required": false
+    },
+    { "kind": "plugin", "id": "@ryu/mem0", "name": "Mem0", "required": false },
+    {
+      "kind": "plugin",
+      "id": "@ryu/composio-connect",
+      "name": "Composio Connect",
+      "required": false
+    },
+    { "kind": "plugin", "id": "@ryu/exa", "name": "Exa", "required": false },
+    {
+      "kind": "mcp",
+      "id": "io.modelcontextprotocol/memory",
+      "name": "Memory MCP Server",
+      "required": true
+    },
+    {
+      "kind": "mcp",
+      "id": "ai.backengine/backengine-mcp",
+      "name": "Backengine Customer Context",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "mattpocock/skills/research",
+      "name": "Research",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "googleworkspace/cli/persona-researcher",
+      "name": "Researcher Persona",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/skills/pdf",
+      "name": "PDF",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "anthropics/skills/docx",
+      "name": "DOCX",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "openai/skills/openai-docs",
+      "name": "OpenAI Docs",
+      "required": false
+    },
+    {
+      "kind": "skill",
+      "id": "aminblg/simpleenglish/simple-english",
+      "name": "Simple English",
+      "required": true
+    }
+  ]
+}
