@@ -5332,7 +5332,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Keep the work moving",
-      "description": "A durable coordinator workspace for turning long-running work into owned tasks, shared context, delegated workers, and recurring signals without replacing Ryu's CRM, Calendar, or Workflows.",
+      "description": "Projects are where long-running work lives: each project has a coordinator main thread, the bots and Groups working on it (each with its own main thread), shared context, model defaults, and the sessions they spawn.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -20486,7 +20486,7 @@
       "system": false,
       "developer": "Ryu",
       "tagline": "Keep the work moving",
-      "description": "A durable coordinator workspace for turning long-running work into owned tasks, shared context, delegated workers, and recurring signals without replacing Ryu's CRM, Calendar, or Workflows.",
+      "description": "Projects are where long-running work lives: each project has a coordinator main thread, the bots and Groups working on it (each with its own main thread), shared context, model defaults, and the sessions they spawn.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
