@@ -1,4 +1,10 @@
 # Tokenmaxxing
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="tokenmaxxing" width="96" />
+  </picture>
+</p>
 
 An opt-in notification for when every agent you delegated work to has finished.
 

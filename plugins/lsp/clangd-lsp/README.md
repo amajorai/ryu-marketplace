@@ -1,4 +1,10 @@
 # Clangd (C/C++)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="clangd-lsp" width="96" />
+  </picture>
+</p>
 
 C/C++ language server (clangd) for the ryu agent: definitions, references, hover, symbols, implementations, call hierarchies and diagnostics after every edit. You install clangd; the plugin ships config.
 

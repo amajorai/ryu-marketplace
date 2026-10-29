@@ -1,4 +1,10 @@
 # Is Agentic
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="is-agentic" width="96" />
+  </picture>
+</p>
 
 Agent-readiness reports from [Is Agentic](https://is-agentic.com) for Ryu. Ships as a
 fully declarative plugin: one `http` tool-def in `manifest.json`, no key, no Core Rust.

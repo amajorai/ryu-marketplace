@@ -1,4 +1,10 @@
 # Needle 3 Local Planner
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="needle3" width="96" />
+  </picture>
+</p>
 
 This plugin bundles the pinned [Cactus Compute Needle 3](https://huggingface.co/Cactus-Compute/needle3) weights into Ryu's private plugin runtime and contributes the model to Shadow's computer-use planner picker. Needle uses its own compact tool-calling runtime; it is not sent through Laya's classifier API.
 

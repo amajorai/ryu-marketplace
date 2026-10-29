@@ -1,4 +1,10 @@
 # Kill Switch
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="kill-switch" width="96" />
+  </picture>
+</p>
 
 Stop every running chat and bot on the selected node, and hold new work until you
 resume it.

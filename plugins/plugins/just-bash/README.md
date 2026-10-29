@@ -1,4 +1,10 @@
 # just-bash
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="just-bash" width="96" />
+  </picture>
+</p>
 
 A simulated bash shell for Ryu agents, powered by Vercel Labs'
 [just-bash](https://github.com/vercel-labs/just-bash) CLI. This is a fully

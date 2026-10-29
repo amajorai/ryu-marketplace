@@ -1,4 +1,10 @@
 # Usage Pacer
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="usage-pacer" width="96" />
+  </picture>
+</p>
 
 Usage Pacer reads an agent's subscription usage windows before each turn. It
 supports both sides of quota management:

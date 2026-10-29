@@ -1,4 +1,10 @@
 # Steel
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="steel" width="96" />
+  </picture>
+</p>
 
 Steel is a preview provider for Ryu's swappable `browser.control` layer. It runs
 Steel's official MCP server (pinned to the v2.0.1 commit and launched with `npx` from

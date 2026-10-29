@@ -1,4 +1,10 @@
 # Cloudflare Browser Run
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="cloudflare-browser-run" width="96" />
+  </picture>
+</p>
 
 Cloudflare Browser Run is an external provider for Ryu's swappable `browser.control`
 layer. It connects to Cloudflare's hosted Browser Run MCP server with Core-managed

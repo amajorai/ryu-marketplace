@@ -1,4 +1,10 @@
 # Toolsmith Example
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="toolsmith-example" width="96" />
+  </picture>
+</p>
 
 The worked example for **toolsmith**, Ryu's tool-authoring harness: one real,
 verified `inline_js` tool, `text_chunk`, that splits text into fixed-size,

@@ -1,4 +1,10 @@
 # Message Reactions
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="reactions" width="96" />
+  </picture>
+</p>
 
 Emoji reactions on chat messages, for people and for agents.
 

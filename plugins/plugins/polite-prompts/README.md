@@ -1,4 +1,10 @@
 # Polite Prompts
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="polite-prompts" width="96" />
+  </picture>
+</p>
 
 Notices when a message is written in anger (insults, profanity aimed at the agent,
 shouting) and has a side model rewrite it into a calm, respectful prompt before it is

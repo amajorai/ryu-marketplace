@@ -1,4 +1,10 @@
 # Laya Local Decisions
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="laya" width="96" />
+  </picture>
+</p>
 
 `@ryu/laya` packages [Convai Innovations' Laya](https://huggingface.co/convaiinnovations/laya)
 as a local Ryu decision tool.

@@ -1,4 +1,10 @@
 # Ollaya Decision Models
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="ollaya" width="96" />
+  </picture>
+</p>
 
 `@ryu/ollaya` connects a Ryu node to an Ollaya service running on that same
 machine. Ollaya owns model installation and process lifecycle; the plugin only

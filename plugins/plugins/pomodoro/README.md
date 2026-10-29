@@ -1,4 +1,10 @@
 # Pomodoro Timer
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="pomodoro" width="96" />
+  </picture>
+</p>
 
 A focus timer that renders inline in chat. Ask an agent to "start a pomodoro for the
 release notes" and it calls `pomodoro.start`; the reply shows a timer you control.

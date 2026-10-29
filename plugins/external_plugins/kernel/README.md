@@ -1,4 +1,10 @@
 # Kernel
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="kernel" width="96" />
+  </picture>
+</p>
 
 Kernel is an external provider for Ryu's swappable `browser.control` layer. It
 connects to Kernel's hosted MCP server (`https://mcp.onkernel.com/mcp`) with

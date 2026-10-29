@@ -1,4 +1,10 @@
 # LLM Wiki (`@ryu/llm-wiki`)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="llm-wiki" width="96" />
+  </picture>
+</p>
 
 LLM Wiki turns the Karpathy-style interlinked research wiki into a Ryu-native
 Agent Skill. The durable store is a user-owned Ryu Space, not a hidden local

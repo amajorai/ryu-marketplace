@@ -1,4 +1,10 @@
 # Copy & Paste
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="pi-copy" width="96" />
+  </picture>
+</p>
 
 Adds the `copy_paste` tool to the managed Pi agent, so the flagship `ryu` agent
 can copy or move a block of text between or within files **without retyping

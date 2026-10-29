@@ -1,4 +1,10 @@
 # Security Scanner
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="security-scanner" width="96" />
+  </picture>
+</p>
 
 Security Scanner is an original Ryu plugin that combines the strongest workflow
 ideas from modern coding-agent security tools into one model-agnostic package.

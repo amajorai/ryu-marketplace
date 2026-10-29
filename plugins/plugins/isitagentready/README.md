@@ -1,4 +1,10 @@
 # Is It Agent Ready?
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="isitagentready" width="96" />
+  </picture>
+</p>
 
 Live agent-readiness scans from [Is Your Site Agent-Ready?](https://isitagentready.com)
 for Ryu. Ships as a fully declarative plugin: one `http` tool-def in `manifest.json`, no

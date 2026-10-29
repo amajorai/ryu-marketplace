@@ -1,4 +1,10 @@
 # ora
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="ora" width="96" />
+  </picture>
+</p>
 
 Agent-readiness scoring from [ora](https://ora.ai) for Ryu. Ships as a fully declarative
 plugin: six `http` tool-defs over ora's public, keyless read API, no Core Rust.

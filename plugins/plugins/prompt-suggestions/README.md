@@ -1,4 +1,10 @@
 # Prompt Suggestions
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="prompt-suggestions" width="96" />
+  </picture>
+</p>
 
 Prompt Suggestions is the installable plugin for the shared chat-composer prompt
 bridge. It lifecycle-gates Core's one next-prompt generator: after an assistant turn,

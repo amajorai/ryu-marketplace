@@ -1,4 +1,10 @@
 # Kev Decision Models
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="kev" width="96" />
+  </picture>
+</p>
 
 This plugin connects the Ryu **Decision Models** layer to a Kev server already running on the
 selected node. Kev uses the System One request format, so agents call the same stable
