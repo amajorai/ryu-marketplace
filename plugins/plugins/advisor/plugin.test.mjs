@@ -1,6 +1,18 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
 // Co-located unit test for the Advisor plugin.
 //
-// Runner: `node --test` (zero dependencies — node:test + node:assert only).
+// Runner: `node --test` (Node assertions + bundled canonical observers).
 //   node --test plugins-store/plugins/advisor/plugin.test.mjs
 //
 // Advisor is an INLINE-HOOK plugin: it ships a `post_assistant_turn` turn hook
@@ -55,7 +67,7 @@ const parseManifest = () => hydrateCodeFiles(JSON.parse(RAW));
 
 test("manifest.json is valid JSON and parses", () => {
 	const m = parseManifest();
-	assert.equal(typeof m, "object");
+	assert.equal(isObjectRepresentation(m), true);
 	assert.notEqual(m, null);
 });
 
@@ -117,6 +129,11 @@ test("advisor.consult input_schema requires `question`", () => {
 	const schema = tool.config.input_schema;
 	assert.equal(schema.type, "object");
 	assert.deepEqual(schema.required, ["question"]);
+	assert.deepEqual(Object.keys(schema.properties).sort(), [
+		"context",
+		"model",
+		"question",
+	]);
 	for (const key of ["question", "context", "model"]) {
 		assert.equal(
 			schema.properties[key].type,
@@ -124,6 +141,12 @@ test("advisor.consult input_schema requires `question`", () => {
 			`${key} is a string prop`
 		);
 	}
+	assert.equal(tool.config.body_defaults, undefined);
+	assert.equal(
+		Object.hasOwn(schema.properties, "Authorization"),
+		false,
+		"the server-side bearer token is never model input"
+	);
 });
 
 // ── 3. contributes surfaces are well-formed ────────────────────────────────────
@@ -151,7 +174,7 @@ test("turn hook is a post_assistant_turn hook carrying JS code", () => {
 	assert.ok(Array.isArray(hooks));
 	assert.equal(hooks.length, 1);
 	assert.equal(hooks[0].on, "post_assistant_turn");
-	assert.equal(typeof hooks[0].code, "string");
+	assert.equal(isNativeText(hooks[0].code), true);
 	assert.ok(hooks[0].code.length > 0);
 });
 
@@ -313,6 +336,84 @@ test("hook: null advice from side model → kind:none", async () => {
 	});
 	const out = await runHook(ctx, host);
 	assert.deepEqual(out, { kind: "none" });
+});
+
+test("hook: missing or malformed transcript is refused without a model call", async () => {
+	for (const transcript of [undefined, null, "not-an-array", { length: 1 }]) {
+		const { host, calls } = makeHost(() => "SHOULD NOT BE CALLED");
+		const ctx = mkCtx({ flags: { [FLAG]: true } });
+		ctx.transcript = transcript;
+		const out = await runHook(ctx, host);
+		assert.deepEqual(out, { kind: "none" });
+		assert.equal(calls.length, 0);
+	}
+});
+
+test("hook: non-string user content cannot masquerade as an advisor command", async () => {
+	const { host, calls } = makeHost(() => "SHOULD NOT BE CALLED");
+	const out = await runHook(
+		mkCtx({ transcript: [userMsg({ command: "/advisor" })] }),
+		host
+	);
+	assert.deepEqual(out, { kind: "none" });
+	assert.equal(calls.length, 0);
+});
+
+test("hook: side-model failure is returned to Core without an implicit retry", async () => {
+	const failure = new Error("controlled side-model refusal");
+	const { host, calls } = makeHost(() => {
+		throw failure;
+	});
+	const ctx = mkCtx({
+		transcript: [userMsg("review this"), asstMsg("draft")],
+		flags: { [FLAG]: true },
+	});
+	await assert.rejects(runHook(ctx, host), (error) => error === failure);
+	assert.equal(
+		calls.length,
+		1,
+		"the hook must not duplicate a provider request"
+	);
+});
+
+test("hook: concurrent conversations keep prompts and results isolated", async () => {
+	const pending = new Map();
+	const makeDeferred = (id) =>
+		new Promise((resolve) => {
+			pending.set(id, resolve);
+		});
+	const { host, calls } = makeHost(({ prompt }) => {
+		const id = prompt.includes("conversation alpha") ? "alpha" : "beta";
+		return makeDeferred(id);
+	});
+	const alpha = runHook(
+		mkCtx({
+			conversationId: "alpha",
+			transcript: [userMsg("conversation alpha")],
+			flags: { [FLAG]: true },
+		}),
+		host
+	);
+	const beta = runHook(
+		mkCtx({
+			conversationId: "beta",
+			transcript: [userMsg("conversation beta")],
+			flags: { [FLAG]: true },
+		}),
+		host
+	);
+	assert.equal(calls.length, 2);
+	pending.get("beta")("beta advice");
+	pending.get("alpha")("alpha advice");
+	assert.deepEqual(await alpha, {
+		kind: "note",
+		text: "Advisor: alpha advice",
+	});
+	assert.deepEqual(await beta, { kind: "note", text: "Advisor: beta advice" });
+	assert.match(calls[0].prompt, /conversation alpha/);
+	assert.doesNotMatch(calls[0].prompt, /conversation beta/);
+	assert.match(calls[1].prompt, /conversation beta/);
+	assert.doesNotMatch(calls[1].prompt, /conversation alpha/);
 });
 
 // ── 5. Byte-identity with the built-in Core fixture (monorepo only) ────────────

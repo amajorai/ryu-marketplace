@@ -70,8 +70,8 @@ test("sidecar keeps inference local and has contract/parser tests", () => {
 
 test("the pinned inference stack installs on Ryu's Python 3.14 host", () => {
 	assert.match(pyproject, /requires-python = ">=3\.11,<3\.15"/);
-	assert.match(pyproject, /"torch==2\.10\.0"/);
-	assert.match(pyproject, /"transformers==4\.57\.1"/);
+	assert.match(pyproject, /"torch==2\.13\.0"/);
+	assert.match(pyproject, /"transformers==5\.10\.1"/);
 });
 
 test("Core exposes this opt-in model plugin without pre-installing it", () => {

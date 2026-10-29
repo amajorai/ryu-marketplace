@@ -1,5 +1,5 @@
 // Co-located unit test for the `docs` plugin manifest.
-// Zero-dependency, runnable with: node --test plugin.test.mjs
+// Runner: bun test; uses the production manifest and MCP schemas.
 //
 // docs is a manifest-only plugin: it declares a REMOTE (HTTP) MCP server
 // (`https://docs.ryuhq.com/mcp`) and has no inline turn_hooks, sandboxed code
@@ -17,31 +17,41 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import {
+	McpServerDeclSchema,
+	PluginManifestSchema,
+} from "../../../packages/sdk/src/manifest.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
+const MCP_PATH = join(HERE, "mcp.json");
+const EXTENSION_PATH = join(HERE, "plugin.json");
 
 const parseManifest = () => JSON.parse(readFileSync(MANIFEST_PATH, "utf8"));
+const parseMcpConfig = () => JSON.parse(readFileSync(MCP_PATH, "utf8"));
+const parseExtension = () => JSON.parse(readFileSync(EXTENSION_PATH, "utf8"));
 
 const SEMVER = /^\d+\.\d+\.\d+/;
 
 test("manifest.json is valid JSON and parses", () => {
 	const m = parseManifest();
-	assert.equal(typeof m, "object");
+	assert.doesNotThrow(() => PluginManifestSchema.parse(m));
 	assert.notEqual(m, null);
 });
 
 test("required identity fields are present and well-formed", () => {
 	const m = parseManifest();
 
-	assert.equal(typeof m.id, "string");
+	assert.doesNotThrow(() => PluginManifestSchema.shape.id.parse(m.id));
 	assert.ok(m.id.length > 0, "id must be non-empty");
 	assert.equal(m.id, "@ryu/docs");
 
-	assert.equal(typeof m.name, "string");
+	assert.doesNotThrow(() => PluginManifestSchema.shape.name.parse(m.name));
 	assert.ok(m.name.length > 0, "name must be non-empty");
 
-	assert.equal(typeof m.version, "string");
+	assert.doesNotThrow(() =>
+		PluginManifestSchema.shape.version.parse(m.version)
+	);
 	assert.match(m.version, SEMVER, "version must be semver-ish");
 });
 
@@ -54,19 +64,25 @@ test("runnables is an empty array (remote-server plugin ships no runnables)", ()
 test("mcp_servers.docs is a well-formed REMOTE declaration", () => {
 	const m = parseManifest();
 
-	assert.equal(typeof m.mcp_servers, "object");
+	assert.doesNotThrow(() =>
+		PluginManifestSchema.shape.mcp_servers.unwrap().parse(m.mcp_servers)
+	);
 	assert.notEqual(m.mcp_servers, null);
 
 	const server = m.mcp_servers.docs;
 	assert.ok(server, "must declare a `docs` MCP server");
 
 	// A remote server names an HTTP transport + a URL and spawns nothing.
-	assert.equal(typeof server.type, "string");
+	assert.doesNotThrow(() =>
+		McpServerDeclSchema.shape.type.unwrap().parse(server.type)
+	);
 	assert.ok(
 		["http", "streamable-http", "streamable_http", "sse"].includes(server.type),
 		"transport must be one Core lowers to HTTP"
 	);
-	assert.equal(typeof server.url, "string");
+	assert.doesNotThrow(() =>
+		McpServerDeclSchema.shape.url.unwrap().parse(server.url)
+	);
 	assert.match(server.url, /^https:\/\/.+/, "endpoint must be https");
 	assert.match(server.url, /\/mcp$/, "endpoint should point at the /mcp route");
 	assert.equal(
@@ -76,9 +92,31 @@ test("mcp_servers.docs is a well-formed REMOTE declaration", () => {
 	);
 
 	if (server.description !== undefined) {
-		assert.equal(typeof server.description, "string");
+		assert.doesNotThrow(() =>
+			McpServerDeclSchema.shape.description.unwrap().parse(server.description)
+		);
 		assert.ok(server.description.length > 0, "description must be non-empty");
 	}
+});
+
+test("the agent-plugin launch config and Ryu extension project the same remote server", () => {
+	const manifest = parseManifest();
+	const config = parseMcpConfig();
+	const extension = parseExtension();
+	const server = manifest.mcp_servers.docs;
+	const mirroredServer = config.mcpServers.docs;
+
+	assert.equal(mirroredServer.url, server.url);
+	assert.equal(mirroredServer.type, "streamable-http");
+	assert.ok(
+		["http", "streamable-http", "streamable_http", "sse"].includes(server.type)
+	);
+	assert.equal(extension.name, "ryu.docs");
+	assert.equal(extension.version, manifest.version);
+	assert.equal(extension.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.ok(
+		extension.extensions["com.ryuhq.ryu"].mcp.docs.description.length > 0
+	);
 });
 
 test("permission_grants reference the declared MCP server", () => {
@@ -89,7 +127,11 @@ test("permission_grants reference the declared MCP server", () => {
 		"permission_grants must be an array"
 	);
 	for (const grant of m.permission_grants) {
-		assert.equal(typeof grant, "string");
+		assert.doesNotThrow(() =>
+			PluginManifestSchema.shape.permission_grants
+				.removeDefault()
+				.element.parse(grant)
+		);
 	}
 
 	// The mcp:<id> grant must correspond to an actually-declared server.

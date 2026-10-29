@@ -4,55 +4,55 @@
   "members": [
     {
       "kind": "skill",
-      "id": "0xdesign/design-lab",
+      "id": "0xdesign/design-plugin/design-lab",
       "name": "Design Lab",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/frontend-ui-engineering",
+      "id": "addyosmani/agent-skills/frontend-ui-engineering",
       "name": "Frontend UI Engineering",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "antfu/pinia",
+      "id": "antfu/skills/pinia",
       "name": "Pinia",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "anthropics/frontend-design",
+      "id": "anthropics/skills/frontend-design",
       "name": "Frontend Design",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "edenspiekermann/apply-design-system",
+      "id": "edenspiekermann/skills/apply-design-system",
       "name": "Apply Design System",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "edenspiekermann/audit-design-system",
+      "id": "edenspiekermann/skills/audit-design-system",
       "name": "Audit Design System",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "ibelick/create-design-md",
+      "id": "ibelick/ui-skills/create-design-md",
       "name": "Create Design Md",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-interface",
+      "id": "jakubkrehel/skills/better-interface",
       "name": "Better Interface",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-layout",
+      "id": "jakubkrehel/skills/better-layout",
       "name": "Better Layout",
       "required": false
     }

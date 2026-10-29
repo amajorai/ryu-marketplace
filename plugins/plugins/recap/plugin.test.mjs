@@ -1,4 +1,8 @@
-// Co-located, zero-dependency test for the `recap` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Co-located test for the `recap` plugin.
 // Run with:  node --test plugins-store/plugins/recap/plugin.test.mjs
 
 import assert from "node:assert/strict";
@@ -6,9 +10,11 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { runCase } from "../../../tools/toolsmith/harness.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
+const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 const raw = readFileSync(MANIFEST_PATH, "utf8");
 
 // ── code_file hydration ───────────────────────────────────────────────────────
@@ -65,7 +71,13 @@ function makeHost({
 	stored = null,
 	reply = "Fixed the expiry check.",
 } = {}) {
-	const calls = { sideModel: [], getPreference: [], set: [], delete: [] };
+	const calls = {
+		sideModel: [],
+		getPreference: [],
+		set: [],
+		delete: [],
+		log: [],
+	};
 	let value = stored === null ? null : JSON.stringify(stored);
 	return {
 		calls,
@@ -89,7 +101,7 @@ function makeHost({
 				value = null;
 			},
 		},
-		log: () => undefined,
+		log: (...args) => calls.log.push(args),
 	};
 }
 
@@ -98,25 +110,53 @@ function makeHost({
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
 	assert.equal(m.id, "@ryu/recap");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
+	assert.equal(plugin.version, m.version);
+	assert.deepEqual(m.activation_events, ["*"]);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: m.id,
+		displayName: m.name,
+	});
 });
 
 test("declares required grants, settings and the /recap command", () => {
 	const m = parseManifest();
-	for (const g of ["hook:side-model", "storage:kv", "preferences:read"]) {
-		assert.ok(m.permission_grants.includes(g), `missing grant ${g}`);
-	}
-	const keys = m.contributes.settings_tabs[0].fields.map((f) => f.pref_key);
-	for (const k of [
-		"recap-auto",
-		"recap-min-chars",
-		"recap-detail",
-		"recap-model",
-	]) {
-		assert.ok(keys.includes(k), `missing setting ${k}`);
-	}
-	assert.equal(m.contributes.slash_commands[0].command, "/recap");
+	assert.deepEqual(m.permission_grants, [
+		"hook:side-model",
+		"storage:kv",
+		"preferences:read",
+	]);
+	const tab = m.contributes.settings_tabs[0];
+	assert.deepEqual([tab.id, tab.title], ["recap.settings", "Recap"]);
+	assert.deepEqual(
+		tab.fields.map((field) => [field.pref_key, field.label, field.type]),
+		[
+			["recap-auto", "Recap long turns automatically", "toggle"],
+			["recap-min-chars", "Recap turns longer than (characters)", "number"],
+			["recap-detail", "Detail", "select"],
+			["recap-model", "Recap model", "model_picker"],
+		]
+	);
+	assert.deepEqual(
+		tab.fields[2].options.map((option) => option.value),
+		["brief", "standard", "detailed"]
+	);
+	assert.deepEqual(
+		m.contributes.slash_commands.map(({ id, command }) => [id, command]),
+		[["recap.now", "/recap"]]
+	);
+	assert.deepEqual(
+		m.contributes.turn_hooks.map(({ id, on, match }) => [
+			id,
+			on,
+			match?.commands ?? null,
+		]),
+		[
+			["recap.turn", "post_assistant_turn", null],
+			["recap.command", "pre_user_turn", ["/recap"]],
+		]
+	);
 });
 
 test("the command hook pre-gates on /recap so idle turns never spawn a sandbox", () => {
@@ -124,6 +164,52 @@ test("the command hook pre-gates on /recap so idle turns never spawn a sandbox",
 	const hook = m.contributes.turn_hooks.find((h) => h.id === "recap.command");
 	assert.equal(hook.on, "pre_user_turn");
 	assert.deepEqual(hook.match.commands, ["/recap"]);
+});
+
+test("Toolsmith persists /recap off state for the exact conversation", async () => {
+	const hook = parseManifest().contributes.turn_hooks.find(
+		(entry) => entry.id === "recap.command"
+	);
+	await runCase({
+		kind: "turn_hook",
+		code: hook.code,
+		testCase: {
+			name: "mute automatic recaps without removing existing entries",
+			ctx: {
+				conversation_id: "toolsmith-recap-conversation",
+				input: "/recap off",
+				transcript: [{ role: "user", content: "/recap off" }],
+			},
+			host: {
+				storage: {
+					"toolsmith-recap-conversation": JSON.stringify({
+						entries: [{ turn: 3, text: "finished local fixture" }],
+						muted: false,
+					}),
+				},
+			},
+			expect: {
+				kind: "handled",
+				text: "Automatic per-turn recaps are off for this chat. `/recap on` turns them back on, and `/recap` still works on demand.",
+			},
+			expectCalls: [
+				{
+					path: "host.storage.get",
+					args: { key: "toolsmith-recap-conversation" },
+				},
+				{
+					path: "host.storage.set",
+					args: {
+						key: "toolsmith-recap-conversation",
+						value: {
+							entries: [{ turn: 3, text: "finished local fixture" }],
+							muted: true,
+						},
+					},
+				},
+			],
+		},
+	});
 });
 
 // ── recap.turn ────────────────────────────────────────────────────────────────
@@ -136,6 +222,30 @@ test("recaps a long turn as a note and stores it", async () => {
 	assert.match(out.text, /Fixed the expiry check\./);
 	assert.equal(host.calls.sideModel.length, 1);
 	assert.equal(host.calls.sideModel[0].model_pref_key, "recap-model");
+	assert.equal(host.stored().entries.length, 1);
+});
+
+test("a failed automatic recap stays invisible and retries without stale state", async () => {
+	const run = loadHook(parseManifest(), "recap.turn");
+	const host = makeHost();
+	let attempts = 0;
+	host.sideModel = async (args) => {
+		host.calls.sideModel.push(args);
+		attempts += 1;
+		if (attempts === 1) {
+			throw new Error("provider unavailable");
+		}
+		return "Recovered recap.";
+	};
+
+	assert.deepEqual(await run(makeCtx(), host), { kind: "none" });
+	assert.equal(host.stored(), null);
+	assert.equal(host.calls.log[0][0], "recap: generating the turn recap failed");
+	assert.deepEqual(await run(makeCtx(), host), {
+		kind: "note",
+		text: "Recap\n\nRecovered recap.",
+	});
+	assert.equal(host.calls.sideModel.length, 2);
 	assert.equal(host.stored().entries.length, 1);
 });
 
@@ -258,6 +368,37 @@ test("/recap answers the turn itself, without the main model", async () => {
 	assert.ok(!host.calls.sideModel[0].prompt.includes("/recap"));
 });
 
+test("/recap model failure stays handled, preserves state, and retries explicitly", async () => {
+	const run = loadHook(parseManifest(), "recap.command");
+	const stored = {
+		entries: [{ turn: 1, text: "Previously completed work" }],
+		muted: false,
+	};
+	const host = makeHost({ stored });
+	let calls = 0;
+	host.sideModel = async () => {
+		calls += 1;
+		if (calls === 1) {
+			throw new Error("provider 503 private diagnostic");
+		}
+		return "Recap: recovered on explicit retry.";
+	};
+	const ctx = makeCtx({ input: "/recap" });
+	const refused = await run(ctx, host);
+	assert.equal(refused.kind, "handled");
+	assert.match(refused.text, /Couldn't generate the recap/);
+	assert.doesNotMatch(refused.text, /private diagnostic/);
+	assert.deepEqual(host.stored(), stored);
+	assert.equal(calls, 1);
+	const retried = await run(ctx, host);
+	assert.deepEqual(retried, {
+		kind: "handled",
+		text: "Recap: recovered on explicit retry.",
+	});
+	assert.equal(calls, 2);
+	assert.deepEqual(host.stored(), stored);
+});
+
 test("/recap <focus> points the summary without becoming the whole prompt", async () => {
 	const run = loadHook(parseManifest(), "recap.command");
 	const host = makeHost();
@@ -329,4 +470,102 @@ test("a message that merely mentions recap is not the command", async () => {
 	const ctx = makeCtx({ input: "can you recap that for me" });
 	assert.deepEqual(await run(ctx, host), { kind: "none" });
 	assert.equal(host.calls.sideModel.length, 0);
+});
+
+test("mute and clear refuse failed storage, preserve readback, then succeed on retry", async () => {
+	const run = loadHook(parseManifest(), "recap.command");
+	for (const refusal of [false, new Error("storage denied")]) {
+		const host = makeHost({
+			stored: { entries: [{ turn: 1, text: "existing recap" }], muted: false },
+		});
+		const originalSet = host.storage.set;
+		const originalDelete = host.storage.delete;
+		host.storage.set = async () => {
+			if (refusal instanceof Error) {
+				throw refusal;
+			}
+			return refusal;
+		};
+		const failedMute = await run(makeCtx({ input: "/recap off" }), host);
+		assert.match(failedMute.text, /Couldn't save/);
+		assert.equal(host.stored().muted, false);
+		host.storage.set = originalSet;
+		assert.match(
+			(await run(makeCtx({ input: "/recap off" }), host)).text,
+			/are off/
+		);
+		assert.equal(host.stored().muted, true);
+		host.storage.delete = async () => {
+			if (refusal instanceof Error) {
+				throw refusal;
+			}
+			return refusal;
+		};
+		assert.match(
+			(await run(makeCtx({ input: "/recap clear" }), host)).text,
+			/Couldn't clear/
+		);
+		assert.deepEqual(host.stored(), {
+			entries: [{ turn: 1, text: "existing recap" }],
+			muted: true,
+		});
+		host.storage.delete = originalDelete;
+		assert.match(
+			(await run(makeCtx({ input: "/recap clear" }), host)).text,
+			/Cleared/
+		);
+		assert.equal(host.stored(), null);
+		assert.equal(host.calls.sideModel.length, 0);
+	}
+});
+
+test("failed and malformed state reads preserve cached history and permit an explicit retry", async () => {
+	const run = loadHook(parseManifest(), "recap.command");
+	for (const malformed of [false, true]) {
+		const before = {
+			entries: [{ turn: 1, text: "existing recap" }],
+			muted: false,
+		};
+		const host = makeHost({ stored: before });
+		const get = host.storage.get;
+		host.storage.get = async () => {
+			if (malformed) {
+				return "malformed stored JSON";
+			}
+			throw new Error("storage unavailable");
+		};
+		for (const input of ["/recap off", "/recap on"]) {
+			assert.match((await run(makeCtx({ input }), host)).text, /Couldn't save/);
+			assert.equal(host.calls.set.length, 0);
+			assert.deepEqual(host.stored(), before);
+		}
+		host.storage.get = get;
+		assert.match(
+			(await run(makeCtx({ input: "/recap off" }), host)).text,
+			/are off/
+		);
+		assert.deepEqual(host.stored(), { ...before, muted: true });
+	}
+});
+
+test("turn recap is read back by command using the exact conversation key", async () => {
+	const manifest = parseManifest();
+	const host = makeHost({ reply: "Fixed auth expiry in session.rs." });
+	const turn = await loadHook(manifest, "recap.turn")(makeCtx(), host);
+	assert.equal(turn.kind, "note");
+	assert.equal(host.calls.set[0].key, "conv-123");
+	assert.deepEqual(host.stored(), {
+		entries: [{ turn: 1, text: "Fixed auth expiry in session.rs." }],
+		muted: false,
+	});
+	const command = await loadHook(manifest, "recap.command")(
+		makeCtx({ input: "/recap", transcript: [] }),
+		host
+	);
+	assert.equal(command.kind, "handled");
+	assert.equal(host.calls.sideModel[1].model_pref_key, "recap-model");
+	assert.equal(
+		host.calls.sideModel[1].prompt,
+		"PER-TURN RECAPS SO FAR (oldest first):\nTurn 1: Fixed auth expiry in session.rs.\n\n"
+	);
 });

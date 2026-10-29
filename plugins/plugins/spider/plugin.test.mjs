@@ -3,41 +3,98 @@
 // Spider is a declarative `command`-tool plugin (no inline turn_hooks, no
 // mcp_servers, no http tool, no secret_headers). It shells out to the locally
 // installed `spider` CLI. There is therefore no embedded JS to execute; the
-// strongest honest test is a full validation of the command-tool contract:
+// these Node tests validate the authored command-tool contract:
 // the runnable shape, the placeholder<->input_schema wiring, the egress arg,
 // the timeout, and the permission grant. We also assert the manifest is
-// byte-identical to the Core built-in fixture (the registration seam).
+// registered from its package home. The bundled Core runtime stage separately
+// proves canonical routing and the current fail-closed URL-child policy; these
+// manifest checks alone do not prove a successful crawler invocation.
 //
-// Runner: `node --test` (zero deps).
+// Runner: `bun test`; uses the production manifest SDK.
 
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { z } from "zod";
+import {
+	EnginesReqSchema,
+	PluginManifestSchema,
+	RunnableMetaSchema,
+} from "../../../packages/sdk/src/manifest.ts";
+
+const identitySchema = z.object({
+	id: PluginManifestSchema.shape.id,
+	name: PluginManifestSchema.shape.name,
+	version: PluginManifestSchema.shape.version,
+});
+const spiderInputPropertiesSchema = z.object({
+	url: z.object({
+		type: z.literal("string"),
+		description: z.string().optional(),
+	}),
+	depth: z.object({
+		type: z.literal("integer"),
+		minimum: z.number(),
+		maximum: z.number(),
+		default: z.number(),
+	}),
+	limit: z.object({
+		type: z.literal("integer"),
+		minimum: z.number(),
+		maximum: z.number(),
+		default: z.number(),
+	}),
+});
+const spiderCommandSchema = z.object({
+	slug: z.string(),
+	backend: z.literal("command"),
+	bin: z.string(),
+	output: z.literal("json"),
+	timeout_secs: z.number(),
+	description: z.string(),
+	command_args: z.array(z.string()),
+	egress_url_arg: z.string(),
+	bin_version: z.object({
+		args: z.array(z.string()),
+		pattern: z.string(),
+		requirement: z.string(),
+		install_hint: z.string(),
+	}),
+	input_schema: z.object({
+		type: z.literal("object"),
+		required: z.array(z.string()),
+		properties: spiderInputPropertiesSchema,
+	}),
+});
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
-
-test("manifest.json is valid JSON and parses", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
 
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/spider");
-	assert.equal(typeof manifest.name, "string");
+	assert.doesNotThrow(() => identitySchema.shape.name.parse(manifest.name));
 	assert.ok(manifest.name.length > 0);
-	assert.equal(typeof manifest.version, "string");
+	assert.doesNotThrow(() =>
+		identitySchema.shape.version.parse(manifest.version)
+	);
 	// semver-ish
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+	assert.equal(plugin.version, manifest.version);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].displayName, manifest.name);
 });
 
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines, "object");
-	assert.equal(typeof manifest.engines.ryu, "string");
+	assert.doesNotThrow(() => EnginesReqSchema.parse(manifest.engines));
+	assert.doesNotThrow(() =>
+		EnginesReqSchema.shape.ryu.parse(manifest.engines.ryu)
+	);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -47,8 +104,8 @@ test("runnables is a non-empty array with the crawl tool", () => {
 	const r = manifest.runnables[0];
 	assert.equal(r.kind, "tool");
 	assert.equal(r.id, "tool-spider-crawl");
-	assert.equal(typeof r.name, "string");
-	assert.equal(typeof r.config, "object");
+	assert.doesNotThrow(() => RunnableMetaSchema.shape.name.parse(r.name));
+	assert.doesNotThrow(() => spiderCommandSchema.parse(r.config));
 });
 
 const config = manifest.runnables[0].config;
@@ -59,18 +116,24 @@ test("command-tool config is well-formed", () => {
 	assert.equal(config.bin, "spider");
 	assert.equal(config.output, "json");
 	// timeout must be a positive integer number of seconds
-	assert.equal(typeof config.timeout_secs, "number");
+	assert.doesNotThrow(() =>
+		spiderCommandSchema.shape.timeout_secs.parse(config.timeout_secs)
+	);
 	assert.ok(Number.isInteger(config.timeout_secs));
 	assert.ok(config.timeout_secs > 0);
 	assert.equal(config.timeout_secs, 120);
-	assert.equal(typeof config.description, "string");
+	assert.doesNotThrow(() =>
+		spiderCommandSchema.shape.description.parse(config.description)
+	);
 	assert.ok(config.description.length > 0);
 });
 
 test("command_args is a string array beginning with the subcommand", () => {
 	assert.ok(Array.isArray(config.command_args));
 	for (const a of config.command_args) {
-		assert.equal(typeof a, "string");
+		assert.doesNotThrow(() =>
+			spiderCommandSchema.shape.command_args.element.parse(a)
+		);
 	}
 	assert.equal(config.command_args[0], "crawl");
 	// the URL must be passed after a `--` end-of-flags sentinel so a
@@ -87,10 +150,8 @@ function placeholdersIn(args) {
 	const found = new Set();
 	const re = /\{([a-zA-Z0-9_]+)\}/g;
 	for (const a of args) {
-		let m;
-		// biome-ignore lint/suspicious/noAssignInExpressions: standard regex loop
-		while ((m = re.exec(a)) !== null) {
-			found.add(m[1]);
+		for (const match of a.matchAll(re)) {
+			found.add(match[1]);
 		}
 	}
 	return found;
@@ -100,7 +161,7 @@ test("every command_args placeholder maps to an input_schema property", () => {
 	const schema = config.input_schema;
 	assert.equal(schema.type, "object");
 	const props = schema.properties;
-	assert.equal(typeof props, "object");
+	assert.doesNotThrow(() => spiderInputPropertiesSchema.parse(props));
 
 	const used = placeholdersIn(config.command_args);
 	assert.deepEqual([...used].sort(), ["depth", "limit", "url"]);
@@ -148,6 +209,21 @@ test("permission_grants matches the declared command binary", () => {
 	assert.ok(manifest.permission_grants.includes(`tool:command:${config.bin}`));
 });
 
+test("canonical extract and crawl retain their distinct declared command mappings", () => {
+	const extract = manifest.provides.find(
+		(entry) => entry.capability === "web.extract"
+	);
+	const crawl = manifest.provides.find(
+		(entry) => entry.capability === "web.crawl"
+	);
+	assert.deepEqual(extract.tools["web.extract"], {
+		tool: "spider.crawl",
+		args: { format: "" },
+		arg_defaults: { depth: 0, limit: 1 },
+	});
+	assert.deepEqual(crawl.tools["web.crawl"], { tool: "spider.crawl" });
+});
+
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
 	const coreSrc = join(here, "..", "..", "..", "apps", "core", "src");
 	if (!existsSync(coreSrc)) {
@@ -179,4 +255,36 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 		),
 		"Core does not compile this manifest in from its package home — it would not exist at runtime"
 	);
+});
+
+test("README pins the spider_cli version the egress broker was verified against", () => {
+	// Core's egress proxy only mediates a CLI that honours HTTP(S)_PROXY, verified for
+	// spider_cli 2.53.9. The manifest's bin_version makes Core enforce that pin; the
+	// README install instruction must match it, and an unpinned install must not return.
+	const readme = readFileSync(join(here, "README.md"), "utf8");
+	assert.ok(
+		readme.includes("cargo install spider_cli --version 2.53.9 --locked"),
+		"README must pin spider_cli to the verified 2.53.9 release"
+	);
+	const unpinned = readme
+		.split("\n")
+		.filter(
+			(line) =>
+				line.includes("cargo install spider_cli") && !line.includes("--version")
+		);
+	assert.deepEqual(unpinned, [], "unpinned spider_cli install instruction");
+});
+
+test("bin_version makes Core enforce the verified spider_cli release", () => {
+	// spider_cli 2.53.9 is a clap derive CLI with no explicit name, so
+	// `spider --version` prints the crate name: `spider_cli 2.53.9`.
+	assert.deepEqual(config.bin_version, {
+		args: ["--version"],
+		pattern: "spider_cli {version}",
+		requirement: "=2.53.9",
+		install_hint: "cargo install spider_cli --version 2.53.9 --locked",
+	});
+	assert.equal(config.bin_version.pattern.split("{version}").length, 2);
+	const readme = readFileSync(join(here, "README.md"), "utf8");
+	assert.ok(readme.includes(config.bin_version.install_hint));
 });

@@ -4,25 +4,25 @@
   "members": [
     {
       "kind": "skill",
-      "id": "callstackincubator/react-native-best-practices",
+      "id": "callstackincubator/agent-skills/react-native-best-practices",
       "name": "React Native Best Practices",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/animate-expo",
+      "id": "emilkowalski/skills/animate-expo",
       "name": "Animate Expo",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "ibelick/fixing-accessibility",
+      "id": "ibelick/ui-skills/fixing-accessibility",
       "name": "Fixing Accessibility",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-interface",
+      "id": "jakubkrehel/skills/better-interface",
       "name": "Better Interface",
       "required": false
     }

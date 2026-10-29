@@ -18,7 +18,11 @@ arrives, then resolves when the watch ends:
   build`, `tail -f app.log`) and streams stdout+stderr line by line. Ends when
   the command exits.
 - **WebSocket** (`ws.url`): connects to a `ws://`/`wss://` feed and emits each
-  incoming message as one line. Ends when the socket closes.
+  incoming text message as one line. Native Blob, ArrayBuffer, and
+  ArrayBufferView binary frames emit a byte-count placeholder; their payloads
+  are not exposed. Arbitrary objects with `size` or `byteLength` properties are
+  not accepted as native frames and report zero bytes. Ends when the socket
+  closes.
 
 Every watch ends when the source ends, when a line matches the optional `until`
 regex, or when `timeout_ms` fires (default 5 minutes, clamped to

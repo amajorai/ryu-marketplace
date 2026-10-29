@@ -1,7 +1,7 @@
 {
   "id": "@ryu/functiongemma",
   "name": "FunctionGemma Local Planner",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "stability": "experimental",
   "description": "Run Google's license-gated FunctionGemma 270M model locally as a selectable Shadow computer-use planner. Ryu downloads a pinned Hugging Face snapshot using the user's Hugging Face token; the user must first accept Google's Gemma terms.",
   "tagline": "Local function-calling for Shadow",
@@ -11,6 +11,7 @@
   "license": "Gemma",
   "category": "Models",
   "icon": "ai-brain-01",
+  "iconDither": { "from": 240, "to": "transparent", "direction": "down" },
   "tags": [
     "models",
     "huggingface",
@@ -105,7 +106,7 @@
         "env": {
           "RYU_FUNCTIONGEMMA_HOST": "127.0.0.1",
           "RYU_FUNCTIONGEMMA_MODEL_ROOT": "${RYU_RUNTIME_DIR}/models/functiongemma",
-          "HF_HOME": "${RYU_RUNTIME_DIR}/cache/hf",
+          "HF_HOME": "${RYU_MODELS_DIR}/hf",
           "HF_HUB_DISABLE_TELEMETRY": "1",
           "HF_HUB_OFFLINE": "1",
           "TRANSFORMERS_OFFLINE": "1",

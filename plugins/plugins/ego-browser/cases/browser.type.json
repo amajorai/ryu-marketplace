@@ -1,0 +1,100 @@
+{
+  "tool": "browser.type",
+  "kind": "adapter",
+  "code_file": "adapters/browser.type.js",
+  "adapter_tools": [],
+  "cases": [
+    {
+      "name": "pins operation 'type' and forwards the canonical args",
+      "input": {
+        "ref": "e5",
+        "text": "hi",
+        "submit": true
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true,
+            "operation": "type"
+          }
+        ]
+      },
+      "expect": {
+        "ok": true,
+        "operation": "type"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "ref": "e5",
+            "text": "hi",
+            "submit": true,
+            "operation": "type"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a caller-supplied operation cannot change the action",
+      "input": {
+        "ref": "e5",
+        "text": "hi",
+        "submit": true,
+        "operation": "navigate"
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true
+          }
+        ]
+      },
+      "expect": {
+        "ok": true
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "ref": "e5",
+            "text": "hi",
+            "submit": true,
+            "operation": "type"
+          }
+        }
+      ]
+    },
+    {
+      "name": "an unavailable provider answer is returned unchanged",
+      "input": {
+        "ref": "e5",
+        "text": "hi",
+        "submit": true
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false,
+            "error": "ego-browser is not on PATH"
+          }
+        ]
+      },
+      "expect": {
+        "available": false,
+        "error": "ego-browser is not on PATH"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "ref": "e5",
+            "text": "hi",
+            "submit": true,
+            "operation": "type"
+          }
+        }
+      ]
+    }
+  ]
+}

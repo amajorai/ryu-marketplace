@@ -116,13 +116,13 @@
     },
     {
       "kind": "skill",
-      "id": "aashaexo/humanize",
+      "id": "aashaexo/soundshuman/humanize",
       "name": "Humanize",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "pbakaus/critique",
+      "id": "pbakaus/impeccable/critique",
       "name": "Critique",
       "required": false
     }

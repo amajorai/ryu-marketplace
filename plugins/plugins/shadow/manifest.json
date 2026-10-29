@@ -7,9 +7,8 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/shadow",
   "name": "Shadow",
-  "version": "0.4.0",
-  "system": true,
-  "builtin": true,
+  "version": "0.5.0",
+  "stability": "stable",
   "description": "Search everything Shadow has captured (screen text, audio transcripts, input) and summarize recent activity. Exposed as declarative HTTP tools that reach the device-local Shadow sidecar through Core's authenticated `/api/shadow/*` proxy (which injects Shadow's bearer token).",
   "icon": "record",
   "iconDither": { "from": 296, "to": "transparent", "direction": "down" },
@@ -164,7 +163,7 @@
         },
         "fail_open": false,
         "unwrap_body": true,
-        "description": "Use the configured Shadow computer-use planner (Shadow, Jev Ultrafast, or the local Laya decision model) to perform a user-requested task through the current accessibility tree. Requires an explicit user request. It can click visible controls, enter requested text, and scroll; it never presses Enter or submits a form automatically.",
+        "description": "Use the configured Shadow computer-use planner (Shadow, Jev Ultrafast, or an enabled local model plugin) to perform a user-requested task through the current accessibility tree. Requires an explicit user request. The task is bounded to the configured step limit, and Shadow rechecks the focused window and selected control immediately before acting. It can click visible controls, enter requested text, and scroll; it never presses Enter or submits a form automatically.",
         "input_schema": {
           "type": "object",
           "properties": {
@@ -180,7 +179,10 @@
         "output_schema": {
           "type": "object",
           "properties": {
-            "planner": { "type": "string", "enum": ["native", "jev", "laya"] },
+            "planner": {
+              "type": "string",
+              "enum": ["native", "jev", "local", "laya"]
+            },
             "status": {
               "type": "string",
               "enum": ["completed", "blocked", "step_limit"]
@@ -205,7 +207,7 @@
             "type": "secret",
             "pref_key": "SHADOW_JEV_API_KEY",
             "label": "Jev API key",
-            "description": "Stored encrypted on this node and injected only into the Shadow process. Required by the Jev planner; leave blank for the native or local Laya planner."
+            "description": "Stored encrypted on this node and injected only into the Shadow process. Required by the Jev planner; leave blank for the native or local model planner."
           }
         ]
       }

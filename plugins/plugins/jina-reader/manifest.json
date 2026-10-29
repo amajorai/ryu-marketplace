@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/jina-reader",
   "name": "Jina Reader",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "stability": "experimental",
   "description": "Direct page extraction through Jina Reader. Provides the swappable web.extract layer and works with or without a Jina API key; a key raises the upstream rate limit.",
   "icon": "book-search",
@@ -36,7 +36,7 @@
         "backend": "http",
         "method": "POST",
         "url": "https://r.jina.ai/",
-        "header_params": ["Accept"],
+        "header_params": ["Accept", "X-Respond-With"],
         "secret_headers": {
           "Authorization": "Bearer env:RYU_PLUGIN__X40_RYU_X2F_JINA_X2D_READER_API_KEY"
         },
@@ -53,6 +53,11 @@
             "Accept": {
               "type": "string",
               "description": "Response format header; use application/json for structured output."
+            },
+            "X-Respond-With": {
+              "type": "string",
+              "description": "Reader output format header. Omit for main-content Markdown.",
+              "enum": ["markdown", "html", "text"]
             }
           },
           "required": ["url"]

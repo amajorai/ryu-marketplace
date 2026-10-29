@@ -1,0 +1,141 @@
+{
+  "tool": "web.extract",
+  "kind": "adapter",
+  "code_file": "adapters/web.extract.js",
+  "adapter_tools": [],
+  "cases": [
+    {
+      "name": "maps a scraped page onto the canonical extract result",
+      "input": {
+        "url": "https://example.com/a"
+      },
+      "provider": {
+        "call": [
+          {
+            "success": true,
+            "data": {
+              "markdown": "# A",
+              "metadata": {
+                "sourceURL": "https://example.com/a",
+                "title": "A"
+              }
+            }
+          }
+        ]
+      },
+      "expect": {
+        "results": [
+          {
+            "url": "https://example.com/a",
+            "title": "A",
+            "content": "# A",
+            "raw": {
+              "markdown": "# A",
+              "metadata": {
+                "sourceURL": "https://example.com/a",
+                "title": "A"
+              }
+            }
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/a"
+          }
+        }
+      ]
+    },
+    {
+      "name": "unwraps single-element metadata arrays and keeps every batch item",
+      "input": {
+        "url": "https://example.com/b"
+      },
+      "provider": {
+        "call": [
+          {
+            "data": [
+              {
+                "markdown": "one",
+                "metadata": {
+                  "sourceURL": ["https://example.com/b"],
+                  "title": ["B"]
+                }
+              },
+              {
+                "markdown": "two",
+                "metadata": {
+                  "sourceURL": ["https://x.test/1", "https://x.test/2"]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "results": [
+          {
+            "url": "https://example.com/b",
+            "title": "B",
+            "content": "one",
+            "raw": {
+              "markdown": "one",
+              "metadata": {
+                "sourceURL": ["https://example.com/b"],
+                "title": ["B"]
+              }
+            }
+          },
+          {
+            "url": ["https://x.test/1", "https://x.test/2"],
+            "content": "two",
+            "raw": {
+              "markdown": "two",
+              "metadata": {
+                "sourceURL": ["https://x.test/1", "https://x.test/2"]
+              }
+            }
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/b"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a provider error without data is surfaced raw, not as an empty result",
+      "input": {
+        "url": "https://example.com/missing"
+      },
+      "provider": {
+        "call": [
+          {
+            "success": false,
+            "error": "Payment required"
+          }
+        ]
+      },
+      "expect": {
+        "raw": {
+          "success": false,
+          "error": "Payment required"
+        }
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/missing"
+          }
+        }
+      ]
+    }
+  ]
+}

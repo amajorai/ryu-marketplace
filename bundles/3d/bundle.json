@@ -4,37 +4,37 @@
   "members": [
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-fundamentals",
+      "id": "cloudai-x/threejs-skills/threejs-fundamentals",
       "name": "Threejs Fundamentals",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-geometry",
+      "id": "cloudai-x/threejs-skills/threejs-geometry",
       "name": "Threejs Geometry",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-materials",
+      "id": "cloudai-x/threejs-skills/threejs-materials",
       "name": "Threejs Materials",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "flornkm/webgl-components",
+      "id": "flornkm/skills/webgl-components",
       "name": "WebGL Components",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "mengto/cobejs",
+      "id": "mengto/skills/cobejs",
       "name": "Cobejs",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "oso95/scroll-world",
+      "id": "oso95/scroll-world/scroll-world",
       "name": "Scroll World",
       "required": false
     }

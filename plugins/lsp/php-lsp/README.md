@@ -17,9 +17,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install Intelephense globally: `npm install -g intelephense`.
-```
+Install Intelephense globally on any platform with Node.js: `npm install -g intelephense`.
 
 ## More information
 

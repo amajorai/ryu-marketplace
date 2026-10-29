@@ -56,6 +56,10 @@ The plugin exposes `laya.status` for availability checks. `laya.predict` is boun
 to a 512 KiB request, 256 KiB state, and 64 questions. Requests go through Core's
 authenticated extension proxy and the sidecar rejects unauthenticated direct calls.
 
+Laya also provides the shared `decision.typed` capability through the stable
+`decision.predict` tool. The node selector's **Decision Models** layer can route that
+tool to Laya or Ollaya; `laya.predict` remains available for Laya-specific profiles.
+
 ## Model and license notes
 
 The manifest pins the Hugging Face repository revision and allowlists the exact

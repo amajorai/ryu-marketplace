@@ -1,6 +1,6 @@
 // Co-located unit test for the `headroom` plugin manifest.
 //
-// Runner: `node --test` (zero external deps).
+// Runner: `bun test`; uses the production manifest SDK.
 //
 // Shape note: `headroom` is a *policy + sidecar* plugin. It declares NO
 // `contributes.turn_hooks`, NO `mcp_servers`, NO http/command tool, and NO
@@ -17,6 +17,53 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { z } from "zod";
+import {
+	PluginManifestSchema,
+	RunnableMetaSchema,
+} from "../../../packages/sdk/src/manifest.ts";
+
+// Core policy entries have their own native kind/config contract; the SDK's
+// authoring runnable enum intentionally does not include `policy`.
+const identitySchema = z.object({
+	id: PluginManifestSchema.shape.id,
+	name: PluginManifestSchema.shape.name,
+	version: PluginManifestSchema.shape.version,
+});
+const compressionDefinitionSchema = z.object({
+	service: z.string(),
+	url: z.string(),
+	timeout_ms: z.number(),
+	min_messages: z.number(),
+});
+const compressionPolicySchema = z.object({
+	policy_type: z.string(),
+	definition: compressionDefinitionSchema,
+});
+const localProcessSchema = z.object({
+	kind: z.literal("local"),
+	command: z.string(),
+	command_env: z.string(),
+	args: z.array(z.string()),
+});
+const compressionSidecarSchema = z.object({
+	name: z.string(),
+	process: localProcessSchema,
+	health_path: z.string(),
+	port: z.number(),
+});
+const headroomManifestSchema = identitySchema.extend({
+	runnables: z.array(
+		z.object({
+			id: RunnableMetaSchema.shape.id,
+			name: RunnableMetaSchema.shape.name,
+			kind: z.literal("policy"),
+			config: compressionPolicySchema,
+		})
+	),
+	sidecars: z.array(compressionSidecarSchema),
+	permission_grants: z.array(z.string()),
+});
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -26,18 +73,36 @@ const RAW = readFileSync(MANIFEST_PATH, "utf8");
 test("manifest.json is valid, parseable JSON", () => {
 	assert.doesNotThrow(() => JSON.parse(RAW));
 	const m = JSON.parse(RAW);
-	assert.equal(typeof m, "object");
+	assert.doesNotThrow(() => headroomManifestSchema.parse(m));
 	assert.ok(m !== null && !Array.isArray(m), "manifest is a JSON object");
 });
 
 test("manifest carries required identity fields", () => {
 	const m = JSON.parse(RAW);
 	assert.equal(m.id, "@ryu/headroom");
-	assert.equal(typeof m.name, "string");
+	assert.doesNotThrow(() => identitySchema.shape.name.parse(m.name));
 	assert.ok(m.name.length > 0, "name is non-empty");
 	// Version must be a non-empty semver-ish string (Core rejects empty version).
-	assert.equal(typeof m.version, "string");
+	assert.doesNotThrow(() => identitySchema.shape.version.parse(m.version));
 	assert.match(m.version, /^\d+\.\d+\.\d+$/, "version is semver");
+});
+
+test("Agent Plugins projection stays synchronized with the native manifest", () => {
+	const manifest = JSON.parse(RAW);
+	const projection = JSON.parse(
+		readFileSync(join(HERE, "plugin.json"), "utf8")
+	);
+	assert.equal(projection.name, "ryu.headroom");
+	assert.equal(projection.version, manifest.version);
+	assert.equal(projection.description, manifest.description);
+	assert.deepEqual(projection.author, manifest.author);
+	assert.equal(projection.repository, manifest.repository);
+	assert.equal(projection.homepage, manifest.homepage);
+	assert.deepEqual(projection.keywords, manifest.keywords);
+	assert.deepEqual(projection.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 });
 
 test("manifest declares no hook/mcp/tool/secret surfaces (policy+sidecar shape)", () => {
@@ -57,25 +122,39 @@ test("policy runnable is well-formed (compression, non-empty policy_type)", () =
 
 	const r = m.runnables[0];
 	assert.equal(r.id, "policy-headroom-compression");
-	assert.equal(typeof r.name, "string");
+	assert.doesNotThrow(() => RunnableMetaSchema.shape.name.parse(r.name));
 	assert.ok(r.name.length > 0);
 	assert.equal(r.kind, "policy");
 
 	const cfg = r.config;
-	assert.ok(cfg && typeof cfg === "object", "config object present");
+	assert.doesNotThrow(
+		() => compressionPolicySchema.parse(cfg),
+		"config object present"
+	);
 	// Core: `policy_type` must not be empty.
-	assert.equal(typeof cfg.policy_type, "string");
+	assert.doesNotThrow(() =>
+		compressionPolicySchema.shape.policy_type.parse(cfg.policy_type)
+	);
 	assert.ok(cfg.policy_type.length > 0, "policy_type non-empty");
 	assert.equal(cfg.policy_type, "compression");
 
 	const def = cfg.definition;
-	assert.ok(def && typeof def === "object", "definition object present");
+	assert.doesNotThrow(
+		() => compressionDefinitionSchema.parse(def),
+		"definition object present"
+	);
 	assert.equal(def.service, "headroom");
-	assert.equal(typeof def.url, "string");
+	assert.doesNotThrow(() =>
+		compressionDefinitionSchema.shape.url.parse(def.url)
+	);
 	assert.match(def.url, /^http:\/\/127\.0\.0\.1:\d+$/, "url is loopback http");
-	assert.equal(typeof def.timeout_ms, "number");
+	assert.doesNotThrow(() =>
+		compressionDefinitionSchema.shape.timeout_ms.parse(def.timeout_ms)
+	);
 	assert.ok(def.timeout_ms > 0, "timeout_ms positive");
-	assert.equal(typeof def.min_messages, "number");
+	assert.doesNotThrow(() =>
+		compressionDefinitionSchema.shape.min_messages.parse(def.min_messages)
+	);
 	assert.ok(
 		Number.isInteger(def.min_messages) && def.min_messages >= 0,
 		"min_messages is a non-negative integer"
@@ -91,10 +170,13 @@ test("sidecar is well-formed (local command, leading-slash health_path)", () => 
 	assert.equal(s.name, "headroom");
 
 	const p = s.process;
-	assert.ok(p && typeof p === "object", "process object present");
+	assert.doesNotThrow(
+		() => localProcessSchema.parse(p),
+		"process object present"
+	);
 	assert.equal(p.kind, "local");
 	// Core: local 'command' must not be empty.
-	assert.equal(typeof p.command, "string");
+	assert.doesNotThrow(() => localProcessSchema.shape.command.parse(p.command));
 	assert.ok(p.command.length > 0, "command non-empty");
 	assert.equal(p.command, "headroom");
 	// Per AGENTS.md: the binary is overridable via an injected env var.
@@ -102,12 +184,14 @@ test("sidecar is well-formed (local command, leading-slash health_path)", () => 
 	assert.ok(Array.isArray(p.args), "args is an array");
 
 	// Core: health_path must start with '/'.
-	assert.equal(typeof s.health_path, "string");
+	assert.doesNotThrow(() =>
+		compressionSidecarSchema.shape.health_path.parse(s.health_path)
+	);
 	assert.ok(s.health_path.startsWith("/"), "health_path starts with '/'");
 	assert.equal(s.health_path, "/health");
 
 	// Port must be a valid TCP port.
-	assert.equal(typeof s.port, "number");
+	assert.doesNotThrow(() => compressionSidecarSchema.shape.port.parse(s.port));
 	assert.ok(
 		Number.isInteger(s.port) && s.port > 0 && s.port < 65_536,
 		"port in valid range"

@@ -1,6 +1,15 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeObjectLike } from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
 // Co-located unit test for the Output Styles plugin.
 //
-// Runner: `node --test` (zero dependencies — node:test + node:assert only).
+// Runner: `node --test` (Node assertions + bundled canonical observers).
 //   node --test plugins-store/plugins/output-styles/plugin.test.mjs
 //
 // This plugin carries no runnables and no sandboxed JS: it is twelve Markdown files
@@ -20,6 +29,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
 const manifest = JSON.parse(RAW);
+const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 
 const STYLES_DIR = "output-styles";
 /** `output-styles/<slug>.md`, exactly one segment deep. `validate_output_style_path`
@@ -32,11 +42,17 @@ const entries = manifest.contributes?.output_styles ?? [];
 // ── 1. Manifest identity ───────────────────────────────────────────────────────
 
 test("manifest.json is valid JSON with id / name / version", () => {
-	assert.equal(typeof manifest, "object");
+	assert.equal(isObjectRepresentation(manifest), true);
 	assert.notEqual(manifest, null);
 	assert.equal(manifest.id, "@ryu/output-styles");
 	assert.equal(manifest.name, "Output Styles");
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+	assert.equal(plugin.version, manifest.version);
+	assert.deepEqual(manifest.activation_events, ["*"]);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 });
 
 test("declares no runnables, no sandboxed code and no capability grants", () => {
@@ -120,7 +136,7 @@ test("no style file on disk is left undeclared", () => {
 // ── 3. Frontmatter is parseable and carries a name ─────────────────────────────
 
 /**
- * The zero-dependency half of Core's `parse_output_style_md`: split the leading
+ * The repository-native observers half of Core's `parse_output_style_md`: split the leading
  * `---`-fenced YAML block off the body and read its top-level scalars. Deliberately
  * shallow — this test only needs to prove the block is well-formed and names the
  * style, not to reimplement YAML. Values may be quoted (`i-have-adhd` quotes a
@@ -285,7 +301,7 @@ test("contributes exactly one store tab, in the catalog group", () => {
 
 /** Copy of `isCoreApiPath` (`@ryu/app-host/views`), which the desktop renderer
  *  applies to every spec path before it fetches. Duplicated rather than imported
- *  so this stays a zero-dependency `node --test` file that also runs in the
+ *  so this stays a repository-native observers `node --test` file that also runs in the
  *  satellite tree, where `packages/app-host` does not exist. */
 const isCoreApiPath = (p) =>
 	p.startsWith("/api/") && !p.split("/").some((segment) => segment === "..");

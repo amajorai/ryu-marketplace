@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.ollaya",
+  "version": "0.1.0",
+  "description": "Use Ollaya's local, TypeSafe-compatible decision API as a swappable typed-decision provider. The service runs separately on the Ryu node; model state and questions are sent to its loopback API.",
+  "homepage": "https://ollaya.dev/",
+  "license": "Apache-2.0",
+  "keywords": [
+    "decision models",
+    "classification",
+    "local",
+    "ollaya",
+    "typesafe"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/ollaya",
+      "displayName": "Ollaya Decision Models"
+    }
+  }
+}

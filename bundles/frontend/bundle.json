@@ -4,49 +4,49 @@
   "members": [
     {
       "kind": "skill",
-      "id": "accesslint/accessibility-diff",
+      "id": "accesslint/skills/accessibility-diff",
       "name": "Accessibility Diff",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "accesslint/accessibility-scan",
+      "id": "accesslint/skills/accessibility-scan",
       "name": "Accessibility Scan",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "accesslint/audit-and-fix",
+      "id": "accesslint/skills/audit-and-fix",
       "name": "Audit And Fix",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/frontend-ui-engineering",
+      "id": "addyosmani/agent-skills/frontend-ui-engineering",
       "name": "Frontend UI Engineering",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "anthropics/frontend-design",
+      "id": "anthropics/skills/frontend-design",
       "name": "Frontend Design",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "ibelick/fixing-accessibility",
+      "id": "ibelick/ui-skills/fixing-accessibility",
       "name": "Fixing Accessibility",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-interface",
+      "id": "jakubkrehel/skills/better-interface",
       "name": "Better Interface",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "vercel-labs/react-best-practices",
+      "id": "vercel-labs/agent-skills/vercel-react-best-practices",
       "name": "React Best Practices",
       "required": true
     }

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.steel",
+  "version": "0.1.0",
+  "description": "Preview of Steel cloud browsers as a provider for Ryu's swappable browser.control layer, over Steel's official MCP server. Not usable as the Browser layer yet: Ryu starts a fresh Steel server process for every tool call, and the session handle that browser.navigate gets back exists only inside the process that created it, so the next call cannot use it. It is hidden from the store while that is the case. Steel's stateless tools that take a URL directly, such as steel_scrape, stay available under steel.*. Needs a Steel API key stored as the STEEL_API_KEY vault secret and Node on PATH.",
+  "author": {
+    "name": "Steel",
+    "url": "https://steel.dev"
+  },
+  "homepage": "https://steel.dev",
+  "repository": "https://github.com/steel-dev/steel-mcp-server",
+  "license": "MIT",
+  "keywords": [
+    "browser",
+    "automation",
+    "steel",
+    "remote",
+    "web"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/steel",
+      "displayName": "Steel",
+      "mcp": {
+        "steel": {
+          "description": "Steel MCP server v2.0.1 (pinned commit), launched with npx from GitHub because Steel does not publish it to npm. Tools include steel_scrape, steel_screenshot, steel_pdf, session create/release, navigate, snapshot, find, act, wait_for, handoff, batch, and session options. Unavailable until Node is installed and STEEL_API_KEY resolves from the vault."
+        }
+      }
+    }
+  }
+}

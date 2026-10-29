@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
@@ -7,6 +8,22 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+
+test("production sidecar routes enforce auth and preserve inference boundaries", () => {
+	const result = spawnSync(
+		"python3",
+		[join(here, "sidecar", "tests", "test_server.py")],
+		{
+			cwd: here,
+			encoding: "utf8",
+			timeout: 10_000,
+		}
+	);
+	assert.equal(result.error, undefined, result.error?.message);
+	const output = `${result.stdout}\n${result.stderr}`;
+	assert.equal(result.status, 0, output);
+	assert.match(output, /Ran 11 tests/);
+});
 const marketplacePlugin = JSON.parse(
 	readFileSync(join(here, "plugin.json"), "utf8")
 );
@@ -27,6 +44,22 @@ test("manifest is parseable and identifies the Laya model package", () => {
 		/huggingface\.co\/convaiinnovations\/laya$/
 	);
 	assert.match(manifest.license, /Apache-2\.0/i);
+});
+
+test("the typed-decision capability resolves to the explicit Laya predict tool", () => {
+	const provider = manifest.provides.find(
+		(entry) => entry.capability === "decision.typed"
+	);
+	assert.deepEqual(provider, {
+		capability: "decision.typed",
+		version: "1.0.0",
+		title: "Typed Decisions",
+		selectable: true,
+		default: true,
+		layerKind: "decision-model",
+		tools: { "decision.predict": { tool: "laya.predict" } },
+	});
+	assert.equal(bySlug.get("laya.predict")?.kind, "tool");
 });
 
 test("both Store descriptions disclose the complete checkpoint disk requirement", () => {
@@ -53,6 +86,11 @@ test("tools use Core's authenticated ext-proxy and expose explicit model choices
 		"typed-decisions",
 	]);
 	assert.deepEqual(predict.input_schema.required, ["state", "questions"]);
+	assert.equal(
+		Object.hasOwn(predict.input_schema.properties, "images"),
+		false,
+		"the text-only Laya runtime must not advertise unsupported image input"
+	);
 
 	const status = bySlug.get("laya.status").config;
 	assert.equal(status.method, "GET");
@@ -116,9 +154,14 @@ test("sidecar routes and permissions keep inference behind the app boundary", ()
 	assert.equal(routes.get("/predict").permission, "laya.predict");
 	assert.equal(routes.get("/computer-use").method, "POST");
 	assert.equal(routes.get("/computer-use").permission, "laya.predict");
-	assert.ok(!manifest.permission_grants.includes("sidecar:process"));
-	assert.ok(!manifest.permission_grants.includes("runtime:external"));
-	assert.ok(manifest.permission_grants.includes("tool:http-egress:127.0.0.1"));
+	// The declared Python sidecar needs lifecycle grants. Keep their exact set
+	// bounded: inference remains gated by laya.predict on the private routes.
+	assert.deepEqual(manifest.permission_grants, [
+		"sidecar:process",
+		"runtime:external",
+		"tool:http-egress:127.0.0.1",
+	]);
+	assert.equal(runtime.env.RYU_LAYA_HOST, "127.0.0.1");
 	for (const route of sidecar.http.routes) {
 		assert.notEqual(route.auth, "public", `${route.path} must not be public`);
 	}

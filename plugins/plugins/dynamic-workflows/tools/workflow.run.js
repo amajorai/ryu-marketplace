@@ -1,4 +1,4 @@
-// Tool body for `workflow.run`, run in Core's Deno sandbox.
+// Tool body for `workflow.run`, run in Core's JS sandbox.
 //
 // This file is a FRAGMENT, not an ES module: Core splices it into an async IIFE
 // with `input` (the call arguments) and `host` (the capability bridge) already
@@ -10,6 +10,16 @@
 // variable arrives as an argument. `node tools/toolsmith/index.mjs verify`
 // enforces that both statically and by running every case twice.
 
+// The host injects actual serde_json values. The native String brand
+// operation plus identity admits only primitive strings without coercion.
+function primitiveStringAdmitted(raw) {
+	try {
+		return String.prototype.valueOf.call(raw) === raw;
+	} catch {
+		return false;
+	}
+}
+
 const tasks = input && input.tasks;
 if (!Array.isArray(tasks) || tasks.length === 0 || tasks.length > 20) {
 	throw new Error("workflow.run: 'tasks' must contain 1-20 delegate tasks");
@@ -18,24 +28,30 @@ if (!Array.isArray(tasks) || tasks.length === 0 || tasks.length > 20) {
 const presets = new Set(["research", "code_read", "summarise"]);
 const ids = new Set();
 const delegates = tasks.map((task, index) => {
-	if (!task || typeof task !== "object" || Array.isArray(task)) {
+	if (!task || Object(task) !== task || Array.isArray(task)) {
 		throw new Error(`workflow.run: task ${index + 1} must be an object`);
 	}
-	if (typeof task.task !== "string" || task.task.trim().length === 0) {
+	if (!primitiveStringAdmitted(task.task) || task.task.trim().length === 0) {
 		throw new Error(`workflow.run: task ${index + 1} requires a non-empty 'task'`);
 	}
-	const id = typeof task.id === "string" && task.id.trim().length > 0
+	const id = primitiveStringAdmitted(task.id) && task.id.trim().length > 0
 		? task.id.trim()
 		: `delegate-${index + 1}`;
 	if (ids.has(id)) {
 		throw new Error(`workflow.run: duplicate task id '${id}'`);
 	}
 	ids.add(id);
-	if (task.agent_id !== undefined && (typeof task.agent_id !== "string" || task.agent_id.trim().length === 0)) {
+	if (task.agent_id !== undefined && (!primitiveStringAdmitted(task.agent_id) || task.agent_id.trim().length === 0)) {
 		throw new Error(`workflow.run: task ${index + 1} 'agent_id' must be a non-empty string`);
 	}
 	if (task.preset !== undefined && !presets.has(task.preset)) {
 		throw new Error(`workflow.run: task ${index + 1} has an unknown preset`);
+	}
+	if (
+		task.model !== undefined &&
+		(!primitiveStringAdmitted(task.model) || task.model.trim().length === 0)
+	) {
+		throw new Error(`workflow.run: task ${index + 1} 'model' must be a non-empty string`);
 	}
 	if (task.tools !== undefined) {
 		throw new Error("workflow.run: inline delegates are prompt-only; use a registered agent_id for tools");
@@ -47,12 +63,12 @@ const delegates = tasks.map((task, index) => {
 	};
 	if (task.agent_id !== undefined) delegate.agent_id = task.agent_id.trim();
 	if (task.system_prompt !== undefined || task.model !== undefined) {
-		if (typeof task.system_prompt !== "string" || task.system_prompt.trim().length === 0) {
+		if (!primitiveStringAdmitted(task.system_prompt) || task.system_prompt.trim().length === 0) {
 			throw new Error(`workflow.run: task ${index + 1} 'system_prompt' must be non-empty`);
 		}
 		delegate.inline = {
 			system_prompt: task.system_prompt?.trim() ?? "",
-			...(task.model === undefined ? {} : { model: task.model }),
+			...(task.model === undefined ? undefined : { model: task.model.trim() }),
 		};
 	}
 	return delegate;

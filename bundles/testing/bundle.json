@@ -4,73 +4,73 @@
   "members": [
     {
       "kind": "skill",
-      "id": "accesslint/accessibility-diff",
+      "id": "accesslint/skills/accessibility-diff",
       "name": "Accessibility Diff",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "accesslint/accessibility-scan",
+      "id": "accesslint/skills/accessibility-scan",
       "name": "Accessibility Scan",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "accesslint/audit-and-fix",
+      "id": "accesslint/skills/audit-and-fix",
       "name": "Audit And Fix",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "accesslint/contrast-checker",
+      "id": "accesslint/skills/contrast-checker",
       "name": "Contrast Checker",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "accesslint/link-purpose",
+      "id": "accesslint/skills/link-purpose",
       "name": "Link Purpose",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "accesslint/refactor",
+      "id": "accesslint/skills/refactor",
       "name": "Refactor",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "accesslint/use-of-color",
+      "id": "accesslint/skills/use-of-color",
       "name": "Use Of Color",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "addyosmani/web-quality-audit",
+      "id": "addyosmani/web-quality-skills/web-quality-audit",
       "name": "Web Quality Audit",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "antfu/vitest",
+      "id": "antfu/skills/vitest",
       "name": "Vitest",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "antfu/vue-testing-best-practices",
+      "id": "antfu/skills/vue-testing-best-practices",
       "name": "Vue Testing Best Practices",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cursor/thermo-nuclear-code-quality-review",
+      "id": "cursor/plugins/thermo-nuclear-code-quality-review",
       "name": "Thermo Nuclear Code Quality Review",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/improve-animations",
+      "id": "emilkowalski/skills/improve-animations",
       "name": "Improve Animations",
       "required": false
     }

@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `exa` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `exa` is a declarative HTTP-tool plugin: it contributes two `tool` runnables
 // (search + find-similar) that Core proxies to https://api.exa.ai with a
@@ -16,6 +20,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
@@ -45,22 +50,21 @@ function hydrateCodeFiles(m) {
 /** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
 const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/exa");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	// semantic-ish version string
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
+	assert.equal(plugin.version, manifest.version);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].displayName, manifest.name);
 });
 
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -69,8 +73,8 @@ test("contributes exactly three http tool runnables", () => {
 	assert.equal(manifest.runnables.length, 3);
 	for (const r of manifest.runnables) {
 		assert.equal(r.kind, "tool");
-		assert.equal(typeof r.id, "string");
-		assert.equal(typeof r.name, "string");
+		assert.equal(isNativeText(r.id), true);
+		assert.equal(isNativeText(r.name), true);
 		assert.equal(r.config.backend, "http");
 		assert.equal(r.config.method, "POST");
 	}
@@ -124,15 +128,19 @@ test("search tool routes to /search with sane body defaults", () => {
 	const s = bySlug.get("exa.search");
 	assert.equal(new URL(s.config.url).pathname, "/search");
 	const bd = s.config.body_defaults;
-	assert.equal(bd.num_results, 10);
-	assert.equal(bd.use_autoprompt, true);
+	// Exa's REST body is camelCase; `num_results` is not an Exa field, so the
+	// default (and every canonical web.search limit) was silently ignored.
+	assert.equal(bd.numResults, 10);
+	assert.equal(bd.num_results, undefined);
+	assert.equal(bd.use_autoprompt, undefined);
 	assert.deepEqual(bd.contents, { text: true });
 });
 
-test("find-similar tool routes to /findSimilar with num_results default", () => {
+test("find-similar tool routes to /findSimilar with numResults default", () => {
 	const f = bySlug.get("exa.find_similar");
 	assert.equal(new URL(f.config.url).pathname, "/findSimilar");
-	assert.equal(f.config.body_defaults.num_results, 10);
+	assert.equal(f.config.body_defaults.numResults, 10);
+	assert.equal(f.config.body_defaults.num_results, undefined);
 });
 
 test("both tools are fail_open and unwrap_body proxies", () => {
@@ -148,10 +156,8 @@ test("input schemas are well-formed JSON Schema objects with required keys", () 
 	assert.equal(s.properties.query.type, "string");
 	assert.deepEqual(s.required, ["query"]);
 	// declared numeric bounds are coherent
-	assert.equal(s.properties.num_results.type, "integer");
-	assert.ok(
-		s.properties.num_results.minimum <= s.properties.num_results.maximum
-	);
+	assert.equal(s.properties.numResults.type, "integer");
+	assert.ok(s.properties.numResults.minimum <= s.properties.numResults.maximum);
 
 	const f = bySlug.get("exa.find_similar").config.input_schema;
 	assert.equal(f.type, "object");
@@ -204,7 +210,7 @@ test("contributes exactly one settings tab, declarative and node-scoped", () => 
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "exa.settings");
-	assert.equal(typeof tab.title, "string");
+	assert.equal(isNativeText(tab.title), true);
 	assert.ok(tab.title.length > 0);
 	// The secret-header resolver runs in Core ON THE NODE, so it can only read a
 	// node-scoped preference. A `user` (client-local) scope would be invisible to
@@ -236,7 +242,7 @@ test("the settings field pref_key IS the env var the tools reference", () => {
 
 test("the secret field carries a real label and a sourcing description", () => {
 	const field = manifest.contributes.settings_tabs[0].fields[0];
-	assert.equal(typeof field.label, "string");
+	assert.equal(isNativeText(field.label), true);
 	assert.ok(field.label.length > 0);
 	assert.ok(
 		field.description?.includes("https://"),
@@ -345,15 +351,17 @@ test("the free endpoint is called with the Accept header it requires", () => {
 	assert.match(code, /name: "web_search_exa"/);
 });
 
-test("the adapter parses the SSE frame the endpoint actually returns", () => {
-	// The reply is `event: message\ndata: {json}` with Content-Type
-	// text/event-stream, so the http tool hands back a STRING, not JSON. Records
-	// inside the payload text are separated by a `---` line.
-	const code = manifest.provides.find((p) => p.capability === "web.search")
-		.tools["web.search"].adapter.code;
-	assert.match(code, /typeof free !== "string"/);
-	assert.match(code, /startsWith\("data: "\)/);
-	assert.match(code, /split\(\/\\n-\{3,\}\\n\/\)/);
+test("free search preserves a non-text response envelope", async () => {
+	const raw = { code: 502, error: "fixture-upstream-failure" };
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "hello" },
+		provider: {
+			call: [{ available: false }],
+			named: { "exa.free_search": [raw] },
+		},
+	});
+	assert.deepEqual(outcome.value, { raw });
+	assert.equal(outcome.calls.length, 2);
 });
 
 // Execute the native fragment with Toolsmith's recorded, allowlisted effects.
@@ -396,7 +404,108 @@ test("free search preserves MCP errors even when they carry result-shaped conten
 		},
 	});
 	assert.deepEqual(outcome.value, { raw });
-	assert.equal(outcome.calls.length, 2);
+	assert.deepEqual(outcome.calls, [
+		{ path: "callTool", args: { query: "hello" } },
+		{
+			path: "callNamed:exa.free_search",
+			args: {
+				Accept: "application/json, text/event-stream",
+				jsonrpc: "2.0",
+				id: 1,
+				method: "tools/call",
+				params: {
+					name: "web_search_exa",
+					arguments: { query: "hello" },
+				},
+			},
+		},
+	]);
+});
+
+test("keyed search maps the result and records one exact provider request", async () => {
+	const item = {
+		title: "Fixture result",
+		url: "https://example.test/result",
+		text: "Local excerpt",
+		publishedDate: "2026-09-28",
+		author: "Fixture author",
+		score: 0.91,
+	};
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "local test query", limit: 3 },
+		provider: { call: [{ results: [item] }] },
+	});
+
+	assert.deepEqual(outcome.value, {
+		results: [
+			{
+				title: item.title,
+				url: item.url,
+				snippet: item.text,
+				published: item.publishedDate,
+				author: item.author,
+				score: item.score,
+				raw: item,
+			},
+		],
+		via: "api.exa.ai",
+	});
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: { query: "local test query", numResults: 3 },
+		},
+	]);
+});
+
+test("free search parses a local SSE frame into canonical results", async () => {
+	const text = [
+		"Title: Fixture free result",
+		"URL: https://example.test/free",
+		"Published: 2026-09-28",
+		"Author: Local fixture",
+		"Highlights: excerpt from the local response",
+	].join("\n");
+	const raw = `event: message\ndata: ${JSON.stringify({ result: { content: [{ type: "text", text }] } })}\n`;
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "free local query" },
+		provider: {
+			call: [{ available: false }],
+			named: { "exa.free_search": [raw] },
+		},
+	});
+	assert.deepEqual(outcome.value, {
+		results: [
+			{
+				title: "Fixture free result",
+				url: "https://example.test/free",
+				snippet: "excerpt from the local response",
+				published: "2026-09-28",
+				author: "Local fixture",
+				score: undefined,
+				raw: text,
+			},
+		],
+		via: "mcp.exa.ai (free tier, no key)",
+	});
+	assert.deepEqual(outcome.calls[0], {
+		path: "callTool",
+		args: { query: "free local query" },
+	});
+	assert.equal(outcome.calls[1].path, "callNamed:exa.free_search");
+});
+
+test("a keyed provider failure is returned without a free-tier retry", async () => {
+	const failure = { status: 503, body: "local provider fixture unavailable" };
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "local test query" },
+		provider: { call: [failure] },
+	});
+
+	assert.deepEqual(outcome.value, { raw: failure });
+	assert.deepEqual(outcome.calls, [
+		{ path: "callTool", args: { query: "local test query" } },
+	]);
 });
 
 test("free search leaves unrecognized text visible instead of inventing a result", async () => {

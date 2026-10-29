@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `serper` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `serper` is a declarative HTTP-tool plugin AND a capability provider for the
 // swappable layers: it declares `provides` entries binding the canonical
@@ -32,22 +36,22 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
-
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
 
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/serper");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
+	assert.equal(plugin.version, manifest.version);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].displayName, manifest.name);
 });
 
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -359,7 +363,7 @@ test("contributes exactly one settings tab, declarative and node-scoped", () => 
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "serper.settings");
-	assert.equal(typeof tab.title, "string");
+	assert.equal(isNativeText(tab.title), true);
 	assert.ok(tab.title.length > 0);
 	// The secret-header resolver runs in Core ON THE NODE, so it can only read a
 	// node-scoped preference. A `user` (client-local) scope would be invisible to
@@ -406,7 +410,7 @@ test("one key powers BOTH capabilities serper provides", () => {
 
 test("the secret field carries a real label and a sourcing description", () => {
 	const field = manifest.contributes.settings_tabs[0].fields[0];
-	assert.equal(typeof field.label, "string");
+	assert.equal(isNativeText(field.label), true);
 	assert.ok(field.label.length > 0);
 	assert.ok(
 		field.description?.includes("https://"),

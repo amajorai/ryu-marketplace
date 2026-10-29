@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/accessibility",
   "name": "Accessibility",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,22 +19,22 @@
     "bundle:ui-skills:accessibility"
   ],
   "includes": [
-    "skill:accesslint/accessibility-diff",
-    "skill:accesslint/accessibility-scan",
-    "skill:accesslint/audit-and-fix",
-    "skill:accesslint/contrast-checker",
-    "skill:accesslint/link-purpose",
-    "skill:accesslint/use-of-color",
-    "skill:addyosmani/accessibility",
-    "skill:addyosmani/web-quality-audit",
-    "skill:ibelick/fixing-accessibility",
-    "skill:jakubkrehel/better-accessibility",
-    "skill:wshobson/wcag-audit-patterns"
+    "skill:accesslint/skills/accessibility-diff",
+    "skill:accesslint/skills/accessibility-scan",
+    "skill:accesslint/skills/audit-and-fix",
+    "skill:accesslint/skills/contrast-checker",
+    "skill:accesslint/skills/link-purpose",
+    "skill:accesslint/skills/use-of-color",
+    "skill:addyosmani/web-quality-skills/accessibility",
+    "skill:addyosmani/web-quality-skills/web-quality-audit",
+    "skill:ibelick/ui-skills/fixing-accessibility",
+    "skill:jakubkrehel/skills/better-accessibility",
+    "skill:wshobson/agents/wcag-audit-patterns"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/accessibility",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/accessibility",
     "ref": "main"
   },
   "security": {

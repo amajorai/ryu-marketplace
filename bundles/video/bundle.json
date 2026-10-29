@@ -4,31 +4,31 @@
   "members": [
     {
       "kind": "skill",
-      "id": "antfu/slidev",
+      "id": "antfu/skills/slidev",
       "name": "Slidev",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "arifszn/slide-wright",
+      "id": "arifszn/slide-wright/slide-wright",
       "name": "Slide Wright",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "figma/figma-implement-motion",
+      "id": "figma/mcp-server-guide/figma-implement-motion",
       "name": "Figma Implement Motion",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "remotion-dev/remotion-best-practices",
+      "id": "remotion-dev/skills/remotion-best-practices",
       "name": "Remotion Best Practices",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "iart-ai/lottie-animation",
+      "id": "iart-ai/web-animation-skills/lottie-animation",
       "name": "Lottie Animation",
       "required": false
     }

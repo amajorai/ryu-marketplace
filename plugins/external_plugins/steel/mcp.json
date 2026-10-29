@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "steel": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "github:steel-dev/steel-mcp-server#4c0c583a3704ea3605fe3c72d7d0e9a9b1b94994"
+      ],
+      "env": {
+        "STEEL_PROFILE": "browse"
+      }
+    }
+  }
+}

@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/video",
   "name": "Video",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,16 +19,16 @@
     "bundle:ui-skills:video"
   ],
   "includes": [
-    "skill:antfu/slidev",
-    "skill:arifszn/slide-wright",
-    "skill:figma/figma-implement-motion",
-    "skill:remotion-dev/remotion-best-practices",
-    "skill:iart-ai/lottie-animation"
+    "skill:antfu/skills/slidev",
+    "skill:arifszn/slide-wright/slide-wright",
+    "skill:figma/mcp-server-guide/figma-implement-motion",
+    "skill:remotion-dev/skills/remotion-best-practices",
+    "skill:iart-ai/web-animation-skills/lottie-animation"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/video",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/video",
     "ref": "main"
   },
   "security": {

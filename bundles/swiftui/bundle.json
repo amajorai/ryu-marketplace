@@ -4,19 +4,19 @@
   "members": [
     {
       "kind": "skill",
-      "id": "dimillian/swiftui-ui-patterns",
+      "id": "dimillian/skills/swiftui-ui-patterns",
       "name": "SwiftUI UI Patterns",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/write-swift",
+      "id": "emilkowalski/skills/write-swift",
       "name": "Write Swift",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/apple-design",
+      "id": "emilkowalski/skills/apple-design",
       "name": "Apple Design",
       "required": false
     }

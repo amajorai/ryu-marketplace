@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `parallel` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `parallel` is a declarative HTTP-tool plugin: it contributes three `tool`
 // runnables (keyed search, keyless MCP search, extract) that Core proxies to
@@ -16,6 +20,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`adapters/*.js`) and
@@ -45,10 +50,6 @@ function hydrateCodeFiles(m) {
 /** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
 const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = parseManifest();
 
 /** The hydrated `web.search` adapter body, which several tests assert against. */
@@ -59,13 +60,16 @@ const adapterCode = () =>
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/parallel");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
+	assert.equal(plugin.version, manifest.version);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].displayName, manifest.name);
 });
 
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -74,8 +78,8 @@ test("contributes exactly three http tool runnables", () => {
 	assert.equal(manifest.runnables.length, 3);
 	for (const r of manifest.runnables) {
 		assert.equal(r.kind, "tool");
-		assert.equal(typeof r.id, "string");
-		assert.equal(typeof r.name, "string");
+		assert.equal(isNativeText(r.id), true);
+		assert.equal(isNativeText(r.name), true);
 		assert.equal(r.config.backend, "http");
 		assert.equal(r.config.method, "POST");
 	}
@@ -291,13 +295,39 @@ test("the adapter fans ONE canonical query out to objective + search_queries", (
 	assert.match(code, /callTool\(\{ objective, search_queries \}\)/);
 });
 
-test("the adapter applies `limit` itself, guarded for undefined", () => {
-	// Parallel exposes no result-count knob on either path, so the canonical
-	// `limit` is honoured client-side or not at all. Slicing at an absent limit
-	// would return zero results, hence the type guard.
-	const code = adapterCode();
-	assert.match(code, /typeof input\.limit === "number"/);
-	assert.match(code, /slice\(0, input\.limit\)/);
+test("the adapter applies only positive numeric limits on both provider paths", async () => {
+	const items = [
+		{ url: "https://example.test/first" },
+		{ url: "https://example.test/second" },
+	];
+	for (const [limit, expected] of [
+		[undefined, 2],
+		[null, 2],
+		["1", 2],
+		[true, 2],
+		[0, 2],
+		[-1, 2],
+		[1, 1],
+		[2, 2],
+	]) {
+		for (const free of [false, true]) {
+			const outcome = await runAdapterCase("web.search", {
+				input: { query: "limit contract", limit },
+				provider: free
+					? {
+							call: [{ available: false }],
+							named: {
+								"parallel.free_search": [
+									{ result: { structuredContent: { results: items } } },
+								],
+							},
+						}
+					: { call: [{ results: items }] },
+			});
+			assert.equal(outcome.value.results.length, expected);
+			assert.equal(outcome.calls.length, free ? 2 : 1);
+		}
+	}
 });
 
 test("the adapter joins the excerpts ARRAY into a snippet string", () => {
@@ -356,7 +386,7 @@ test("the adapter reads structuredContent and passes JSON-RPC errors through", (
 	assert.match(code, /Array\.isArray\(payload\.results\)/);
 	assert.match(code, /return \{ raw: free \};/);
 	// Every parse is guarded — a throw would surface as an adapter crash.
-	assert.match(code, /catch \(e\)/);
+	assert.match(code, /catch\s*(?:\([^)]*\))?\s*\{/);
 });
 
 // --- BYOK settings tab -------------------------------------------------------
@@ -371,7 +401,7 @@ test("contributes exactly one settings tab, declarative and node-scoped", () => 
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "parallel.settings");
-	assert.equal(typeof tab.title, "string");
+	assert.equal(isNativeText(tab.title), true);
 	assert.ok(tab.title.length > 0);
 	// The secret-header resolver runs in Core ON THE NODE, so it can only read a
 	// node-scoped preference. A `user` (client-local) scope would be invisible to
@@ -402,7 +432,7 @@ test("the settings field pref_key IS the env var the tools reference", () => {
 
 test("the secret field carries a real label and a sourcing description", () => {
 	const field = manifest.contributes.settings_tabs[0].fields[0];
-	assert.equal(typeof field.label, "string");
+	assert.equal(isNativeText(field.label), true);
 	assert.ok(field.label.length > 0);
 	assert.ok(
 		field.description?.includes("https://"),
@@ -517,5 +547,288 @@ test("free search preserves MCP errors even when they carry result-shaped conten
 		},
 	});
 	assert.deepEqual(outcome.value, { raw });
-	assert.equal(outcome.calls.length, 2);
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: {
+				objective: "hello",
+				search_queries: ["hello"],
+			},
+		},
+		{
+			path: "callNamed:parallel.free_search",
+			args: {
+				jsonrpc: "2.0",
+				id: 1,
+				method: "tools/call",
+				params: {
+					name: "web_search",
+					arguments: {
+						objective: "hello",
+						search_queries: ["hello"],
+					},
+				},
+			},
+		},
+	]);
+});
+
+test("keyed search caps and normalizes results after one exact local call", async () => {
+	const item = {
+		title: "Fixture answer",
+		url: "https://example.test/answer",
+		excerpts: ["First excerpt", "Second excerpt"],
+		publish_date: "2026-09-28",
+	};
+	const ignored = {
+		title: "Over the limit",
+		url: "https://example.test/ignored",
+	};
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "local search question", limit: 1 },
+		provider: { call: [{ results: [item, ignored] }] },
+	});
+
+	assert.deepEqual(outcome.value, {
+		results: [
+			{
+				title: item.title,
+				url: item.url,
+				snippet: "First excerpt\n\nSecond excerpt",
+				published: item.publish_date,
+				raw: item,
+			},
+		],
+		via: "api.parallel.ai",
+	});
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: {
+				objective: "local search question",
+				search_queries: ["local search question"],
+			},
+		},
+	]);
+});
+
+test("the keyless MCP fallback shapes structured content and exact tool arguments", async () => {
+	const item = {
+		title: "Local MCP result",
+		url: "https://example.test/mcp",
+		excerpts: ["First passage", "Answer passage"],
+		publish_date: "2026-09-28",
+	};
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "keyless local query" },
+		provider: {
+			call: [{ available: false }],
+			named: {
+				"parallel.free_search": [
+					{ result: { structuredContent: { results: [item] } } },
+				],
+			},
+		},
+	});
+	assert.deepEqual(outcome.value, {
+		results: [
+			{
+				title: "Local MCP result",
+				url: "https://example.test/mcp",
+				snippet: "First passage\n\nAnswer passage",
+				published: "2026-09-28",
+				raw: item,
+			},
+		],
+		via: "search.parallel.ai (free tier, no key)",
+	});
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: {
+				objective: "keyless local query",
+				search_queries: ["keyless local query"],
+			},
+		},
+		{
+			path: "callNamed:parallel.free_search",
+			args: {
+				jsonrpc: "2.0",
+				id: 1,
+				method: "tools/call",
+				params: {
+					name: "web_search",
+					arguments: {
+						objective: "keyless local query",
+						search_queries: ["keyless local query"],
+					},
+				},
+			},
+		},
+	]);
+});
+
+test("a keyed provider failure is not hidden by an unkeyed fallback", async () => {
+	const failure = { status: 429, body: "local rate limit fixture" };
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "local search question" },
+		provider: { call: [failure] },
+	});
+
+	assert.deepEqual(outcome.value, { raw: failure });
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: {
+				objective: "local search question",
+				search_queries: ["local search question"],
+			},
+		},
+	]);
+});
+
+test("rejects missing, malformed, and blank queries before calling a provider", async () => {
+	for (const [name, input] of [
+		["missing query", {}],
+		["non-string query", { query: 42 }],
+		["blank query", { query: " \t " }],
+	]) {
+		await assert.rejects(
+			runAdapterCase("web.search", {
+				input,
+				// A queued success would resolve normally if the adapter reached the
+				// provider, so the asserted validation error proves zero calls occur.
+				provider: { call: [{ results: [] }] },
+			}),
+			/Parallel web\.search requires a non-empty string 'query'/,
+			name
+		);
+	}
+});
+
+test("an empty provider result set is successful and does not trigger fallback", async () => {
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "local query with no matches" },
+		provider: { call: [{ results: [] }] },
+	});
+
+	assert.deepEqual(outcome.value, {
+		results: [],
+		via: "api.parallel.ai",
+	});
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: {
+				objective: "local query with no matches",
+				search_queries: ["local query with no matches"],
+			},
+		},
+	]);
+});
+
+test("a malformed keyed response shape stays visible as raw data", async () => {
+	const malformed = { results: "not an array" };
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "local response-shape query" },
+		provider: { call: [malformed] },
+	});
+
+	assert.deepEqual(outcome.value, { raw: malformed });
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: {
+				objective: "local response-shape query",
+				search_queries: ["local response-shape query"],
+			},
+		},
+	]);
+});
+
+test("the keyless fallback parses legacy JSON text blocks", async () => {
+	const item = {
+		title: "Text-block result",
+		url: "https://example.test/text-block",
+		excerpts: ["Text-block excerpt"],
+	};
+	const free = {
+		result: {
+			content: [
+				{
+					type: "text",
+					text: JSON.stringify({ results: [item] }),
+				},
+			],
+		},
+	};
+	const outcome = await runAdapterCase("web.search", {
+		input: { query: "local text-block query", limit: 1 },
+		provider: {
+			call: [{ available: false }],
+			named: { "parallel.free_search": [free] },
+		},
+	});
+
+	assert.deepEqual(outcome.value, {
+		results: [
+			{
+				title: item.title,
+				url: item.url,
+				snippet: "Text-block excerpt",
+				published: undefined,
+				raw: item,
+			},
+		],
+		via: "search.parallel.ai (free tier, no key)",
+	});
+	assert.deepEqual(outcome.calls[1], {
+		path: "callNamed:parallel.free_search",
+		args: {
+			jsonrpc: "2.0",
+			id: 1,
+			method: "tools/call",
+			params: {
+				name: "web_search",
+				arguments: {
+					objective: "local text-block query",
+					search_queries: ["local text-block query"],
+				},
+			},
+		},
+	});
+});
+
+test("malformed keyless JSON and JSON-RPC errors are returned raw", async () => {
+	for (const [name, free] of [
+		["invalid JSON string", "not JSON"],
+		["JSON-RPC error", { error: { code: -32_001, message: "local denied" } }],
+	]) {
+		const outcome = await runAdapterCase("web.search", {
+			input: { query: "local fallback error query" },
+			provider: {
+				call: [{ available: false }],
+				named: { "parallel.free_search": [free] },
+			},
+		});
+
+		assert.deepEqual(outcome.value, { raw: free }, name);
+		assert.deepEqual(
+			outcome.calls.map((call) => call.path),
+			["callTool", "callNamed:parallel.free_search"],
+			name
+		);
+	}
+});
+
+test("a rejected provider tool call stays rejected instead of becoming empty results", async () => {
+	await assert.rejects(
+		runAdapterCase("web.search", {
+			input: { query: "local provider rejection query" },
+			// An exhausted Toolsmith effect queue models the callTool rejection that
+			// Core surfaces when the provider tool invocation itself fails.
+			provider: { call: [] },
+		}),
+		/callTool was called .* case fixture has no response left/
+	);
 });

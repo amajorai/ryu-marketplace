@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/nextjs",
   "name": "Next.js",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,17 +19,16 @@
     "bundle:ui-skills:nextjs"
   ],
   "includes": [
-    "skill:vercel/next-cache-components",
-    "skill:vercel/next-cache-components-optimizer",
-    "skill:addyosmani/frontend-ui-engineering",
-    "skill:addyosmani/performance",
-    "skill:addyosmani/seo",
-    "skill:vercel-labs/react-best-practices"
+    "skill:vercel/next.js/next-cache-components-optimizer",
+    "skill:addyosmani/agent-skills/frontend-ui-engineering",
+    "skill:addyosmani/web-quality-skills/performance",
+    "skill:addyosmani/web-quality-skills/seo",
+    "skill:vercel-labs/agent-skills/vercel-react-best-practices"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/nextjs",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/nextjs",
     "ref": "main"
   },
   "security": {

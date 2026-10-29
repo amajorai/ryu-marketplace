@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.usage-pacer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Keeps subscription agents usable for the whole rolling window. It can pace usage down with a fallback ladder, then spend remaining quota on stronger models or ACP fast mode as a reset approaches.",
   "author": {
     "name": "Ryu",

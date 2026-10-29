@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.pomodoro",
+  "version": "0.1.0",
+  "description": "Ask an agent to start a focus session and get a Pomodoro timer inline in chat. A small local MCP server exposes one tool (pomodoro.start) that takes focus, short-break and long-break lengths, how many focus rounds come before a long break, and an optional task label. The self-contained widget runs the countdown, cycles focus and break phases, and can play a short chime. It keeps its progress in widget state, so a reload restores the session. It makes no network requests and keeps no data outside the chat.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pomodoro",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/pomodoro",
+  "keywords": [
+    "pomodoro",
+    "timer",
+    "focus",
+    "productivity",
+    "breaks",
+    "widget"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/pomodoro",
+      "displayName": "Pomodoro Timer",
+      "mcp": {
+        "pomodoro": {
+          "description": "Pomodoro MCP server: the start tool and the ui://widget/pomodoro.html timer resource."
+        }
+      }
+    }
+  }
+}

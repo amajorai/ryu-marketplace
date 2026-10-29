@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/color",
   "name": "Color",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,16 +19,16 @@
     "bundle:ui-skills:color"
   ],
   "includes": [
-    "skill:accesslint/contrast-checker",
-    "skill:accesslint/use-of-color",
-    "skill:firebenders/sync-figma-token",
-    "skill:jakubkrehel/better-colors",
-    "skill:jakubkrehel/better-accessibility"
+    "skill:accesslint/skills/contrast-checker",
+    "skill:accesslint/skills/use-of-color",
+    "skill:firebenders/sync-figma-token-skill/sync-figma-token",
+    "skill:jakubkrehel/skills/better-colors",
+    "skill:jakubkrehel/skills/better-accessibility"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/color",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/color",
     "ref": "main"
   },
   "security": {

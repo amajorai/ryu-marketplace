@@ -45,7 +45,9 @@ the workspace.
 
 The plugin stores only the latest bounded report, verification, and patch
 proposal in its namespaced Ryu KV store so the follow-up commands can refer to
-the same evidence. /security-clear removes that state.
+the same evidence. If that write is refused, the command keeps the visible
+result but warns that follow-up commands cannot rely on it; rerunning after
+storage recovers is safe. /security-clear removes that state.
 
 ## Permissions
 

@@ -1,0 +1,767 @@
+<!--
+  Pomodoro Timer UI — a self-contained skybridge widget
+  ---------------------------------------------------------------------------
+  Core serves this ONE document from `resources/read` and ships it inline into
+  a null-origin `sandbox="allow-scripts"` iframe. The host CSP is pinned:
+    - no external scripts, stylesheets or fetches (connect-src 'none');
+    - inline <style> and one nonced inline module only.
+  The bridge (window.ryu, alias window.openai) is installed synchronously before
+  this module runs. Settings arrive as `toolOutput`; timer progress is kept in
+  `widgetState` so a reload restores the session from its wall-clock deadline.
+
+  Styling reads Ryu's semantic theme tokens (`--background`, `--primary`,
+  `--muted-foreground`, `--radius`, `--font-sans`, ...). The host writes the
+  user's live palette onto the root element's inline style, which overrides the
+  fallbacks below; the fallbacks are the DESIGN.md light/dark defaults for hosts
+  that only send `theme`.
+-->
+<style>
+:root {
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--primary: #0099ff;
+	--primary-foreground: oklch(0.97 0.014 254.604);
+	--muted: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--accent: oklch(0.97 0 0);
+	--accent-foreground: oklch(0.205 0 0);
+	--border: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+	--radius: 0.625rem;
+	--font-sans:
+		"Inter Variable", Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+	color-scheme: light dark;
+}
+:root[data-theme="dark"] {
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+	--muted: oklch(0.269 0 0);
+	--muted-foreground: oklch(0.708 0 0);
+	--accent: oklch(0.269 0 0);
+	--accent-foreground: oklch(0.985 0 0);
+	--border: oklch(1 0 0 / 10%);
+	--ring: oklch(0.556 0 0);
+}
+* {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	font-family: var(--font-sans);
+	font-size: 14px;
+	-webkit-font-smoothing: antialiased;
+	line-height: 1.4;
+	color: var(--foreground);
+	background: var(--background);
+}
+.timer {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 14px 16px 16px;
+}
+.meta {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 20px;
+}
+.status {
+	margin: 0;
+	font-size: 13px;
+	color: var(--muted-foreground);
+}
+.status strong {
+	font-weight: 500;
+	color: var(--foreground);
+}
+.dots {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	justify-content: flex-end;
+}
+.dot {
+	width: 6px;
+	height: 6px;
+	background: var(--border);
+	border-radius: 999px;
+}
+.dot[data-state="done"] {
+	background: var(--primary);
+}
+.dot[data-state="current"] {
+	background: transparent;
+	box-shadow: inset 0 0 0 1.5px var(--primary);
+}
+.task {
+	margin: 0;
+	font-weight: 500;
+	overflow-wrap: anywhere;
+}
+.task:empty {
+	display: none;
+}
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 16px;
+	align-items: center;
+	justify-content: space-between;
+}
+/* Sans with tabular figures, not --font-mono: the sandboxed frame cannot load
+   the host's Geist Mono, and a system monospace fallback reads as a terminal. */
+.time {
+	font-size: 40px;
+	font-weight: 600;
+	font-feature-settings: "tnum";
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+:root[data-status="paused"] .time {
+	color: var(--muted-foreground);
+}
+.controls {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+button {
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+	padding: 0 12px;
+	font: inherit;
+	font-weight: 500;
+	color: var(--foreground);
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	border-radius: calc(var(--radius) - 2px);
+	transition:
+		background-color 120ms ease,
+		color 120ms ease;
+}
+button:focus-visible {
+	outline: 2px solid var(--ring);
+	outline-offset: 2px;
+}
+button:disabled {
+	cursor: default;
+	opacity: 0.5;
+}
+button[hidden] {
+	display: none;
+}
+button svg {
+	flex: none;
+	width: 16px;
+	height: 16px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+button svg[hidden] {
+	display: none;
+}
+.primary {
+	min-width: 92px;
+	padding: 0 12px 0 10px;
+	color: var(--primary-foreground);
+	background: var(--primary);
+}
+.primary:hover {
+	background: color-mix(in oklab, var(--primary) 90%, var(--foreground));
+}
+.primary svg.filled {
+	fill: currentColor;
+	stroke: none;
+}
+.icon {
+	width: 32px;
+	padding: 0;
+	color: var(--muted-foreground);
+}
+.icon:hover {
+	color: var(--accent-foreground);
+	background: var(--accent);
+}
+.icon[aria-pressed="false"] {
+	color: color-mix(in oklab, var(--muted-foreground) 60%, transparent);
+}
+.track {
+	height: 4px;
+	overflow: hidden;
+	background: var(--muted);
+	border-radius: 999px;
+}
+.fill {
+	width: 100%;
+	height: 100%;
+	background: var(--primary);
+	border-radius: inherit;
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 250ms linear;
+}
+:root[data-phase="short_break"] .fill,
+:root[data-phase="long_break"] .fill {
+	background: var(--muted-foreground);
+}
+:root[dir="rtl"] .fill {
+	transform-origin: right center;
+}
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+	clip-path: inset(50%);
+}
+@media (prefers-reduced-motion: reduce) {
+	.fill,
+	button {
+		transition: none;
+	}
+}
+:root[data-ryu-animations="off"] .fill,
+:root[data-ryu-animations="off"] button {
+	transition: none;
+}
+</style>
+
+<main class="timer" aria-labelledby="phase">
+	<div class="meta">
+		<p class="status">
+			<strong id="phase">Focus</strong>
+			· <span id="rounds">Round 1 of 4</span>
+		</p>
+		<div class="dots" id="dots" aria-hidden="true"></div>
+	</div>
+	<p class="task" id="task"></p>
+	<div class="row">
+		<div class="time" id="time" role="timer" aria-live="off">25:00</div>
+		<div class="controls">
+			<button type="button" id="toggle" class="primary">
+				<svg
+					id="icon-play"
+					class="filled"
+					viewBox="0 0 24 24"
+					aria-hidden="true"
+					focusable="false"
+				>
+					<path
+						d="M7 4.5v15a1 1 0 0 0 1.5.86l12.4-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"
+					/>
+				</svg>
+				<svg
+					id="icon-pause"
+					class="filled"
+					viewBox="0 0 24 24"
+					aria-hidden="true"
+					focusable="false"
+					hidden
+				>
+					<rect x="6" y="4" width="4" height="16" rx="1" />
+					<rect x="14" y="4" width="4" height="16" rx="1" />
+				</svg>
+				<span id="toggle-label">Start</span>
+			</button>
+			<button
+				type="button"
+				id="skip"
+				class="icon"
+				aria-label="Skip to next phase"
+				title="Skip to next phase"
+			>
+				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<polygon points="5 4 15 12 5 20 5 4" />
+					<line x1="19" x2="19" y1="5" y2="19" />
+				</svg>
+			</button>
+			<button
+				type="button"
+				id="reset"
+				class="icon"
+				aria-label="Reset timer"
+				title="Reset timer"
+			>
+				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+					<path d="M3 3v5h5" />
+				</svg>
+			</button>
+			<button
+				type="button"
+				id="sound"
+				class="icon"
+				aria-label="Chime"
+				aria-pressed="true"
+				title="Chime on"
+			>
+				<svg
+					id="icon-sound-on"
+					viewBox="0 0 24 24"
+					aria-hidden="true"
+					focusable="false"
+				>
+					<path
+						d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
+					/>
+					<path d="M16 9a5 5 0 0 1 0 6" />
+					<path d="M19.364 18.364a9 9 0 0 0 0-12.728" />
+				</svg>
+				<svg
+					id="icon-sound-off"
+					viewBox="0 0 24 24"
+					aria-hidden="true"
+					focusable="false"
+					hidden
+				>
+					<path
+						d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
+					/>
+					<line x1="22" x2="16" y1="9" y2="15" />
+					<line x1="16" x2="22" y1="9" y2="15" />
+				</svg>
+			</button>
+			<button
+				type="button"
+				id="popout"
+				class="icon"
+				aria-label="Pop out"
+				title="Pop out"
+				hidden
+			>
+				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<path d="M21 9V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10c0 1.1.9 2 2 2h4" />
+					<rect width="10" height="7" x="12" y="13" rx="2" />
+				</svg>
+			</button>
+		</div>
+	</div>
+	<div class="track" aria-hidden="true"><div class="fill" id="fill"></div></div>
+	<p class="visually-hidden" id="announce" role="status" aria-live="polite"></p>
+</main>
+
+<script type="module">
+const bridge = window.ryu ?? window.openai;
+const $ = (id) => document.getElementById(id);
+
+const PHASES = {
+	focus: "Focus",
+	short_break: "Short break",
+	long_break: "Long break",
+};
+const DEFAULTS = {
+	task: "",
+	focusMinutes: 25,
+	shortBreakMinutes: 5,
+	longBreakMinutes: 15,
+	roundsBeforeLongBreak: 4,
+	autoStart: false,
+};
+const MINUTE_MS = 60_000;
+// A reload long after the deadline with auto-start on would otherwise replay
+// every elapsed phase; this bounds the catch-up to a plausible working day.
+const MAX_CATCH_UP_PHASES = 64;
+
+function positiveInteger(value, fallback) {
+	return Number.isInteger(value) && value > 0 ? value : fallback;
+}
+
+function readSettings() {
+	const output = bridge?.toolOutput ?? {};
+	return {
+		task: typeof output.task === "string" ? output.task : DEFAULTS.task,
+		focusMinutes: positiveInteger(output.focusMinutes, DEFAULTS.focusMinutes),
+		shortBreakMinutes: positiveInteger(
+			output.shortBreakMinutes,
+			DEFAULTS.shortBreakMinutes
+		),
+		longBreakMinutes: positiveInteger(
+			output.longBreakMinutes,
+			DEFAULTS.longBreakMinutes
+		),
+		roundsBeforeLongBreak: positiveInteger(
+			output.roundsBeforeLongBreak,
+			DEFAULTS.roundsBeforeLongBreak
+		),
+		autoStart: output.autoStart === true,
+	};
+}
+
+let settings = readSettings();
+
+function durationMs(phase) {
+	if (phase === "short_break") {
+		return settings.shortBreakMinutes * MINUTE_MS;
+	}
+	if (phase === "long_break") {
+		return settings.longBreakMinutes * MINUTE_MS;
+	}
+	return settings.focusMinutes * MINUTE_MS;
+}
+
+function freshState() {
+	return {
+		phase: "focus",
+		status: "idle",
+		endsAt: null,
+		remainingMs: durationMs("focus"),
+		completedRounds: 0,
+		sound: true,
+	};
+}
+
+// Accept persisted state only when every field is coherent; anything else
+// starts a fresh session rather than rendering a corrupted countdown.
+function restoreState() {
+	const saved = bridge?.widgetState?.pomodoro;
+	if (!saved || typeof saved !== "object" || !(saved.phase in PHASES)) {
+		return freshState();
+	}
+	const status = ["idle", "running", "paused"].includes(saved.status)
+		? saved.status
+		: "idle";
+	if (status === "running" && !Number.isFinite(saved.endsAt)) {
+		return freshState();
+	}
+	const remainingMs =
+		Number.isFinite(saved.remainingMs) && saved.remainingMs >= 0
+			? Math.min(saved.remainingMs, durationMs(saved.phase))
+			: durationMs(saved.phase);
+	return {
+		phase: saved.phase,
+		status,
+		endsAt: status === "running" ? saved.endsAt : null,
+		remainingMs,
+		completedRounds: Number.isInteger(saved.completedRounds)
+			? Math.max(0, saved.completedRounds)
+			: 0,
+		sound: saved.sound !== false,
+	};
+}
+
+let state = restoreState();
+
+function persist() {
+	try {
+		const result = bridge?.setWidgetState?.({
+			...(bridge.widgetState ?? {}),
+			pomodoro: state,
+		});
+		// The host also writes the value through to Core; a failed write keeps
+		// the in-memory session running and simply will not survive a reload.
+		result?.catch?.(() => undefined);
+	} catch {
+		// Same as above: persistence is best effort, the timer is not.
+	}
+}
+
+function remainingNow(now) {
+	if (state.status === "running") {
+		return Math.max(0, state.endsAt - now);
+	}
+	return state.remainingMs;
+}
+
+function nextPhase() {
+	if (state.phase !== "focus") {
+		return "focus";
+	}
+	return state.completedRounds % settings.roundsBeforeLongBreak === 0
+		? "long_break"
+		: "short_break";
+}
+
+// Move to the following phase. `at` is when the finished phase ended, so an
+// auto-started phase keeps exact cadence even if the tick fired late.
+function advance(at, { credit }) {
+	if (state.phase === "focus" && credit) {
+		state.completedRounds += 1;
+	}
+	const phase =
+		state.phase === "focus" && !credit ? "short_break" : nextPhase();
+	state.phase = phase;
+	if (settings.autoStart && at !== null) {
+		state.status = "running";
+		state.endsAt = at + durationMs(phase);
+		state.remainingMs = durationMs(phase);
+	} else {
+		state.status = "idle";
+		state.endsAt = null;
+		state.remainingMs = durationMs(phase);
+	}
+}
+
+let audioContext = null;
+
+function ensureAudio() {
+	if (audioContext || typeof window.AudioContext !== "function") {
+		return;
+	}
+	try {
+		audioContext = new window.AudioContext();
+	} catch {
+		audioContext = null;
+	}
+}
+
+function chime() {
+	if (!(state.sound && audioContext)) {
+		return;
+	}
+	try {
+		const start = audioContext.currentTime;
+		for (const [offset, frequency] of [
+			[0, 880],
+			[0.22, 1320],
+		]) {
+			const oscillator = audioContext.createOscillator();
+			const gain = audioContext.createGain();
+			oscillator.frequency.value = frequency;
+			gain.gain.setValueAtTime(0.0001, start + offset);
+			gain.gain.exponentialRampToValueAtTime(0.18, start + offset + 0.02);
+			gain.gain.exponentialRampToValueAtTime(0.0001, start + offset + 0.5);
+			oscillator.connect(gain).connect(audioContext.destination);
+			oscillator.start(start + offset);
+			oscillator.stop(start + offset + 0.55);
+		}
+	} catch {
+		// Audio is an optional cue; the visible and announced change still happens.
+	}
+}
+
+function announce(message) {
+	$("announce").textContent = message;
+}
+
+function formatTime(ms) {
+	const totalSeconds = Math.ceil(ms / 1000);
+	const minutes = Math.floor(totalSeconds / 60);
+	const seconds = totalSeconds % 60;
+	return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+// Position within the current cycle: which focus round is next (1-based) and
+// how many of this cycle's rounds are done. A long break shows a full cycle.
+function cyclePosition() {
+	const cycle = settings.roundsBeforeLongBreak;
+	const done = state.completedRounds;
+	const doneInCycle =
+		state.phase === "long_break" && done > 0 ? cycle : done % cycle;
+	return { cycle, done, doneInCycle };
+}
+
+function roundsLabel() {
+	const { cycle, done, doneInCycle } = cyclePosition();
+	if (state.phase !== "focus") {
+		return `${done} ${done === 1 ? "round" : "rounds"} completed`;
+	}
+	return `Round ${doneInCycle + 1} of ${cycle}`;
+}
+
+function renderDots() {
+	const { cycle, doneInCycle } = cyclePosition();
+	const dots = $("dots");
+	while (dots.childElementCount > cycle) {
+		dots.lastElementChild.remove();
+	}
+	while (dots.childElementCount < cycle) {
+		const dot = document.createElement("span");
+		dot.className = "dot";
+		dots.append(dot);
+	}
+	[...dots.children].forEach((dot, index) => {
+		let dotState = "todo";
+		if (index < doneInCycle) {
+			dotState = "done";
+		} else if (index === doneInCycle && state.phase === "focus") {
+			dotState = "current";
+		}
+		dot.setAttribute("data-state", dotState);
+	});
+}
+
+// Host theme tokens arrive as inline custom properties and win over the
+// stylesheet fallbacks; `data-theme` only picks which fallback set applies.
+function applyTheme() {
+	const root = document.documentElement;
+	const hostMode = root.getAttribute("data-ryu-theme");
+	const mode =
+		hostMode === "dark" || hostMode === "light" ? hostMode : bridge?.theme;
+	root.setAttribute("data-theme", mode === "dark" ? "dark" : "light");
+}
+
+let lastHeight = -1;
+
+function render(now = Date.now()) {
+	applyTheme();
+	const root = document.documentElement;
+	root.setAttribute("data-phase", state.phase);
+	root.setAttribute("data-status", state.status);
+	const remaining = remainingNow(now);
+	const total = durationMs(state.phase);
+	const elapsedFraction = total > 0 ? 1 - remaining / total : 1;
+
+	$("phase").textContent = PHASES[state.phase];
+	$("rounds").textContent = roundsLabel();
+	$("task").textContent = settings.task;
+	$("time").textContent = formatTime(remaining);
+	$("time").setAttribute(
+		"aria-label",
+		`${formatTime(remaining)} remaining in ${PHASES[state.phase].toLowerCase()}`
+	);
+	$("fill").style.transform =
+		`scaleX(${Math.min(1, Math.max(0, elapsedFraction))})`;
+	renderDots();
+
+	const running = state.status === "running";
+	let toggleLabel = "Start";
+	if (running) {
+		toggleLabel = "Pause";
+	} else if (state.status === "paused") {
+		toggleLabel = "Resume";
+	}
+	$("toggle-label").textContent = toggleLabel;
+	// SVG elements have no `hidden` property; toggle the attribute itself.
+	$("icon-play").toggleAttribute("hidden", running);
+	$("icon-pause").toggleAttribute("hidden", !running);
+
+	const sound = $("sound");
+	sound.setAttribute("aria-pressed", String(state.sound));
+	sound.title = state.sound ? "Chime on" : "Chime off";
+	$("icon-sound-on").toggleAttribute("hidden", !state.sound);
+	$("icon-sound-off").toggleAttribute("hidden", state.sound);
+
+	$("popout").hidden =
+		typeof bridge?.requestDisplayMode !== "function" ||
+		bridge?.displayMode === "pip";
+
+	const height = document.body.scrollHeight;
+	if (height !== lastHeight) {
+		lastHeight = height;
+		bridge?.notifyIntrinsicHeight?.(height);
+	}
+}
+
+// Resolve every deadline that has passed. Returns whether any phase finished.
+function settle(now) {
+	let finished = 0;
+	while (
+		state.status === "running" &&
+		now >= state.endsAt &&
+		finished < MAX_CATCH_UP_PHASES
+	) {
+		advance(state.endsAt, { credit: true });
+		finished += 1;
+	}
+	if (state.status === "running" && now >= state.endsAt) {
+		// Catch-up limit reached: stop on the current phase instead of looping.
+		state.status = "idle";
+		state.endsAt = null;
+		state.remainingMs = durationMs(state.phase);
+	}
+	return finished > 0;
+}
+
+function tick() {
+	const now = Date.now();
+	if (settle(now)) {
+		persist();
+		chime();
+		announce(
+			state.status === "running"
+				? `${PHASES[state.phase]} started.`
+				: `Time for a ${PHASES[state.phase].toLowerCase()}. Press Start when ready.`
+		);
+	}
+	render(now);
+}
+
+$("toggle").addEventListener("click", () => {
+	ensureAudio();
+	audioContext?.resume?.().catch?.(() => undefined);
+	const now = Date.now();
+	if (state.status === "running") {
+		state.remainingMs = remainingNow(now);
+		state.status = "paused";
+		state.endsAt = null;
+		announce(`${PHASES[state.phase]} paused.`);
+	} else {
+		state.endsAt = now + state.remainingMs;
+		state.status = "running";
+		announce(`${PHASES[state.phase]} started.`);
+	}
+	persist();
+	render(now);
+});
+
+$("skip").addEventListener("click", () => {
+	const now = Date.now();
+	const wasRunning = state.status === "running";
+	// Skipping a focus round never credits it: the count records focus time
+	// that actually ran to the end.
+	advance(wasRunning ? now : null, { credit: false });
+	persist();
+	announce(`Skipped to ${PHASES[state.phase].toLowerCase()}.`);
+	render(now);
+});
+
+$("reset").addEventListener("click", () => {
+	const sound = state.sound;
+	state = { ...freshState(), sound };
+	persist();
+	announce("Timer reset.");
+	render();
+});
+
+$("sound").addEventListener("click", () => {
+	ensureAudio();
+	state.sound = !state.sound;
+	persist();
+	render();
+});
+
+$("popout").addEventListener("click", async () => {
+	const popout = $("popout");
+	if (popout.disabled) {
+		return;
+	}
+	popout.disabled = true;
+	try {
+		await bridge.requestDisplayMode({ mode: "pip" });
+	} catch {
+		announce("Pop out is not available here.");
+	} finally {
+		popout.disabled = false;
+		render();
+	}
+});
+
+function onGlobals() {
+	settings = readSettings();
+	// A fresh tool output with no saved progress resets the idle countdown to
+	// the new focus length; an in-flight session keeps its own deadline.
+	if (state.status === "idle" && state.completedRounds === 0) {
+		state.remainingMs = durationMs(state.phase);
+	}
+	render();
+}
+
+for (const eventName of ["openai:set_globals", "ryu:set_globals"]) {
+	window.addEventListener(eventName, onGlobals);
+}
+document.addEventListener("visibilitychange", tick);
+window.setInterval(tick, 250);
+
+tick();
+</script>

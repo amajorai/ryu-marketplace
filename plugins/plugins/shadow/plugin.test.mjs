@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `shadow` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `shadow` is a declarative HTTP-tool plugin: it contributes five `tool`
 // runnables (search, semantic search, timeline, recent-context, computer-use) that Core
@@ -27,19 +31,32 @@ const EXPECTED_SLUGS = [
 	"shadow.computer_use",
 ];
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/shadow");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.equal(manifest.name, "Shadow");
 	// semantic-ish version string
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
+});
+
+test("Agent Plugins projection stays synchronized with the native manifest", () => {
+	const projection = JSON.parse(
+		readFileSync(join(here, "plugin.json"), "utf8")
+	);
+	assert.equal(projection.name, "ryu.shadow");
+	assert.equal(projection.version, manifest.version);
+	assert.equal(projection.description, manifest.description);
+	assert.deepEqual(projection.author, manifest.author);
+	assert.equal(projection.repository, manifest.repository);
+	assert.equal(projection.homepage, manifest.homepage);
+	assert.deepEqual(projection.keywords, manifest.keywords);
+	assert.deepEqual(projection.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 });
 
 test("contributes five authenticated HTTP tool runnables", () => {
@@ -47,8 +64,8 @@ test("contributes five authenticated HTTP tool runnables", () => {
 	assert.equal(manifest.runnables.length, 5);
 	for (const r of manifest.runnables) {
 		assert.equal(r.kind, "tool");
-		assert.equal(typeof r.id, "string");
-		assert.equal(typeof r.name, "string");
+		assert.equal(isNativeText(r.id), true);
+		assert.equal(isNativeText(r.name), true);
 		assert.equal(r.config.backend, "http");
 		assert.ok(["GET", "POST"].includes(r.config.method));
 	}
@@ -139,8 +156,26 @@ test("read tools fail open while computer use reports action failures", () => {
 	assert.deepEqual(
 		bySlug.get("shadow.computer_use").config.output_schema.properties.planner
 			.enum,
-		["native", "jev", "laya"]
+		["native", "jev", "local", "laya"]
 	);
+});
+
+test("computer-use result schema retains all production terminal outcomes and required fields", () => {
+	// Paired with Shadow's compiled ComputerUseResult serde regression. This
+	// validates the shipped declaration; it does not execute desktop input.
+	const schema = bySlug.get("shadow.computer_use").config.output_schema;
+	assert.equal(schema.type, "object");
+	assert.deepEqual(schema.required, ["planner", "status", "steps", "message"]);
+	assert.deepEqual(schema.properties.planner, {
+		type: "string",
+		enum: ["native", "jev", "local", "laya"],
+	});
+	assert.deepEqual(schema.properties.status, {
+		type: "string",
+		enum: ["completed", "blocked", "step_limit"],
+	});
+	assert.equal(schema.properties.steps.type, "array");
+	assert.equal(schema.properties.message.type, "string");
 });
 
 test("search + semantic-search require q; a positive-int limit is optional", () => {

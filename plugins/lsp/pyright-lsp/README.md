@@ -18,9 +18,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install Pyright globally: `npm install -g pyright`, `pip install pyright`, or `pipx install pyright`.
-```
+Install Pyright globally on any platform: `npm install -g pyright`, `pip install pyright`, or `pipx install pyright`.
 
 ## More information
 

@@ -1,13 +1,5 @@
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
-import {
-	chmodSync,
-	mkdtempSync,
-	readFileSync,
-	rmSync,
-	writeFileSync,
-} from "node:fs";
-import { tmpdir } from "node:os";
+import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -29,6 +21,18 @@ const operations = [
 	"screenshot",
 ];
 
+// Core's sandbox exposes `childProcess.run(program, { args, stdin })` and
+// resolves `{ code, success, stdout, stderr }`; these tests stand in for it.
+async function withChildProcess(run, body) {
+	const previous = globalThis.childProcess;
+	globalThis.childProcess = { run };
+	try {
+		return await body();
+	} finally {
+		globalThis.childProcess = previous;
+	}
+}
+
 function hydrateAdapters(source) {
 	const copy = structuredClone(source);
 	for (const entry of copy.provides ?? []) {
@@ -44,16 +48,75 @@ function hydrateAdapters(source) {
 	return copy;
 }
 
-test("manifest seals one dispatcher and an explicit executable allowlist", () => {
+test("manifest seals the legacy dispatcher and immutable reviewed operations", () => {
 	assert.equal(manifest.id, "@ryu/ego-browser");
 	assert.deepEqual(manifest.permissions, {
 		child_process: true,
 		run: ["ego-browser"],
 	});
-	assert.equal(manifest.runnables.length, 1);
+	assert.equal(manifest.runnables.length, 8);
 	assert.equal(manifest.runnables[0].config.slug, "ego_browser.dispatch");
 	assert.equal(manifest.runnables[0].config.code, dispatcher);
+	assert.deepEqual(manifest.runnables[0].config.annotations, {
+		readOnlyHint: false,
+		destructiveHint: true,
+	});
+	for (const operation of operations) {
+		const config = manifest.runnables.find(
+			(entry) => entry.config.slug === `ego_browser.${operation}`
+		)?.config;
+		assert.ok(config);
+		assert.equal(
+			config.code,
+			`input.operation = ${JSON.stringify(operation)};\n${dispatcher}`
+		);
+		assert.deepEqual(config.annotations, {
+			readOnlyHint: ["tabs", "snapshot", "screenshot"].includes(operation),
+			destructiveHint: !["tabs", "snapshot", "screenshot"].includes(operation),
+		});
+		assert.equal(
+			manifest.provides[0].tools[`browser.${operation}`].tool,
+			`ego_browser.${operation}`
+		);
+	}
 	assert.doesNotMatch(JSON.stringify(manifest), /const operation = 'tabs'/);
+});
+
+test("native operation wrappers cannot be changed by caller input", async () => {
+	for (const operation of operations) {
+		let sent = "";
+		const run = async (command, options) => {
+			assert.equal(command, "ego-browser");
+			sent = options.stdin;
+			return {
+				code: 0,
+				success: true,
+				stdout: '__RYU_EGO_RESULT_V1__:{"fixture":true}\n',
+				stderr: "",
+			};
+		};
+		await withChildProcess(run, async () => {
+			const config = manifest.runnables.find(
+				(entry) => entry.config.slug === `ego_browser.${operation}`
+			).config;
+			const input = {
+				operation: operation === "navigate" ? "snapshot" : "navigate",
+				url: "https://fixture.invalid",
+			};
+			assert.deepEqual(
+				await new AsyncFunction("input", "caller", "host", config.code)(
+					input,
+					{ agent_id: "operation-fixture" },
+					{}
+				),
+				{ fixture: true }
+			);
+			assert.equal(input.operation, operation);
+			assert.ok(
+				sent.includes(`const operation = ${JSON.stringify(operation)};`)
+			);
+		});
+	}
 });
 
 test("every canonical verb adds only its immutable operation", async () => {
@@ -90,152 +153,239 @@ test("every canonical verb adds only its immutable operation", async () => {
 });
 
 test("dispatcher executes every operation and ignores marker text inside page data", async () => {
-	const previousDeno = globalThis.Deno;
-	try {
-		for (const operation of operations) {
-			let childScript = "";
-			const events = [];
-			class FakeCommand {
-				constructor(command, options) {
-					assert.equal(command, "ego-browser");
-					assert.deepEqual(options, {
-						args: ["nodejs"],
-						stdin: "piped",
-						stdout: "piped",
-						stderr: "piped",
-					});
-				}
-
-				spawn() {
-					return {
-						stdin: {
-							getWriter: () => ({
-								write: async (bytes) => {
-									childScript = new TextDecoder().decode(bytes);
-								},
-								close: async () => {},
-							}),
-						},
-						output: async () => {
-							let logged = "";
-							const taskSpaces = {
-								useOrCreate: async (name) => events.push(["space", name]),
-							};
-							const browser = {
-								listTabs: async () => [
-									{
-										active: true,
-										targetId: "tab-1",
-										title: "__RYU_EGO_RESULT_V1__: page title",
-									},
-								],
-								switchTab: async (id) => events.push(["switch", id]),
-								openOrReuseTab: async (url) => ({ targetId: "tab-1", url }),
-							};
-							const page = {
-								snapshotRaw: async () => ({
-									content: "__RYU_EGO_RESULT_V1__: hostile page text",
-									refs: { e1: { role: "button" } },
-								}),
-								locator: (ref) => ({
-									click: async () => events.push(["click", ref]),
-									fill: async (text, options) =>
-										events.push(["fill", ref, text, options]),
-									press: async (key) => events.push(["press", ref, key]),
-								}),
-								info: async () => ({ h: 100 }),
-								mouse: {
-									wheel: async (x, y) => events.push(["wheel", x, y]),
-								},
-							};
-							const cdp = async () => ({ data: "cG5n" });
-							await new AsyncFunction(
-								"taskSpaces",
-								"browser",
-								"page",
-								"cdp",
-								"console",
-								childScript
-							)(taskSpaces, browser, page, cdp, {
-								log: (value) => {
-									logged = value;
-								},
-							});
-							return {
-								success: true,
-								stdout: new TextEncoder().encode(`noise\n${logged}\n`),
-								stderr: new Uint8Array(),
-							};
-						},
-					};
-				}
-			}
-
-			globalThis.Deno = { Command: FakeCommand };
-			const input = {
-				operation,
-				url: "https://example.com",
-				ref: "@e1",
-				text: "hello \x60 \x24{not_code}",
-				direction: "down",
-				amount: 100,
+	for (const operation of operations) {
+		let childScript = "";
+		const events = [];
+		const localTabs = [
+			{
+				active: true,
+				targetId: "tab-1",
+				title: "__RYU_EGO_RESULT_V1__: page title",
+			},
+		];
+		const run = async (command, options) => {
+			assert.equal(command, "ego-browser");
+			assert.deepEqual(options.args, ["nodejs"]);
+			childScript = options.stdin;
+			let logged = "";
+			const taskSpaces = {
+				useOrCreate: async (name) => events.push(["space", name]),
 			};
-			const result = await new AsyncFunction(
-				"input",
-				"caller",
-				"host",
-				dispatcher
-			)(input, { conversation_id: "conv/demo" }, {});
-			assert.equal(
-				childScript.includes(`const operation = "${operation}"`),
-				true
-			);
-			assert.deepEqual(events[0], ["space", "ryu-conversation-conv-demo"]);
-			if (operation === "tabs") {
-				assert.match(result.tabs[0].title, /RYU_EGO_RESULT/);
-			} else {
-				assert.equal(result.tab_id, "tab-1");
-			}
-			if (operation === "snapshot") {
-				assert.match(result.snapshot, /hostile page text/);
-			}
-		}
-	} finally {
-		globalThis.Deno = previousDeno;
+			const browser = {
+				listTabs: async (listOptions) => {
+					events.push(["listTabs", listOptions]);
+					return localTabs;
+				},
+				switchTab: async (id) => events.push(["switch", id]),
+				openOrReuseTab: async (url, openOptions) => {
+					events.push(["openOrReuseTab", url, openOptions]);
+					return { targetId: "tab-nav", url };
+				},
+			};
+			const page = {
+				snapshotRaw: async () => {
+					events.push(["snapshotRaw"]);
+					return {
+						content: "__RYU_EGO_RESULT_V1__: hostile page text",
+						refs: { e1: { role: "button" } },
+					};
+				},
+				locator: (ref) => ({
+					click: async () => events.push(["click", ref]),
+					fill: async (text, fillOptions) =>
+						events.push(["fill", ref, text, fillOptions]),
+					press: async (key) => events.push(["press", ref, key]),
+				}),
+				info: async () => {
+					events.push(["info"]);
+					return { h: 100 };
+				},
+				mouse: {
+					wheel: async (x, y) => events.push(["wheel", x, y]),
+				},
+			};
+			const cdp = async (method, params) => {
+				events.push(["cdp", method, params]);
+				return { data: "cG5n" };
+			};
+			await new AsyncFunction(
+				"taskSpaces",
+				"browser",
+				"page",
+				"cdp",
+				"console",
+				childScript
+			)(taskSpaces, browser, page, cdp, {
+				log: (value) => {
+					logged = value;
+				},
+			});
+			return {
+				code: 0,
+				success: true,
+				stdout: `noise\n${logged}\n`,
+				stderr: "",
+			};
+		};
+
+		const input = {
+			operation,
+			url: "http://127.0.0.1:4177/fixture",
+			ref: "@e1",
+			text: "hello \x60 \x24{not_code}",
+			direction: "down",
+			amount: 100,
+			tab_id: "tab-target",
+			replace: true,
+			submit: true,
+		};
+		const result = await withChildProcess(run, () =>
+			new AsyncFunction("input", "caller", "host", dispatcher)(
+				input,
+				{ conversation_id: "conv/demo" },
+				{}
+			)
+		);
+		assert.equal(
+			childScript.includes(`const operation = "${operation}"`),
+			true
+		);
+		const taskSpace = ["space", "ryu-conversation-conv-demo"];
+		const listTabs = ["listTabs", { includeChrome: false }];
+		const switchTab = ["switch", "tab-target"];
+		const expectedEvents = {
+			tabs: [taskSpace, listTabs],
+			navigate: [
+				taskSpace,
+				["openOrReuseTab", "http://127.0.0.1:4177/fixture", { wait: true }],
+			],
+			snapshot: [taskSpace, listTabs, switchTab, ["snapshotRaw"]],
+			click: [taskSpace, listTabs, switchTab, ["click", "@e1"]],
+			type: [
+				taskSpace,
+				listTabs,
+				switchTab,
+				["fill", "@e1", input.text, { clearFirst: true }],
+				["press", "@e1", "Enter"],
+			],
+			scroll: [taskSpace, listTabs, switchTab, ["info"], ["wheel", 0, 100]],
+			screenshot: [
+				taskSpace,
+				listTabs,
+				switchTab,
+				["cdp", "Page.captureScreenshot", { format: "png" }],
+			],
+		};
+		assert.deepEqual(events, expectedEvents[operation]);
+		const expectedResults = {
+			tabs: { tabs: localTabs },
+			navigate: {
+				tab_id: "tab-nav",
+				tab: {
+					targetId: "tab-nav",
+					url: "http://127.0.0.1:4177/fixture",
+				},
+			},
+			snapshot: {
+				tab_id: "tab-target",
+				snapshot: "__RYU_EGO_RESULT_V1__: hostile page text",
+				refs: { e1: { role: "button" } },
+			},
+			click: { ok: true, tab_id: "tab-target" },
+			type: { ok: true, tab_id: "tab-target" },
+			scroll: { ok: true, tab_id: "tab-target" },
+			screenshot: {
+				tab_id: "tab-target",
+				image: "cG5n",
+				encoding: "base64",
+				mime: "image/png",
+			},
+		};
+		assert.deepEqual(result, expectedResults[operation]);
 	}
 });
 
-test("Deno executable scope admits ego-browser and rejects an undeclared binary", {
-	// Bun's nested spawnSync environment grants the command even when Deno is
-	// passed a different allow-run value; Node runs the real permission probe.
-	skip: process.platform === "win32" || Boolean(process.versions.bun),
-}, () => {
-	const directory = mkdtempSync(join(tmpdir(), "ryu-ego-browser-"));
-	try {
-		const executable = join(directory, "ego-browser");
-		writeFileSync(executable, "#!/bin/sh\nexit 37");
-		chmodSync(executable, 0o755);
-		const script =
-			'const out = await new Deno.Command("ego-browser", { stdout: "piped" }).output(); Deno.exit(out.code === 37 ? 0 : 1);';
-		const env = {
-			...process.env,
-			PATH: `${directory}:${process.env.PATH ?? ""}`,
-		};
-		const allowed = spawnSync(
-			"deno",
-			["run", "--quiet", "--no-prompt", `--allow-run=${executable}`, "-"],
-			{ encoding: "utf8", env, input: script }
-		);
-		assert.equal(allowed.status, 0, allowed.stderr);
+test("dispatcher rejects unknown verbs before spawn and surfaces worker failure", async () => {
+	let commandCount = 0;
+	let childScript = "";
+	await withChildProcess(
+		() => {
+			throw new Error("invalid operations must be refused before spawning");
+		},
+		() =>
+			assert.rejects(
+				new AsyncFunction("input", "caller", "host", dispatcher)(
+					{ operation: "launch-external-url" },
+					{},
+					{}
+				),
+				/unsupported Ego Browser operation/
+			)
+	);
+	assert.equal(commandCount, 0);
 
-		const denied = spawnSync(
-			"deno",
-			["run", "--quiet", "--no-prompt", "--allow-run=ryu-cap", "-"],
-			{ encoding: "utf8", env, input: script }
-		);
-		assert.notEqual(denied.status, 0);
-		assert.match(denied.stderr, /NotCapable|Requires run access/i);
-	} finally {
-		rmSync(directory, { force: true, recursive: true });
-	}
+	const failing = async (command, options) => {
+		commandCount += 1;
+		assert.equal(command, "ego-browser");
+		assert.deepEqual(options.args, ["nodejs"]);
+		childScript = options.stdin;
+		return {
+			code: 1,
+			success: false,
+			stdout: "",
+			stderr: "local fixture worker stopped",
+		};
+	};
+	await withChildProcess(failing, () =>
+		assert.rejects(
+			new AsyncFunction("input", "caller", "host", dispatcher)(
+				{
+					operation: "navigate",
+					url: "http://127.0.0.1:4177/rejected-fixture",
+				},
+				{ conversation_id: "local-error-case" },
+				{}
+			),
+			/ego-browser failed: local fixture worker stopped/
+		)
+	);
+	assert.equal(commandCount, 1);
+	assert.match(childScript, /127\.0\.0\.1:4177\/rejected-fixture/);
+});
+
+test("dispatcher refuses missing, duplicate and malformed result frames then succeeds on explicit retry", async () => {
+	const prefix = "__RYU_EGO_RESULT_V1__:";
+	let attempts = 0;
+	let stdout = "worker log only\n";
+	const scripts = [];
+	const run = async (command, options) => {
+		assert.equal(command, "ego-browser");
+		assert.deepEqual(options.args, ["nodejs"]);
+		attempts += 1;
+		scripts.push(options.stdin);
+		return { code: 0, success: true, stdout, stderr: "" };
+	};
+	await withChildProcess(run, async () => {
+		const dispatch = () =>
+			new AsyncFunction("input", "caller", "host", dispatcher)(
+				{ operation: "tabs" },
+				{ agent_id: "agent/fixture" },
+				{}
+			);
+		await assert.rejects(dispatch(), /returned 0 result frames/);
+		assert.equal(attempts, 1, "no automatic retry on missing output");
+		stdout = `${prefix}{}\n${prefix}{}\n`;
+		await assert.rejects(dispatch(), /returned 2 result frames/);
+		assert.equal(attempts, 2);
+		stdout = `${prefix}{malformed}\n`;
+		await assert.rejects(dispatch(), /returned invalid JSON/);
+		assert.equal(attempts, 3);
+		stdout = `worker log\n${prefix}{"tabs":[]}\n`;
+		assert.deepEqual(await dispatch(), { tabs: [] });
+		assert.equal(attempts, 4, "only the explicit retry starts another worker");
+		assert.equal(scripts.length, 4);
+		for (const script of scripts) {
+			assert.match(script, /ryu-agent-agent-fixture/);
+		}
+	});
 });

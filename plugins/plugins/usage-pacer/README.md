@@ -23,10 +23,29 @@ current `fast` option, and can be requested at the end of a weekly window:
 }
 ```
 
-`remaining` and `within_minutes` are OR conditions. Agent-specific rules replace
-the global rule. ACP options are best-effort: adapters that do not advertise an
-option ignore the request and continue with their normal configuration. Use the
-adapter's advertised id directly in `acp_config` for non-Claude/Codex agents.
+`remaining` and `within_minutes` are OR conditions. Rules resolve from
+`providers[provider_id]` (keyed by subscription provider id) to `agents[agent_id]`
+to `global`; the most specific match replaces the others. ACP options are
+best-effort: adapters that do not advertise an option ignore the request and
+continue with their normal configuration. Use the adapter's advertised id
+directly in `acp_config` for non-Claude/Codex agents.
+
+## Pool-aware pacing
+
+When Core predicts a subscription provider for the turn (`ctx.event.provider_id`,
+set for direct managed Pi turns), the hook reads the label-free provider form
+`host.usage({ provider_id })` and paces against one account:
+
+1. `ctx.event.account_id`, when Core predicts the conversation's account;
+2. otherwise the active account when the pool strategy is `manual`;
+3. otherwise the eligible `state: "ok"` account with the lowest pacing pressure.
+
+The provider form is cache-only, so the hook never waits on a vendor. On a
+refusal (the provider form is owner/admin only), an `account_not_found` or empty
+result, or when no chosen account has a cached reading (`pending`), the hook falls
+back to `host.usage({ agent_id })`, and returns `{ kind: "none" }` if that is
+unavailable too.
 
 The plugin is opt-in and only has `preferences:read` and `usage:read`; it never
-changes an agent's saved model or reads provider credentials.
+changes an agent's saved model or reads provider credentials. It never sees
+account labels and never pins an account.

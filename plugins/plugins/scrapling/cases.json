@@ -1,0 +1,120 @@
+{
+  "tool": "web.extract",
+  "kind": "adapter",
+  "code_file": "adapters/web.extract.js",
+  "adapter_tools": [],
+  "cases": [
+    {
+      "name": "joins structured content chunks into one canonical result",
+      "input": {
+        "url": "https://example.com/"
+      },
+      "provider": {
+        "call": [
+          {
+            "structuredContent": {
+              "url": "https://example.com/",
+              "content": ["# Title", "", "Body"]
+            }
+          }
+        ]
+      },
+      "expect": {
+        "results": [
+          {
+            "url": "https://example.com/",
+            "content": "# Title\n\nBody",
+            "raw": {
+              "url": "https://example.com/",
+              "content": ["# Title", "", "Body"]
+            }
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/",
+            "extraction_type": "markdown"
+          }
+        }
+      ]
+    },
+    {
+      "name": "honours an explicit format and falls back to the input url",
+      "input": {
+        "url": "https://example.com/t",
+        "format": "text"
+      },
+      "provider": {
+        "call": [
+          {
+            "structuredContent": {
+              "content": "plain text"
+            }
+          }
+        ]
+      },
+      "expect": {
+        "results": [
+          {
+            "url": "https://example.com/t",
+            "content": "plain text",
+            "raw": {
+              "content": "plain text"
+            }
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/t",
+            "extraction_type": "text"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a transport envelope without structuredContent is surfaced raw",
+      "input": {
+        "url": "https://example.com/x"
+      },
+      "provider": {
+        "call": [
+          {
+            "isError": true,
+            "content": [
+              {
+                "type": "text",
+                "text": "scrapling is not installed"
+              }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "raw": {
+          "isError": true,
+          "content": [
+            {
+              "type": "text",
+              "text": "scrapling is not installed"
+            }
+          ]
+        }
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/x",
+            "extraction_type": "markdown"
+          }
+        }
+      ]
+    }
+  ]
+}

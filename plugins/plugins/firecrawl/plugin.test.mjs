@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `firecrawl` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `firecrawl` is a declarative HTTP-tool plugin AND a *capability provider* for the
 // swappable layers: it declares `provides` entries binding the canonical
@@ -22,6 +26,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
@@ -51,21 +56,20 @@ function hydrateCodeFiles(m) {
 /** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
 const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/firecrawl");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
+	assert.equal(plugin.version, manifest.version);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].displayName, manifest.name);
 });
 
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -192,6 +196,17 @@ test("required schema properties are actually declared in properties", () => {
 const provides = manifest.provides ?? [];
 const byCapability = new Map(provides.map((p) => [p.capability, p]));
 
+async function runAdapter(capability, verb, input, provider) {
+	const { runOnce } = await import("../../../tools/toolsmith/harness.mjs");
+	const binding = byCapability.get(capability).tools[verb];
+	return runOnce({
+		kind: "adapter",
+		code: binding.adapter.code,
+		adapterTools: binding.adapter.tools ?? [],
+		testCase: { input, provider },
+	});
+}
+
 test("provides the web.search, web.extract and web.crawl capabilities", () => {
 	assert.equal(provides.length, 3);
 	assert.ok(byCapability.has("web.search"));
@@ -208,7 +223,7 @@ test("web.crawl is served through an ADAPTER, because the endpoint is async", ()
 	const binding = byCapability.get("web.crawl").tools["web.crawl"];
 	assert.equal(binding.tool, "firecrawl.crawl_start");
 	assert.ok(binding.adapter, "web.crawl must carry an adapter");
-	assert.equal(typeof binding.adapter.code, "string");
+	assert.equal(isNativeText(binding.adapter.code), true);
 	// The second endpoint must be DECLARED: the adapter's reachable tool set is
 	// fixed by this list and enforced host-side, so an id missing here is refused
 	// at runtime rather than silently called.
@@ -413,16 +428,105 @@ test("extract normalizes Firecrawl's string|string[] title IN ITS OWN adapter", 
 	);
 });
 
-test("extract sends `url` and never forwards the canonical `format`", () => {
-	// The canonical `format` enum is markdown|text|html. Firecrawl v2 `formats`
-	// accepts markdown and html but has NO `text` member, so forwarding the
-	// canonical value would fail on one of its three legal values. Omitting it
-	// leaves Firecrawl's own default (`[{"type":"markdown"}]`), which is what the
-	// canonical default means anyway.
-	const code =
-		byCapability.get("web.extract").tools["web.extract"].adapter.code;
-	assert.match(code, /callTool\(\s*\{\s*url:\s*input\.url\s*\}\s*\)/);
-	assert.doesNotMatch(code, /input\.format/);
+test("extract maps canonical markdown/html onto `formats` and leaves text unmapped", async () => {
+	// Firecrawl v2 `formats` accepts `markdown` and `html` but has NO plain-text
+	// member, so `text` (and an absent format) must not be forwarded: Firecrawl's
+	// own default (`markdown`) answers instead of a rejected request.
+	const scrapeProps = manifest.runnables.find(
+		(r) => r.config.slug === "firecrawl.scrape"
+	).config.input_schema.properties;
+	assert.deepEqual(scrapeProps.formats.items.enum, ["markdown", "html"]);
+	const item = {
+		metadata: { sourceURL: "https://example.test/a", title: "A" },
+		markdown: "# A",
+		html: "<h1>A</h1>",
+	};
+	for (const [format, formats, content] of [
+		["markdown", ["markdown"], "# A"],
+		["html", ["html"], "<h1>A</h1>"],
+		["text", undefined, "# A"],
+		[undefined, undefined, "# A"],
+	]) {
+		const outcome = await runAdapter(
+			"web.extract",
+			"web.extract",
+			{ url: "https://example.test/a", format },
+			{ call: [{ data: item }] }
+		);
+		const args = { url: "https://example.test/a" };
+		if (formats) {
+			args.formats = formats;
+		}
+		assert.deepEqual(
+			outcome.calls,
+			[{ path: "callTool", args }],
+			String(format)
+		);
+		assert.equal(outcome.value.results[0].content, content, String(format));
+	}
+});
+
+test("Toolsmith executes extract with the exact local request and canonical result", async () => {
+	const item = {
+		metadata: {
+			sourceURL: "https://example.test/final",
+			title: ["Fixture title"],
+		},
+		markdown: "Fixture markdown",
+	};
+	const outcome = await runAdapter(
+		"web.extract",
+		"web.extract",
+		{ url: "https://example.test/start" },
+		{ call: [{ data: [item] }] }
+	);
+
+	assert.deepEqual(outcome.value, {
+		results: [
+			{
+				url: "https://example.test/final",
+				title: "Fixture title",
+				content: "Fixture markdown",
+				raw: item,
+			},
+		],
+	});
+	assert.deepEqual(outcome.calls, [
+		{ path: "callTool", args: { url: "https://example.test/start" } },
+	]);
+});
+
+test("Toolsmith preserves the extraction failure envelope without inventing pages", async () => {
+	const failure = { available: false, reason: "credential missing" };
+	const outcome = await runAdapter(
+		"web.extract",
+		"web.extract",
+		{ url: "https://example.test/start" },
+		{ call: [failure] }
+	);
+
+	assert.deepEqual(outcome.value, { raw: failure });
+	assert.deepEqual(outcome.calls, [
+		{ path: "callTool", args: { url: "https://example.test/start" } },
+	]);
+});
+
+test("Toolsmith does not poll a crawl job when the local start request fails", async () => {
+	const failure = { available: false, reason: "credential missing" };
+	const outcome = await runAdapter(
+		"web.crawl",
+		"web.crawl",
+		{ url: "https://example.test/start" },
+		{ call: [failure] }
+	);
+
+	assert.deepEqual(outcome.value, { raw: failure });
+	assert.deepEqual(outcome.calls, [
+		{
+			path: "callTool",
+			args: { url: "https://example.test/start" },
+		},
+	]);
 });
 
 // --- BYOK settings tab -------------------------------------------------------
@@ -437,7 +541,7 @@ test("contributes exactly one settings tab, declarative and node-scoped", () => 
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "firecrawl.settings");
-	assert.equal(typeof tab.title, "string");
+	assert.equal(isNativeText(tab.title), true);
 	assert.ok(tab.title.length > 0);
 	// The secret-header resolver runs in Core ON THE NODE, so it can only read a
 	// node-scoped preference. A `user` (client-local) scope would be invisible to
@@ -482,7 +586,7 @@ test("one key powers EVERY capability firecrawl provides", () => {
 
 test("the secret field carries a real label and a sourcing description", () => {
 	const field = manifest.contributes.settings_tabs[0].fields[0];
-	assert.equal(typeof field.label, "string");
+	assert.equal(isNativeText(field.label), true);
 	assert.ok(field.label.length > 0);
 	assert.ok(
 		field.description?.includes("https://"),

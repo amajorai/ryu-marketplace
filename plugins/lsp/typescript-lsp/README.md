@@ -24,9 +24,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install the language server and the TypeScript compiler it shells out to: `npm install -g typescript-language-server typescript`.
-```
+Install the language server and the TypeScript compiler it shells out to, on any platform with Node.js: `npm install -g typescript-language-server typescript`.
 
 ## More information
 

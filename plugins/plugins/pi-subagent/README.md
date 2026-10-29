@@ -30,3 +30,21 @@ contribution: Core-tier is auto-allowed, anything else needs the operator-only
 `pi_config::app_extensions`, which writes it into `~/.ryu/pi-agent/extensions/` and
 deletes it again when the plugin is disabled. **Toggling takes effect in a new chat** —
 Pi reads its extensions at process start.
+
+### Override registry ownership
+
+Agent overrides are held in a native Map. A configured name such as
+`__proto__` is an ordinary persona entry and does not change an object's
+prototype; inherited Object methods are never treated as configured personas.
+Normal built-in and authored names retain their existing sorted display and
+lookup behavior. Missing override files remain silent. Other native filesystem
+and JSON parse errors retain the existing log-and-built-ins fallback.
+
+Child JSON messages are admitted against the current managed Pi publisher's
+message fields before they enter results. All eight native message roles,
+including extension and compaction messages, remain supported. Malformed JSON
+objects that claim to carry messages but omit required SDK fields or supply
+invalid content are skipped like stray output, rather than entering the result
+and failing during later content or usage reads. Authored local worker fixtures
+include the same required publisher fields. The existing legacy
+`tool_result_end` consumer branch remains available.

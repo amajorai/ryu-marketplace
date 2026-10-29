@@ -1,0 +1,191 @@
+{
+  "tool": "web.search",
+  "kind": "adapter",
+  "code_file": "adapters/web.search.js",
+  "adapter_tools": ["parallel.free_search"],
+  "cases": [
+    {
+      "name": "maps keyed API results and caps them at limit",
+      "input": {
+        "query": "rust ownership",
+        "limit": 1
+      },
+      "provider": {
+        "call": [
+          {
+            "results": [
+              {
+                "title": "Ownership",
+                "url": "https://a.test",
+                "excerpts": ["one", "two"],
+                "publish_date": "2024-01-02"
+              },
+              {
+                "url": "https://b.test"
+              }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "results": [
+          {
+            "title": "Ownership",
+            "url": "https://a.test",
+            "snippet": "one\n\ntwo",
+            "published": "2024-01-02",
+            "raw": {
+              "title": "Ownership",
+              "url": "https://a.test",
+              "excerpts": ["one", "two"],
+              "publish_date": "2024-01-02"
+            }
+          }
+        ],
+        "via": "api.parallel.ai"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "objective": "rust ownership",
+            "search_queries": ["rust ownership"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "falls back to the free tier and parses a JSON-RPC text payload",
+      "input": {
+        "query": "rust"
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false
+          }
+        ],
+        "named": {
+          "parallel.free_search": [
+            "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"results\\\":[{\\\"title\\\":\\\"\\\",\\\"url\\\":\\\"https://c.test\\\",\\\"excerpts\\\":[\\\"x\\\"]}]}\"}]}}"
+          ]
+        }
+      },
+      "expect": {
+        "results": [
+          {
+            "url": "https://c.test",
+            "snippet": "x",
+            "raw": {
+              "title": "",
+              "url": "https://c.test",
+              "excerpts": ["x"]
+            }
+          }
+        ],
+        "via": "search.parallel.ai (free tier, no key)"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "objective": "rust",
+            "search_queries": ["rust"]
+          }
+        },
+        {
+          "path": "callNamed:parallel.free_search",
+          "args": {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "web_search",
+              "arguments": {
+                "objective": "rust",
+                "search_queries": ["rust"]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "rejects an empty query before calling the provider",
+      "input": {
+        "query": "   "
+      },
+      "provider": {},
+      "expectError": "non-empty string 'query'"
+    },
+    {
+      "name": "a free-tier tool error is surfaced raw",
+      "input": {
+        "query": "rust"
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false
+          }
+        ],
+        "named": {
+          "parallel.free_search": [
+            {
+              "jsonrpc": "2.0",
+              "id": 1,
+              "result": {
+                "isError": true,
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "quota"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "expect": {
+        "raw": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "isError": true,
+            "content": [
+              {
+                "type": "text",
+                "text": "quota"
+              }
+            ]
+          }
+        }
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "objective": "rust",
+            "search_queries": ["rust"]
+          }
+        },
+        {
+          "path": "callNamed:parallel.free_search",
+          "args": {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "web_search",
+              "arguments": {
+                "objective": "rust",
+                "search_queries": ["rust"]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

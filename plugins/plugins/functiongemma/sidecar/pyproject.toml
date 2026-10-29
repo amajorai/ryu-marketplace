@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=69"]
+requires = ["setuptools>=84.1.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -12,8 +12,8 @@ dependencies = []
 server = [
   "fastapi==0.115.12",
   "uvicorn==0.34.0",
-  "torch==2.10.0",
-  "transformers==4.57.1",
+  "torch==2.13.0",
+  "transformers==5.10.1",
   "safetensors==0.6.2"
 ]
 

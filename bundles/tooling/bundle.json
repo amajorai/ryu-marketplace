@@ -4,75 +4,85 @@
   "members": [
     {
       "kind": "skill",
-      "id": "aashaexo/humanize",
+      "id": "aashaexo/soundshuman/humanize",
       "name": "Humanize",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "aboudjem/humanizer",
+      "id": "aboudjem/humanizer-skill/humanizer",
       "name": "Humanizer",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "aminblg/simple-english",
+      "id": "aminblg/simpleenglish/simple-english",
       "name": "Simple English",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "antfu/antfu",
+      "id": "antfu/skills/antfu",
       "name": "Antfu",
       "required": false
     },
-    { "kind": "skill", "id": "antfu/pnpm", "name": "Pnpm", "required": true },
     {
       "kind": "skill",
-      "id": "antfu/tsdown",
+      "id": "antfu/skills/pnpm",
+      "name": "Pnpm",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/skills/tsdown",
       "name": "Tsdown",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "antfu/turborepo",
+      "id": "antfu/skills/turborepo",
       "name": "Turborepo",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "antfu/unocss",
+      "id": "antfu/skills/unocss",
       "name": "Unocss",
       "required": false
     },
-    { "kind": "skill", "id": "antfu/vite", "name": "Vite", "required": true },
     {
       "kind": "skill",
-      "id": "antfu/vitepress",
+      "id": "antfu/skills/vite",
+      "name": "Vite",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/skills/vitepress",
       "name": "Vitepress",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "antfu/vitest",
+      "id": "antfu/skills/vitest",
       "name": "Vitest",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "antfu/vueuse-functions",
+      "id": "antfu/skills/vueuse-functions",
       "name": "Vueuse Functions",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cursor/unslop",
+      "id": "cursor/plugins/unslop",
       "name": "Unslop",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "elithrar/anti-slop",
+      "id": "elithrar/dotfiles/anti-slop",
       "name": "Anti-Slop",
       "required": false
     }

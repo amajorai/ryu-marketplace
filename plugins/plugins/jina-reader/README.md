@@ -6,6 +6,10 @@ JSON output. Its capability adapter maps a successful page to the shared
 `web.extract` result shape. A target-page warning or upstream error remains an
 error envelope instead of an empty page.
 
+The canonical `format` maps onto Reader's `X-Respond-With` header for `html` and
+`text`. `markdown` (and an omitted format) sends no header, which keeps Reader's
+default main-content Markdown output.
+
 The service works anonymously at Jina's lower free limit. Add an optional
 `RYU_PLUGIN__X40_RYU_X2F_JINA_X2D_READER_API_KEY` in the plugin's node settings
 for a higher upstream limit. This plugin-scoped name also works as an operator

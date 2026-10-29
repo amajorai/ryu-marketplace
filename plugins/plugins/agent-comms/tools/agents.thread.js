@@ -1,4 +1,4 @@
-// Tool body for `agents.thread`, run in Core's Deno sandbox.
+// Tool body for `agents.thread`, run in Core's JS sandbox.
 //
 // This file is a FRAGMENT, not an ES module: Core splices it into an async IIFE
 // (`build_inline_tool_program` in crates/core/tool-exec/src/lib.rs) with `input`,
@@ -22,7 +22,7 @@ async function readJson(key, fallback) {
 	try {
 		const parsed = JSON.parse(String(raw));
 		return parsed === null ? fallback : parsed;
-	} catch (_e) {
+	} catch {
 		return fallback;
 	}
 }

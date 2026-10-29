@@ -39,8 +39,8 @@ test("participates in the Browser toolkit with honest URL-scoped verbs", () => {
 
 test("keeps sandboxed adapter bodies flat and referenced by code_file", () => {
 	const manifest = parseManifest();
-	for (const binding of Object.values(manifest.provides[0].tools)) {
-		assert.equal(typeof binding.adapter?.code_file, "string");
+	for (const [verb, binding] of Object.entries(manifest.provides[0].tools)) {
+		assert.equal(binding.adapter?.code_file, `adapters/${verb}.js`);
 		assert.equal(binding.adapter.code, undefined);
 	}
 });
@@ -82,9 +82,50 @@ for (const verb of [
 			{ path: "callTool", args: { url: "https://example.test" } },
 		]);
 	});
+	test(`${verb} rejects non-string and blank handles without provider effects`, async () => {
+		for (const value of [
+			null,
+			42,
+			true,
+			[],
+			["https://example.test"],
+			{},
+			"   ",
+		]) {
+			const outcome = await runAdapterCase(verb, {
+				input: { url: value, tab_id: value },
+			});
+			assert.deepEqual(outcome.calls, []);
+			assert.equal(
+				outcome.value.error,
+				verb === "browser.navigate"
+					? "url is required"
+					: "tab_id is required; Cloudflare Browser Run uses the URL as the tab id"
+			);
+		}
+	});
+	test(`${verb} trims a valid handle before calling its provider`, async () => {
+		const raw = { isError: true, error: "fixture" };
+		const outcome = await runAdapterCase(verb, {
+			input: {
+				url: "  https://example.test  ",
+				tab_id: "  https://example.test  ",
+			},
+			provider: { call: [raw] },
+		});
+		assert.deepEqual(outcome.value, { raw });
+		assert.deepEqual(outcome.calls, [
+			{ path: "callTool", args: { url: "https://example.test" } },
+		]);
+	});
 	test(`${verb} rejects a missing URL without provider effects`, async () => {
 		const outcome = await runAdapterCase(verb, { input: {} });
-		assert.equal(typeof outcome.value.error, "string");
+		assert.equal(
+			outcome.value.error,
+			verb === "browser.navigate"
+				? "url is required"
+				: "tab_id is required; Cloudflare Browser Run uses the URL as the tab id"
+		);
 		assert.deepEqual(outcome.calls, []);
 	});
 }
@@ -131,5 +172,56 @@ for (const verb of ["browser.navigate", "browser.snapshot"]) {
 			provider: { call: [raw] },
 		});
 		assert.deepEqual(unavailable.value, { raw });
+	});
+
+	test(`${verb} retains opaque snapshots without flattening provider fields`, async () => {
+		for (const [snapshot, content] of [
+			[null, null],
+			[42, 42],
+			["page text", "page text"],
+			[["page"], ["page"]],
+			[
+				{ title: "page", extra: { nested: true } },
+				{ title: "page", extra: { nested: true } },
+			],
+			[{ content: null, extra: true }, null],
+		]) {
+			const raw = {
+				content: [{ type: "text", text: JSON.stringify(snapshot) }],
+			};
+			const outcome = await runAdapterCase(verb, {
+				input: { url: "https://example.test", tab_id: "https://example.test" },
+				provider: { call: [raw] },
+			});
+			assert.deepEqual(outcome.value, {
+				content,
+				tab_id: "https://example.test",
+				url: "https://example.test",
+				raw,
+			});
+		}
+	});
+	test(`${verb} refuses provider attempts to replace the caller URL`, async () => {
+		const input = {
+			url: "https://example.test",
+			tab_id: "https://example.test",
+		};
+		const raw = {
+			structuredContent: {
+				content: "page content",
+				tab_id: "https://provider.invalid/tab",
+				url: "https://provider.invalid/redirect",
+			},
+		};
+		const outcome = await runAdapterCase(verb, {
+			input,
+			provider: { call: [raw] },
+		});
+		assert.equal(outcome.value.tab_id, input.url);
+		assert.equal(outcome.value.url, input.url);
+		assert.equal(outcome.value.content, "page content");
+		assert.deepEqual(outcome.calls, [
+			{ path: "callTool", args: { url: input.url } },
+		]);
 	});
 }

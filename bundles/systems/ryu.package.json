@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/systems",
   "name": "Systems",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,20 +19,20 @@
     "bundle:ui-skills:systems"
   ],
   "includes": [
-    "skill:0xdesign/design-lab",
-    "skill:addyosmani/frontend-ui-engineering",
-    "skill:antfu/pinia",
-    "skill:anthropics/frontend-design",
-    "skill:edenspiekermann/apply-design-system",
-    "skill:edenspiekermann/audit-design-system",
-    "skill:ibelick/create-design-md",
-    "skill:jakubkrehel/better-interface",
-    "skill:jakubkrehel/better-layout"
+    "skill:0xdesign/design-plugin/design-lab",
+    "skill:addyosmani/agent-skills/frontend-ui-engineering",
+    "skill:antfu/skills/pinia",
+    "skill:anthropics/skills/frontend-design",
+    "skill:edenspiekermann/skills/apply-design-system",
+    "skill:edenspiekermann/skills/audit-design-system",
+    "skill:ibelick/ui-skills/create-design-md",
+    "skill:jakubkrehel/skills/better-interface",
+    "skill:jakubkrehel/skills/better-layout"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/systems",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/systems",
     "ref": "main"
   },
   "security": {

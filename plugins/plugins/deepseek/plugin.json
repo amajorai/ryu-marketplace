@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.deepseek",
+  "version": "0.1.14",
+  "description": "Web search and page fetch via the DeepSeek Search / Fetch API (https://api-docs.deepseek.com/guides/search), powered by DeepSeek's in-house search engine and exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at DeepSeek without changing what agents call. Billed per successful request; requires a BYOK DeepSeek API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/deepseek",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/deepseek",
+  "keywords": [
+    "search",
+    "web",
+    "extract",
+    "fetch",
+    "deepseek"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/deepseek",
+      "displayName": "DeepSeek Search"
+    }
+  }
+}

@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/nuxt",
   "name": "Nuxt",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,17 +19,17 @@
     "bundle:ui-skills:nuxt"
   ],
   "includes": [
-    "skill:antfu/nuxt",
-    "skill:antfu/nitro",
-    "skill:antfu/vue",
-    "skill:antfu/pinia",
-    "skill:antfu/vue-router-best-practices",
-    "skill:antfu/vueuse-functions"
+    "skill:antfu/skills/nuxt",
+    "skill:antfu/skills/nitro",
+    "skill:antfu/skills/vue",
+    "skill:antfu/skills/pinia",
+    "skill:antfu/skills/vue-router-best-practices",
+    "skill:antfu/skills/vueuse-functions"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/nuxt",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/nuxt",
     "ref": "main"
   },
   "security": {

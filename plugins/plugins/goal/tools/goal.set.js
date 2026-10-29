@@ -1,4 +1,4 @@
-// Tool body for `goal.set`, run in Core's Deno sandbox.
+// Tool body for `goal.set`, run in Core's JS sandbox.
 //
 // This file is a FRAGMENT, not an ES module: Core splices it into an async IIFE
 // (`build_inline_tool_program` in crates/core/tool-exec/src/lib.rs) with `input`
@@ -9,7 +9,17 @@
 
 const MAX_GOAL_LENGTH = 4000;
 
-if (typeof input?.goal !== "string") {
+const primitiveStringAdmitted = (() => {
+	const raw = input?.goal;
+	try {
+		// The native String brand operation accepts only string primitives or
+		// boxed strings. Identity rejects boxes without coercing the raw value.
+		return String.prototype.valueOf.call(raw) === raw;
+	} catch {
+		return false;
+	}
+})();
+if (!primitiveStringAdmitted) {
 	throw new Error("goal.set: 'goal' is required and must be a string");
 }
 

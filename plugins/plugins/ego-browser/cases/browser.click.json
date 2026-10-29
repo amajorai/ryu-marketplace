@@ -1,0 +1,94 @@
+{
+  "tool": "browser.click",
+  "kind": "adapter",
+  "code_file": "adapters/browser.click.js",
+  "adapter_tools": [],
+  "cases": [
+    {
+      "name": "pins operation 'click' and forwards the canonical args",
+      "input": {
+        "tab_id": "t1",
+        "ref": "e5"
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true,
+            "operation": "click"
+          }
+        ]
+      },
+      "expect": {
+        "ok": true,
+        "operation": "click"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "tab_id": "t1",
+            "ref": "e5",
+            "operation": "click"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a caller-supplied operation cannot change the action",
+      "input": {
+        "tab_id": "t1",
+        "ref": "e5",
+        "operation": "navigate"
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true
+          }
+        ]
+      },
+      "expect": {
+        "ok": true
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "tab_id": "t1",
+            "ref": "e5",
+            "operation": "click"
+          }
+        }
+      ]
+    },
+    {
+      "name": "an unavailable provider answer is returned unchanged",
+      "input": {
+        "tab_id": "t1",
+        "ref": "e5"
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false,
+            "error": "ego-browser is not on PATH"
+          }
+        ]
+      },
+      "expect": {
+        "available": false,
+        "error": "ego-browser is not on PATH"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "tab_id": "t1",
+            "ref": "e5",
+            "operation": "click"
+          }
+        }
+      ]
+    }
+  ]
+}

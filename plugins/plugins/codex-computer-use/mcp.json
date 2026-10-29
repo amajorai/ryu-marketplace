@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "codex_cu": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "codex-computer-use-mcp@0.5.2"
+      ]
+    }
+  }
+}

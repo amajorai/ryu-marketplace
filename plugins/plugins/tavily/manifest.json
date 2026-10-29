@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/tavily",
   "name": "Tavily Search",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "stability": "experimental",
   "description": "Search-and-extract for agents via the Tavily API (https://tavily.com), exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at Tavily without changing what agents call. Requires a BYOK Tavily API key.",
   "iconUrl": "https://www.tavily.com/favicon.ico",
@@ -96,6 +96,11 @@
               "items": {
                 "type": "string"
               }
+            },
+            "format": {
+              "type": "string",
+              "description": "Output format for the extracted content (default markdown).",
+              "enum": ["markdown", "text"]
             }
           },
           "required": ["urls"]
@@ -135,22 +140,14 @@
       "tools": {
         "web.extract": {
           "tool": "tavily.extract",
-          "args": {
-            "url": "urls[]",
-            "format": ""
-          },
-          "response": {
-            "results": "results",
-            "fields": {
-              "url": "url",
-              "content": "raw_content"
-            }
+          "adapter": {
+            "code_file": "adapters/web.extract.js"
           }
         }
       }
     }
   ],
-  "permission_grants": ["tool:http-egress:api.tavily.com"],
+  "permission_grants": ["tool:http-egress:api.tavily.com", "tool:execute"],
   "contributes": {
     "settings_tabs": [
       {

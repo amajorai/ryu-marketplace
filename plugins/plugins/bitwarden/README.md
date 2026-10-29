@@ -100,6 +100,8 @@ degradation as a missing `spider`/`rtk`.
   interpolated values cannot smuggle shell metacharacters. Every call is
   grant-gated (`tool:command:bws`) and runs through the same Gateway budget +
   exec-approval scan as the other command tools.
+- **Strict tool inputs.** Empty project/secret ids and undeclared input fields are
+  rejected by the tool schema before `bws` is launched.
 
 ## When NOT to use this
 

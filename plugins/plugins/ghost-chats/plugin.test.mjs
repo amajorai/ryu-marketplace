@@ -8,9 +8,18 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
+const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 
 test("declares a current-tab ghost-chat feature with no persistence", () => {
 	assert.equal(manifest.id, "@ryu/ghost-chats");
+	assert.equal(manifest.name, "Temporary Chats");
+	assert.equal(plugin.version, manifest.version);
+	assert.deepEqual(manifest.activation_events, ["*"]);
+	assert.deepEqual(manifest.permission_grants ?? [], []);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 	assert.deepEqual(manifest.runnables, []);
 	assert.deepEqual(manifest.contributes?.chat_features, [
 		{

@@ -1,0 +1,139 @@
+{
+  "tool": "workflow.script",
+  "kind": "inline_tool",
+  "code_file": "tools/workflow.script.js",
+  "cases": [
+    {
+      "name": "starts a durable script and reports the finished result",
+      "input": {
+        "script": "const [a, b] = await parallel([() => agent('A'), () => agent('B')]);\nreturn a + b;",
+        "args": { "topic": "caching" },
+        "preset": "research",
+        "wait_secs": 120
+      },
+      "host": {
+        "workflowScript": [
+          {
+            "run_id": "sr-1",
+            "status": "completed",
+            "result": "ab",
+            "error": null,
+            "resume_at": null,
+            "wait_reason": null,
+            "updated_at": "2026-10-12T00:00:00Z"
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "host.workflows.script",
+          "args": {
+            "script": "const [a, b] = await parallel([() => agent('A'), () => agent('B')]);\nreturn a + b;",
+            "args": { "topic": "caching" },
+            "wait_secs": 120,
+            "preset": "research"
+          }
+        }
+      ],
+      "expect": {
+        "run_id": "sr-1",
+        "status": "completed",
+        "result": "ab",
+        "error": null,
+        "resume_at": null,
+        "wait_reason": null,
+        "updated_at": "2026-10-12T00:00:00Z",
+        "note": "Finished."
+      }
+    },
+    {
+      "name": "follows a run parked on a provider limit by run_id",
+      "input": { "run_id": " sr-2 ", "wait_secs": 0 },
+      "host": {
+        "workflowRunStatus": [
+          {
+            "run_id": "sr-2",
+            "status": "waiting",
+            "result": null,
+            "error": null,
+            "resume_at": "2026-10-12T17:00:05+00:00",
+            "wait_reason": "usage limit reached",
+            "updated_at": "2026-10-12T15:00:00Z"
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "host.workflows.status",
+          "args": { "run_id": "sr-2", "wait_secs": 0 }
+        }
+      ],
+      "expect": {
+        "run_id": "sr-2",
+        "status": "waiting",
+        "result": null,
+        "error": null,
+        "resume_at": "2026-10-12T17:00:05+00:00",
+        "wait_reason": "usage limit reached",
+        "updated_at": "2026-10-12T15:00:00Z",
+        "note": "Paused by a provider rate, usage, or session limit. It resumes on its own at resume_at; finished agents are kept."
+      }
+    },
+    {
+      "name": "uses the default wait and a run key for a deliberate re-run",
+      "input": {
+        "script": "return await agent('again');",
+        "run_key": "second"
+      },
+      "host": {
+        "workflowScript": [
+          {
+            "run_id": "sr-3",
+            "status": "running",
+            "result": null,
+            "error": null,
+            "resume_at": null,
+            "wait_reason": null,
+            "updated_at": "2026-10-12T00:00:00Z"
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "host.workflows.script",
+          "args": {
+            "script": "return await agent('again');",
+            "args": null,
+            "wait_secs": 300,
+            "run_key": "second"
+          }
+        }
+      ],
+      "expect": {
+        "run_id": "sr-3",
+        "status": "running",
+        "result": null,
+        "error": null,
+        "resume_at": null,
+        "wait_reason": null,
+        "updated_at": "2026-10-12T00:00:00Z",
+        "note": "Still running. Call workflow.script again with this run_id to keep waiting."
+      }
+    },
+    {
+      "name": "rejects a call with both script and run_id",
+      "input": { "script": "return 1;", "run_id": "sr-4" },
+      "expectError": "pass either 'script' or 'run_id'"
+    },
+    {
+      "name": "rejects an unknown preset",
+      "input": { "script": "return 1;", "preset": "root" },
+      "expectError": "unknown 'preset'"
+    },
+    {
+      "name": "rejects an out-of-range wait",
+      "input": { "script": "return 1;", "wait_secs": 9000 },
+      "expectError": "'wait_secs' must be an integer"
+    }
+  ]
+}

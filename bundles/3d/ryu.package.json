@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/3d",
   "name": "3D",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,17 +19,17 @@
     "bundle:ui-skills:3d"
   ],
   "includes": [
-    "skill:cloudai-x/threejs-fundamentals",
-    "skill:cloudai-x/threejs-geometry",
-    "skill:cloudai-x/threejs-materials",
-    "skill:flornkm/webgl-components",
-    "skill:mengto/cobejs",
-    "skill:oso95/scroll-world"
+    "skill:cloudai-x/threejs-skills/threejs-fundamentals",
+    "skill:cloudai-x/threejs-skills/threejs-geometry",
+    "skill:cloudai-x/threejs-skills/threejs-materials",
+    "skill:flornkm/skills/webgl-components",
+    "skill:mengto/skills/cobejs",
+    "skill:oso95/scroll-world/scroll-world"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/3d",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/3d",
     "ref": "main"
   },
   "security": {

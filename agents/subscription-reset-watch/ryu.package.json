@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/subscription-reset-watch",
   "name": "Subscription Reset Watch",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "agent",
   "artifacts": [
     "agent.json"
@@ -25,8 +25,8 @@
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/agents/subscription-reset-watch",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "agents/subscription-reset-watch",
     "ref": "main"
   },
   "security": {

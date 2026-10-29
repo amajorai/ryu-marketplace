@@ -1,4 +1,11 @@
-// Co-located, zero-dependency test for the `receipts` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeFunction,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Co-located test for the `receipts` plugin.
 // Run with:  node --test plugins-store/plugins/receipts/plugin.test.mjs
 //
 // `receipts` is a HOOK plugin: its behaviour lives entirely in the JS body Core
@@ -73,7 +80,7 @@ function makeCtx(overrides = {}) {
 function makeHost({ verdict = "", seed, prefs = {} } = {}) {
 	const kv = new Map();
 	if (seed !== undefined) {
-		kv.set("conv-abc", typeof seed === "string" ? seed : JSON.stringify(seed));
+		kv.set("conv-abc", isNativeText(seed) ? seed : JSON.stringify(seed));
 	}
 	const runAgentCalls = [];
 	return {
@@ -81,14 +88,14 @@ function makeHost({ verdict = "", seed, prefs = {} } = {}) {
 		runAgentCalls,
 		runAgent: async (args) => {
 			runAgentCalls.push(args);
-			return typeof verdict === "function" ? verdict(args) : verdict;
+			return isNativeFunction(verdict) ? verdict(args) : verdict;
 		},
 		getPreference: async ({ key }) =>
 			Object.hasOwn(prefs, key) ? prefs[key] : null,
 		storage: {
 			get: async (k) => (kv.has(String(k)) ? kv.get(String(k)) : null),
 			set: async (k, v) => {
-				kv.set(String(k), typeof v === "string" ? v : JSON.stringify(v));
+				kv.set(String(k), isNativeText(v) ? v : JSON.stringify(v));
 				return true;
 			},
 			delete: async (k) => {
@@ -114,9 +121,27 @@ const activeGoal = (over = {}) => ({
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
 	assert.equal(m.id, "@ryu/receipts");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
+});
+
+test("Agent Plugins projection stays synchronized with the native manifest", () => {
+	const manifest = parseManifest();
+	const projection = JSON.parse(
+		readFileSync(join(HERE, "plugin.json"), "utf8")
+	);
+	assert.equal(projection.name, "ryu.receipts");
+	assert.equal(projection.version, manifest.version);
+	assert.equal(projection.description, manifest.description);
+	assert.deepEqual(projection.author, manifest.author);
+	assert.equal(projection.repository, manifest.repository);
+	assert.equal(projection.homepage, manifest.homepage);
+	assert.deepEqual(projection.keywords, manifest.keywords);
+	assert.deepEqual(projection.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 });
 
 test("declared contributes fields are well-formed", () => {
@@ -132,7 +157,7 @@ test("declared contributes fields are well-formed", () => {
 
 	const cmd = m.contributes.slash_commands[0];
 	assert.equal(cmd.command, "/receipt");
-	assert.equal(typeof cmd.description, "string");
+	assert.equal(isNativeText(cmd.description), true);
 
 	// Settings write the two pref keys the hook actually reads. `proof` declares a
 	// model_picker its hook never consults (runAgent takes no model); don't copy that.
@@ -335,6 +360,53 @@ test("an EVIDENCE path drives the verifier and a yes verdict emits a receipt", a
 		call.task.includes("EVIDENCE VERIFIED: no"),
 		"task pins the verdict grammar"
 	);
+});
+
+test("only the final explicit yes verdict can accept an artifact", async () => {
+	const run = loadHookRunner(parseManifest());
+	const conflictingVerdict =
+		"EVIDENCE VERIFIED: yes - the claim sounds plausible\n" +
+		"EVIDENCE VERIFIED: no - the screenshot is blank";
+	const host = makeHost({ verdict: conflictingVerdict, seed: activeGoal() });
+	const ctx = makeCtx({
+		transcript: [
+			{ role: "user", content: "keep going" },
+			{ role: "assistant", content: "EVIDENCE: /tmp/blank.png" },
+		],
+	});
+
+	const directive = await run(ctx, host);
+	assert.equal(directive.kind, "continue");
+	assert.ok(directive.text.includes("does NOT show the goal done"));
+	assert.equal(host.runAgentCalls.length, 1);
+	assert.deepEqual(JSON.parse(host.kv.get("conv-abc")), {
+		...activeGoal(),
+		rounds: 1,
+		nudges: 0,
+		submitted: ["/tmp/blank.png"],
+		last_verdict: conflictingVerdict,
+	});
+});
+
+test("a verifier failure leaves the goal available for a later retry", async () => {
+	const run = loadHookRunner(parseManifest());
+	const initialGoal = activeGoal({ rounds: 2, submitted: ["/tmp/old.png"] });
+	const host = makeHost({
+		verdict: async () => {
+			throw new Error("verifier unavailable");
+		},
+		seed: initialGoal,
+	});
+	const ctx = makeCtx({
+		transcript: [
+			{ role: "user", content: "keep going" },
+			{ role: "assistant", content: "EVIDENCE: /tmp/new.png" },
+		],
+	});
+
+	await assert.rejects(run(ctx, host), /verifier unavailable/);
+	assert.equal(host.runAgentCalls.length, 1);
+	assert.deepEqual(JSON.parse(host.kv.get("conv-abc")), initialGoal);
 });
 
 test("a no verdict continues with the report, records the artifact, increments rounds", async () => {

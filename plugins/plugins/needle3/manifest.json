@@ -1,7 +1,7 @@
 {
   "id": "@ryu/needle3",
   "name": "Needle 3 Local Planner",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "stability": "experimental",
   "description": "Run Cactus Compute's Apache-2.0 Needle 3 tool-calling model locally as a selectable Shadow computer-use planner. The model weights are pinned and installed into the plugin runtime; the small cactus-needle runtime is installed separately.",
   "tagline": "Tiny on-device tool-calling for Shadow",
@@ -11,6 +11,7 @@
   "license": "Apache-2.0",
   "category": "Models",
   "icon": "ai-brain-01",
+  "iconDither": { "from": 240, "to": "transparent", "direction": "down" },
   "tags": [
     "models",
     "huggingface",
@@ -95,7 +96,7 @@
         "env": {
           "RYU_NEEDLE3_HOST": "127.0.0.1",
           "RYU_NEEDLE3_MODEL_ROOT": "${RYU_RUNTIME_DIR}/models/needle3",
-          "HF_HOME": "${RYU_RUNTIME_DIR}/cache/hf",
+          "HF_HOME": "${RYU_MODELS_DIR}/hf",
           "HF_HUB_DISABLE_TELEMETRY": "1",
           "NEEDLE_TELEMETRY": "0",
           "DO_NOT_TRACK": "1"

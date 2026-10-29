@@ -4,74 +4,68 @@
   "members": [
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-animation",
+      "id": "cloudai-x/threejs-skills/threejs-animation",
       "name": "Threejs Animation",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/animate",
+      "id": "emilkowalski/skills/animate",
       "name": "Animate",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/animate-expo",
+      "id": "emilkowalski/skills/animate-expo",
       "name": "Animate Expo",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/animation-vocabulary",
+      "id": "emilkowalski/skills/animation-vocabulary",
       "name": "Animation Vocabulary",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/find-animation-opportunities",
+      "id": "emilkowalski/skills/find-animation-opportunities",
       "name": "Find Animation Opportunities",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/improve-animations",
+      "id": "emilkowalski/skills/improve-animations",
       "name": "Improve Animations",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/review-animations",
+      "id": "emilkowalski/skills/review-animations",
       "name": "Review Animations",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "iart-ai/accessible-animation",
+      "id": "iart-ai/web-animation-skills/accessible-animation",
       "name": "Accessible Animation",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "iart-ai/micro-interaction",
+      "id": "iart-ai/web-animation-skills/micro-interaction",
       "name": "Micro Interaction",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "iart-ai/page-transition-animation",
+      "id": "iart-ai/web-animation-skills/page-transition-animation",
       "name": "Page Transition Animation",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "iart-ai/svg-animation",
+      "id": "iart-ai/web-animation-skills/svg-animation",
       "name": "SVG Animation",
-      "required": false
-    },
-    {
-      "kind": "skill",
-      "id": "jakubantalik/transitions-dev",
-      "name": "Transitions Dev",
       "required": false
     }
   ]

@@ -3,8 +3,8 @@
 
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -23,7 +23,10 @@ test("manifest identity and backend integrity are valid", () => {
 	assert.equal(manifest.id, "@ryu/chatgpt-web");
 	assert.equal(manifest.name, "ChatGPT Web");
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
-	assert.equal(typeof manifest.backend_code, "string");
+	assert.equal(
+		String.prototype.valueOf.call(manifest.backend_code),
+		manifest.backend_code
+	);
 	assert.equal(
 		manifest.backend_sha256,
 		createHash("sha256").update(manifest.backend_code, "utf8").digest("hex")
@@ -118,4 +121,53 @@ test("the verification bundle resolves dependencies from this checkout", () => {
 		verificationViteConfig,
 		/resolve\(\s*repoRoot,\s*"apps\/desktop\/node_modules\/react-dom\/client\.js"\s*\)/
 	);
+});
+
+function findManifests(directory) {
+	if (!existsSync(directory)) {
+		return [];
+	}
+	const found = [];
+	for (const entry of readdirSync(directory, { withFileTypes: true })) {
+		if (entry.name === "node_modules" || entry.name.startsWith(".")) {
+			continue;
+		}
+		const path = join(directory, entry.name);
+		if (entry.isDirectory()) {
+			found.push(...findManifests(path));
+		} else if (entry.name === "manifest.json") {
+			found.push(path);
+		}
+	}
+	return found;
+}
+
+function sidecarPorts(path) {
+	try {
+		const parsed = JSON.parse(readFileSync(path, "utf8"));
+		const sidecars = Array.isArray(parsed.sidecars) ? parsed.sidecars : [];
+		return sidecars
+			.map((sidecar) => sidecar.port)
+			.filter((port) => Number.isInteger(port));
+	} catch {
+		return [];
+	}
+}
+
+test("the sidecar port stays in the first-party band and is unique", () => {
+	// sidecar-ports.mdx reserves 8300-8699 for community apps and plugins and
+	// 7990-8112 for first-party ones. A first-party port inside the community
+	// band would collide with the numbers we tell third parties to pick.
+	const { port } = manifest.sidecars[0];
+	assert.equal(port, 8027);
+	assert.ok(port >= 7990 && port <= 8112, "first-party band");
+	assert.ok(port < 8300 || port > 8699, "outside the community band");
+	const repoRoot = resolve(here, "..", "..", "..");
+	const others = [
+		...findManifests(resolve(repoRoot, "apps-store")),
+		...findManifests(resolve(repoRoot, "plugins-store")),
+	].filter((path) => path !== manifestPath);
+	assert.ok(others.length > 10, "the scan found the sibling manifests");
+	const clashes = others.filter((path) => sidecarPorts(path).includes(port));
+	assert.deepEqual(clashes, []);
 });

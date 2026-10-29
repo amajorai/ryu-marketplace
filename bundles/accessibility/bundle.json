@@ -4,67 +4,67 @@
   "members": [
     {
       "kind": "skill",
-      "id": "accesslint/accessibility-diff",
+      "id": "accesslint/skills/accessibility-diff",
       "name": "Accessibility Diff",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "accesslint/accessibility-scan",
+      "id": "accesslint/skills/accessibility-scan",
       "name": "Accessibility Scan",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "accesslint/audit-and-fix",
+      "id": "accesslint/skills/audit-and-fix",
       "name": "Audit And Fix",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "accesslint/contrast-checker",
+      "id": "accesslint/skills/contrast-checker",
       "name": "Contrast Checker",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "accesslint/link-purpose",
+      "id": "accesslint/skills/link-purpose",
       "name": "Link Purpose",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "accesslint/use-of-color",
+      "id": "accesslint/skills/use-of-color",
       "name": "Use Of Color",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "addyosmani/accessibility",
+      "id": "addyosmani/web-quality-skills/accessibility",
       "name": "Accessibility",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/web-quality-audit",
+      "id": "addyosmani/web-quality-skills/web-quality-audit",
       "name": "Web Quality Audit",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "ibelick/fixing-accessibility",
+      "id": "ibelick/ui-skills/fixing-accessibility",
       "name": "Fixing Accessibility",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-accessibility",
+      "id": "jakubkrehel/skills/better-accessibility",
       "name": "Better Accessibility",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "wshobson/wcag-audit-patterns",
+      "id": "wshobson/agents/wcag-audit-patterns",
       "name": "WCAG Audit Patterns",
       "required": false
     }

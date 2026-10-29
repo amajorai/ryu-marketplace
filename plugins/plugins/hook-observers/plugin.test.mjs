@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located unit test for the hook-observers plugin.
-// Runnable with `node --test` (zero dependencies).
+// Runnable with `node --test` (no external runtime dependencies).
 //
 // hook-observers is an INLINE-HOOK plugin: its behavior lives entirely in the
 // `contributes.turn_hooks[].code` JS strings. This test validates the manifest
@@ -19,10 +23,12 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { runCase } from "../../../tools/toolsmith/harness.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
 const RAW = readFileSync(MANIFEST_PATH, "utf8");
+const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
@@ -54,18 +60,20 @@ const parseManifest = () => hydrateCodeFiles(JSON.parse(RAW));
 
 // ── Manifest / contract validation (ALWAYS) ─────────────────────────────────
 
-test("manifest.json is valid JSON and parses", () => {
-	assert.doesNotThrow(() => JSON.parse(RAW));
-});
-
 const manifest = parseManifest();
 
 test("manifest has required id/name/version", () => {
 	assert.equal(manifest.id, "@ryu/hook-observers");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	// Semver-ish version.
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
+	assert.equal(plugin.version, manifest.version);
+	assert.deepEqual(manifest.activation_events, ["*"]);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 });
 
 test("manifest declares contributes.turn_hooks (well-formed)", () => {
@@ -103,13 +111,13 @@ test("manifest declares contributes.turn_hooks (well-formed)", () => {
 		);
 
 	for (const hook of hooks) {
-		assert.equal(typeof hook.id, "string");
+		assert.equal(isNativeText(hook.id), true);
 		assert.ok(hook.id.length > 0, "hook id must be non-empty");
 		assert.ok(
 			validPhases.has(hook.on) || isAppEvent(hook.on),
 			`unknown phase: ${hook.on}`
 		);
-		assert.equal(typeof hook.code, "string");
+		assert.equal(isNativeText(hook.code), true);
 		assert.ok(
 			hook.code.includes("return"),
 			"hook body must return a directive"
@@ -121,6 +129,25 @@ test("manifest declares contributes.turn_hooks (well-formed)", () => {
 			`hook ${hook.id} body must be syntactically valid`
 		);
 	}
+	const declaredHooks = JSON.parse(RAW).contributes.turn_hooks;
+	assert.deepEqual(
+		declaredHooks.map(({ id, on, code_file }) => [id, on, code_file]),
+		[
+			["observers.subagent-stop", "subagent_stop", "hooks/subagent-stop.js"],
+			["observers.session-end", "session_end", "hooks/session-end.js"],
+			["observers.notification", "notification", "hooks/notification.js"],
+			[
+				"observers.workflow-run-failed",
+				"workflow_run_failed",
+				"hooks/workflow-run-failed.js",
+			],
+			[
+				"observers.meeting-ended",
+				"@ryu/meetings#meeting.ended",
+				"hooks/app-event-meeting-ended.js",
+			],
+		]
+	);
 
 	// This is a pure-observer plugin: no runnables, grants, servers or tools.
 	assert.deepEqual(manifest.runnables, []);
@@ -234,6 +261,75 @@ test('notification falls back to "?" for a missing event title', () => {
 	assert.equal(out.text, "notification: ?");
 });
 
+test("workflow failure and meeting end report their local event context", () => {
+	assert.deepEqual(
+		runHook("observers.workflow-run-failed", {
+			event: { workflow_name: "Local export", error: "fixture failure" },
+		}),
+		{ kind: "note", text: "workflow failed: Local export — fixture failure" }
+	);
+	assert.deepEqual(
+		runHook("observers.meeting-ended", {
+			event: { title: "Fixture meeting" },
+		}),
+		{ kind: "note", text: "meeting ended: Fixture meeting" }
+	);
+});
+
+test("Toolsmith runs every hydrated observer body with exact local outputs", async () => {
+	const cases = [
+		[
+			"observers.subagent-stop",
+			{ event: { id: "local-worker" }, output: "local result" },
+			{ kind: "note", text: "subagent local-worker finished: local result" },
+		],
+		[
+			"observers.session-end",
+			{
+				conversation_id: "local-conversation",
+				transcript: [{ role: "user" }, { role: "assistant" }],
+			},
+			{
+				kind: "note",
+				text: "session local-conversation ended with 2 messages",
+			},
+		],
+		[
+			"observers.notification",
+			{ event: { title: "Local notification" } },
+			{ kind: "note", text: "notification: Local notification" },
+		],
+		[
+			"observers.workflow-run-failed",
+			{ event: { workflow_id: "local-workflow", error: "fixture failure" } },
+			{
+				kind: "note",
+				text: "workflow failed: local-workflow — fixture failure",
+			},
+		],
+		[
+			"observers.meeting-ended",
+			{ event: { meeting_id: "local-meeting" } },
+			{ kind: "note", text: "meeting ended: local-meeting" },
+		],
+	];
+
+	for (const [hookId, ctx, expected] of cases) {
+		const hook = hookById(hookId);
+		await runCase({
+			kind: "turn_hook",
+			code: hook.code,
+			testCase: {
+				name: `${hookId} emits its local event summary`,
+				ctx,
+				host: {},
+				expect: expected,
+				expectCalls: [],
+			},
+		});
+	}
+});
+
 // ── Cross-cutting invariant ──────────────────────────────────────────────────
 
 test("every observer hook returns a well-formed note directive", () => {
@@ -246,7 +342,7 @@ test("every observer hook returns a well-formed note directive", () => {
 	for (const hook of manifest.contributes.turn_hooks) {
 		const out = runHook(hook.id, ctx);
 		assert.equal(out.kind, "note", `${hook.id} must return kind:note`);
-		assert.equal(typeof out.text, "string");
+		assert.equal(isNativeText(out.text), true);
 		assert.ok(out.text.length > 0, `${hook.id} text must be non-empty`);
 	}
 });

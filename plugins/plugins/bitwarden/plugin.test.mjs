@@ -1,3 +1,16 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeNumber,
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
 // Co-located test for the `bitwarden` plugin manifest.
 //
 // Bitwarden is a declarative `command`-tool plugin (no inline turn_hooks, no
@@ -8,10 +21,18 @@
 // timeout, and the permission grant. We also assert the manifest is
 // byte-identical to the Core built-in fixture (the registration seam).
 //
-// Runner: `node --test` (zero deps).
+// Runner: `node --test` (no external runtime dependencies).
 
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import {
+	existsSync,
+	mkdtempSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
@@ -20,23 +41,19 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 
-test("manifest.json is valid JSON and parses", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/bitwarden");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
-	assert.equal(typeof manifest.version, "string");
+	assert.equal(isNativeText(manifest.version), true);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
 });
 
 test("declares an engines.ryu constraint and Security category", () => {
-	assert.equal(typeof manifest.engines, "object");
-	assert.equal(typeof manifest.engines.ryu, "string");
+	assert.equal(isObjectRepresentation(manifest.engines), true);
+	assert.equal(isNativeText(manifest.engines.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 	assert.equal(manifest.category, "Security");
 });
@@ -46,8 +63,8 @@ test("runnables is a non-empty array of command-tool definitions", () => {
 	assert.ok(manifest.runnables.length >= 4);
 	for (const r of manifest.runnables) {
 		assert.equal(r.kind, "tool");
-		assert.equal(typeof r.name, "string");
-		assert.equal(typeof r.config, "object");
+		assert.equal(isNativeText(r.name), true);
+		assert.equal(isObjectRepresentation(r.config), true);
 		assert.equal(r.config.backend, "command");
 		assert.equal(r.config.bin, "bws");
 	}
@@ -65,14 +82,14 @@ test("exposes the four expected bitwarden. tools", () => {
 		"bitwarden.get",
 	]) {
 		assert.ok(bySlug[slug], `missing tool ${slug}`);
-		assert.equal(typeof bySlug[slug].description, "string");
+		assert.equal(isNativeText(bySlug[slug].description), true);
 		assert.ok(bySlug[slug].description.length > 0);
 	}
 });
 
 test("every command tool carries a positive integer timeout_secs", () => {
 	for (const r of manifest.runnables) {
-		assert.equal(typeof r.config.timeout_secs, "number");
+		assert.equal(isNativeNumber(r.config.timeout_secs), true);
 		assert.ok(Number.isInteger(r.config.timeout_secs));
 		assert.ok(r.config.timeout_secs > 0);
 	}
@@ -117,6 +134,10 @@ test("list/get declare their required id arguments", () => {
 		bySlug["bitwarden.list"].input_schema.properties.project_id.type,
 		"string"
 	);
+	assert.equal(
+		bySlug["bitwarden.list"].input_schema.properties.project_id.minLength,
+		1
+	);
 	assert.deepEqual(bySlug["bitwarden.get"].input_schema.required, [
 		"secret_id",
 	]);
@@ -124,6 +145,20 @@ test("list/get declare their required id arguments", () => {
 		bySlug["bitwarden.get"].input_schema.properties.secret_id.type,
 		"string"
 	);
+	assert.equal(
+		bySlug["bitwarden.get"].input_schema.properties.secret_id.minLength,
+		1
+	);
+});
+
+test("all command schemas reject undeclared inputs", () => {
+	for (const [slug, config] of Object.entries(bySlug)) {
+		assert.equal(
+			config.input_schema.additionalProperties,
+			false,
+			`${slug} must not silently accept unused input fields`
+		);
+	}
 });
 
 test("list/get/projects parse stdout as JSON; status returns raw text", () => {
@@ -131,6 +166,80 @@ test("list/get/projects parse stdout as JSON; status returns raw text", () => {
 	assert.equal(bySlug["bitwarden.get"].output, "json");
 	assert.equal(bySlug["bitwarden.projects"].output, "json");
 	assert.equal(bySlug["bitwarden.status"].output, undefined);
+});
+
+test("local CLI fixture receives exact bws argv and synthetic token only via env", () => {
+	const directory = mkdtempSync(join(tmpdir(), "ryu-bws-command-fixture-"));
+	try {
+		const fixture = join(directory, "bws-fixture.cjs");
+		writeFileSync(
+			fixture,
+			"process.stdout.write(JSON.stringify({ args: process.argv.slice(2), tokenPresent: Boolean(process.env.BWS_ACCESS_TOKEN), server: process.env.BWS_SERVER_URL ?? null }));\n"
+		);
+		const token = "0.fixture-only-sentinel-not-a-credential";
+		const secretEnv = {
+			BWS_ACCESS_TOKEN: token,
+			BWS_SERVER_URL: "https://vault.invalid",
+		};
+		const cases = [
+			{
+				slug: "bitwarden.status",
+				input: {},
+				expectedArgs: ["--version"],
+				authenticated: false,
+			},
+			{
+				slug: "bitwarden.projects",
+				input: {},
+				expectedArgs: ["project", "list"],
+				authenticated: true,
+			},
+			{
+				slug: "bitwarden.list",
+				input: { project_id: "fixture-project;literal" },
+				expectedArgs: ["secret", "list", "fixture-project;literal"],
+				authenticated: true,
+			},
+			{
+				slug: "bitwarden.get",
+				input: { secret_id: "fixture-secret;literal" },
+				expectedArgs: ["secret", "get", "fixture-secret;literal"],
+				authenticated: true,
+			},
+		];
+
+		for (const item of cases) {
+			const config = bySlug[item.slug];
+			const args = (config.command_args ?? []).map((argument) =>
+				argument.replace(/\{([a-zA-Z0-9_]+)\}/g, (_match, name) =>
+					String(item.input[name] ?? "")
+				)
+			);
+			assert.deepEqual(args, item.expectedArgs, `${item.slug} request argv`);
+			const childEnv = { PATH: process.env.PATH ?? "" };
+			for (const [name, source] of Object.entries(config.command_env ?? {})) {
+				assert.match(source, /^env:/, `${item.slug} ${name} is env-sourced`);
+				childEnv[name] = secretEnv[source.slice("env:".length)];
+			}
+			const result = spawnSync(process.execPath, [fixture, ...args], {
+				encoding: "utf8",
+				env: childEnv,
+			});
+			assert.equal(result.status, 0, result.stderr);
+			assert.deepEqual(JSON.parse(result.stdout), {
+				args: item.expectedArgs,
+				tokenPresent: item.authenticated,
+				server: item.authenticated ? "https://vault.invalid" : null,
+			});
+			assert.equal(
+				result.stdout.includes(token),
+				false,
+				"sentinel stays out of output"
+			);
+		}
+	} finally {
+		rmSync(directory, { force: true, recursive: true });
+	}
 });
 
 test("bws receives the bootstrap token through command_env (env: source)", () => {
@@ -163,7 +272,7 @@ test("declares NO mcp_servers / http / inline sandbox code / turn_hooks", () => 
 		assert.equal(cfg.secret_headers, undefined);
 		assert.equal(cfg.code, undefined);
 		assert.notEqual(cfg.backend, "http");
-		assert.notEqual(cfg.backend, "inline_deno");
+		assert.notEqual(cfg.backend, "inline_js");
 	}
 });
 

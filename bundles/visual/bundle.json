@@ -4,55 +4,55 @@
   "members": [
     {
       "kind": "skill",
-      "id": "0xdesign/design-lab",
+      "id": "0xdesign/design-plugin/design-lab",
       "name": "Design Lab",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "antfu/antfu-design",
+      "id": "antfu/skills/antfu-design",
       "name": "Antfu Design",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "anthropics/canvas-design",
+      "id": "anthropics/skills/canvas-design",
       "name": "Canvas Design",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "anthropics/frontend-design",
+      "id": "anthropics/skills/frontend-design",
       "name": "Frontend Design",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "calicastle/signal-geometry",
+      "id": "calicastle/skills/signal-geometry",
       "name": "Signal Geometry",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "dammyjay93/interface-design",
+      "id": "dammyjay93/interface-design/interface-design",
       "name": "Interface Design",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "ibelick/improve-ui",
+      "id": "ibelick/ui-skills/improve-ui",
       "name": "Improve UI",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "pbakaus/impeccable",
+      "id": "pbakaus/impeccable/impeccable",
       "name": "Impeccable",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "pbakaus/polish",
+      "id": "pbakaus/impeccable/polish",
       "name": "Polish",
       "required": true
     }

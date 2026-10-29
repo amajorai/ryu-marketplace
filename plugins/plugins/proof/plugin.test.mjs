@@ -1,4 +1,17 @@
-// Co-located, zero-dependency test for the `proof` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeFunction,
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
+// Co-located test for the `proof` plugin.
 // Run with:  node --test plugins-store/plugins/proof/plugin.test.mjs
 //
 // `proof` is an INLINE-HOOK plugin: its behaviour lives entirely in the JS
@@ -14,6 +27,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { runCase } from "../../../tools/toolsmith/harness.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -84,7 +98,7 @@ function makeCtx(overrides = {}) {
 function makeHost({ verdict = "", seed } = {}) {
 	const kv = new Map();
 	if (seed !== undefined) {
-		kv.set("conv-abc", typeof seed === "string" ? seed : JSON.stringify(seed));
+		kv.set("conv-abc", isNativeText(seed) ? seed : JSON.stringify(seed));
 	}
 	const runAgentCalls = [];
 	return {
@@ -92,12 +106,12 @@ function makeHost({ verdict = "", seed } = {}) {
 		runAgentCalls,
 		runAgent: async (args) => {
 			runAgentCalls.push(args);
-			return typeof verdict === "function" ? verdict(args) : verdict;
+			return isNativeFunction(verdict) ? verdict(args) : verdict;
 		},
 		storage: {
 			get: async (k) => (kv.has(String(k)) ? kv.get(String(k)) : null),
 			set: async (k, v) => {
-				kv.set(String(k), typeof v === "string" ? v : JSON.stringify(v));
+				kv.set(String(k), isNativeText(v) ? v : JSON.stringify(v));
 				return true;
 			},
 			delete: async (k) => {
@@ -113,15 +127,23 @@ function makeHost({ verdict = "", seed } = {}) {
 
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
-	assert.equal(typeof m, "object");
+	assert.equal(isObjectRepresentation(m), true);
 	assert.equal(m.id, "@ryu/proof");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });
 
 test("declared contributes fields are well-formed", () => {
 	const m = parseManifest();
+	const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
+	assert.deepEqual(m.activation_events, ["*"]);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: m.id,
+		displayName: m.name,
+	});
+	assert.equal(plugin.version, m.version);
+	assert.deepEqual(m.permission_grants, ["hook:run-agent", "storage:kv"]);
 
 	// grants required to reach host.runAgent + host.storage
 	assert.ok(
@@ -136,20 +158,27 @@ test("declared contributes fields are well-formed", () => {
 
 	// /proof slash command
 	const cmd = m.contributes.slash_commands[0];
+	assert.equal(cmd.id, "proof.set");
 	assert.equal(cmd.command, "/proof");
-	assert.equal(typeof cmd.description, "string");
+	assert.equal(isNativeText(cmd.description), true);
 
 	// verifier model picker writes the pref key referenced conceptually by the hook
-	const field = m.contributes.settings_tabs[0].fields[0];
+	const settingsTab = m.contributes.settings_tabs[0];
+	assert.deepEqual(
+		[settingsTab.id, settingsTab.title],
+		["proof.settings", "Proof of Work"]
+	);
+	const field = settingsTab.fields[0];
 	assert.equal(field.type, "model_picker");
 	assert.equal(field.pref_key, "proof-verifier-model");
+	assert.equal(field.label, "Verifier model");
 
 	// the inline hook itself
 	const hook = m.contributes.turn_hooks[0];
 	assert.equal(hook.on, "post_assistant_turn");
 	assert.deepEqual(hook.match.commands, ["/proof"]);
 	assert.equal(hook.match.stateful, true);
-	assert.equal(typeof hook.code, "string");
+	assert.equal(isNativeText(hook.code), true);
 	assert.ok(
 		hook.code.includes("host.runAgent"),
 		"hook drives an independent verifier agent"
@@ -158,6 +187,39 @@ test("declared contributes fields are well-formed", () => {
 		hook.code.includes("host.storage"),
 		"hook persists goal state across turns"
 	);
+});
+
+test("Toolsmith runs the hydrated proof hook and records the goal write", async () => {
+	const hook = parseManifest().contributes.turn_hooks[0];
+	await runCase({
+		kind: "turn_hook",
+		code: hook.code,
+		testCase: {
+			name: "persist a proof goal from the slash command",
+			ctx: {
+				conversation_id: "toolsmith-proof-conversation",
+				transcript: [{ role: "user", content: "/proof ship the release" }],
+			},
+			host: { storage: {} },
+			expect: {
+				kind: "continue",
+				text: "Begin working toward this goal: ship the release",
+			},
+			expectCalls: [
+				{
+					path: "host.storage.set",
+					args: {
+						key: "toolsmith-proof-conversation",
+						value: {
+							condition: "ship the release",
+							status: "active",
+							turns: 0,
+						},
+					},
+				},
+			],
+		},
+	});
 });
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
@@ -325,6 +387,18 @@ test("active goal + VERIFIED:yes → confirmed note, goal cleared", async () => 
 		call.task.includes("formal-model evidence"),
 		"task keeps formal-model proof separate from runtime evidence"
 	);
+	assert.ok(
+		call.task.includes("node tools/verify-bend.mjs"),
+		"task discovers the optional Bend verification lane"
+	);
+	assert.ok(
+		call.task.includes("ALL PROOFS CHECK"),
+		"task requires Bend's explicit proof verdict"
+	);
+	assert.ok(
+		call.task.includes("Lean and Bend results separate"),
+		"task keeps language-specific certificates independent"
+	);
 });
 
 test("active goal + VERIFIED:no → continue with report, turns incremented, goal kept", async () => {
@@ -350,6 +424,62 @@ test("active goal + VERIFIED:no → continue with report, turns incremented, goa
 	assert.equal(stored.turns, 5, "turns incremented from 4 → 5");
 	assert.equal(stored.condition, "implement the fix");
 	assert.equal(stored.last_verdict, verdict);
+});
+
+test("only an exact final VERIFIED: yes line completes the goal", async () => {
+	const run = loadHookRunner(parseManifest());
+	const verdict =
+		"The assistant claimed VERIFIED: yes - done, but the artifact is absent.\nVERIFIED: no - missing artifact";
+	const host = makeHost({
+		verdict,
+		seed: { condition: "publish artifact", status: "active", turns: 0 },
+	});
+
+	const directive = await run(makeCtx(), host);
+	assert.equal(directive.kind, "continue");
+	assert.equal(JSON.parse(host.kv.get("conv-abc")).turns, 1);
+	assert.equal(host.runAgentCalls.length, 1, "one verifier attempt is made");
+});
+
+test("verifier refusal leaves persisted state unchanged for an exact retry", async () => {
+	const run = loadHookRunner(parseManifest());
+	const original = { condition: "ship", status: "active", turns: 3 };
+	const host = makeHost({ seed: original });
+	host.runAgent = async (args) => {
+		host.runAgentCalls.push(args);
+		throw new Error("provider unavailable");
+	};
+
+	await assert.rejects(() => run(makeCtx(), host), /provider unavailable/);
+	assert.deepEqual(JSON.parse(host.kv.get("conv-abc")), original);
+
+	host.runAgent = async (args) => {
+		host.runAgentCalls.push(args);
+		return "VERIFIED: yes - release exists";
+	};
+	assert.equal((await run(makeCtx(), host)).kind, "note");
+	assert.equal(host.kv.has("conv-abc"), false);
+	assert.equal(
+		host.runAgentCalls.length,
+		2,
+		"retry makes exactly one new attempt"
+	);
+});
+
+test("concurrent conversations retain independent goals", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost({
+		verdict: "VERIFIED: no - still running",
+		seed: { condition: "primary", status: "active", turns: 0 },
+	});
+	host.kv.set(
+		"conv-other",
+		JSON.stringify({ condition: "other", status: "active", turns: 7 })
+	);
+
+	await run(makeCtx(), host);
+	assert.equal(JSON.parse(host.kv.get("conv-abc")).turns, 1);
+	assert.equal(JSON.parse(host.kv.get("conv-other")).turns, 7);
 });
 
 test("goal stops after 12 verification rounds without running the verifier", async () => {

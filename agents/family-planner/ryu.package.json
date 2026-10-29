@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/family-planner",
+  "name": "Family Planner",
+  "version": "0.5.0",
+  "kind": "agent",
+  "artifacts": [
+    "agent.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "agent"
+  ],
+  "requires": {},
+  "capabilities": [
+    "Plan birthdays and occasions",
+    "Suggest gifts within a budget",
+    "Keep shared family lists"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "agents/family-planner",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "tagline": "Keep birthdays, lists, and gift plans in one place.",
+    "category": "Productivity",
+    "description": "Plans birthdays and family occasions, keeps shared lists and chores, and suggests gift options with links and price ranges within your budget through the Family app. It never buys anything.",
+    "author": "Ryu",
+    "examplePrompts": [
+      "What birthdays are coming up this month?",
+      "Add milk and eggs to the grocery list."
+    ],
+    "featuredRank": 140
+  }
+}

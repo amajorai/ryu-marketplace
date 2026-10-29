@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.agents-md-tail",
   "version": "0.1.14",
-  "description": "Experimental context hook that keeps the active AGENTS.md instructions at the head and repeats the latest copy at the tail of each model turn without adding either injection to chat history.",
+  "description": "Experimental context hook that repeats the active AGENTS.md instructions at the end of the latest message on each model turn, without editing the system prompt or chat history.",
   "author": {
     "name": "Ryu",
     "url": "https://ryuhq.com"

@@ -1,4 +1,10 @@
 # Tavily Search
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="tavily" width="96" />
+  </picture>
+</p>
 
 Agent-tuned web search and content extraction for Ryu, powered by the
 [Tavily API](https://tavily.com). Ships as a fully declarative plugin — two `http`
@@ -10,6 +16,8 @@ tool-defs in `manifest.json`, no Core Rust.
 | ------------------ | --------------------------------------- | ------------ |
 | `tavily.search`   | `POST https://api.tavily.com/search`    | `query`      |
 | `tavily.extract`  | `POST https://api.tavily.com/extract`   | `urls`       |
+
+The `web.extract` adapter requires the `tool:execute` grant.
 
 ## Setup
 
@@ -60,12 +68,15 @@ without changing its id, its input schema, or the shape of its results. An agent
 allowlisted for `web.search` keeps working across the swap, and prompts that name
 the tool keep matching.
 
-Two mappings do the normalizing, both declared in `provides[].tools`:
+The normalizing is declared in `provides[].tools`:
 
 - **`args`** renames the canonical arguments onto Tavily's (`limit` → `max_results`).
-  The suffix `[]` means "rename and wrap in a single-element array": the canonical
-  `web.extract` passes one `url`, while Tavily's endpoint takes a batch `urls`
-  array, so the binding is `"url": "urls[]"`.
+- **`web.extract` uses an adapter** (`adapters/web.extract.js`): the canonical verb
+  passes one `url`, while Tavily's endpoint takes a batch `urls` array, and the
+  canonical `format` maps onto Tavily's `format` only for `markdown` and `text`.
+  Tavily has no HTML output, so `html` is left unmapped and Tavily's markdown default
+  answers. The adapter returns `{url, content}` items with the original record under
+  `raw`, and passes a failure envelope through unchanged.
 - **`response`** maps Tavily's records into the canonical `{title, url, snippet}`
   shape. Each item keeps the provider's original record under `raw`, so nothing is
   lost by the mapping.

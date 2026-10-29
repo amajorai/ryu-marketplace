@@ -4,67 +4,67 @@
   "members": [
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-animation",
+      "id": "cloudai-x/threejs-skills/threejs-animation",
       "name": "Threejs Animation",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-fundamentals",
+      "id": "cloudai-x/threejs-skills/threejs-fundamentals",
       "name": "Threejs Fundamentals",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-geometry",
+      "id": "cloudai-x/threejs-skills/threejs-geometry",
       "name": "Threejs Geometry",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-interaction",
+      "id": "cloudai-x/threejs-skills/threejs-interaction",
       "name": "Threejs Interaction",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-lighting",
+      "id": "cloudai-x/threejs-skills/threejs-lighting",
       "name": "Threejs Lighting",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-loaders",
+      "id": "cloudai-x/threejs-skills/threejs-loaders",
       "name": "Threejs Loaders",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-materials",
+      "id": "cloudai-x/threejs-skills/threejs-materials",
       "name": "Threejs Materials",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-postprocessing",
+      "id": "cloudai-x/threejs-skills/threejs-postprocessing",
       "name": "Threejs Postprocessing",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-shaders",
+      "id": "cloudai-x/threejs-skills/threejs-shaders",
       "name": "Threejs Shaders",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-textures",
+      "id": "cloudai-x/threejs-skills/threejs-textures",
       "name": "Threejs Textures",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "flornkm/webgl-components",
+      "id": "flornkm/skills/webgl-components",
       "name": "WebGL Components",
       "required": false
     }

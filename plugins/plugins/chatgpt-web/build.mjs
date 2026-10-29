@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const pluginId = "@ryu/chatgpt-web";
 const entry = "./backend.js";
-const port = 8301;
+const port = 8027;
 
 const code = (await readFile(join(here, "backend.js"), "utf8")).replace(
 	/\r\n?/g,

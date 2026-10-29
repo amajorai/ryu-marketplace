@@ -19,13 +19,26 @@ function parseFrontmatter(text) {
 	}
 	const [, block, body] = match;
 	const values = {};
+	const lists = {};
+	let activeList;
 	for (const line of block.split(/\r?\n/)) {
 		const entry = /^([A-Za-z0-9_-]+):\s*(.*)$/.exec(line);
 		if (entry) {
 			values[entry[1]] = entry[2].trim().replace(/^['"](.*)['"]$/, "$1");
+			activeList = entry[2].trim() === "" ? entry[1] : undefined;
+			if (activeList) {
+				lists[activeList] = [];
+			}
+			continue;
 		}
+		const item = /^\s+-\s+(.+)$/.exec(line);
+		if (activeList && item) {
+			lists[activeList].push(item[1].trim().replace(/^['"](.*)['"]$/, "$1"));
+			continue;
+		}
+		activeList = undefined;
 	}
-	return { values, body };
+	return { values, lists, body };
 }
 
 test("manifest identifies a Space-backed skill plugin", () => {
@@ -55,6 +68,24 @@ test("the bundled skill has standard frontmatter and a real body", () => {
 	assert.ok(parsed.body.trim().length > 0);
 });
 
+test("the skill tool allowlist matches its Space and web workflow without shell access", () => {
+	const parsed = parseFrontmatter(skill);
+	assert.deepEqual(parsed.lists["allowed-tools"], [
+		"spaces.list_spaces",
+		"spaces.list_documents",
+		"spaces.search",
+		"spaces.create_space",
+		"spaces.create_page",
+		"spaces.create_file",
+		"web.search",
+		"web.extract",
+	]);
+	assert.ok(
+		parsed.lists["allowed-tools"].every((tool) => /^(spaces|web)\./.test(tool)),
+		"the skill should not gain shell, filesystem, or unrelated tool access"
+	);
+});
+
 test("the skill is Ryu-native and never falls back to a private filesystem wiki", () => {
 	for (const phrase of [
 		"spaces.list_spaces",
@@ -62,7 +93,7 @@ test("the skill is Ryu-native and never falls back to a private filesystem wiki"
 		"spaces.search",
 		"spaces.create_space",
 		"spaces.create_file",
-		"mime: \"text/markdown\"",
+		'mime: "text/markdown"',
 		"web.extract",
 		"Raw source documents are immutable",
 		"untrusted source material",

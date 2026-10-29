@@ -1,0 +1,93 @@
+{
+  "tool": "round_trip.clean_text",
+  "kind": "inline_tool",
+  "code_file": "tools/clean_text.js",
+  "cases": [
+    {
+      "name": "plain text passes through unchanged",
+      "input": { "text": "Hello, world." },
+      "expect": {
+        "text": "Hello, world.",
+        "changed": false,
+        "removed_total": 0,
+        "removed": {},
+        "replaced_spaces": 0
+      }
+    },
+    {
+      "name": "zero-width spaces, a BOM and a soft hyphen are removed and counted",
+      "input": { "text": "﻿The​ quick​ bro­wn fox" },
+      "expect": {
+        "text": "The quick brown fox",
+        "changed": true,
+        "removed_total": 4,
+        "removed": {
+          "byte-order mark": 1,
+          "soft hyphen": 1,
+          "zero-width space": 2
+        },
+        "replaced_spaces": 0
+      }
+    },
+    {
+      "name": "unusual spaces become ordinary spaces",
+      "input": { "text": "a b c d　e" },
+      "expect": {
+        "text": "a b c d e",
+        "changed": true,
+        "removed_total": 0,
+        "removed": {},
+        "replaced_spaces": 4
+      }
+    },
+    {
+      "name": "astral tag characters and bidi controls are removed",
+      "input": { "text": "ok󠁁󠁿‮yes⁦" },
+      "expect": {
+        "text": "okyes",
+        "changed": true,
+        "removed_total": 4,
+        "removed": { "bidi control": 2, "tag character": 2 },
+        "replaced_spaces": 0
+      }
+    },
+    {
+      "name": "joiners are removed by default",
+      "input": { "text": "a‍b‌c" },
+      "expect": {
+        "text": "abc",
+        "changed": true,
+        "removed_total": 2,
+        "removed": { "zero-width joiner": 2 },
+        "replaced_spaces": 0
+      }
+    },
+    {
+      "name": "keep_joiners preserves emoji and script joiners",
+      "input": { "text": "👩‍💻 می‌خواهم​", "keep_joiners": true },
+      "expect": {
+        "text": "👩‍💻 می‌خواهم",
+        "changed": true,
+        "removed_total": 1,
+        "removed": { "zero-width space": 1 },
+        "replaced_spaces": 0
+      }
+    },
+    {
+      "name": "empty text is a valid, unchanged result",
+      "input": { "text": "" },
+      "expect": {
+        "text": "",
+        "changed": false,
+        "removed_total": 0,
+        "removed": {},
+        "replaced_spaces": 0
+      }
+    },
+    {
+      "name": "a missing or non-string text is rejected",
+      "input": { "text": 42 },
+      "expectError": "'text' is required and must be a string"
+    }
+  ]
+}

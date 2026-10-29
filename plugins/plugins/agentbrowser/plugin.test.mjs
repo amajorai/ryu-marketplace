@@ -1,5 +1,5 @@
 // Co-located unit test for the `agentbrowser` plugin manifest.
-// Zero-dependency, runnable with: node --test plugin.test.mjs
+// Runner: bun test; uses the production manifest and MCP schemas.
 //
 // agentbrowser is a manifest-only plugin: it contributes an MCP server
 // (`npx -y agent-browser@0.34.0 mcp`) and has no inline turn_hooks, so there is no
@@ -23,6 +23,10 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import {
+	McpServerDeclSchema,
+	PluginManifestSchema,
+} from "../../../packages/sdk/src/manifest.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -85,21 +89,23 @@ test("manifest.json is valid JSON and parses", () => {
 	assert.doesNotThrow(() => {
 		parsed = parseManifest();
 	}, "manifest.json must be parseable JSON");
-	assert.equal(typeof parsed, "object");
+	assert.doesNotThrow(() => PluginManifestSchema.parse(parsed));
 	assert.notEqual(parsed, null);
 });
 
 test("required identity fields are present and well-formed", () => {
 	const m = parseManifest();
 
-	assert.equal(typeof m.id, "string");
+	assert.doesNotThrow(() => PluginManifestSchema.shape.id.parse(m.id));
 	assert.ok(m.id.length > 0, "id must be non-empty");
 	assert.equal(m.id, "@ryu/agentbrowser");
 
-	assert.equal(typeof m.name, "string");
+	assert.doesNotThrow(() => PluginManifestSchema.shape.name.parse(m.name));
 	assert.ok(m.name.length > 0, "name must be non-empty");
 
-	assert.equal(typeof m.version, "string");
+	assert.doesNotThrow(() =>
+		PluginManifestSchema.shape.version.parse(m.version)
+	);
 	assert.match(m.version, SEMVER, "version must be semver-ish");
 });
 
@@ -111,14 +117,18 @@ test("runnables is an array (empty for this MCP-only plugin)", () => {
 test("mcp_servers.agentbrowser is a well-formed command spec", () => {
 	const m = parseManifest();
 
-	assert.equal(typeof m.mcp_servers, "object");
+	assert.doesNotThrow(() =>
+		PluginManifestSchema.shape.mcp_servers.unwrap().parse(m.mcp_servers)
+	);
 	assert.notEqual(m.mcp_servers, null);
 
 	const server = m.mcp_servers.agentbrowser;
 	assert.ok(server, "must declare an `agentbrowser` MCP server");
 
 	// command must be a non-empty string
-	assert.equal(typeof server.command, "string");
+	assert.doesNotThrow(() =>
+		McpServerDeclSchema.shape.command.unwrap().parse(server.command)
+	);
 	assert.ok(server.command.length > 0, "command must be non-empty");
 	assert.equal(server.command, "npx");
 
@@ -127,7 +137,10 @@ test("mcp_servers.agentbrowser is a well-formed command spec", () => {
 	// spelling made this provider unstartable.
 	assert.ok(Array.isArray(server.args), "args must be an array");
 	for (const arg of server.args) {
-		assert.equal(typeof arg, "string", "every arg must be a string");
+		assert.doesNotThrow(
+			() => McpServerDeclSchema.shape.args.removeDefault().element.parse(arg),
+			"every arg must be a string"
+		);
 	}
 	assert.deepEqual(server.args, [
 		"-y",
@@ -139,7 +152,9 @@ test("mcp_servers.agentbrowser is a well-formed command spec", () => {
 
 	// description, if present, must be a non-empty string
 	if (server.description !== undefined) {
-		assert.equal(typeof server.description, "string");
+		assert.doesNotThrow(() =>
+			McpServerDeclSchema.shape.description.unwrap().parse(server.description)
+		);
 		assert.ok(server.description.length > 0, "description must be non-empty");
 	}
 });
@@ -152,7 +167,11 @@ test("permission_grants reference the declared MCP server", () => {
 		"permission_grants must be an array"
 	);
 	for (const grant of m.permission_grants) {
-		assert.equal(typeof grant, "string");
+		assert.doesNotThrow(() =>
+			PluginManifestSchema.shape.permission_grants
+				.removeDefault()
+				.element.parse(grant)
+		);
 	}
 
 	// The mcp:<id> grant must correspond to an actually-declared server.
@@ -402,6 +421,139 @@ async function runAdapterCase(verb, fixture) {
 	});
 }
 
+test("Toolsmith runs browser adapters with exact tool payloads and result shapes", async () => {
+	const cases = [
+		{
+			verb: "browser.click",
+			input: { ref: "@e7", tab_id: "tab-click" },
+			provider: {
+				call: [{ clicked: true }],
+				named: {
+					"agentbrowser.agent_browser_tab_switch": [{ active: "tab-click" }],
+				},
+			},
+			expect: { clicked: true },
+			expectCalls: [
+				{
+					path: "callNamed:agentbrowser.agent_browser_tab_switch",
+					args: { tab: "tab-click" },
+				},
+				{ path: "callTool", args: { selector: "@e7" } },
+			],
+		},
+		{
+			verb: "browser.scroll",
+			input: { tab_id: "tab-scroll", direction: "down", amount: 240 },
+			provider: {
+				call: [{ scrolled: true }],
+				named: {
+					"agentbrowser.agent_browser_tab_switch": [{ active: "tab-scroll" }],
+				},
+			},
+			expect: { scrolled: true },
+			expectCalls: [
+				{
+					path: "callNamed:agentbrowser.agent_browser_tab_switch",
+					args: { tab: "tab-scroll" },
+				},
+				{
+					path: "callTool",
+					args: { direction: "down", amount: 240 },
+				},
+			],
+		},
+		{
+			verb: "browser.snapshot",
+			input: { tab_id: "tab-snapshot" },
+			provider: {
+				call: [{ content: "local accessibility tree" }],
+				named: {
+					"agentbrowser.agent_browser_tab_switch": [{ active: "tab-snapshot" }],
+				},
+			},
+			expect: { content: "local accessibility tree" },
+			expectCalls: [
+				{
+					path: "callNamed:agentbrowser.agent_browser_tab_switch",
+					args: { tab: "tab-snapshot" },
+				},
+				{ path: "callTool", args: {} },
+			],
+		},
+		{
+			verb: "browser.screenshot",
+			input: { tab_id: "tab-image" },
+			provider: {
+				call: [{ image: "local-png-fixture" }],
+				named: {
+					"agentbrowser.agent_browser_tab_switch": [{ active: "tab-image" }],
+				},
+			},
+			expect: { image: "local-png-fixture" },
+			expectCalls: [
+				{
+					path: "callNamed:agentbrowser.agent_browser_tab_switch",
+					args: { tab: "tab-image" },
+				},
+				{ path: "callTool", args: {} },
+			],
+		},
+		{
+			verb: "browser.type",
+			input: {
+				ref: "@e9",
+				text: "fixture query",
+				replace: true,
+				submit: true,
+				tab_id: "tab-form",
+			},
+			provider: {
+				call: [{ typed: true }],
+				named: {
+					"agentbrowser.agent_browser_tab_switch": [{ active: "tab-form" }],
+					"agentbrowser.agent_browser_press": [{ pressed: "Enter" }],
+				},
+			},
+			expect: {
+				ok: true,
+				ref: "@e9",
+				submitted: true,
+				raw: { typed: { typed: true }, pressed: { pressed: "Enter" } },
+			},
+			expectCalls: [
+				{
+					path: "callNamed:agentbrowser.agent_browser_tab_switch",
+					args: { tab: "tab-form" },
+				},
+				{
+					path: "callTool",
+					args: {
+						selector: "@e9",
+						text: "fixture query",
+						clear: true,
+					},
+				},
+				{
+					path: "callNamed:agentbrowser.agent_browser_press",
+					args: { key: "Enter" },
+				},
+			],
+		},
+	];
+
+	for (const fixture of cases) {
+		const outcome = await runAdapterCase(fixture.verb, {
+			name: `${fixture.verb} local success`,
+			input: fixture.input,
+			provider: fixture.provider,
+			expect: fixture.expect,
+			expectCalls: fixture.expectCalls,
+		});
+		assert.deepEqual(outcome.value, fixture.expect);
+		assert.deepEqual(outcome.calls, fixture.expectCalls);
+	}
+});
+
 for (const verb of [
 	"browser.click",
 	"browser.type",
@@ -466,4 +618,89 @@ test("browser.type preserves failed Enter instead of reporting submitted", async
 	});
 	assert.deepEqual(outcome.value, error);
 	assert.equal(outcome.calls.length, 2);
+});
+
+test("a caller retry repeats exactly one complete type sequence", async () => {
+	const fixture = {
+		input: {
+			ref: "@retry",
+			text: "retry me",
+			replace: true,
+			submit: true,
+			tab_id: "tab-retry",
+		},
+		provider: {
+			call: [{ typed: "first" }],
+			named: {
+				"agentbrowser.agent_browser_tab_switch": [{ active: "tab-retry" }],
+				"agentbrowser.agent_browser_press": [{ pressed: "Enter" }],
+			},
+		},
+	};
+	const first = await runAdapterCase("browser.type", fixture);
+	const retry = await runAdapterCase("browser.type", fixture);
+
+	assert.deepEqual(retry.calls, first.calls);
+	assert.equal(retry.calls.length, 3);
+	assert.deepEqual(retry.value, first.value);
+});
+
+test("concurrent adapter calls keep their tab and payload isolated", async () => {
+	const tools = parseManifest().provides.find(
+		(entry) => entry.capability === "browser.control"
+	).tools;
+	const [left, right] = await Promise.all([
+		executeAdapter(tools["browser.click"].adapter.code, {
+			ref: "@left",
+			tab_id: "tab-left",
+		}),
+		executeAdapter(tools["browser.scroll"].adapter.code, {
+			direction: "up",
+			amount: 17,
+			tab_id: "tab-right",
+		}),
+	]);
+
+	assert.deepEqual(left.calls, [
+		["named", "agentbrowser.agent_browser_tab_switch", { tab: "tab-left" }],
+		["tool", { selector: "@left" }],
+	]);
+	assert.deepEqual(right.calls, [
+		["named", "agentbrowser.agent_browser_tab_switch", { tab: "tab-right" }],
+		["tool", { direction: "up", amount: 17 }],
+	]);
+});
+
+test("provider cancellation propagates and prevents submit", async () => {
+	const type = parseManifest().provides.find(
+		(entry) => entry.capability === "browser.control"
+	).tools["browser.type"];
+	const cancellation = new Error("provider request cancelled");
+	const calls = [];
+	const run = new AsyncFunction(
+		"input",
+		"defaults",
+		"callTool",
+		"callNamed",
+		type.adapter.code
+	);
+
+	await assert.rejects(
+		run(
+			{ ref: "@cancel", text: "unfinished", submit: true },
+			{},
+			async (args) => {
+				calls.push(["tool", args]);
+				throw cancellation;
+			},
+			async (id, args) => {
+				calls.push(["named", id, args]);
+				return { called: true };
+			}
+		),
+		(error) => error === cancellation
+	);
+	assert.deepEqual(calls, [
+		["tool", { selector: "@cancel", text: "unfinished", clear: false }],
+	]);
 });

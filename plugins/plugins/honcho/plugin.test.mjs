@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `honcho` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `honcho` is a declarative HTTP-tool plugin AND a capability provider for the
 // swappable `memory` layer. It is the FIRST provider anywhere to bind
@@ -46,21 +50,34 @@ function hydrateCodeFiles(m) {
 /** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
 const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = parseManifest();
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/honcho");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
 });
 
+test("Agent Plugins projection stays synchronized with the native manifest", () => {
+	const projection = JSON.parse(
+		readFileSync(join(here, "plugin.json"), "utf8")
+	);
+	assert.equal(projection.name, "ryu.honcho");
+	assert.equal(projection.version, manifest.version);
+	assert.equal(projection.description, manifest.description);
+	assert.deepEqual(projection.author, manifest.author);
+	assert.equal(projection.repository, manifest.repository);
+	assert.equal(projection.homepage, manifest.homepage);
+	assert.deepEqual(projection.keywords, manifest.keywords);
+	assert.deepEqual(projection.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
+});
+
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -446,7 +463,7 @@ test("contributes exactly one settings tab, declarative and node-scoped", () => 
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "honcho.settings");
-	assert.equal(typeof tab.title, "string");
+	assert.equal(isNativeText(tab.title), true);
 	assert.ok(tab.title.length > 0);
 	// Both the secret-header resolver and the `pref:` token resolver run in Core ON
 	// THE NODE, so they can only read a node-scoped preference. A `user`
@@ -467,7 +484,7 @@ test("every pref: token referenced by a binding has a settings field", () => {
 	for (const p of provides) {
 		for (const binding of Object.values(p.tools)) {
 			for (const value of Object.values(binding.arg_defaults ?? {})) {
-				if (typeof value === "string" && value.startsWith("pref:")) {
+				if (isNativeText(value) && value.startsWith("pref:")) {
 					referenced.add(value.slice("pref:".length));
 				}
 			}
@@ -505,7 +522,7 @@ test("the secret field pref_key IS the env var the tools reference", () => {
 
 test("the secret field carries a real label and a sourcing description", () => {
 	const field = byPrefKey.get("RYU_HONCHO_API_KEY");
-	assert.equal(typeof field.label, "string");
+	assert.equal(isNativeText(field.label), true);
 	assert.ok(field.label.length > 0);
 	assert.ok(
 		field.description?.includes("https://"),
@@ -539,7 +556,7 @@ test("workspace and peer are required text fields with no baked-in default", () 
 		// Required, because an unresolved token drops the argument and the call then
 		// fails on a missing path parameter.
 		assert.equal(field.required, true);
-		assert.equal(typeof field.placeholder, "string");
+		assert.equal(isNativeText(field.placeholder), true);
 		// A `default` here would be a hardcoded identifier by another name: every
 		// install would share one Honcho bucket. The placeholder suggests without
 		// writing anything.

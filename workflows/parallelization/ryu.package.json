@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/workflow/parallelization",
   "name": "Parallelization",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "workflow",
   "artifacts": [
     "workflow.json"
@@ -21,8 +21,8 @@
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/workflows/parallelization",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "workflows/parallelization",
     "ref": "main"
   },
   "security": {

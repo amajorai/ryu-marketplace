@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.round-trip-translate",
+  "version": "0.1.0",
+  "description": "Rewrite text by translating it through a pivot language and back with Google Cloud Translation, after removing invisible Unicode characters. Requires your own Google Cloud Translation API key; the result can change meaning and should be reviewed.",
+  "author": { "name": "Ryu", "url": "https://ryuhq.com" },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/round-trip-translate",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/round-trip-translate",
+  "keywords": [
+    "translate",
+    "round trip",
+    "paraphrase",
+    "Google Translate",
+    "invisible characters"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/round-trip-translate",
+      "displayName": "Round-Trip Translate"
+    }
+  }
+}

@@ -138,3 +138,25 @@ index for new packages.
 - All public links must use `https`.
 - The package must remain installable from its own GitHub repository without a
   Ryu-owned copy of its source.
+
+
+## Testing mirrored plugin sources
+
+Run a package’s co-located Node tests with `node --test` from its directory.
+The Marketplace carries the closed shared observer artifact under `tools/dist/`;
+its parser dependencies are bundled, so these observations require no npm install.
+The accompanying provenance records the canonical source, dependency lock, and
+bundle hashes. Maintainers regenerate the artifact from the canonical source
+before syncing; do not hand-edit the generated classifiers.
+
+Tests that inspect Core registration files require the Core source checkout.
+Keep those integration assertions intact and report missing source separately
+when testing the Marketplace tree alone.
+
+Repository-level test files in the existing Marketplace fallback layout resolve
+the same generated observer under `plugins/tools/dist/`. Both locations contain
+identical bundle, provenance and license bytes. The canonical UI observation
+source is source-available under the accompanying commercial-source notice; its
+inlined Zod/Lodash dependencies retain their own license notices. The artifact
+is a shared test dependency; this does not publish private Core fixtures or
+change the existing package/runtime layout.

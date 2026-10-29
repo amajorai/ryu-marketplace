@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/interaction",
   "name": "Interaction",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,20 +19,19 @@
     "bundle:ui-skills:interaction"
   ],
   "includes": [
-    "skill:0xdesign/design-lab",
-    "skill:accesslint/link-purpose",
-    "skill:anthropics/canvas-design",
-    "skill:cloudai-x/threejs-fundamentals",
-    "skill:cloudai-x/threejs-interaction",
-    "skill:emilkowalski/apple-design",
-    "skill:iart-ai/micro-interaction",
-    "skill:jakubantalik/transitions-dev",
-    "skill:jakubkrehel/better-interface"
+    "skill:0xdesign/design-plugin/design-lab",
+    "skill:accesslint/skills/link-purpose",
+    "skill:anthropics/skills/canvas-design",
+    "skill:cloudai-x/threejs-skills/threejs-fundamentals",
+    "skill:cloudai-x/threejs-skills/threejs-interaction",
+    "skill:emilkowalski/skills/apple-design",
+    "skill:iart-ai/web-animation-skills/micro-interaction",
+    "skill:jakubkrehel/skills/better-interface"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/interaction",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/interaction",
     "ref": "main"
   },
   "security": {

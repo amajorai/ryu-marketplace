@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/testing",
   "name": "Testing",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,23 +19,23 @@
     "bundle:ui-skills:testing"
   ],
   "includes": [
-    "skill:accesslint/accessibility-diff",
-    "skill:accesslint/accessibility-scan",
-    "skill:accesslint/audit-and-fix",
-    "skill:accesslint/contrast-checker",
-    "skill:accesslint/link-purpose",
-    "skill:accesslint/refactor",
-    "skill:accesslint/use-of-color",
-    "skill:addyosmani/web-quality-audit",
-    "skill:antfu/vitest",
-    "skill:antfu/vue-testing-best-practices",
-    "skill:cursor/thermo-nuclear-code-quality-review",
-    "skill:emilkowalski/improve-animations"
+    "skill:accesslint/skills/accessibility-diff",
+    "skill:accesslint/skills/accessibility-scan",
+    "skill:accesslint/skills/audit-and-fix",
+    "skill:accesslint/skills/contrast-checker",
+    "skill:accesslint/skills/link-purpose",
+    "skill:accesslint/skills/refactor",
+    "skill:accesslint/skills/use-of-color",
+    "skill:addyosmani/web-quality-skills/web-quality-audit",
+    "skill:antfu/skills/vitest",
+    "skill:antfu/skills/vue-testing-best-practices",
+    "skill:cursor/plugins/thermo-nuclear-code-quality-review",
+    "skill:emilkowalski/skills/improve-animations"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/testing",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/testing",
     "ref": "main"
   },
   "security": {

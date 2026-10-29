@@ -4,8 +4,10 @@
 
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { once } from "node:events";
 import { createServer } from "node:http";
+import { createServer as createNetServer } from "node:net";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -30,11 +32,26 @@ function sendJson(response, status, payload) {
 	response.end(JSON.stringify(payload));
 }
 
-async function waitForHealthy(port) {
-	for (let attempt = 0; attempt < 100; attempt += 1) {
+const HEALTH_DEADLINE_MS = 10_000;
+
+// Ask the OS for a free loopback port instead of guessing one, so concurrent
+// runs never share (or collide on) the extension host's port.
+async function reserveFreePort() {
+	const probe = createNetServer();
+	probe.listen(0, "127.0.0.1");
+	await once(probe, "listening");
+	const { port } = probe.address();
+	probe.close();
+	await once(probe, "close");
+	return port;
+}
+
+async function waitForHealthy(port, token) {
+	const deadline = Date.now() + HEALTH_DEADLINE_MS;
+	while (Date.now() < deadline) {
 		try {
 			const response = await fetch(`http://127.0.0.1:${port}/health`, {
-				headers: { authorization: "Bearer test-token" },
+				headers: { authorization: `Bearer ${token}` },
 			});
 			if (response.ok) {
 				return;
@@ -119,12 +136,16 @@ test("serves an OpenAI completion through the managed browser capability hop", a
 	core.listen(0, "127.0.0.1");
 	await once(core, "listening");
 	const corePort = core.address().port;
-	const hostPort = 48_000 + Math.floor(Math.random() * 500);
+	const hostPort = await reserveFreePort();
+	// A per-run token means a stray listener on the same port can never pass
+	// the health check or answer the requests below.
+	const token = `test-token-${randomUUID()}`;
+	const auth = `Bearer ${token}`;
 	const child = spawn(process.execPath, [bootstrap], {
 		env: {
 			RYU_CORE_PORT: String(corePort),
 			RYU_EXT_PLUGIN_ID: "@ryu/chatgpt-web",
-			RYU_EXT_TOKEN: "test-token",
+			RYU_EXT_TOKEN: token,
 			RYU_HOST_ENTRY: backend,
 			RYU_HOST_HEALTH_PATH: "/health",
 			RYU_HOST_PLUGIN_VERSION: "0.1.0",
@@ -139,13 +160,13 @@ test("serves an OpenAI completion through the managed browser capability hop", a
 
 	try {
 		try {
-			await waitForHealthy(hostPort);
+			await waitForHealthy(hostPort, token);
 		} catch (error) {
 			throw new Error(`${error.message}\n${stderr}`);
 		}
 
 		const models = await fetch(`http://127.0.0.1:${hostPort}/v1/models`, {
-			headers: { authorization: "Bearer test-token" },
+			headers: { authorization: auth },
 		});
 		assert.equal(models.status, 200);
 		assert.deepEqual(
@@ -156,7 +177,7 @@ test("serves an OpenAI completion through the managed browser capability hop", a
 		modelPreference = "chatgpt-web/pro";
 		const refreshedModels = await fetch(
 			`http://127.0.0.1:${hostPort}/v1/models`,
-			{ headers: { authorization: "Bearer test-token" } }
+			{ headers: { authorization: auth } }
 		);
 		assert.equal(refreshedModels.status, 200);
 		assert.deepEqual(
@@ -171,7 +192,7 @@ test("serves an OpenAI completion through the managed browser capability hop", a
 			{
 				method: "POST",
 				headers: {
-					authorization: "Bearer test-token",
+					authorization: auth,
 					"content-type": "application/json",
 				},
 				body: JSON.stringify({
@@ -290,5 +311,153 @@ test("browser deadline includes a stalled response body and releases the next re
 			}
 		}
 		t.mock.timers.reset();
+	}
+});
+
+test("rejects unsupported requests locally and reports a login boundary without typing", async () => {
+	const previousFetch = globalThis.fetch;
+	const envKeys = ["RYU_CORE_PORT", "RYU_EXT_PLUGIN_ID", "RYU_EXT_TOKEN"];
+	const previousEnv = envKeys.map((key) => process.env[key]);
+	const capabilityCalls = [];
+	let handler;
+	try {
+		process.env.RYU_CORE_PORT = "43123";
+		process.env.RYU_EXT_PLUGIN_ID = "@ryu/chatgpt-web";
+		process.env.RYU_EXT_TOKEN = "fixture-extension-token";
+		globalThis.fetch = async (url, options) => {
+			const body = JSON.parse(options.body);
+			capabilityCalls.push({ url, headers: options.headers, ...body });
+			if (body.tool === "browser.tabs") {
+				return Response.json({ tabs: [] });
+			}
+			if (body.tool === "browser.navigate") {
+				return Response.json({ tab: { id: "fixture-tab" } }, { status: 201 });
+			}
+			if (body.tool === "browser.snapshot") {
+				return Response.json({
+					tab: { id: "fixture-tab", url: "https://chatgpt.com/auth/login" },
+					elements: [{ role: "button", name: "Sign in" }],
+				});
+			}
+			return Response.json(
+				{ error: "unexpected local fixture tool" },
+				{ status: 400 }
+			);
+		};
+
+		const { activate } = await import(
+			`${pathToFileURL(backend).href}?local-security-boundaries`
+		);
+		const preferenceCalls = [];
+		await activate({
+			host: {
+				call: async (method, args) => {
+					preferenceCalls.push({ method, args });
+					return "chatgpt-web/instant";
+				},
+			},
+			http: {
+				onRequest(callback) {
+					handler = callback;
+				},
+			},
+		});
+
+		const image = await handler({
+			method: "POST",
+			path: "/v1/chat/completions",
+			body: JSON.stringify({
+				model: "chatgpt-web/instant",
+				messages: [
+					{
+						role: "user",
+						content: [
+							{
+								type: "image_url",
+								image_url: { url: "data:image/png;base64,AA" },
+							},
+						],
+					},
+				],
+			}),
+		});
+		assert.equal(image.status, 400);
+		assert.equal(image.json.error.code, "images_not_supported");
+		const tools = await handler({
+			method: "POST",
+			path: "/v1/chat/completions",
+			body: JSON.stringify({
+				model: "chatgpt-web/instant",
+				messages: [{ role: "user", content: "local fixture" }],
+				tools: [{ type: "function", function: { name: "unsafe_tool" } }],
+			}),
+		});
+		assert.equal(tools.status, 400);
+		assert.equal(tools.json.error.code, "tools_not_supported");
+		assert.equal(preferenceCalls.length, 0);
+		assert.equal(
+			capabilityCalls.length,
+			0,
+			"rejected input never reaches browser control"
+		);
+
+		const unavailableModel = await handler({
+			method: "POST",
+			path: "/v1/chat/completions",
+			body: JSON.stringify({
+				model: "chatgpt-web/not-enabled",
+				messages: [{ role: "user", content: "local fixture" }],
+			}),
+		});
+		assert.equal(unavailableModel.status, 400);
+		assert.equal(unavailableModel.json.error.code, "model_not_available");
+		assert.deepEqual(preferenceCalls, [
+			{ method: "preferences.get", args: { key: "chatgpt-web.models" } },
+		]);
+		assert.equal(
+			capabilityCalls.length,
+			0,
+			"disabled profile never reaches browser control"
+		);
+
+		const login = await handler({
+			method: "POST",
+			path: "/v1/chat/completions",
+			body: JSON.stringify({
+				model: "chatgpt-web/instant",
+				messages: [{ role: "user", content: "fixture prompt" }],
+			}),
+		});
+		assert.equal(login.status, 401);
+		assert.equal(login.json.error.code, "login_required");
+		assert.deepEqual(
+			capabilityCalls.map((call) => call.tool),
+			["browser.tabs", "browser.navigate", "browser.snapshot"]
+		);
+		assert.deepEqual(capabilityCalls[1].args, {
+			url: "https://chatgpt.com/?temporary-chat=true",
+		});
+		assert.equal(
+			capabilityCalls[0].headers.authorization,
+			"Bearer fixture-extension-token"
+		);
+		assert.equal(
+			capabilityCalls[0].headers["x-ryu-plugin-id"],
+			"@ryu/chatgpt-web"
+		);
+		assert.equal(
+			capabilityCalls.some((call) => call.tool === "browser.type"),
+			false,
+			"login state is surfaced before prompt submission"
+		);
+	} finally {
+		globalThis.fetch = previousFetch;
+		for (const [index, key] of envKeys.entries()) {
+			if (previousEnv[index] === undefined) {
+				delete process.env[key];
+			} else {
+				process.env[key] = previousEnv[index];
+			}
+		}
 	}
 });

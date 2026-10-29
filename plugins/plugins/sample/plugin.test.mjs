@@ -1,5 +1,5 @@
 // Co-located contract test for the `sample` (Research Assistant) plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `bun test` or `node --test`; uses the production manifest SDK.
 //
 // `sample` is a purely declarative manifest plugin: no `sidecar`, no Core Rust,
 // no `mcp_servers`, no inline `turn_hooks[].code` strings, and no `http`/`command`
@@ -14,20 +14,59 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { z } from "zod";
+import {
+	CompanionSurfaceSchema,
+	PluginManifestSchema,
+	RunnableMetaSchema,
+} from "../../../packages/sdk/src/manifest.ts";
+
+// The SDK owns runnable metadata; Core's native per-kind fields are concrete
+// for this reference package, rather than the SDK's opaque authoring config.
+const agentConfigSchema = z.object({
+	system_prompt: z.string(),
+	model: z.string(),
+	tools: z.array(z.string()),
+});
+const workflowConfigSchema = z.object({ entry: z.string() });
+const toolConfigSchema = z.object({ slug: z.string() });
+const skillConfigSchema = z.object({ skill_id: z.string() });
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
+const manifest = JSON.parse(raw);
+
+test("the complete reference package survives the production SDK boundary", () => {
+	const parsed = PluginManifestSchema.parse(manifest);
+
+	assert.equal(parsed.id, manifest.id);
+	assert.deepEqual(parsed.runnables, manifest.runnables);
+	assert.deepEqual(parsed.permission_grants, manifest.permission_grants);
+	assert.deepEqual(parsed.companion, manifest.companion);
 });
 
-const manifest = JSON.parse(raw);
+test("the SDK refuses malformed runnable identities before host registration", () => {
+	const candidate = structuredClone(manifest);
+	candidate.runnables[0].id = "";
+	assert.throws(() => PluginManifestSchema.parse(candidate));
+});
+
+test("Ryu's Marketplace extension metadata projects this reference manifest", () => {
+	const extension = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
+	assert.equal(extension.name, "example.research-assistant");
+	assert.equal(extension.version, manifest.version);
+	assert.equal(extension.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.equal(
+		extension.extensions["com.ryuhq.ryu"].displayName,
+		manifest.name
+	);
+});
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@example/research-assistant");
-	assert.equal(typeof manifest.name, "string");
+	assert.doesNotThrow(() => RunnableMetaSchema.shape.name.parse(manifest.name));
 	assert.ok(manifest.name.length > 0);
 	assert.equal(manifest.name, "Research Assistant");
 	// semantic version string
@@ -38,12 +77,14 @@ test("declares a runnables array with four entries", () => {
 	assert.ok(Array.isArray(manifest.runnables));
 	assert.equal(manifest.runnables.length, 4);
 	for (const r of manifest.runnables) {
-		assert.equal(typeof r.id, "string");
+		assert.doesNotThrow(() => RunnableMetaSchema.shape.id.parse(r.id));
 		assert.ok(r.id.length > 0, "runnable id must be non-empty");
-		assert.equal(typeof r.name, "string");
+		assert.doesNotThrow(() => RunnableMetaSchema.shape.name.parse(r.name));
 		assert.ok(r.name.length > 0, "runnable name must be non-empty");
-		assert.equal(typeof r.kind, "string");
-		assert.equal(typeof r.config, "object");
+		assert.doesNotThrow(() => RunnableMetaSchema.shape.kind.parse(r.kind));
+		assert.doesNotThrow(() =>
+			RunnableMetaSchema.shape.config.unwrap().parse(r.config)
+		);
 		assert.notEqual(r.config, null);
 	}
 });
@@ -64,9 +105,13 @@ test("contributes exactly one of each supported kind", () => {
 test("agent runnable is well-formed", () => {
 	const a = byKind.get("agent");
 	assert.equal(a.id, "agent-researcher");
-	assert.equal(typeof a.config.system_prompt, "string");
+	assert.doesNotThrow(() =>
+		agentConfigSchema.shape.system_prompt.parse(a.config.system_prompt)
+	);
 	assert.ok(a.config.system_prompt.length > 0);
-	assert.equal(typeof a.config.model, "string");
+	assert.doesNotThrow(() =>
+		agentConfigSchema.shape.model.parse(a.config.model)
+	);
 	assert.ok(a.config.model.length > 0);
 	assert.ok(Array.isArray(a.config.tools));
 	assert.ok(a.config.tools.includes("web_search"));
@@ -75,21 +120,25 @@ test("agent runnable is well-formed", () => {
 test("workflow runnable declares an entry step", () => {
 	const w = byKind.get("workflow");
 	assert.equal(w.id, "wf-summarise");
-	assert.equal(typeof w.config.entry, "string");
+	assert.doesNotThrow(() =>
+		workflowConfigSchema.shape.entry.parse(w.config.entry)
+	);
 	assert.ok(w.config.entry.length > 0);
 });
 
 test("tool runnable declares a slug", () => {
 	const t = byKind.get("tool");
 	assert.equal(t.id, "tool-web-search");
-	assert.equal(typeof t.config.slug, "string");
+	assert.doesNotThrow(() => toolConfigSchema.shape.slug.parse(t.config.slug));
 	assert.equal(t.config.slug, "web_search");
 });
 
 test("skill runnable declares a skill_id", () => {
 	const s = byKind.get("skill");
 	assert.equal(s.id, "skill-research");
-	assert.equal(typeof s.config.skill_id, "string");
+	assert.doesNotThrow(() =>
+		skillConfigSchema.shape.skill_id.parse(s.config.skill_id)
+	);
 	assert.ok(s.config.skill_id.length > 0);
 });
 
@@ -100,6 +149,12 @@ test("agent tools reference a tool actually contributed by the plugin", () => {
 			.filter((r) => r.kind === "tool")
 			.map((r) => r.config.slug)
 	);
+	for (const slug of agent.config.tools) {
+		assert.ok(
+			declaredSlugs.has(slug),
+			`agent references ${slug} without a contributed tool`
+		);
+	}
 	// Every non-builtin tool the agent lists should resolve to a contributed
 	// tool runnable. `web_search` is contributed by this same manifest.
 	assert.ok(
@@ -136,14 +191,18 @@ test("the tool the agent uses has a matching mcp permission grant", () => {
 
 test("companion descriptor is well-formed", () => {
 	const c = manifest.companion;
-	assert.equal(typeof c, "object");
+	assert.doesNotThrow(() => CompanionSurfaceSchema.parse(c));
 	assert.notEqual(c, null);
-	assert.equal(typeof c.label, "string");
+	assert.doesNotThrow(() => CompanionSurfaceSchema.shape.label.parse(c.label));
 	assert.ok(c.label.length > 0);
-	assert.equal(typeof c.icon, "string");
+	assert.doesNotThrow(() =>
+		CompanionSurfaceSchema.shape.icon.unwrap().parse(c.icon)
+	);
 	assert.ok(c.icon.length > 0);
 	// shortcut is a modifier+key chord
-	assert.equal(typeof c.shortcut, "string");
+	assert.doesNotThrow(() =>
+		CompanionSurfaceSchema.shape.shortcut.unwrap().parse(c.shortcut)
+	);
 	assert.match(c.shortcut, /^[a-z]+(\+[a-z]+)+$/, "shortcut must be a chord");
 });
 
@@ -183,7 +242,11 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 		`${stale} duplicates this manifest — a packaged manifest has ONE home, its package directory. Delete the fixture copy.`
 	);
 
-	const mod = readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8");
+	// The test const lives in the plugin_manifest test module (tests.rs), so read
+	// both the module and its sibling test file.
+	const mod =
+		readFileSync(join(coreSrc, "plugin_manifest", "mod.rs"), "utf8") +
+		readFileSync(join(coreSrc, "plugin_manifest", "tests.rs"), "utf8");
 	// Registration seam: forgetting the include_str! leaves every other guard passing
 	// while the plugin simply does not exist at runtime. Compiled in via a test const, not BUILTIN_MANIFESTS — it is a template to fork, not a shipped built-in.
 	assert.ok(

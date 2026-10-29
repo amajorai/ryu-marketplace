@@ -4,55 +4,49 @@
   "members": [
     {
       "kind": "skill",
-      "id": "0xdesign/design-lab",
+      "id": "0xdesign/design-plugin/design-lab",
       "name": "Design Lab",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "accesslint/link-purpose",
+      "id": "accesslint/skills/link-purpose",
       "name": "Link Purpose",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "anthropics/canvas-design",
+      "id": "anthropics/skills/canvas-design",
       "name": "Canvas Design",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-fundamentals",
+      "id": "cloudai-x/threejs-skills/threejs-fundamentals",
       "name": "Threejs Fundamentals",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cloudai-x/threejs-interaction",
+      "id": "cloudai-x/threejs-skills/threejs-interaction",
       "name": "Threejs Interaction",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/apple-design",
+      "id": "emilkowalski/skills/apple-design",
       "name": "Apple Design",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "iart-ai/micro-interaction",
+      "id": "iart-ai/web-animation-skills/micro-interaction",
       "name": "Micro Interaction",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "jakubantalik/transitions-dev",
-      "name": "Transitions Dev",
-      "required": false
-    },
-    {
-      "kind": "skill",
-      "id": "jakubkrehel/better-interface",
+      "id": "jakubkrehel/skills/better-interface",
       "name": "Better Interface",
       "required": true
     }

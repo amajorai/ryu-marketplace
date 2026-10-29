@@ -17,9 +17,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install SourceKit-LSP: `brew install sourcekit-lsp` (ships with recent Xcode toolchains too).
-```
+Install a Swift toolchain; SourceKit-LSP ships with it, so there is no separate package to install. On macOS, install Xcode or the Xcode Command Line Tools (`xcode-select --install`) and `sourcekit-lsp` is available via `xcrun`. On Linux and Windows, install the toolchain from swift.org (or with `swiftly` on Linux) and make sure its `bin` directory, which contains `sourcekit-lsp`, is on `PATH`.
 
 ## More information
 

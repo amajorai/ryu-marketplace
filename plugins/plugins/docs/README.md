@@ -15,7 +15,7 @@ enabled and the docs site is reachable.
 
 | Tool | Description |
 | --- | --- |
-| `docs_search` | Search the docs (`{ query, limit?, tag? }`), returns ranked hits with URLs and snippets. |
+| `docs_search` | Search the docs (`{ query, limit?, tag?, locale? }`), returns ranked hits with breadcrumbs, snippets and page URLs. |
 | `docs_get_page` | Fetch one docs page as Markdown (`{ path }` — a `/docs/...` path or full URL). |
 | `docs_index` | List documentation pages, optionally filtered by top-level section (`{ section? }`). |
 

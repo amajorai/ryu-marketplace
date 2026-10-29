@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.just-bash",
+  "version": "0.1.0",
+  "description": "A simulated bash shell for agents, powered by Vercel Labs' just-bash CLI and exposed as a Ryu command tool. Scripts run against a read-only view of a workspace folder: pipes, grep, sed, awk, jq, find and other common commands work, writes stay in memory and are discarded after the call, and there is no network access. No Docker or container runtime needed. BYO install; no API key.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/vercel-labs/just-bash",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/just-bash",
+  "license": "Apache-2.0",
+  "keywords": [
+    "bash",
+    "shell",
+    "sandbox",
+    "grep",
+    "jq",
+    "awk"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/just-bash",
+      "displayName": "just-bash"
+    }
+  }
+}

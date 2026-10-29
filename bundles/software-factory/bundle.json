@@ -53,19 +53,19 @@
     },
     {
       "kind": "skill",
-      "id": "cursor/thermo-nuclear-code-quality-review",
+      "id": "cursor/plugins/thermo-nuclear-code-quality-review",
       "name": "Thermo Nuclear Code Quality Review",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/best-practices",
+      "id": "addyosmani/web-quality-skills/best-practices",
       "name": "Best Practices",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "vercel-labs/react-best-practices",
+      "id": "vercel-labs/agent-skills/vercel-react-best-practices",
       "name": "React Best Practices",
       "required": false
     }

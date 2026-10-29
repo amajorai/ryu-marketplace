@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/ecommerce",
   "name": "E-commerce",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -44,12 +44,12 @@
     "skill:anthropics/knowledge-work-plugins/data-visualization",
     "skill:openai/skills/figma-implement-design",
     "skill:aminblg/simpleenglish/simple-english",
-    "skill:aashaexo/humanize"
+    "skill:aashaexo/soundshuman/humanize"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/ecommerce",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/ecommerce",
     "ref": "main"
   },
   "security": {

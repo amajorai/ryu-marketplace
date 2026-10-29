@@ -8,9 +8,18 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
+const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 
 test("declares a main-chat-context side-chat feature and /btw command", () => {
 	assert.equal(manifest.id, "@ryu/side-chats");
+	assert.equal(manifest.name, "Side Chats");
+	assert.equal(plugin.version, manifest.version);
+	assert.deepEqual(manifest.activation_events, ["*"]);
+	assert.deepEqual(manifest.permission_grants ?? [], []);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 	assert.deepEqual(manifest.runnables, []);
 	assert.deepEqual(manifest.contributes?.chat_features, [
 		{
@@ -44,7 +53,13 @@ test("declares a main-chat-context side-chat feature and /btw command", () => {
 			order: 120,
 		},
 	]);
-	assert.equal(manifest.contributes?.slash_commands?.[0]?.command, "/btw");
+	assert.deepEqual(
+		manifest.contributes?.slash_commands?.map(({ id, command }) => [
+			id,
+			command,
+		]),
+		[["side-chats.ask", "/btw"]]
+	);
 });
 
 test("is registered from its package manifest, not a Core fixture copy", () => {

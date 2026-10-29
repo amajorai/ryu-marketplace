@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.spider",
   "version": "0.1.14",
-  "description": "High-performance web crawling and content extraction via the Spider CLI (https://spider.cloud), exposed as a declarative `command` tool that shells out to the locally-installed `spider` binary. No API key.",
+  "description": "Web crawling and content extraction via the local Spider CLI (https://spider.cloud), declared as a command tool with no API key. Core runs the CLI behind a per-call loopback egress proxy that screens and IP-pins every connection the crawler opens, refusing private, loopback, link-local and cloud-metadata targets and ports other than 80 and 443.",
   "author": {
     "name": "Ryu",
     "url": "https://ryuhq.com"

@@ -1,0 +1,88 @@
+{
+  "tool": "browser.navigate",
+  "kind": "adapter",
+  "code_file": "adapters/browser.navigate.js",
+  "adapter_tools": [],
+  "cases": [
+    {
+      "name": "pins operation 'navigate' and forwards the canonical args",
+      "input": {
+        "url": "https://example.com/"
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true,
+            "operation": "navigate"
+          }
+        ]
+      },
+      "expect": {
+        "ok": true,
+        "operation": "navigate"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/",
+            "operation": "navigate"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a caller-supplied operation cannot change the action",
+      "input": {
+        "url": "https://example.com/",
+        "operation": "click"
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true
+          }
+        ]
+      },
+      "expect": {
+        "ok": true
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/",
+            "operation": "navigate"
+          }
+        }
+      ]
+    },
+    {
+      "name": "an unavailable provider answer is returned unchanged",
+      "input": {
+        "url": "https://example.com/"
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false,
+            "error": "ego-browser is not on PATH"
+          }
+        ]
+      },
+      "expect": {
+        "available": false,
+        "error": "ego-browser is not on PATH"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "url": "https://example.com/",
+            "operation": "navigate"
+          }
+        }
+      ]
+    }
+  ]
+}

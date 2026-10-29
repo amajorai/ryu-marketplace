@@ -23,9 +23,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install `clangd` from your package manager (Homebrew: `brew install clangd`), or use the LLVM bundle that ships `clangd`.
-```
+Install `clangd`. On macOS, use the one that ships with the Xcode Command Line Tools (`xcode-select --install`), or `brew install llvm` (keg-only: add `$(brew --prefix llvm)/bin` to `PATH`). On Debian/Ubuntu, `sudo apt install clangd`; on Fedora, `sudo dnf install clang-tools-extra`; on Windows, `winget install LLVM.LLVM`. The LLVM release bundles also ship `clangd`.
 
 ## Note
 

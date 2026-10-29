@@ -8,6 +8,7 @@ through the MCP `record start`, `record stop`, and `record restart` tools; strea
 is enabled per session with `agent-browser stream enable`.
 
 Definition lives in `manifest.json`, its sandboxed adapter bodies in
+`adapters/browser.click.js`, `adapters/browser.scroll.js`,
 `adapters/browser.screenshot.js`, `adapters/browser.snapshot.js`, and
 `adapters/browser.type.js`; Core compiles them all in from this package directory.
 Published to the grouped `ryu-marketplace` via `tools/mirror-plugins.sh`.

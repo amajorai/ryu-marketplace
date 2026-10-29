@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
+const projection = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 const skillPath = join(HERE, "skills", "writing-style", "SKILL.md");
 const skill = readFileSync(skillPath, "utf8");
 
@@ -37,6 +38,13 @@ test("manifest identifies a skill-only Writing Style plugin", () => {
 	assert.equal(manifest.id, "@ryu/writing-style");
 	assert.equal(manifest.name, "Writing Style");
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+	assert.equal(projection.version, manifest.version);
+	assert.deepEqual(manifest.activation_events, ["*"]);
+	assert.deepEqual(manifest.permission_grants ?? [], []);
+	assert.deepEqual(projection.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 	assert.equal(manifest.runnables.length, 1);
 	assert.deepEqual(manifest.runnables[0], {
 		id: "skill-writing-style",
@@ -88,9 +96,6 @@ test("the generated guide is a separate skill layer, not a second Output Style",
 });
 
 test("the Agent Plugins projection matches the native manifest", () => {
-	const projection = JSON.parse(
-		readFileSync(join(HERE, "plugin.json"), "utf8")
-	);
 	assert.equal(projection.name, "ryu.writing-style");
 	assert.equal(projection.version, manifest.version);
 	assert.equal(projection.extensions["com.ryuhq.ryu"].id, manifest.id);

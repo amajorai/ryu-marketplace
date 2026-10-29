@@ -1,4 +1,11 @@
-// Co-located, zero-dependency test for the `no-more-mistakes` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeFunction,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Co-located test for the `no-more-mistakes` plugin.
 // Run with:  node --test plugins-store/plugins/no-more-mistakes/plugin.test.mjs
 //
 // The plugin's behaviour lives entirely in three sandboxed hook bodies that Core
@@ -89,7 +96,7 @@ function makeHost({ reply = "", prefs = {}, docs = [], stored = {} } = {}) {
 		state,
 		sideModel: async (args) => {
 			state.sideModelCalls.push(args);
-			return typeof reply === "function" ? reply(args) : reply;
+			return isNativeFunction(reply) ? reply(args) : reply;
 		},
 		getPreference: async ({ key }) =>
 			Object.hasOwn(prefs, key) ? prefs[key] : null,
@@ -121,7 +128,7 @@ function makeHost({ reply = "", prefs = {}, docs = [], stored = {} } = {}) {
 		storage: {
 			get: async (k) => state.stored[k] ?? null,
 			set: async (k, v) => {
-				state.stored[k] = typeof v === "string" ? v : JSON.stringify(v);
+				state.stored[k] = isNativeText(v) ? v : JSON.stringify(v);
 				return true;
 			},
 			delete: async (k) => {
@@ -149,6 +156,19 @@ test("manifest.json is valid JSON with id/name/version", () => {
 
 test("declared contributes fields are well-formed", () => {
 	const m = parseManifest();
+	const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
+	assert.deepEqual(m.activation_events, ["*"]);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: m.id,
+		displayName: m.name,
+	});
+	assert.equal(plugin.version, m.version);
+	assert.deepEqual(m.permission_grants, [
+		"hook:side-model",
+		"storage:kv",
+		"preferences:read",
+		"spaces:docs",
+	]);
 
 	// Every host family the hooks reach for must be granted, or the calls 403 at
 	// the bridge and the plugin is silently inert.
@@ -176,14 +196,29 @@ test("declared contributes fields are well-formed", () => {
 	assert.deepEqual(command.match.commands, ["/mistakes"]);
 
 	// The settings the hooks read by key.
-	const keys = m.contributes.settings_tabs[0].fields.map((f) => f.pref_key);
-	assert.deepEqual(keys, [
-		"mistakes-capture",
-		"mistakes-brief",
-		"mistakes-space",
-		"mistakes-brief-max",
-		"mistakes-model",
-	]);
+	const settingsTab = m.contributes.settings_tabs[0];
+	assert.deepEqual(
+		[settingsTab.id, settingsTab.title],
+		["no-more-mistakes.settings", "No More Mistakes"]
+	);
+	assert.deepEqual(
+		settingsTab.fields.map((field) => [
+			field.pref_key,
+			field.label,
+			field.type,
+		]),
+		[
+			["mistakes-capture", "Learn from corrections", "toggle"],
+			["mistakes-brief", "Brief the agent at the start of a chat", "toggle"],
+			["mistakes-space", "Space", "text"],
+			["mistakes-brief-max", "Rules per briefing", "number"],
+			["mistakes-model", "Extraction model", "model_picker"],
+		]
+	);
+	assert.deepEqual(
+		m.contributes.slash_commands.map(({ id, command }) => [id, command]),
+		[["no-more-mistakes.list", "/mistakes"]]
+	);
 });
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
@@ -532,4 +567,245 @@ test("/mistakes off mutes this conversation, and capture then stays quiet", asyn
 	);
 	assert.equal(unmuted.kind, "handled");
 	assert.equal(JSON.parse(host.state.stored["conv-123"]).muted, false);
+});
+
+test("capture considers the pending user turn, not an older transcript correction", async () => {
+	const run = loadHookRunner(parseManifest(), "no-more-mistakes.capture");
+	const host = makeHost({ reply: RULE_REPLY });
+	const ctx = makeCtx({
+		input: "Please add a regression test for the parser.",
+		transcript: [
+			{ role: "user", content: "No, never run git stash here." },
+			{ role: "assistant", content: "I will keep the working tree intact." },
+		],
+	});
+
+	assert.deepEqual(await run(ctx, host), { kind: "none" });
+	assert.equal(host.state.sideModelCalls.length, 0);
+
+	const correctionHost = makeHost({ reply: RULE_REPLY });
+	const correctionCtx = makeCtx({
+		input: "No, never run git stash in this repo.",
+		transcript: [
+			{ role: "assistant", content: "STALE ANSWER from an earlier turn." },
+			{ role: "user", content: "That earlier answer was wrong." },
+			{ role: "assistant", content: "LATEST ANSWER from the current window." },
+		],
+	});
+	assert.equal((await run(correctionCtx, correctionHost)).kind, "note");
+	assert.ok(
+		correctionHost.state.sideModelCalls[0].prompt.includes("LATEST ANSWER")
+	);
+	assert.ok(
+		!correctionHost.state.sideModelCalls[0].prompt.includes("STALE ANSWER")
+	);
+});
+
+test("capture ignores malformed and empty model rules, and caps proposed rules", async () => {
+	const run = loadHookRunner(parseManifest(), "no-more-mistakes.capture");
+	for (const reply of [
+		"",
+		"not JSON",
+		'{"verdict":"rule",',
+		JSON.stringify({ verdict: "rule", rule: "  \n  ", why: "empty" }),
+		JSON.stringify({
+			verdict: "unsure",
+			rule: "Never do this",
+			why: "unknown",
+		}),
+	]) {
+		const host = makeHost({ reply });
+		assert.deepEqual(await run(makeCtx(), host), { kind: "none" }, reply);
+		assert.equal(
+			host.state.docs.length,
+			0,
+			"invalid model output is never saved"
+		);
+	}
+
+	const overlongRule = `Never ${"x".repeat(240)}`;
+	const host = makeHost({
+		reply: JSON.stringify({ verdict: "rule", rule: overlongRule, why: "long" }),
+	});
+	const directive = await run(makeCtx(), host);
+	assert.equal(directive.kind, "note");
+	const proposed = directive.text.match(
+		/Proposed standing rule: (.*)\. Nothing was saved\./
+	)?.[1];
+	assert.equal(proposed?.length, 160);
+	assert.equal(
+		host.state.docs.length,
+		0,
+		"capping does not turn a proposal into a write"
+	);
+});
+
+test("conversation mutes do not cross into another conversation", async () => {
+	const m = parseManifest();
+	const host = makeHost({ reply: RULE_REPLY });
+	const command = loadHookRunner(m, "no-more-mistakes.command");
+	const capture = loadHookRunner(m, "no-more-mistakes.capture");
+
+	await command(makeCtx({ input: "/mistakes off" }), host);
+	const otherConversation = makeCtx({ conversation_id: "conv-456" });
+	const directive = await capture(otherConversation, host);
+
+	assert.equal(directive.kind, "note");
+	assert.equal(host.state.sideModelCalls.length, 1);
+	assert.equal(JSON.parse(host.state.stored["conv-123"]).muted, true);
+});
+
+test("capture fails closed on mute-storage errors and open on model-provider errors", async () => {
+	const run = loadHookRunner(parseManifest(), "no-more-mistakes.capture");
+	const storageErrorHost = makeHost({ reply: RULE_REPLY });
+	storageErrorHost.storage.get = async () => {
+		throw new Error("storage unavailable");
+	};
+	assert.deepEqual(await run(makeCtx(), storageErrorHost), { kind: "none" });
+	assert.equal(storageErrorHost.state.sideModelCalls.length, 0);
+
+	const modelErrorHost = makeHost();
+	modelErrorHost.sideModel = async () => {
+		throw new Error("model unavailable");
+	};
+	assert.deepEqual(await run(makeCtx(), modelErrorHost), { kind: "none" });
+	assert.equal(modelErrorHost.state.docs.length, 0);
+});
+
+test("brief skips empty rules, trims each rule, and enforces the hard cap", async () => {
+	const run = loadHookRunner(parseManifest(), "no-more-mistakes.brief");
+	const longRule = "L".repeat(240);
+	const docs = [
+		{ id: "empty", title: "   " },
+		{ id: "long", title: longRule },
+		...Array.from({ length: 50 }, (_, i) => ({
+			id: `d${i}`,
+			title: `Rule ${i + 1}`,
+		})),
+	];
+	const host = makeHost({ prefs: { "mistakes-brief-max": "500" }, docs });
+	const directive = await run({ conversation_id: "conv-9" }, host);
+
+	assert.equal(directive.kind, "inject");
+	const numberedRules = directive.text
+		.split("\n")
+		.filter((line) => /^\d+\. /.test(line));
+	assert.equal(numberedRules.length, 50);
+	assert.equal(numberedRules[0], `1. ${longRule.slice(0, 200)}`);
+	assert.equal(numberedRules[49], "50. Rule 49");
+	assert.ok(
+		!directive.text.includes("Rule 50"),
+		"setting cannot raise the hard cap"
+	);
+});
+
+test("brief and command report ledger-provider failures without inventing empty state", async () => {
+	const m = parseManifest();
+	const briefHost = makeHost();
+	briefHost.spaces.listDocs = async () => {
+		throw new Error("ledger unavailable");
+	};
+	assert.deepEqual(
+		await loadHookRunner(m, "no-more-mistakes.brief")({}, briefHost),
+		{ kind: "none" }
+	);
+
+	const commandHost = makeHost();
+	commandHost.spaces.listDocs = async () => {
+		throw new Error("ledger unavailable");
+	};
+	const directive = await loadHookRunner(m, "no-more-mistakes.command")(
+		makeCtx({ input: "/mistakes" }),
+		commandHost
+	);
+	assert.equal(directive.kind, "handled");
+	assert.match(directive.text, /couldn.t read/i);
+	assert.doesNotMatch(directive.text, /No rules yet/);
+});
+
+test("/mistakes add rejects empty input, caps saved rules, and reports write failure", async () => {
+	const run = loadHookRunner(parseManifest(), "no-more-mistakes.command");
+	const host = makeHost();
+	const empty = await run(makeCtx({ input: "/mistakes add   " }), host);
+	assert.match(empty.text, /Give me the rule/);
+	assert.equal(host.state.docs.length, 0);
+
+	const overlongRule = "R".repeat(220);
+	const added = await run(
+		makeCtx({ input: `/mistakes add ${overlongRule}` }),
+		host
+	);
+	assert.equal(added.kind, "handled");
+	assert.equal(host.state.docs[0].title.length, 160);
+
+	const failingHost = makeHost();
+	failingHost.spaces.createDoc = async () => {
+		throw new Error("write unavailable");
+	};
+	const failed = await run(
+		makeCtx({ input: "/mistakes add Keep the main branch clean" }),
+		failingHost
+	);
+	assert.match(failed.text, /Nothing was recorded/);
+	assert.equal(failingHost.state.docs.length, 0);
+});
+
+test("/mistakes on and off report mute-storage write failures truthfully", async () => {
+	const run = loadHookRunner(parseManifest(), "no-more-mistakes.command");
+	const host = makeHost();
+	host.storage.set = async () => {
+		throw new Error("storage unavailable");
+	};
+	for (const command of ["/mistakes off", "/mistakes on"]) {
+		const directive = await run(makeCtx({ input: command }), host);
+		assert.equal(directive.kind, "handled");
+		assert.match(directive.text, /couldn.t save that change/i);
+		assert.doesNotMatch(directive.text, /Learning from corrections again/);
+		assert.doesNotMatch(directive.text, /Not learning from corrections/);
+	}
+});
+
+test("explicit add is read back in the briefing, then failed delete retains rule until retry", async () => {
+	const manifest = parseManifest();
+	const command = loadHookRunner(manifest, "no-more-mistakes.command");
+	const brief = loadHookRunner(manifest, "no-more-mistakes.brief");
+	const host = makeHost({ prefs: { "mistakes-space": "Team rules" } });
+	assert.match(
+		(
+			await command(
+				makeCtx({ input: "/mistakes add Keep generated files unchanged" }),
+				host
+			)
+		).text,
+		/Recorded/
+	);
+	const document = host.state.docs[0];
+	assert.equal(document.title, "Keep generated files unchanged");
+	assert.match(document.source, /Added by hand/);
+	assert.match(document.source, /Conversation:\*\* conv-123/);
+	const briefing = await brief({ conversation_id: "fresh-chat" }, host);
+	assert.equal(briefing.kind, "inject");
+	assert.match(briefing.text, /Keep generated files unchanged/);
+	const originalDelete = host.spaces.deleteDoc;
+	host.spaces.deleteDoc = async () => {
+		throw new Error("Space denied");
+	};
+	assert.match(
+		(await command(makeCtx({ input: "/mistakes forget 1" }), host)).text,
+		/Couldn't delete/
+	);
+	assert.equal(host.state.docs.length, 1);
+	host.spaces.deleteDoc = originalDelete;
+	assert.match(
+		(await command(makeCtx({ input: "/mistakes forget 1" }), host)).text,
+		/Forgotten/
+	);
+	assert.deepEqual(await brief({ conversation_id: "another-chat" }, host), {
+		kind: "none",
+	});
+	assert.equal(
+		host.state.ensured.every((call) => call.name === "Team rules"),
+		true
+	);
+	assert.equal(host.state.sideModelCalls.length, 0);
 });

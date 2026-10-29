@@ -176,7 +176,7 @@ async def predict(request: Request) -> JSONResponse:
     model_arg = None if model in (None, "router") else model
     try:
         await asyncio.wait_for(_inference_lock.acquire(), timeout=0.25)
-    except TimeoutError:
+    except asyncio.TimeoutError:
         return JSONResponse(
             status_code=429,
             content={

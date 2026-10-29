@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/performance",
   "name": "Performance",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,18 +19,18 @@
     "bundle:ui-skills:performance"
   ],
   "includes": [
-    "skill:addyosmani/core-web-vitals",
-    "skill:addyosmani/performance",
-    "skill:callstackincubator/react-native-best-practices",
-    "skill:cloudai-x/threejs-lighting",
-    "skill:cloudai-x/threejs-loaders",
-    "skill:ibelick/fixing-motion-performance",
-    "skill:vercel-labs/react-best-practices"
+    "skill:addyosmani/web-quality-skills/core-web-vitals",
+    "skill:addyosmani/web-quality-skills/performance",
+    "skill:callstackincubator/agent-skills/react-native-best-practices",
+    "skill:cloudai-x/threejs-skills/threejs-lighting",
+    "skill:cloudai-x/threejs-skills/threejs-loaders",
+    "skill:ibelick/ui-skills/fixing-motion-performance",
+    "skill:vercel-labs/agent-skills/vercel-react-best-practices"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/performance",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/performance",
     "ref": "main"
   },
   "security": {

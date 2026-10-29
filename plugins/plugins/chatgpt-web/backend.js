@@ -9,6 +9,31 @@
 // The implementation is intentionally dependency-free. Core writes this file from
 // `manifest.json` and runs it under the managed extension-host bootstrap.
 
+// These built-in brand readers validate primitive text and native object
+// admission without coercing provider values or invoking user-defined hooks.
+const nativeTextValue = String.prototype.valueOf;
+const nativeCallableSource = Function.prototype.toString;
+function parseNativeText(value) {
+	try {
+		const text = nativeTextValue.call(value);
+		return text === value ? text : null;
+	} catch {
+		return null;
+	}
+}
+function isNativeMessageContainer(value) {
+	const nativeCarrier = new Object(value);
+	if (nativeCarrier !== value) {
+		return false;
+	}
+	try {
+		nativeCallableSource.call(value);
+		return false;
+	} catch {
+		return true;
+	}
+}
+
 const env = process.env;
 const CORE_PORT = (env.RYU_CORE_PORT || "").trim();
 const PLUGIN_ID = (env.RYU_EXT_PLUGIN_ID || "").trim();
@@ -112,7 +137,7 @@ function modelProfile(model) {
 }
 
 function modelIdsFromPreference(value) {
-	if (typeof value !== "string") {
+	if (parseNativeText(value) === null) {
 		return DEFAULT_MODELS;
 	}
 	const ids = [];
@@ -168,7 +193,7 @@ function jsonError(error) {
 }
 
 function parseRequestBody(raw) {
-	if (typeof raw !== "string" || raw.length > MAX_REQUEST_BYTES) {
+	if (parseNativeText(raw) === null || raw.length > MAX_REQUEST_BYTES) {
 		throw new BridgeError(
 			"request_too_large",
 			"request body is too large",
@@ -177,7 +202,10 @@ function parseRequestBody(raw) {
 	}
 	try {
 		const parsed = JSON.parse(raw || "{}");
-		if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+		if (
+			!(parsed && isNativeMessageContainer(parsed)) ||
+			Array.isArray(parsed)
+		) {
 			throw new Error("body must be an object");
 		}
 		return parsed;
@@ -241,7 +269,9 @@ async function browserCall(tool, args = {}, timeoutMs = RESPONSE_TIMEOUT_MS) {
 	}
 	if (!response.ok || payload.ok === false) {
 		const detail =
-			typeof payload.error === "string" ? payload.error : "request rejected";
+			parseNativeText(payload.error) === null
+				? "request rejected"
+				: payload.error;
 		const code =
 			response.status === 401 || response.status === 403
 				? "browser_not_authorized"
@@ -289,7 +319,7 @@ async function ensureTemporaryTab() {
 	const opened = await browserCall("browser.navigate", {
 		url: TEMPORARY_CHAT_URL,
 	});
-	if (typeof opened.tab?.id !== "string" || opened.tab.id.trim() === "") {
+	if (parseNativeText(opened.tab?.id) === null || opened.tab.id.trim() === "") {
 		throw new BridgeError(
 			"browser_protocol_error",
 			"browser did not return a tab id",
@@ -302,7 +332,7 @@ async function ensureTemporaryTab() {
 
 function elementText(element) {
 	return [element?.name, element?.value]
-		.filter((value) => typeof value === "string" && value.trim() !== "")
+		.filter((value) => parseNativeText(value) !== null && value.trim() !== "")
 		.join(" ")
 		.trim();
 }
@@ -312,7 +342,8 @@ function elementsOf(snapshot) {
 }
 
 function isLoginSnapshot(snapshot) {
-	const url = typeof snapshot?.tab?.url === "string" ? snapshot.tab.url : "";
+	const url =
+		parseNativeText(snapshot?.tab?.url) === null ? "" : snapshot.tab.url;
 	if (/^https:\/\/chatgpt\.com\/auth\/login(?:[/?#]|$)/i.test(url)) {
 		return true;
 	}
@@ -442,7 +473,7 @@ async function selectModel(tabId, model) {
 }
 
 function contentToText(content) {
-	if (typeof content === "string") {
+	if (parseNativeText(content) !== null) {
 		return content;
 	}
 	if (!Array.isArray(content)) {
@@ -450,14 +481,14 @@ function contentToText(content) {
 	}
 	const chunks = [];
 	for (const part of content) {
-		if (typeof part === "string") {
+		if (parseNativeText(part) !== null) {
 			chunks.push(part);
 			continue;
 		}
-		if (!part || typeof part !== "object") {
+		if (!(part && isNativeMessageContainer(part))) {
 			continue;
 		}
-		if (part.type === "text" && typeof part.text === "string") {
+		if (part.type === "text" && parseNativeText(part.text) !== null) {
 			chunks.push(part.text);
 			continue;
 		}
@@ -481,7 +512,9 @@ function buildPrompt(messages, marker) {
 	];
 	for (const message of messages) {
 		const role =
-			typeof message.role === "string" ? message.role.toUpperCase() : "USER";
+			parseNativeText(message.role) === null
+				? "USER"
+				: message.role.toUpperCase();
 		const text = contentToText(message.content).trim();
 		if (text === "") {
 			continue;
@@ -616,14 +649,14 @@ function validateMessages(messages) {
 		throw new BridgeError("too_many_messages", "too many messages", 400);
 	}
 	for (const message of messages) {
-		if (!message || typeof message !== "object") {
+		if (!(message && isNativeMessageContainer(message))) {
 			throw new BridgeError(
 				"invalid_message",
 				"each message must be an object",
 				400
 			);
 		}
-		if (typeof message.role !== "string" || message.role.trim() === "") {
+		if (parseNativeText(message.role) === null || message.role.trim() === "") {
 			throw new BridgeError(
 				"invalid_message",
 				"each message needs a role",
@@ -646,7 +679,7 @@ async function complete(body) {
 	}
 	const models = await configuredModels();
 	const model =
-		typeof request.model === "string" && request.model.trim() !== ""
+		parseNativeText(request.model) !== null && request.model.trim() !== ""
 			? request.model.trim()
 			: models[0];
 	if (!models.includes(model)) {

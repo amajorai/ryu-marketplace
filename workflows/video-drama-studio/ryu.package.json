@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
+  "schemaVersion": 1,
+  "id": "ryu/workflow/video-drama-studio",
+  "name": "Video Drama Studio",
+  "version": "0.5.0",
+  "kind": "workflow",
+  "artifacts": [
+    "workflow.json"
+  ],
+  "targets": [
+    "ryu-desktop",
+    "ryu-cli"
+  ],
+  "scopes": [
+    "workflow"
+  ],
+  "requires": {},
+  "capabilities": [
+    "workflow:video-drama-studio"
+  ],
+  "source": {
+    "type": "github",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "workflows/video-drama-studio",
+    "ref": "main"
+  },
+  "security": {
+    "containsSecrets": false,
+    "permissions": [],
+    "privateContent": false,
+    "redacted": false
+  },
+  "metadata": {
+    "description": "A full production crew turns one video idea into a finished drama: producer, showrunner, casting, screenwriter and script editor, department heads, first AD, production unit, editor, and executive producer sign-off.",
+    "category": "automation",
+    "pattern": "production-pipeline",
+    "icon": "Clapperboard",
+    "nodeCount": 13,
+    "tags": [
+      "video",
+      "drama",
+      "screenplay",
+      "director",
+      "editor",
+      "producer",
+      "film-crew"
+    ]
+  }
+}

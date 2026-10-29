@@ -1,4 +1,4 @@
-// Tool body for `agents.send`, run in Core's Deno sandbox.
+// Tool body for `agents.send`, run in Core's JS sandbox.
 //
 // This file is a FRAGMENT, not an ES module: Core splices it into an async IIFE
 // (`build_inline_tool_program` in crates/core/tool-exec/src/lib.rs) with `input`
@@ -47,7 +47,7 @@ async function readJson(key, fallback) {
 	try {
 		const parsed = JSON.parse(String(raw));
 		return parsed === null ? fallback : parsed;
-	} catch (_e) {
+	} catch {
 		// A half-written value must not brick the mailbox: treat it as empty.
 		return fallback;
 	}
@@ -115,14 +115,13 @@ if (from === to) {
 	);
 }
 
-// How deep this agent already is in a relayed chain: from the conversation it is
-// answering in (set by the delivery hook) or, when it is itself running as a
-// delegated sub-agent with no conversation, from its agent-scoped marker.
-	const arrivedByConversation = caller.conversation_id
+// How deep this agent already is in a relayed chain: the depth of the mail the
+// delivery hook injected into this conversation's current user turn. The hook
+// clears it on any turn that delivers nothing, so a user-started send is hop 1.
+const arrivedByConversation = caller.conversation_id
 	? await readInt(`hops.conv:${keyPart(caller.conversation_id)}`)
 	: 0;
-	const arrivedByAgent = await readInt(`hops.agent:${keyPart(from)}`);
-const hops = Math.max(arrivedByConversation, arrivedByAgent) + 1;
+const hops = arrivedByConversation + 1;
 if (hops > MAX_HOPS) {
 	return {
 		ok: false,

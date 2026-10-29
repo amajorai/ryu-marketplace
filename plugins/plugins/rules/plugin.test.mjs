@@ -83,7 +83,7 @@ test("manual mode keeps agent rules but suppresses project rules", async () => {
 	assert.doesNotMatch(directive.messages[0].content, /Do not inject/);
 });
 
-test("ACP replaces the prompt and requests a fresh session", async () => {
+test("ACP appends rules to the prompt and keeps the pooled session", async () => {
 	const directive = await runHook(
 		{
 			input: "Implement the feature",
@@ -92,7 +92,8 @@ test("ACP replaces the prompt and requests a fresh session", async () => {
 		{}
 	);
 	assert.equal(directive.kind, "replace");
-	assert.equal(directive.fresh_session, true);
+	assert.equal(directive.fresh_session, undefined);
+	assert.ok(directive.text.startsWith("Implement the feature\n\n"));
 	assert.match(directive.text, /Run tests/);
 });
 
@@ -199,20 +200,42 @@ test("hundreds of rules produce a deterministic omitted marker", async () => {
 	assert.doesNotMatch(content, /Rule 399/);
 });
 
-test("turn budget removes legacy project context after the configured turns", async () => {
+test("injection never edits the system prompt or earlier turns", async () => {
+	const messages = [
+		{
+			role: "system",
+			content: "## Project instructions (AGENTS.md)\nLegacy rule\n\nBase",
+		},
+		{ role: "user", content: "Earlier" },
+		{ role: "assistant", content: "Answer" },
+		{ role: "user", content: "Work" },
+	];
+	const directive = await runHook(
+		{
+			project_instructions: "## Project instructions (AGENTS.md)\nLegacy rule",
+			project_rules: [
+				{ id: "project", content: "Fresh rule", apply_mode: "always" },
+			],
+			messages,
+		},
+		{}
+	);
+	assert.equal(directive.kind, "rewrite");
+	assert.deepEqual(directive.messages.slice(0, 3), messages.slice(0, 3));
+	assert.match(directive.messages[3].content, /^Work\n\n<ryu-rules-context>/);
+	assert.match(directive.messages[3].content, /Fresh rule/);
+});
+
+test("turn budget stops injecting after the configured turns without touching the prefix", async () => {
 	const values = new Map();
 	const context = {
 		conversation_id: "limited",
 		agent_id: "ryu",
-		project_instructions: "## Project instructions (AGENTS.md)\nLegacy rule",
 		project_rules: [
 			{ id: "project", content: "Fresh rule", apply_mode: "always" },
 		],
 		messages: [
-			{
-				role: "system",
-				content: "## Project instructions (AGENTS.md)\nLegacy rule\n\nBase",
-			},
+			{ role: "system", content: "Base" },
 			{ role: "user", content: "Work" },
 		],
 	};
@@ -220,7 +243,37 @@ test("turn budget removes legacy project context after the configured turns", as
 	const first = await runHook(context, preference, values);
 	assert.match(first.messages[1].content, /Fresh rule/);
 	const second = await runHook(context, preference, values);
-	assert.equal(second.kind, "rewrite");
-	assert.doesNotMatch(second.messages[0].content, /Legacy rule/);
-	assert.doesNotMatch(second.messages[1].content, /Fresh rule/);
+	assert.deepEqual(second, { kind: "none" });
+});
+
+test("disabling Rules is a no-op that does not consume turn budget", async () => {
+	const calls = [];
+	const ctx = {
+		agent_id: "claude",
+		messages: [
+			{ role: "system", content: "Base system context" },
+			{ role: "user", content: "Question" },
+		],
+	};
+	const host = {
+		getPreference: async ({ key }) => {
+			calls.push({ path: "getPreference", key });
+			return { enabled: false, turnsPerPlan: 1 };
+		},
+		storage: {
+			get: async (key) => {
+				calls.push({ path: "storage.get", key });
+				return "0";
+			},
+			set: async (key, value) => {
+				calls.push({ path: "storage.set", key, value });
+			},
+		},
+	};
+	const directive = await new AsyncFunction("ctx", "host", code)(ctx, host);
+
+	assert.deepEqual(directive, { kind: "none" });
+	assert.deepEqual(calls, [
+		{ path: "getPreference", key: "rules.agent.claude" },
+	]);
 });

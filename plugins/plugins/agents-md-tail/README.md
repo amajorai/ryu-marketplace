@@ -1,45 +1,35 @@
 # AGENTS.md Tail
 
 AGENTS.md Tail is an experimental, opt-in context hook. On every model turn it
-removes stale copies of its own hidden tail block and appends the current
-`ctx.project_instructions` block to the latest user message. The user message in
-chat history is unchanged, so the injection is invisible to the user and does not
-accumulate in the next turn's transcript.
+appends the current `ctx.project_instructions` block to the latest outbound user
+message. The user message in chat history is unchanged, so the injection is
+invisible to the user. For OpenAI-compatible/local agents it does not accumulate
+in the next turn's message array; ACP agents keep earlier copies in their own
+session history (see Caching).
 
 The hook handles both outbound message arrays (OpenAI-compatible/local agents)
 and the flattened prompt used by ACP agents, including the managed `ryu` Pi agent.
-ACP replacements request a fresh session so a prior hidden tail cannot remain in
-the agent's private session history.
+On ACP it appends the block to the end of the prompt; Core forwards that suffix
+to the warm pooled session as part of the latest turn.
 
-## Caching and session trade-offs
+## Caching
 
-This plugin changes the model's outbound prompt, so it can affect server-side
-caching:
+The hook never edits the system prompt or earlier turns. Those are the prefix a
+provider prompt cache reuses, and Core ignores any `context` rewrite that changes
+them.
 
+- **OpenAI-compatible/local agents (message array):** the tail is not
+  persisted, so on the next turn the previous user message is resent without
+  the tail it carried and the cached prefix ends there. The system prompt and
+  every turn before the previous user message stay cached; the previous
+  assistant reply, the new user message, and the fresh tail are re-read on each
+  turn.
 - **Gateway response cache:** the exact cache key includes the complete message
-  array, including the hidden tail. Repeating the same effective prompt still
-  produces the same key, while changing the project instructions intentionally
-  invalidates the old entry.
-- **Provider prompt cache:** with the default settings, the stable system/head
-  prefix remains cacheable. The repeated instructions at the tail are part of
-  the changing suffix and will usually be billed as uncached input each turn.
-  Enabling **Remove the head injection** can reduce the amount of project context
-  in the stable cacheable prefix.
-- **ACP and the managed Ryu/Pi agent:** strict latest-only behavior starts a fresh
-  ACP session for every turn. Ryu replays the persisted visible transcript, but
-  pooled ACP process state, session affinity, and warm in-session KV-cache reuse
-  are not retained. An upstream provider may still reuse a content-based prompt
-  prefix, but the plugin does not guarantee it.
-
-The ACP cost is deliberate: standard ACP has no portable way to inject context
-for one turn while also removing that context from the agent's retained session
-history. Keeping a warm ACP session would violate the plugin's guarantee that the
-agent sees only the head copy and the latest tail copy.
-
-The **Remove the head injection** setting is off by default. When enabled, the
-exact project-instructions block at the start of the system context is removed,
-leaving only the latest copy at the tail. The setting is node-scoped and lives in
-the plugin's **AGENTS.md Tail** settings tab.
+  array, including the hidden tail. Changing the project instructions
+  intentionally invalidates the old entry.
+- **ACP and the managed Ryu/Pi agent:** the pooled session is kept, so warm
+  in-session state and prefix caching survive. Earlier turns' tail copies remain
+  in the agent's own session history, the same as any earlier message.
 
 Definition lives in `manifest.json`, and the sandboxed context hook lives in
 `hooks/inject.js`. This is an experimental Core-tier plugin and is not enabled on

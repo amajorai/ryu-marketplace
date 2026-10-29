@@ -1,6 +1,18 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
 // Co-located unit test for the `hook-session-context` plugin.
 //
-// Zero-dependency, runnable with `node --test plugin.test.mjs`.
+// repository-native observers, runnable with `node --test plugin.test.mjs`.
 //
 // This is an INLINE-HOOK plugin: its only contribution is a `turn_hooks` entry
 // whose `code` string is JS the Core plugin sandbox executes. Core wraps that
@@ -19,6 +31,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const rawManifest = readFileSync(manifestPath, "utf8");
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
@@ -109,7 +122,7 @@ async function runHook(code, ctx, host) {
 
 test("manifest.json is valid JSON and re-serializes stably", () => {
 	const m = manifest();
-	assert.equal(typeof m, "object");
+	assert.equal(isObjectRepresentation(m), true);
 	assert.ok(m !== null);
 	// Round-trips without throwing.
 	assert.doesNotThrow(() => JSON.parse(JSON.stringify(m)));
@@ -118,13 +131,18 @@ test("manifest.json is valid JSON and re-serializes stably", () => {
 test("has non-empty string id / name / version", () => {
 	const m = manifest();
 	for (const key of ["id", "name", "version"]) {
-		assert.equal(typeof m[key], "string", `${key} must be a string`);
+		assert.equal(isNativeText(m[key]), true, `${key} must be a string`);
 		assert.ok(m[key].length > 0, `${key} must be non-empty`);
 	}
 	assert.equal(m.id, "@ryu/session-context");
 	assert.equal(m.name, "Session Context");
 	// Semver-ish version.
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
+	assert.equal(plugin.version, m.version);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: m.id,
+		displayName: m.name,
+	});
 });
 
 test("id is scoped form", () => {
@@ -162,11 +180,11 @@ test("contributes exactly one well-formed turn hook", () => {
 	assert.ok(Array.isArray(hooks), "turn_hooks must be an array");
 	assert.equal(hooks.length, 1);
 	const h = hooks[0];
-	assert.equal(typeof h.id, "string");
+	assert.equal(isNativeText(h.id), true);
 	assert.ok(h.id.length > 0);
 	assert.equal(h.id, "session-context.start");
 	assert.equal(h.on, "session_start");
-	assert.equal(typeof h.code, "string");
+	assert.equal(isNativeText(h.code), true);
 	assert.ok(h.code.length > 0);
 });
 
@@ -213,14 +231,14 @@ test("session_start hook returns an inject directive", async () => {
 	const { host } = mockHost();
 	const directive = await runHook(code, mockCtx(), host);
 
-	assert.equal(typeof directive, "object");
+	assert.equal(isObjectRepresentation(directive), true);
 	assert.ok(directive !== null);
 	assert.ok(
 		VALID_KINDS.has(directive.kind),
 		`kind '${directive.kind}' must be a valid HookDirective kind`
 	);
 	assert.equal(directive.kind, "inject");
-	assert.equal(typeof directive.text, "string");
+	assert.equal(isNativeText(directive.text), true);
 	assert.ok(directive.text.length > 0);
 });
 

@@ -1,0 +1,88 @@
+{
+  "tool": "browser.snapshot",
+  "kind": "adapter",
+  "code_file": "adapters/browser.snapshot.js",
+  "adapter_tools": [],
+  "cases": [
+    {
+      "name": "pins operation 'snapshot' and forwards the canonical args",
+      "input": {
+        "tab_id": "t1"
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true,
+            "operation": "snapshot"
+          }
+        ]
+      },
+      "expect": {
+        "ok": true,
+        "operation": "snapshot"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "tab_id": "t1",
+            "operation": "snapshot"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a caller-supplied operation cannot change the action",
+      "input": {
+        "tab_id": "t1",
+        "operation": "navigate"
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true
+          }
+        ]
+      },
+      "expect": {
+        "ok": true
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "tab_id": "t1",
+            "operation": "snapshot"
+          }
+        }
+      ]
+    },
+    {
+      "name": "an unavailable provider answer is returned unchanged",
+      "input": {
+        "tab_id": "t1"
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false,
+            "error": "ego-browser is not on PATH"
+          }
+        ]
+      },
+      "expect": {
+        "available": false,
+        "error": "ego-browser is not on PATH"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "tab_id": "t1",
+            "operation": "snapshot"
+          }
+        }
+      ]
+    }
+  ]
+}

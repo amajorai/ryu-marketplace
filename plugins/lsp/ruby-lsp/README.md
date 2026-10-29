@@ -21,9 +21,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install the Ruby LSP gem: `gem install ruby-lsp`.
-```
+Install the Ruby LSP gem on any platform with Ruby: `gem install ruby-lsp`.
 
 ## More information
 

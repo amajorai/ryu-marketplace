@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.cloudflare-clef",
+  "version": "0.1.0",
+  "description": "Use Cloudflare Workers AI Clef and Clef Flash as a swappable typed-decision provider. State, questions, and optional embedded images are sent to Cloudflare Workers AI from the selected Ryu node.",
+  "homepage": "https://developers.cloudflare.com/workers-ai/models/clef/",
+  "license": "Apache-2.0",
+  "keywords": [
+    "decision models",
+    "classification",
+    "cloudflare",
+    "workers ai",
+    "clef"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/cloudflare-clef",
+      "displayName": "Cloudflare Clef Decisions"
+    }
+  }
+}

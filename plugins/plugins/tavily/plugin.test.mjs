@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `tavily` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `tavily` is a declarative HTTP-tool plugin AND the first plugin to be a
 // *capability provider* for the swappable layers: it declares `provides` entries
@@ -18,22 +22,22 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
-
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
 
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/tavily");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
+	assert.equal(plugin.version, manifest.version);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].displayName, manifest.name);
 });
 
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -76,8 +80,10 @@ test("both tools target the api.tavily.com host over https", () => {
 });
 
 test("permission_grants gate egress to exactly the hosts the tools call", () => {
+	// `tool:execute` is the grant Core gates the web.extract adapter on.
 	assert.deepEqual(manifest.permission_grants, [
 		"tool:http-egress:api.tavily.com",
+		"tool:execute",
 	]);
 	const hosts = new Set(
 		manifest.runnables.map((r) => new URL(r.config.url).hostname)
@@ -130,9 +136,9 @@ test("every provides entry is selectable and claims no default", () => {
 	}
 });
 
-test("verb keys are canonical DOUBLE-underscore ids under the right capability", () => {
-	// A single-underscore typo (`web_search`) is not an error anywhere — the verb
-	// lookup simply misses and the layer silently serves nothing. Hence this test.
+test("verb keys are canonical dotted ids under the right capability", () => {
+	// Replacing the canonical dot with an underscore (`web_search`) is not an error
+	// anywhere — the verb lookup simply misses and the layer silently serves nothing.
 	const expected = {
 		"web.search": "web.search",
 		"web.extract": "web.extract",
@@ -190,10 +196,120 @@ test("search normalizes into the canonical result shape", () => {
 	}
 });
 
-test("extract wraps the single canonical url into Tavily's urls array", () => {
+const extractCode = readFileSync(
+	join(
+		here,
+		byCapability.get("web.extract").tools["web.extract"].adapter.code_file
+	),
+	"utf8"
+);
+
+async function runExtract(input, response) {
+	const { runOnce } = await import("../../../tools/toolsmith/harness.mjs");
+	return runOnce({
+		kind: "adapter",
+		code: extractCode,
+		adapterTools: [],
+		testCase: { input, provider: { call: [response] } },
+	});
+}
+
+test("extract is an adapter whose format enum matches Tavily's", () => {
 	const binding = byCapability.get("web.extract").tools["web.extract"];
-	// The canonical verb passes one `url`; Tavily's API takes a batch `urls`.
-	assert.equal(binding.args.url, "urls[]");
+	assert.equal(binding.tool, "tavily.extract");
+	assert.equal(binding.adapter.code_file, "adapters/web.extract.js");
+	// An adapter REPLACES the declarative mapping; carrying both would describe the
+	// same transformation twice and only one of them would run.
+	assert.equal(binding.args, undefined);
+	assert.equal(binding.response, undefined);
+	assert.deepEqual(
+		bySlug.get("tavily.extract").config.input_schema.properties.format.enum,
+		["markdown", "text"]
+	);
+});
+
+test("extract wraps the url, maps markdown/text and leaves html unmapped", async () => {
+	const item = { url: "https://a.example/x", raw_content: "Body" };
+	for (const [format, forwarded] of [
+		["markdown", "markdown"],
+		["text", "text"],
+		["html", undefined],
+		[undefined, undefined],
+	]) {
+		const { value, calls } = await runExtract(
+			{ url: "https://a.example/x", format },
+			{ results: [item] }
+		);
+		const args = { urls: ["https://a.example/x"] };
+		if (forwarded) {
+			args.format = forwarded;
+		}
+		assert.deepEqual(calls, [{ path: "callTool", args }], String(format));
+		assert.deepEqual(value, {
+			results: [{ url: "https://a.example/x", content: "Body", raw: item }],
+		});
+	}
+});
+
+test("extract passes a failure envelope through under raw", async () => {
+	for (const failure of [
+		{ available: false, reason: "endpoint returned HTTP 401" },
+		{ status: 500, body: "boom" },
+		null,
+	]) {
+		const { value } = await runExtract({ url: "https://a.example/x" }, failure);
+		assert.deepEqual(value, { raw: failure });
+	}
+});
+
+test("search defaults and schema bounds match the provider request contract", () => {
+	const config = bySlug.get("tavily.search").config;
+	assert.deepEqual(config.body_defaults, {
+		max_results: 10,
+		search_depth: "basic",
+	});
+	assert.equal(config.unwrap_body, true);
+	assert.equal(config.fail_open, true);
+	assert.deepEqual(config.input_schema.additionalProperties, undefined);
+	assert.deepEqual(config.input_schema.properties.max_results, {
+		type: "integer",
+		description: "Number of results to return (default 10).",
+		minimum: 1,
+		maximum: 20,
+	});
+	assert.deepEqual(config.input_schema.properties.search_depth.enum, [
+		"basic",
+		"advanced",
+	]);
+});
+
+test("extract accepts a required array and never accepts a caller-supplied credential", () => {
+	const schema = bySlug.get("tavily.extract").config.input_schema;
+	assert.deepEqual(schema.required, ["urls"]);
+	assert.equal(schema.properties.urls.type, "array");
+	assert.equal(schema.properties.urls.items.type, "string");
+	for (const runnable of manifest.runnables) {
+		const propertyNames = Object.keys(runnable.config.input_schema.properties);
+		assert.equal(propertyNames.includes("api_key"), false);
+		assert.equal(propertyNames.includes("authorization"), false);
+		assert.equal(propertyNames.includes("headers"), false);
+	}
+});
+
+test("both provider tools deliberately use identical degradation semantics", () => {
+	for (const runnable of manifest.runnables) {
+		assert.equal(runnable.config.fail_open, true, runnable.config.slug);
+		assert.equal(runnable.config.unwrap_body, true, runnable.config.slug);
+	}
+});
+
+test("portable projection publishes identity but no native secret or endpoint", () => {
+	const extension = plugin.extensions["com.ryuhq.ryu"];
+	assert.deepEqual(Object.keys(extension).sort(), ["displayName", "id"]);
+	const portableText = JSON.stringify(plugin);
+	assert.equal(portableText.includes("RYU_TAVILY_API_KEY"), false);
+	assert.equal(portableText.includes("Authorization"), false);
+	assert.equal(portableText.includes("api.tavily.com"), false);
 });
 
 // --- BYOK settings tab -------------------------------------------------------
@@ -208,7 +324,7 @@ test("contributes exactly one settings tab, declarative and node-scoped", () => 
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "tavily.settings");
-	assert.equal(typeof tab.title, "string");
+	assert.equal(isNativeText(tab.title), true);
 	assert.ok(tab.title.length > 0);
 	// The secret-header resolver runs in Core ON THE NODE, so it can only read a
 	// node-scoped preference. A `user` (client-local) scope would be invisible to
@@ -250,7 +366,7 @@ test("one key powers BOTH capabilities tavily provides", () => {
 
 test("the secret field carries a real label and a sourcing description", () => {
 	const field = manifest.contributes.settings_tabs[0].fields[0];
-	assert.equal(typeof field.label, "string");
+	assert.equal(isNativeText(field.label), true);
 	assert.ok(field.label.length > 0);
 	assert.ok(
 		field.description?.includes("https://"),

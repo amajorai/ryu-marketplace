@@ -128,7 +128,7 @@
     },
     {
       "kind": "skill",
-      "id": "aashaexo/humanize",
+      "id": "aashaexo/soundshuman/humanize",
       "name": "Humanize",
       "required": false
     }

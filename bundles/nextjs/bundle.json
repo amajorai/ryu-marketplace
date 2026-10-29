@@ -4,37 +4,31 @@
   "members": [
     {
       "kind": "skill",
-      "id": "vercel/next-cache-components",
-      "name": "Next Cache Components",
-      "required": true
-    },
-    {
-      "kind": "skill",
-      "id": "vercel/next-cache-components-optimizer",
+      "id": "vercel/next.js/next-cache-components-optimizer",
       "name": "Next Cache Components Optimizer",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "addyosmani/frontend-ui-engineering",
+      "id": "addyosmani/agent-skills/frontend-ui-engineering",
       "name": "Frontend UI Engineering",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/performance",
+      "id": "addyosmani/web-quality-skills/performance",
       "name": "Performance",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/seo",
+      "id": "addyosmani/web-quality-skills/seo",
       "name": "SEO",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "vercel-labs/react-best-practices",
+      "id": "vercel-labs/agent-skills/vercel-react-best-practices",
       "name": "React Best Practices",
       "required": true
     }

@@ -3,7 +3,7 @@
 //   node plugins-store/plugins/goal/seal.mjs          # write
 //   node plugins-store/plugins/goal/seal.mjs --check  # verify, non-zero on drift
 //
-// ToolConfig currently carries inline_deno bodies as manifest strings, so the
+// ToolConfig currently carries inline_js bodies as manifest strings, so the
 // readable `.js` file is the source form and the manifest is the wire form.
 // Keeping the source flat makes the sandboxed body auditable and lets the test
 // suite reject an edited-but-unsealed tool.
@@ -19,7 +19,7 @@ const normalizeLineEndings = (value) => value.replace(/\r\n?/g, "\n");
 
 export function inlineToolSources(manifest) {
 	return (manifest.runnables ?? [])
-		.filter((runnable) => runnable.config?.backend === "inline_deno")
+		.filter((runnable) => runnable.config?.backend === "inline_js")
 		.map((runnable) => ({
 			slug: runnable.config.slug,
 			file: `tools/${runnable.config.slug}.js`,

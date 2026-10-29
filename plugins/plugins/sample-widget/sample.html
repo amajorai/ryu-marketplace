@@ -166,8 +166,18 @@ $("dec").addEventListener("click", () => setCount(currentCount() - 1));
 // (here `render` itself). If the experimental runtime is off or provenance
 // fails, callTool rejects — we degrade gracefully rather than break the UI.
 $("refresh").addEventListener("click", async () => {
+	const refresh = $("refresh");
+	if (refresh.disabled) {
+		return;
+	}
+	if (typeof bridge?.callTool !== "function") {
+		$("meta").textContent =
+			"Refresh unavailable (needs widgetAccessible + live session).";
+		return;
+	}
+	refresh.disabled = true;
 	try {
-		const result = await bridge?.callTool?.("render", {
+		const result = await bridge.callTool("render", {
 			name: bridge?.toolInput?.name ?? "world",
 		});
 		// callTool returns the tool result; the host ALSO refreshes toolOutput,
@@ -179,6 +189,8 @@ $("refresh").addEventListener("click", async () => {
 	} catch {
 		$("meta").textContent =
 			"Refresh unavailable (needs widgetAccessible + live session).";
+	} finally {
+		refresh.disabled = false;
 	}
 });
 

@@ -1,4 +1,18 @@
-// Co-located, zero-dependency test for the `goal` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeFunction,
+	isNativeNumber,
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
+// Co-located test for the `goal` plugin.
 // Run with:  node --test plugins-store/plugins/goal/plugin.test.mjs
 //
 // `goal` has an inline tool and an inline turn hook. Core runs them in sandboxes
@@ -11,9 +25,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { runCase, runOnce } from "../../../tools/toolsmith/harness.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
+const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 const JUDGE_PREF_KEY = "goal-judge-model";
 const normalizeLineEndings = (value) => value.replace(/\r\n?/g, "\n");
 
@@ -111,7 +127,7 @@ function makeHost(sideModelReply, seed = {}) {
 		sideModelCalls,
 		sideModel: async (args) => {
 			sideModelCalls.push(args);
-			return typeof sideModelReply === "function"
+			return isNativeFunction(sideModelReply)
 				? sideModelReply(args)
 				: sideModelReply;
 		},
@@ -121,7 +137,7 @@ function makeHost(sideModelReply, seed = {}) {
 				return v === undefined ? null : v;
 			},
 			set: async (k, v) => {
-				store.set(String(k), typeof v === "string" ? v : JSON.stringify(v));
+				store.set(String(k), isNativeText(v) ? v : JSON.stringify(v));
 				return true;
 			},
 			delete: async (k) => {
@@ -136,11 +152,130 @@ function makeHost(sideModelReply, seed = {}) {
 
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
-	assert.equal(typeof m, "object");
+	assert.equal(isObjectRepresentation(m), true);
 	assert.equal(m.id, "@ryu/goal");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
+	assert.equal(plugin.version, m.version);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"].id, m.id);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].displayName, m.name);
+	assert.deepEqual(m.activation_events, ["*"]);
+});
+
+test("Toolsmith executes the hydrated goal clear hook against conversation-scoped KV", async () => {
+	const hook = parseManifest().contributes.turn_hooks[0];
+	await runCase({
+		kind: "turn_hook",
+		code: hook.code,
+		testCase: {
+			name: "clear only the current conversation goal",
+			ctx: {
+				conversation_id: "toolsmith-goal-conversation",
+				transcript: [{ role: "user", content: "/goal clear" }],
+			},
+			host: {
+				storage: {
+					"toolsmith-goal-conversation": JSON.stringify({
+						condition: "local fixture goal",
+						status: "active",
+						turns: 2,
+					}),
+				},
+			},
+			expect: { kind: "note", text: "Goal cleared." },
+			expectCalls: [
+				{
+					path: "host.storage.delete",
+					args: { key: "toolsmith-goal-conversation" },
+				},
+			],
+		},
+	});
+});
+
+test("Toolsmith evaluates an active goal and persists a retryable unfinished turn", async () => {
+	const hook = parseManifest().contributes.turn_hooks[0];
+	const context = {
+		conversation_id: "toolsmith-active-goal",
+		transcript: [
+			{ role: "user", content: "finish the local fixture" },
+			{ role: "assistant", content: "the first part is done" },
+		],
+	};
+	const testCase = {
+		ctx: context,
+		host: {
+			sideModel: ["MET: no - one assertion is still missing"],
+			storage: {
+				"toolsmith-active-goal": JSON.stringify({
+					condition: "complete all local assertions",
+					status: "active",
+					turns: 2,
+				}),
+			},
+		},
+	};
+	const first = await runOnce({ kind: "turn_hook", code: hook.code, testCase });
+	const second = await runOnce({
+		kind: "turn_hook",
+		code: hook.code,
+		testCase,
+	});
+
+	assert.deepEqual(
+		second,
+		first,
+		"the real goal hook is deterministic for this fixture"
+	);
+	assert.deepEqual(first.value, {
+		kind: "continue",
+		text: "Keep working toward the goal: complete all local assertions. Judge feedback: MET: no - one assertion is still missing",
+	});
+	assert.equal(first.calls[0].path, "host.storage.get");
+	assert.equal(first.calls[1].path, "host.sideModel");
+	assert.equal(first.calls[1].args.model_pref_key, JUDGE_PREF_KEY);
+	assert.match(first.calls[1].args.prompt, /complete all local assertions/);
+	assert.match(first.calls[1].args.prompt, /assistant: the first part is done/);
+	assert.deepEqual(first.calls[2], {
+		path: "host.storage.set",
+		args: {
+			key: "toolsmith-active-goal",
+			value: {
+				condition: "complete all local assertions",
+				status: "active",
+				turns: 3,
+				last_reason: "MET: no - one assertion is still missing",
+			},
+		},
+	});
+});
+
+test("Toolsmith ignores valid JSON that is not a stored goal object", async () => {
+	const hook = parseManifest().contributes.turn_hooks[0];
+	for (const raw of ["null", "[]", JSON.stringify({ status: "active" })]) {
+		await runCase({
+			kind: "turn_hook",
+			code: hook.code,
+			testCase: {
+				name: `ignore malformed goal value ${raw}`,
+				ctx: {
+					conversation_id: "toolsmith-malformed-goal",
+					transcript: [{ role: "user", content: "continue" }],
+				},
+				host: {
+					storage: { "toolsmith-malformed-goal": raw },
+				},
+				expect: { kind: "none" },
+				expectCalls: [
+					{
+						path: "host.storage.get",
+						args: { key: "toolsmith-malformed-goal" },
+					},
+				],
+			},
+		});
+	}
 });
 
 test("declared contributes fields are well-formed", () => {
@@ -164,10 +299,10 @@ test("declared contributes fields are well-formed", () => {
 	const tool = m.runnables.find((entry) => entry.config?.slug === "goal.set");
 	assert.ok(tool, "must expose goal.set as a runnable");
 	assert.equal(tool.kind, "tool");
-	assert.equal(tool.config.backend, "inline_deno");
+	assert.equal(tool.config.backend, "inline_js");
 	assert.equal(tool.config.input_schema.type, "object");
 	assert.deepEqual(tool.config.input_schema.required, ["goal"]);
-	assert.equal(typeof tool.config.code, "string");
+	assert.equal(isNativeText(tool.config.code), true);
 	assert.ok(tool.config.code.includes("caller?.conversation_id"));
 	assert.equal(
 		normalizeLineEndings(tool.config.code),
@@ -180,7 +315,7 @@ test("declared contributes fields are well-formed", () => {
 	// slash command that seeds the goal
 	const cmd = m.contributes.slash_commands[0];
 	assert.equal(cmd.command, "/goal");
-	assert.equal(typeof cmd.description, "string");
+	assert.equal(isNativeText(cmd.description), true);
 
 	// judge model picker writes the pref key the hook passes to sideModel
 	const field = m.contributes.settings_tabs[0].fields[0];
@@ -192,7 +327,7 @@ test("declared contributes fields are well-formed", () => {
 	assert.equal(hook.on, "post_assistant_turn");
 	assert.deepEqual(hook.match.commands, ["/goal"]);
 	assert.equal(hook.match.stateful, true);
-	assert.equal(typeof hook.code, "string");
+	assert.equal(isNativeText(hook.code), true);
 	assert.ok(hook.code.includes("host.sideModel"), "hook uses sideModel");
 	assert.ok(hook.code.includes("host.storage"), "hook uses storage");
 	assert.ok(
@@ -254,7 +389,7 @@ test("goal.set stores an active goal under the caller's conversation", async () 
 	assert.equal(stored.condition, "ship the release notes");
 	assert.equal(stored.status, "active");
 	assert.equal(stored.turns, 0);
-	assert.equal(typeof stored.started_at, "number");
+	assert.equal(isNativeNumber(stored.started_at), true);
 });
 
 test("goal.set ignores a model-supplied conversation id", async () => {
@@ -270,7 +405,7 @@ test("goal.set ignores a model-supplied conversation id", async () => {
 	assert.equal(stored.condition, "only this chat");
 	assert.equal(stored.status, "active");
 	assert.equal(stored.turns, 0);
-	assert.equal(typeof stored.started_at, "number");
+	assert.equal(isNativeNumber(stored.started_at), true);
 });
 
 test("goal.set rejects empty, oversized, and agent-less calls", async () => {
@@ -289,6 +424,77 @@ test("goal.set rejects empty, oversized, and agent-less calls", async () => {
 		() => run({ goal: "no scope" }, {}, host),
 		/goal.set: an active conversation is required/
 	);
+});
+
+test("goal.set rejects a non-string goal before writing storage", async () => {
+	const run = loadToolRunner(parseManifest());
+	const writes = [];
+	const host = {
+		storage: {
+			set: async (...args) => writes.push(args),
+		},
+	};
+	await assert.rejects(
+		() => run({ goal: 42 }, { conversation_id: "conv-agent" }, host),
+		/goal.set: 'goal' is required and must be a string/
+	);
+	assert.deepEqual(writes, []);
+});
+
+test("goal.set accepts the exact 4000-character boundary and writes serialized state", async () => {
+	const run = loadToolRunner(parseManifest());
+	const goal = "x".repeat(4000);
+	const writes = [];
+	const result = await run(
+		{ goal },
+		{ agent_id: "ryu", conversation_id: "conv-boundary" },
+		{
+			storage: {
+				set: async (...args) => writes.push(args),
+			},
+		}
+	);
+
+	assert.equal(result.goal, goal);
+	assert.equal(writes.length, 1);
+	assert.equal(writes[0][0], "conv-boundary");
+	assert.equal(isNativeText(writes[0][1]), true);
+	const stored = JSON.parse(writes[0][1]);
+	assert.deepEqual(Object.keys(stored).sort(), [
+		"condition",
+		"started_at",
+		"status",
+		"turns",
+	]);
+	assert.equal(stored.condition, goal);
+	assert.equal(stored.status, "active");
+	assert.equal(stored.turns, 0);
+	assert.equal(isNativeNumber(stored.started_at), true);
+});
+
+test("goal.set does not report success when conversation storage rejects the write", async () => {
+	const run = loadToolRunner(parseManifest());
+	let attemptedWrite;
+	const host = {
+		storage: {
+			set: async (key, value) => {
+				attemptedWrite = { key, value };
+				throw new Error("conversation storage unavailable");
+			},
+		},
+	};
+	await assert.rejects(
+		() =>
+			run(
+				{ goal: "persist this" },
+				{ agent_id: "ryu", conversation_id: "conv-storage-error" },
+				host
+			),
+		/conversation storage unavailable/
+	);
+	assert.equal(attemptedWrite.key, "conv-storage-error");
+	assert.equal(isNativeText(attemptedWrite.value), true);
+	assert.equal(JSON.parse(attemptedWrite.value).condition, "persist this");
 });
 
 // ── Hook behaviour ─────────────────────────────────────────────────────────────
@@ -353,7 +559,7 @@ test("'/goal <condition>' seeds active state and returns a continue", async () =
 	assert.equal(stored.condition, "ship the release notes");
 	assert.equal(stored.status, "active");
 	assert.equal(stored.turns, 0);
-	assert.equal(typeof stored.started_at, "number");
+	assert.equal(isNativeNumber(stored.started_at), true);
 	assert.equal(host.sideModelCalls.length, 0, "seeding does not judge");
 });
 
@@ -445,7 +651,7 @@ test("active goal, judge says met → note + achieved state persisted", async ()
 	assert.equal(stored.status, "achieved");
 	assert.equal(stored.turns, 3);
 	assert.equal(stored.last_reason, "MET: yes - all done");
-	assert.equal(typeof stored.achieved_at, "number");
+	assert.equal(isNativeNumber(stored.achieved_at), true);
 	assert.equal(host.sideModelCalls.length, 1);
 });
 
@@ -530,4 +736,92 @@ test("command detection uses the NEWEST user turn (reverse scan)", async () => {
 		"state survived (no stale clear)"
 	);
 	assert.equal(host.sideModelCalls.length, 1, "judge ran on the active goal");
+});
+
+test("a newest /goal command replaces an active goal before judging it", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost("MET: yes - should not be consulted", {
+		"conv-123": JSON.stringify({
+			condition: "old goal",
+			status: "active",
+			turns: 12,
+			last_reason: "old verdict",
+		}),
+	});
+	const ctx = makeCtx({
+		transcript: [
+			{ role: "user", content: "/goal stale command" },
+			{ role: "assistant", content: "started stale command" },
+			{ role: "user", content: "  /goal new goal  " },
+		],
+	});
+
+	assert.deepEqual(await run(ctx, host), {
+		kind: "continue",
+		text: "Begin working toward this goal: new goal",
+	});
+	const stored = JSON.parse(host.store.get("conv-123"));
+	assert.equal(stored.condition, "new goal");
+	assert.equal(stored.status, "active");
+	assert.equal(stored.turns, 0);
+	assert.equal("last_reason" in stored, false);
+	assert.equal(isNativeNumber(stored.started_at), true);
+	assert.equal(
+		host.sideModelCalls.length,
+		0,
+		"replacement runs before the judge"
+	);
+});
+
+test("a judge host failure leaves the active goal unchanged", async () => {
+	const run = loadHookRunner(parseManifest());
+	const original = JSON.stringify({
+		condition: "finish the task",
+		status: "active",
+		turns: 4,
+	});
+	const host = makeHost(
+		() => {
+			throw new Error("judge service unavailable");
+		},
+		{ "conv-123": original }
+	);
+
+	await assert.rejects(() => run(makeCtx(), host), /judge service unavailable/);
+	assert.equal(host.sideModelCalls.length, 1);
+	assert.equal(host.store.get("conv-123"), original);
+});
+
+test("a failed judge call retries from unchanged persisted state", async () => {
+	const run = loadHookRunner(parseManifest());
+	const original = JSON.stringify({
+		condition: "finish the task",
+		status: "active",
+		turns: 4,
+	});
+	let attempts = 0;
+	const host = makeHost(
+		() => {
+			attempts += 1;
+			if (attempts === 1) {
+				throw new Error("temporary judge outage");
+			}
+			return "MET: no - one check remains";
+		},
+		{ "conv-123": original }
+	);
+
+	await assert.rejects(() => run(makeCtx(), host), /temporary judge outage/);
+	assert.equal(host.store.get("conv-123"), original);
+	assert.deepEqual(await run(makeCtx(), host), {
+		kind: "continue",
+		text: "Keep working toward the goal: finish the task. Judge feedback: MET: no - one check remains",
+	});
+	assert.equal(attempts, 2, "the next hook dispatch performs one exact retry");
+	assert.deepEqual(JSON.parse(host.store.get("conv-123")), {
+		condition: "finish the task",
+		status: "active",
+		turns: 5,
+		last_reason: "MET: no - one check remains",
+	});
 });

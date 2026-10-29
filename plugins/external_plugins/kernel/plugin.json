@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.kernel",
+  "version": "0.1.0",
+  "description": "Kernel cloud browsers for Ryu's swappable browser.control layer, over Kernel's hosted OAuth MCP server. A Kernel browser session is the browser.* tab id: each navigate creates a new session on the URL, tabs lists live sessions, and screenshot, click_at, key, scroll, and drag drive it by viewport coordinates. Element-reference verbs stay unbound because Kernel controls the browser by pixels; the full Kernel tool set (Playwright execution, browser REPL, profiles, replays, files) remains available under kernel.*.",
+  "author": {
+    "name": "Kernel",
+    "url": "https://www.kernel.sh"
+  },
+  "homepage": "https://www.kernel.sh",
+  "repository": "https://github.com/kernel/kernel-mcp-server",
+  "license": "MIT",
+  "keywords": [
+    "browser",
+    "automation",
+    "kernel",
+    "remote",
+    "web"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/kernel",
+      "displayName": "Kernel",
+      "mcp": {
+        "kernel": {
+          "description": "Kernel remote OAuth MCP server. Native tools include manage_browsers, computer_action, execute_playwright_code, browser_repl, profiles, proxies, replays, browser files, and documentation search."
+        }
+      }
+    }
+  }
+}

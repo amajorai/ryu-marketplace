@@ -13,7 +13,7 @@
   "license": "Apache-2.0",
   "id": "@ryu/laya",
   "name": "Laya Local Decisions",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "stability": "experimental",
   "description": "Run Convai Innovations' Apache-2.0 Laya decision models locally through authenticated Ryu tools and as a selectable Shadow computer-use planner. Laya classifies text, email, tickets, and JSON into typed choice, score, and boolean answers; it does not generate text. The plugin provisions its Python sidecar and all three pinned Hugging Face checkpoints (about 2.37 GB / 2.21 GiB) inside the plugin runtime.",
   "tagline": "Fast local typed decisions for routing and guardrails",
@@ -114,7 +114,26 @@
       }
     }
   ],
-  "permission_grants": ["tool:http-egress:127.0.0.1"],
+  "provides": [
+    {
+      "capability": "decision.typed",
+      "version": "1.0.0",
+      "title": "Typed Decisions",
+      "selectable": true,
+      "default": true,
+      "layerKind": "decision-model",
+      "tools": {
+        "decision.predict": {
+          "tool": "laya.predict"
+        }
+      }
+    }
+  ],
+  "permission_grants": [
+    "sidecar:process",
+    "runtime:external",
+    "tool:http-egress:127.0.0.1"
+  ],
   "permission_levels": [
     {
       "id": "laya.view",
@@ -173,7 +192,7 @@
         "env": {
           "RYU_LAYA_HOST": "127.0.0.1",
           "RYU_LAYA_MODEL_ROOT": "${RYU_RUNTIME_DIR}/models/laya",
-          "HF_HOME": "${RYU_RUNTIME_DIR}/cache/hf",
+          "HF_HOME": "${RYU_MODELS_DIR}/hf",
           "HF_HUB_DISABLE_TELEMETRY": "1",
           "HF_HUB_OFFLINE": "1",
           "USE_TF": "0"

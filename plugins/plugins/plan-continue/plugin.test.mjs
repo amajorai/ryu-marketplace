@@ -1,4 +1,8 @@
-// Co-located, zero-dependency test for the `plan-continue` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Co-located test for the `plan-continue` plugin.
 // Run with:  node --test plugins-store/plugins/plan-continue/plugin.test.mjs
 //
 // The plugin's whole behaviour is the sandboxed hook body Core runs with an
@@ -80,7 +84,7 @@ function makeHost(seed = {}) {
 				return v === undefined ? null : v;
 			},
 			set: async (k, v) => {
-				store.set(String(k), typeof v === "string" ? v : JSON.stringify(v));
+				store.set(String(k), isNativeText(v) ? v : JSON.stringify(v));
 				return true;
 			},
 			delete: async (k) => {
@@ -96,7 +100,7 @@ function makeHost(seed = {}) {
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
 	assert.equal(m.id, "@ryu/plan-continue");
-	assert.ok(typeof m.name === "string" && m.name.length > 0);
+	assert.ok(isNativeText(m.name) && m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });
 
@@ -108,7 +112,7 @@ test("declared contributes fields are well-formed", () => {
 
 	const cmd = m.contributes.slash_commands[0];
 	assert.equal(cmd.command, "/plan-continue");
-	assert.equal(typeof cmd.description, "string");
+	assert.equal(isNativeText(cmd.description), true);
 
 	const hook = m.contributes.turn_hooks[0];
 	assert.equal(hook.on, "post_assistant_turn");
@@ -120,7 +124,7 @@ test("declared contributes fields are well-formed", () => {
 	// once used the off switch. The streak is counted from the transcript instead,
 	// so there is no counter in KV that needs waking to be cleared.
 	assert.equal(hook.match.stateful, undefined);
-	assert.equal(typeof hook.code, "string");
+	assert.equal(isNativeText(hook.code), true);
 	assert.ok(hook.code.includes(MARKER), "hook stamps the auto-continue marker");
 });
 
@@ -220,6 +224,19 @@ test("cap: stops after MAX_CONSECUTIVE auto-continuations", async () => {
 	assert.ok(directive.text.includes(String(MAX_CONSECUTIVE)));
 });
 
+test("cap permits one more continuation immediately below the limit", async () => {
+	const run = loadHookRunner(parseManifest());
+	const transcript = [{ role: "user", content: "plan the migration" }];
+	for (let i = 0; i < MAX_CONSECUTIVE - 1; i++) {
+		transcript.push({ role: "assistant", content: `step ${i}` });
+		transcript.push({ role: "user", content: auto() });
+	}
+	transcript.push({ role: "assistant", content: "one step remains" });
+
+	const directive = await run(makeCtx({ transcript }), makeHost());
+	assert.equal(directive.kind, "continue");
+});
+
 test("cap counts CONSECUTIVE runs: a real user message resets the streak", async () => {
 	const run = loadHookRunner(parseManifest());
 	const transcript = [];
@@ -309,10 +326,26 @@ test("'/plan-continue on' clears the opt-out", async () => {
 	assert.equal(host.store.has("conv-123"), false);
 });
 
+test("'/plan-continue on' clears malformed state and the next plan turn resumes", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost({ "conv-123": "" });
+	const enabled = await run(
+		makeCtx({ transcript: [{ role: "user", content: "/plan-continue on" }] }),
+		host
+	);
+	assert.equal(enabled.kind, "note");
+	assert.equal(host.store.has("conv-123"), false);
+
+	const resumed = await run(makeCtx(), host);
+	assert.equal(resumed.kind, "continue");
+});
+
 test("corrupt stored state fails quiet (no tokens spent on a bad read)", async () => {
 	const run = loadHookRunner(parseManifest());
-	const host = makeHost({ "conv-123": "not-json{" });
-	assert.deepEqual(await run(makeCtx(), host), { kind: "none" });
+	for (const storedValue of ["not-json{", ""]) {
+		const host = makeHost({ "conv-123": storedValue });
+		assert.deepEqual(await run(makeCtx(), host), { kind: "none" });
+	}
 });
 
 test("the off switch is checked before the flag, so it works mid-plan", async () => {
@@ -326,3 +359,33 @@ test("the off switch is checked before the flag, so it works mid-plan", async ()
 	assert.equal(directive.kind, "note");
 	assert.ok(host.store.has("conv-123"));
 });
+
+const storageFailureCases = [
+	{
+		operation: "get",
+		transcript: makeCtx().transcript,
+	},
+	{
+		operation: "set",
+		transcript: [{ role: "user", content: "/plan-continue off" }],
+	},
+	{
+		operation: "delete",
+		transcript: [{ role: "user", content: "/plan-continue on" }],
+	},
+];
+
+for (const { operation, transcript } of storageFailureCases) {
+	test(`storage host failures reject instead of silently continuing: storage.${operation}`, async () => {
+		const run = loadHookRunner(parseManifest());
+		const failure = new Error(`storage.${operation} failed`);
+		const host = makeHost();
+		host.storage[operation] = async () => {
+			throw failure;
+		};
+		await assert.rejects(
+			run(makeCtx({ transcript }), host),
+			(error) => error === failure
+		);
+	});
+}

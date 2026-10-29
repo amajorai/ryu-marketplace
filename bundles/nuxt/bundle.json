@@ -2,24 +2,39 @@
   "kind": "bundle",
   "sourceUrl": "https://www.ui-skills.com/skills/nuxt",
   "members": [
-    { "kind": "skill", "id": "antfu/nuxt", "name": "Nuxt", "required": true },
-    { "kind": "skill", "id": "antfu/nitro", "name": "Nitro", "required": true },
-    { "kind": "skill", "id": "antfu/vue", "name": "Vue", "required": true },
     {
       "kind": "skill",
-      "id": "antfu/pinia",
+      "id": "antfu/skills/nuxt",
+      "name": "Nuxt",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/skills/nitro",
+      "name": "Nitro",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/skills/vue",
+      "name": "Vue",
+      "required": true
+    },
+    {
+      "kind": "skill",
+      "id": "antfu/skills/pinia",
       "name": "Pinia",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "antfu/vue-router-best-practices",
+      "id": "antfu/skills/vue-router-best-practices",
       "name": "Vue Router Best Practices",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "antfu/vueuse-functions",
+      "id": "antfu/skills/vueuse-functions",
       "name": "Vueuse Functions",
       "required": false
     }

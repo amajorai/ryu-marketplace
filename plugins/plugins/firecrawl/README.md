@@ -1,4 +1,10 @@
 # Firecrawl
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="firecrawl" width="96" />
+  </picture>
+</p>
 
 Web search and page scraping for Ryu, powered by the
 [Firecrawl v2 API](https://firecrawl.dev). Ships as a fully declarative plugin — two
@@ -68,22 +74,22 @@ results. An agent allowlisted for `web.search` keeps working across the swap.
 Two mappings do the normalizing, both declared in `provides[].tools`:
 
 - **`args`** reconciles the canonical argument names with Firecrawl's. Firecrawl
-  happens to use the canonical names already for `query`, `limit` and `url`, so those
-  pass through untouched; the one real decision is `"format": ""`, an explicit **drop**
-  (see below).
-- **`response`** maps Firecrawl's records into the canonical `{title, url, snippet}` /
-  `{url, content}` shapes. Search reads `data.web`; scrape reads `data`, a single
-  object that the mapper wraps into a one-element result list, and reaches the page URL
-  through the dotted path `metadata.sourceURL`. Each item keeps Firecrawl's original
+  happens to use the canonical names already for `query` and `limit`, so those pass
+  through untouched.
+- **`response`** maps Firecrawl's search records into the canonical
+  `{title, url, snippet}` shape from `data.web`. Each item keeps Firecrawl's original
   record under `raw`, so nothing is lost by the mapping.
+- `web.extract` and `web.crawl` are served by adapters (`adapters/*.js`). The extract
+  adapter reads `data`, reaches the page URL through `metadata.sourceURL`, and keeps
+  the original record under `raw`.
 
-Two deliberate omissions in that mapping:
+Two deliberate decisions in that mapping:
 
-- **`format` is dropped, not forwarded.** The canonical enum is
-  `markdown | text | html`. Firecrawl v2's `formats` accepts `markdown` and `html` but
-  has **no `text` member**, so forwarding the canonical value verbatim would fail on
-  one of its three legal values. Dropping it leaves Firecrawl's own default
-  (`[{"type":"markdown"}]`), which is what the canonical default means anyway.
+- **`format` maps only where Firecrawl has an equivalent.** The canonical enum is
+  `markdown | text | html`. Firecrawl v2's `formats` accepts `markdown` and `html`, so
+  those are forwarded as `formats: ["markdown"]` / `formats: ["html"]` (and `html`
+  returns `data.html` as the content). Firecrawl has **no `text` member**, so `text`
+  is left unmapped and Firecrawl's own markdown default answers.
 - **`position` is not mapped onto `score`.** Canonical `score` is a *relevance* score,
   higher-is-better, which is what Exa and Tavily emit. Firecrawl's `position` is a
   1-based *rank*, lower-is-better. Mapping one onto the other would invert the ordering

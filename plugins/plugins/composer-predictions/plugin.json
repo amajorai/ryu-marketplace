@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.composer-predictions",
+  "version": "0.1.0",
+  "description": "Predicts your next message in your own voice after each reply, using a cheap side model. Press Tab to accept it into the composer; nothing is sent automatically.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/composer-predictions",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/composer-predictions",
+  "keywords": [
+    "chat",
+    "composer",
+    "predictions",
+    "autocomplete",
+    "next message"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/composer-predictions",
+      "displayName": "Composer Predictions"
+    }
+  }
+}

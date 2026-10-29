@@ -1,3 +1,4 @@
+import "./verification.css";
 import { createRoot } from "react-dom/client";
 
 type Status = "pass" | "expected";
@@ -91,7 +92,7 @@ function App() {
 			</section>
 
 			<section className="lower-grid">
-				<div className="panel flow-panel">
+				<div className="panel">
 					<div className="panel-label">Request flow</div>
 					<div className="flow-line">
 						{["OpenAI", "Ryu Core", "Browser", "ChatGPT Web"].map(
@@ -127,64 +128,6 @@ function App() {
 				<span>Experimental · text-only · Temporary Chat per completion</span>
 				<span>Ryu-native implementation</span>
 			</footer>
-
-			<style>{`
-        :root {
-          color: #f3efe7;
-          background: #171713;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-          font-synthesis: none;
-          text-rendering: optimizeLegibility;
-        }
-        * { box-sizing: border-box; }
-        body { margin: 0; min-width: 320px; }
-        .page-shell { margin: 0 auto; max-width: 1180px; padding: 42px 34px 28px; }
-        .panel-label, .card-topline, footer, .status-strip { letter-spacing: .12em; text-transform: uppercase; }
-        .verification-header { border-bottom: 1px solid #393a32; padding: 32px 0 28px; }
-        h1 { font-size: clamp(24px, 4vw, 40px); letter-spacing: -.045em; line-height: 1; margin: 0; max-width: 790px; }
-        .lede { color: #b8b6aa; font-size: 14px; line-height: 1.5; margin: 12px 0 0; max-width: 600px; }
-        .status-strip { border-bottom: 1px solid #393a32; display: grid; font-size: 10px; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 18px 0; }
-        .status-strip div { align-items: center; display: flex; flex-wrap: wrap; gap: 9px; }
-        .status-strip strong { color: #f3efe7; font-size: 11px; letter-spacing: .08em; }
-        .status-strip span:last-child { color: #8f8e84; letter-spacing: .02em; text-transform: none; }
-        .status-dot { border-radius: 999px; display: inline-block; flex: 0 0 auto; height: 9px; width: 9px; }
-        .status-dot.pass { background: #c7f36b; box-shadow: 0 0 0 4px #c7f36b1c; }
-        .status-dot.expected { background: #f1a56d; box-shadow: 0 0 0 4px #f1a56d1c; }
-        .evidence-grid { display: grid; gap: 12px; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 26px 0 14px; }
-        .evidence-card { background: #20201b; border: 1px solid #35362e; min-height: 190px; padding: 19px; }
-        .evidence-card:last-child { border-color: #6b4a35; }
-        .card-topline { align-items: center; color: #8f8e84; display: flex; font-size: 9px; font-weight: 700; gap: 9px; }
-        .evidence-card h2 { font-size: 20px; letter-spacing: -.03em; line-height: 1.1; margin: 33px 0 11px; }
-        .evidence-card p { color: #aaa89d; font-size: 13px; line-height: 1.45; margin: 0; }
-        .lower-grid { display: grid; gap: 12px; grid-template-columns: 1.35fr .65fr; padding-top: 12px; }
-        .panel { background: #1c1c18; border: 1px solid #35362e; padding: 22px; }
-        .panel-label { color: #a5a394; font-size: 10px; font-weight: 800; }
-        .flow-line { align-items: start; display: grid; gap: 8px; grid-template-columns: repeat(4, 1fr); margin: 33px 0 28px; }
-        .flow-step { border-top: 1px solid #55564a; padding-top: 11px; position: relative; }
-        .flow-step span { color: #c7f36b; display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; margin-bottom: 12px; }
-        .flow-step strong { font-size: 14px; letter-spacing: -.02em; }
-        .flow-step b { color: #6f7064; font-size: 18px; font-weight: 400; position: absolute; right: 10px; top: 34px; }
-        .contract-note { border-left: 2px solid #f1a56d; color: #aaa89d; font-size: 13px; line-height: 1.5; max-width: 650px; padding-left: 13px; }
-        .checks-panel ul { list-style: none; margin: 27px 0 0; padding: 0; }
-        .checks-panel li { align-items: center; border-bottom: 1px solid #30312a; color: #cfcdc2; display: flex; font-size: 13px; gap: 10px; padding: 11px 0; }
-        .checks-panel li:last-child { border-bottom: 0; }
-        .checkmark { color: #c7f36b; font-size: 16px; }
-        footer { border-top: 1px solid #393a32; color: #77776d; display: flex; font-size: 9px; justify-content: space-between; margin-top: 24px; padding-top: 17px; }
-        @media (max-width: 930px) {
-          .evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-          .evidence-card:last-child { grid-column: span 2; min-height: auto; }
-        }
-        @media (max-width: 680px) {
-          .page-shell { padding: 28px 18px 20px; }
-          .verification-header { padding: 28px 0 24px; }
-          .status-strip, .lower-grid { grid-template-columns: 1fr; }
-          .evidence-grid { grid-template-columns: 1fr; }
-          .evidence-card:last-child { grid-column: auto; }
-          .flow-line { gap: 14px; grid-template-columns: repeat(2, 1fr); }
-          .flow-step b { display: none; }
-          footer { gap: 10px; line-height: 1.4; }
-        }
-      `}</style>
 		</main>
 	);
 }

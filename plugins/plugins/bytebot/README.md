@@ -1,8 +1,15 @@
 # Bytebot Desktop
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="bytebot" width="96" />
+  </picture>
+</p>
 
 Computer control for Ryu, backed by [`bytebotd`](https://github.com/bytebot-ai/bytebot)
-— the local HTTP daemon inside a Bytebot desktop. Ships as a fully declarative plugin:
-six `http` tool-defs in `manifest.json`, no Core Rust.
+— the local HTTP daemon inside a Bytebot desktop. Ships as six `http` tool-defs in
+`manifest.json` plus one sandboxed capability adapter (`adapters/computer.scroll.js`),
+no Core Rust.
 
 ## Read this before you select it
 
@@ -105,19 +112,21 @@ disappears from the agent-visible surface**. That is the same narrowing `mem0` d
   which is what the canonical verb promises. `press_keys` is a *half* action with a
   required `press: "up" | "down"`; sending a chord through it would leave the modifiers
   physically held down on the desktop.
-* **`computer.scroll` drops `x`/`y`.** `arg_template` builds its object shape
-  unconditionally, and Bytebot's `coordinates` is `@IsOptional @ValidateNested` over a
-  `{x, y}` that are both `@IsNumber` — so a scroll with no coordinates (legal: the
-  canonical schema marks them optional) would send `coordinates: {}` and be rejected.
-  Dropping them scrolls at the pointer's current position, which is exactly the fallback
-  the canonical `x` description already warns callers about. `computer.click` *does*
-  template them, and safely: there `x`/`y` are **required**, so the placeholders always
-  resolve.
+* **`computer.scroll` is an adapter.** Bytebot's `coordinates` is
+  `@IsOptional @ValidateNested` over a `{x, y}` that are both `@IsNumber`. The
+  declarative `arg_template` builds its object shape unconditionally, so a scroll with
+  no coordinates (legal: the canonical schema marks them optional) would send
+  `coordinates: {}` and be rejected. The adapter forwards `coordinates: {x, y}` only when
+  both canonical `x` and `y` are present, and otherwise scrolls at the pointer's current
+  position, which is the fallback the canonical `x` description warns callers about.
+  `computer.click` templates them declaratively, and safely: there `x`/`y` are
+  **required**, so the placeholders always resolve. The adapter needs the
+  `tool:execute` grant.
 * **`amount` is clamped to 1..10.** Bytebot's `scrollCount` counts mouse-wheel **ticks**
   and the daemon sleeps 150ms between them. An `amount` a model intends as pixels (say
-  500) would be 500 ticks and 75 seconds of scrolling. `count` gets no clamp, because the
-  canonical maximum is already 3 and Bytebot declares no upper bound: a clamp that narrows
-  nothing is noise.
+  500) would be 500 ticks and 75 seconds of scrolling. The scroll adapter applies the
+  clamp. `count` gets no clamp, because the canonical maximum is already 3 and Bytebot
+  declares no upper bound: a clamp that narrows nothing is noise.
 
 ### What a capture returns
 

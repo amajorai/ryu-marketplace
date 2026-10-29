@@ -1,5 +1,12 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeFunction,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located unit test for the `security-guidance` plugin.
-// Runner: `node --test plugin.test.mjs` (zero external deps).
+// Runner: `node --test plugin.test.mjs` (no external runtime dependencies).
 //
 // This is an INLINE-HOOK plugin: the real behaviour lives in the JS string at
 // contributes.turn_hooks[].code, which Core injects into a sandbox where `ctx`
@@ -14,6 +21,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { runCase } from "../../../tools/toolsmith/harness.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -89,7 +97,7 @@ function makeHost(sideModelReturn) {
 		host: {
 			sideModel: async (arg) => {
 				calls.push(arg);
-				if (typeof sideModelReturn === "function") {
+				if (isNativeFunction(sideModelReturn)) {
 					return sideModelReturn(arg);
 				}
 				return sideModelReturn;
@@ -109,7 +117,7 @@ const asstMsg = (content) => ({ role: "assistant", content });
 test("manifest.json is valid JSON and has id/name/version", () => {
 	const m = parseManifest();
 	assert.equal(m.id, "@ryu/security-guidance");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });
@@ -151,7 +159,7 @@ test("turn_hook is a post_assistant_turn hook matching the flag + /security comm
 	assert.equal(hook.on, "post_assistant_turn");
 	assert.equal(hook.match.flag, FLAG);
 	assert.deepEqual(hook.match.commands, ["/security"]);
-	assert.equal(typeof hook.code, "string");
+	assert.equal(isNativeText(hook.code), true);
 	assert.ok(hook.code.length > 0);
 });
 
@@ -327,4 +335,57 @@ test("multiple distinct patterns each produce a bullet warning", async () => {
 	assert.match(out.text, /os\.system/);
 	assert.match(out.text, /pickle/);
 	assert.match(out.text, /TLS verification/);
+});
+
+test("Toolsmith rejects idle review without calling the model", async () => {
+	const hook = parseManifest().contributes.turn_hooks[0];
+	await runCase({
+		kind: "turn_hook",
+		code: hook.code,
+		testCase: {
+			name: "idle security guidance has no side effect",
+			ctx: {
+				flags: { [FLAG]: false },
+				transcript: [
+					userMsg("hello"),
+					asstMsg("const html = element.innerHTML = untrusted;"),
+				],
+			},
+			host: { sideModel: ["Looks secure."] },
+			expect: { kind: "none" },
+			expectCalls: [],
+		},
+	});
+});
+
+test("Toolsmith pins exact review request and XSS warning", async () => {
+	const hook = parseManifest().contributes.turn_hooks[0];
+	const code = "const html = element.innerHTML = untrusted;";
+	await runCase({
+		kind: "turn_hook",
+		code: hook.code,
+		testCase: {
+			name: "report a local XSS sink even when model says clean",
+			ctx: {
+				flags: { [FLAG]: true },
+				transcript: [userMsg("review this"), asstMsg(code)],
+			},
+			host: { sideModel: ["Looks secure."] },
+			expect: {
+				kind: "note",
+				text: "Security guidance:\n\n⚠️ Pattern warnings:\n• Assigning innerHTML/outerHTML with untrusted content is an XSS sink. Use textContent or a sanitizer.",
+			},
+			expectCalls: [
+				{
+					path: "host.sideModel",
+					args: {
+						system:
+							"You are a security code reviewer. Review only the code in the message for high-confidence security vulnerabilities: injection (SQL/command/code), XSS, SSRF, hardcoded secrets/credentials, IDOR/auth bypass, unsafe deserialization, path traversal, and weak crypto. Report only concrete, exploitable issues with a one-line fix each. If a line has an inline comment justifying why it is safe, treat it as excluded. If you find nothing exploitable, reply with exactly: Looks secure.",
+						prompt: `Review this code the assistant just produced:\n\n${code}`,
+						model_pref_key: "security-review-model",
+					},
+				},
+			],
+		},
+	});
 });

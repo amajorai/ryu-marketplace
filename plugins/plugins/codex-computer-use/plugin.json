@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.codex-computer-use",
+  "version": "0.1.14",
+  "description": "Drives OpenAI's signed Codex Computer Use engine, the one the ChatGPT macOS app installs, as an optional provider for Ryu's swappable computer.control layer. Actions go to one target app in the background, through its accessibility tree and screenshots, without moving your cursor. Launched from the pinned, unofficial `codex-computer-use-mcp@0.5.2` stdio bridge. Requires macOS, Node.js 22+, and the ChatGPT app with Computer Use set up; Ryu does not install ChatGPT. Unofficial: a ChatGPT update can break it.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/tmustier/codex-computer-use-mcp",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/codex-computer-use",
+  "license": "MIT",
+  "keywords": [
+    "automation",
+    "desktop",
+    "computer-use",
+    "codex",
+    "macos"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/codex-computer-use",
+      "displayName": "Codex Computer Use",
+      "mcp": {
+        "codex_cu": {
+          "description": "Unofficial stdio bridge to the Codex Computer Use engine that the ChatGPT macOS app installs. It exposes the ten official methods as typed tools (list_apps, get_app_state, click, perform_secondary_action, set_value, select_text, scroll, drag, press_key, type_text) plus computer_use_status. It only runs OpenAI-signed binaries (Team ID 2DC432GLL2) and runs no model of its own. Requires macOS, Node.js 22+, and the ChatGPT app with Computer Use set up; Screen Recording and Accessibility permissions still apply."
+        }
+      }
+    }
+  }
+}

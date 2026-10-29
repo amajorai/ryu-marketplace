@@ -4,31 +4,31 @@
   "members": [
     {
       "kind": "skill",
-      "id": "accesslint/contrast-checker",
+      "id": "accesslint/skills/contrast-checker",
       "name": "Contrast Checker",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "accesslint/use-of-color",
+      "id": "accesslint/skills/use-of-color",
       "name": "Use Of Color",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "firebenders/sync-figma-token",
+      "id": "firebenders/sync-figma-token-skill/sync-figma-token",
       "name": "Sync Figma Token",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-colors",
+      "id": "jakubkrehel/skills/better-colors",
       "name": "Better Colors",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-accessibility",
+      "id": "jakubkrehel/skills/better-accessibility",
       "name": "Better Accessibility",
       "required": false
     }

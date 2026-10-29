@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.is-agentic",
+  "version": "0.1.0",
+  "description": "Read the latest completed Is Agentic (https://is-agentic.com) agent-readiness report for a public website: a 0-100 score split into essential, recommended and bonus checks, plus every failing check with its evidence and recommended fix. Read-only, keyless, and never starts a scan.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/is-agentic",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/is-agentic",
+  "keywords": [
+    "agent readiness",
+    "agentic web",
+    "audit",
+    "Is Agentic"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/is-agentic",
+      "displayName": "Is Agentic"
+    }
+  }
+}

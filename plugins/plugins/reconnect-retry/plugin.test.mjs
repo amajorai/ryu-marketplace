@@ -8,9 +8,18 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
+const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 
 test("declares one bounded host-rendered reconnect feature", () => {
 	assert.equal(manifest.id, "@ryu/reconnect-retry");
+	assert.equal(manifest.name, "Reconnect Retry");
+	assert.equal(plugin.version, manifest.version);
+	assert.deepEqual(manifest.activation_events, ["*"]);
+	assert.deepEqual(manifest.permission_grants ?? [], []);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 	assert.deepEqual(manifest.runnables, []);
 	assert.equal(manifest.surfaces?.core?.support, "full");
 	assert.equal(manifest.surfaces?.desktop?.support, "full");

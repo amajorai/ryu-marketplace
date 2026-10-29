@@ -1,6 +1,6 @@
 // Co-located contract test for the `firewall` plugin.
 //
-// Runner: `node --test` (zero dependencies).
+// Runner: `bun test`; uses the production manifest SDK.
 //   $ node --test plugins-store/plugins/firewall/plugin.test.mjs
 //
 // firewall is a DECLARATIVE policy plugin: it has no turn_hooks, no
@@ -26,6 +26,48 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { z } from "zod";
+import {
+	EnginesReqSchema,
+	PluginManifestSchema,
+	RunnableMetaSchema,
+} from "../../../packages/sdk/src/manifest.ts";
+
+// Core policy entries have their own native kind/config contract; the SDK's
+// authoring runnable enum intentionally does not include `policy`.
+const identitySchema = z.object({
+	id: PluginManifestSchema.shape.id,
+	name: PluginManifestSchema.shape.name,
+	version: PluginManifestSchema.shape.version,
+});
+const firewallDefinitionSchema = z.object({
+	service: z.string(),
+	note: z.string().optional(),
+});
+const firewallPolicySchema = z.object({
+	policy_type: z.string(),
+	definition: firewallDefinitionSchema,
+});
+const firewallContributionSchema = z.object({
+	id: z.string(),
+	title: z.string(),
+});
+const firewallContributionsSchema = z.object({
+	policies: z.array(firewallContributionSchema),
+});
+const firewallManifestSchema = identitySchema.extend({
+	engines: EnginesReqSchema,
+	runnables: z.array(
+		z.object({
+			id: RunnableMetaSchema.shape.id,
+			name: RunnableMetaSchema.shape.name,
+			kind: z.literal("policy"),
+			config: firewallPolicySchema,
+		})
+	),
+	contributes: firewallContributionsSchema,
+	permission_grants: z.array(z.string()),
+});
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -33,18 +75,20 @@ const RAW = readFileSync(MANIFEST_PATH, "utf8");
 
 test("manifest.json is valid JSON and parses", () => {
 	const manifest = JSON.parse(RAW);
-	assert.equal(typeof manifest, "object");
+	assert.doesNotThrow(() => firewallManifestSchema.parse(manifest));
 	assert.notEqual(manifest, null);
 });
 
 const manifest = JSON.parse(RAW);
 
 test("has required identity fields: id / name / version", () => {
-	assert.equal(typeof manifest.id, "string");
+	assert.doesNotThrow(() => identitySchema.shape.id.parse(manifest.id));
 	assert.ok(manifest.id.length > 0, "id must be non-empty");
-	assert.equal(typeof manifest.name, "string");
+	assert.doesNotThrow(() => identitySchema.shape.name.parse(manifest.name));
 	assert.ok(manifest.name.length > 0, "name must be non-empty");
-	assert.equal(typeof manifest.version, "string");
+	assert.doesNotThrow(() =>
+		identitySchema.shape.version.parse(manifest.version)
+	);
 	// semver-ish (major.minor.patch)
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/, "version must be semver");
 });
@@ -54,8 +98,10 @@ test('id is exactly "firewall" (fixture registration key)', () => {
 });
 
 test("declares a Ryu engine constraint", () => {
-	assert.equal(typeof manifest.engines, "object");
-	assert.equal(typeof manifest.engines.ryu, "string");
+	assert.doesNotThrow(() => EnginesReqSchema.parse(manifest.engines));
+	assert.doesNotThrow(() =>
+		EnginesReqSchema.shape.ryu.parse(manifest.engines.ryu)
+	);
 	assert.ok(manifest.engines.ryu.length > 0);
 });
 
@@ -64,7 +110,7 @@ test("has exactly one runnable and it is the firewall policy", () => {
 	assert.equal(manifest.runnables.length, 1);
 
 	const r = manifest.runnables[0];
-	assert.equal(typeof r.id, "string");
+	assert.doesNotThrow(() => RunnableMetaSchema.shape.id.parse(r.id));
 	assert.ok(r.id.length > 0, "runnable id must be non-empty");
 	assert.equal(r.kind, "policy", 'runnable kind must be "policy"');
 });
@@ -72,18 +118,22 @@ test("has exactly one runnable and it is the firewall policy", () => {
 test("policy runnable config satisfies Core validate_runnable rules", () => {
 	const r = manifest.runnables[0];
 	// Core: RunnableKind::Policy requires a `config` object.
-	assert.equal(typeof r.config, "object");
+	assert.doesNotThrow(() => firewallPolicySchema.parse(r.config));
 	assert.notEqual(r.config, null);
 
 	// Core: policy_type must be present and NON-EMPTY.
-	assert.equal(typeof r.config.policy_type, "string");
+	assert.doesNotThrow(() =>
+		firewallPolicySchema.shape.policy_type.parse(r.config.policy_type)
+	);
 	assert.ok(
 		r.config.policy_type.trim().length > 0,
 		"'policy_type' must not be empty"
 	);
 
 	// Core: a `definition` object accompanies the policy_type.
-	assert.equal(typeof r.config.definition, "object");
+	assert.doesNotThrow(() =>
+		firewallDefinitionSchema.parse(r.config.definition)
+	);
 	assert.notEqual(r.config.definition, null);
 });
 
@@ -95,7 +145,9 @@ test("policy dispatches to the gateway firewall (apply_policy key)", () => {
 });
 
 test("contributes.policies references the same runnable id", () => {
-	assert.equal(typeof manifest.contributes, "object");
+	assert.doesNotThrow(() =>
+		firewallContributionsSchema.parse(manifest.contributes)
+	);
 	assert.ok(Array.isArray(manifest.contributes.policies));
 	assert.equal(manifest.contributes.policies.length, 1);
 
@@ -106,7 +158,9 @@ test("contributes.policies references the same runnable id", () => {
 		runnableId,
 		"contributed policy id must match the policy runnable id"
 	);
-	assert.equal(typeof contributed.title, "string");
+	assert.doesNotThrow(() =>
+		firewallContributionSchema.shape.title.parse(contributed.title)
+	);
 	assert.ok(contributed.title.length > 0);
 });
 
@@ -155,5 +209,34 @@ test("manifest is the only copy and Core compiles it in (registration seam)", ()
 			'include_str!("../../../../plugins-store/plugins/firewall/manifest.json")'
 		),
 		"Core does not compile this manifest in from its package home — it would not exist at runtime"
+	);
+});
+
+test("Core runtime proof covers the live Gateway config transaction", () => {
+	const runtimeTestPath = join(
+		HERE,
+		"../../../apps/core/src/server/gateway_policy_patch_tests/firewall_policy_runtime_test.rs"
+	);
+	assert.ok(
+		existsSync(runtimeTestPath),
+		"Core must keep a loopback test for the shipped Firewall policy"
+	);
+	const runtimeTest = readFileSync(runtimeTestPath, "utf8");
+	assert.ok(runtimeTest.includes("plugins/firewall/manifest.json"));
+	assert.ok(runtimeTest.includes("fetch_config"));
+	assert.ok(runtimeTest.includes("build_firewall_patch"));
+	assert.ok(runtimeTest.includes("push_config"));
+	assert.ok(runtimeTest.includes("fixture GET unavailable"));
+	assert.ok(runtimeTest.includes("fixture PUT unavailable"));
+
+	const serverSource = readFileSync(
+		join(HERE, "../../../apps/core/src/server/mod.rs"),
+		"utf8"
+	);
+	assert.ok(
+		/#\[path\s*=\s*"firewall_policy_runtime_test\.rs"\]\s*mod\s+firewall_policy_runtime\s*;/.test(
+			serverSource
+		),
+		"Core's server test module must register the package's runtime proof"
 	);
 });

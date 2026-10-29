@@ -139,6 +139,21 @@
           "type": "boolean",
           "description": "Hide this listing from the store without removing it from the index. Absent means visible, so an older client that predates the field simply shows everything — the safe direction for a flag whose job is to remove things. This is the LIVE control point: flipping it here hides the listing for every already-shipped client on its next catalog fetch, with no release."
         },
+        "deprecated": {
+          "description": "Mark this listing deprecated without hiding it: it stays listed and installable, the store badges it, and its detail page shows the message and replacement. Same shapes as the plugin manifest's `deprecated`: `true`, a message string, or `{ message, replacement }`. Absent or `false` means current. Like `hidden` this is a live control point — re-publishing the index updates every shipped client on its next fetch.",
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "string" },
+            {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "replacement": { "type": "string" }
+              },
+              "additionalProperties": true
+            }
+          ]
+        },
         "stability": {
           "type": "string",
           "description": "How finished this listing is: `alpha`, `beta`, `rc`, … Absent or `stable` means finished and renders no badge. Free-form on purpose — an unrecognised tier renders verbatim rather than being dropped, so a new tier needs no client release."
@@ -162,6 +177,11 @@
         "privacyPolicyUrl": { "type": "string", "format": "uri" },
         "termsOfServiceUrl": { "type": "string", "format": "uri" },
         "license": { "type": "string" },
+        "allowRemix": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether others may remix this listing (copy it into an editable item of their own and publish it with a remixedFrom credit). Absent means allowed; only `false` opts out."
+        },
         "skills": { "type": "array", "items": {} },
         "setup": {
           "oneOf": [

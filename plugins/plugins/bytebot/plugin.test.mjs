@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `bytebot` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `bytebot` is a declarative HTTP-tool plugin and the SECOND provider of the
 // `computer.control` capability — the one that makes that layer swappable at all.
@@ -25,21 +29,17 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/bytebot");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
 });
 
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -97,7 +97,11 @@ test("no tool carries credentials — the daemon has no auth to send", () => {
 });
 
 test("permission_grants gate egress to exactly the host the tools call", () => {
-	assert.deepEqual(manifest.permission_grants, ["tool:http-egress:127.0.0.1"]);
+	// Loopback egress plus `tool:execute`, which the computer.scroll adapter needs.
+	assert.deepEqual(manifest.permission_grants, [
+		"tool:http-egress:127.0.0.1",
+		"tool:execute",
+	]);
 	const hosts = new Set(
 		manifest.runnables.map((r) => new URL(r.config.url).hostname)
 	);
@@ -318,34 +322,77 @@ test("click templates the coordinate pair the daemon nests", () => {
 	assert.equal(binding.args.button, undefined);
 });
 
-test("scroll DROPS x/y instead of templating them", () => {
+const scrollCode = readFileSync(
+	join(
+		here,
+		byCapability.get("computer.control").tools["computer.scroll"].adapter
+			.code_file
+	),
+	"utf8"
+);
+
+async function runScroll(input, response = { status: 201, body: "" }) {
+	const { runOnce } = await import("../../../tools/toolsmith/harness.mjs");
+	return runOnce({
+		kind: "adapter",
+		code: scrollCode,
+		adapterTools: [],
+		testCase: { input, provider: { call: [response] } },
+	});
+}
+
+test("scroll is an adapter, so optional x/y never become `coordinates: {}`", () => {
 	const binding = byCapability.get("computer.control").tools["computer.scroll"];
-	// This is the subtle one. `arg_template` builds its object shape unconditionally,
-	// and the daemon's `coordinates` is @IsOptional @ValidateNested over {x, y} both
-	// @IsNumber — so a scroll with NO coordinates (legal: optional in the canonical
-	// schema) would send `coordinates: {}` and be rejected. Dropping them scrolls at
-	// the pointer's current position, the fallback the canonical `x` description
-	// already warns about. Templating here would 4xx on schema-legal input.
+	// The daemon's `coordinates` is @IsOptional @ValidateNested over {x, y} both
+	// @IsNumber. The declarative template builds its shape unconditionally, so a
+	// scroll with NO coordinates (legal canonically) would send `coordinates: {}`
+	// and be rejected; dropping x/y instead lost a requested point.
+	assert.equal(binding.tool, "bytebot.scroll");
+	assert.equal(binding.adapter.code_file, "adapters/computer.scroll.js");
+	assert.equal(binding.args, undefined);
 	assert.equal(binding.arg_template, undefined);
-	assert.equal(binding.args.x, "");
-	assert.equal(binding.args.y, "");
-	assert.equal(binding.args.amount, "scrollCount");
+	assert.equal(binding.arg_clamp, undefined);
+	// Core refuses an adapter-mapped verb whose provider lacks this grant.
+	assert.ok(manifest.permission_grants.includes("tool:execute"));
+	const props = bySlug.get("bytebot.scroll").config.input_schema.properties;
+	assert.deepEqual(props.coordinates.required, ["x", "y"]);
 });
 
-test("scroll clamps amount, and click does not clamp count", () => {
-	const tools = byCapability.get("computer.control").tools;
+test("scroll forwards coordinates only when both x and y are given", async () => {
+	for (const [input, expected] of [
+		[
+			{ direction: "down", x: 41, y: 73 },
+			{ direction: "down", coordinates: { x: 41, y: 73 } },
+		],
+		[{ direction: "up" }, { direction: "up" }],
+		[{ direction: "left", x: 5 }, { direction: "left" }],
+		[{ direction: "right", y: 9 }, { direction: "right" }],
+	]) {
+		const { value, calls } = await runScroll(input);
+		assert.deepEqual(calls, [{ path: "callTool", args: expected }]);
+		assert.deepEqual(value, { raw: { status: 201, body: "" } });
+	}
+});
+
+test("scroll clamps amount to 1..10 wheel ticks, and click does not clamp count", async () => {
 	// `scrollCount` counts WHEEL TICKS with a 150ms sleep between them. An `amount` a
 	// model intends as pixels (500) would be 500 ticks — 75 seconds of scrolling.
-	assert.deepEqual(tools["computer.scroll"].arg_clamp, {
-		amount: { min: 1, max: 10 },
-	});
-	// The clamp must actually NARROW the canonical bound to be worth declaring; the
-	// tool's own schema is where that ceiling is restated.
+	for (const [amount, ticks] of [
+		[500, 10],
+		[0, 1],
+		[4, 4],
+		[undefined, undefined],
+	]) {
+		const { calls } = await runScroll({ direction: "down", amount });
+		assert.equal(calls[0].args.scrollCount, ticks, String(amount));
+	}
+	// The tool's own schema restates the ceiling.
 	const scrollProps =
 		bySlug.get("bytebot.scroll").config.input_schema.properties;
 	assert.equal(scrollProps.scrollCount.maximum, 10);
 	// `count` maxes at 3 canonically and the daemon declares no upper bound, so a
 	// clamp there would narrow nothing.
+	const tools = byCapability.get("computer.control").tools;
 	assert.equal(tools["computer.click"].arg_clamp, undefined);
 });
 

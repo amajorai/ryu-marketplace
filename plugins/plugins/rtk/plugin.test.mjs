@@ -1,5 +1,5 @@
 // Co-located contract test for the `rtk` plugin (plugins-store/plugins/rtk).
-// Zero-dependency, runnable with:  node --test plugins-store/plugins/rtk/plugin.test.mjs
+// Runner: bun test plugins-store/plugins/rtk/plugin.test.mjs; uses the production manifest SDK.
 //
 // rtk is a COMMAND-TOOL plugin: it exposes a single `command` backend runnable
 // (`rtk.run`) that shells out to the locally-installed `rtk` binary. It has no
@@ -10,10 +10,92 @@
 // registration seam that must never drift).
 
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import {
+	existsSync,
+	mkdtempSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { z } from "zod";
+import {
+	EnginesReqSchema,
+	PluginManifestSchema,
+	RunnableMetaSchema,
+} from "../../../packages/sdk/src/manifest.ts";
+
+const identitySchema = z.object({
+	id: PluginManifestSchema.shape.id,
+	name: PluginManifestSchema.shape.name,
+	version: PluginManifestSchema.shape.version,
+});
+const rtkSettingFieldSchema = z.object({
+	type: z.enum(["toggle", "textarea", "text", "select"]),
+	pref_key: z.string(),
+	label: z.string(),
+});
+const rtkSettingsTabSchema = z.object({
+	id: z.string(),
+	title: z.string(),
+	fields: z.array(rtkSettingFieldSchema),
+});
+const rtkCommandSchema = z.object({
+	slug: z.string(),
+	backend: z.literal("command"),
+	bin: z.string(),
+	timeout_secs: z.number(),
+	description: z.string(),
+	input_schema: z.object({
+		type: z.literal("object"),
+		required: z.array(z.string()),
+		properties: z.object({
+			command: z.object({
+				type: z.literal("string"),
+				description: z.string().optional(),
+			}),
+			mode: z.object({
+				type: z.literal("string"),
+				enum: z.array(z.string()),
+				description: z.string().optional(),
+			}),
+		}),
+	}),
+	args: z.array(
+		z.union([
+			z.object({
+				from: z.string(),
+				map: z.record(z.string(), z.array(z.string())),
+				default: z.string(),
+			}),
+			z.object({
+				from: z.string(),
+				split: z.literal("shell"),
+				required: z.boolean(),
+			}),
+		])
+	),
+});
+const rtkManifestSchema = identitySchema.extend({
+	description: z.string(),
+	tagline: z.string(),
+	category: z.string(),
+	engines: EnginesReqSchema,
+	runnables: z.array(
+		z.object({
+			id: RunnableMetaSchema.shape.id,
+			name: RunnableMetaSchema.shape.name,
+			kind: z.literal("tool"),
+			config: rtkCommandSchema,
+		})
+	),
+	permission_grants: PluginManifestSchema.shape.permission_grants,
+	contributes: z.object({ settings_tabs: z.array(rtkSettingsTabSchema) }),
+});
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
@@ -21,7 +103,7 @@ const rawManifest = readFileSync(manifestPath, "utf8");
 
 test("manifest.json is valid JSON and parses", () => {
 	const parsed = JSON.parse(rawManifest);
-	assert.equal(typeof parsed, "object");
+	assert.doesNotThrow(() => rtkManifestSchema.parse(parsed));
 	assert.notEqual(parsed, null);
 });
 
@@ -29,7 +111,7 @@ const manifest = JSON.parse(rawManifest);
 
 test("has required top-level id/name/version", () => {
 	assert.equal(manifest.id, "@ryu/rtk");
-	assert.equal(typeof manifest.name, "string");
+	assert.doesNotThrow(() => identitySchema.shape.name.parse(manifest.name));
 	assert.ok(manifest.name.length > 0);
 	// version is present and semver-shaped
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
@@ -37,11 +119,16 @@ test("has required top-level id/name/version", () => {
 
 test("has descriptive metadata fields", () => {
 	for (const field of ["description", "tagline", "category"]) {
-		assert.equal(typeof manifest[field], "string", `${field} is a string`);
+		assert.doesNotThrow(
+			() => rtkManifestSchema.shape[field].parse(manifest[field]),
+			`${field} is a string`
+		);
 		assert.ok(manifest[field].length > 0, `${field} is non-empty`);
 	}
-	assert.equal(typeof manifest.engines, "object");
-	assert.equal(typeof manifest.engines.ryu, "string");
+	assert.doesNotThrow(() => EnginesReqSchema.parse(manifest.engines));
+	assert.doesNotThrow(() =>
+		EnginesReqSchema.shape.ryu.parse(manifest.engines.ryu)
+	);
 });
 
 test("declares exactly one command-tool runnable", () => {
@@ -50,7 +137,7 @@ test("declares exactly one command-tool runnable", () => {
 	const [run] = manifest.runnables;
 	assert.equal(run.id, "tool-rtk-run");
 	assert.equal(run.kind, "tool");
-	assert.equal(typeof run.config, "object");
+	assert.doesNotThrow(() => rtkCommandSchema.parse(run.config));
 });
 
 test("command tool config is well-formed (command backend + rtk bin + timeout)", () => {
@@ -59,10 +146,14 @@ test("command tool config is well-formed (command backend + rtk bin + timeout)",
 	assert.equal(cfg.backend, "command");
 	assert.equal(cfg.bin, "rtk");
 	// timeout is present, numeric, and positive
-	assert.equal(typeof cfg.timeout_secs, "number");
+	assert.doesNotThrow(() =>
+		rtkCommandSchema.shape.timeout_secs.parse(cfg.timeout_secs)
+	);
 	assert.ok(cfg.timeout_secs > 0);
 	assert.equal(cfg.timeout_secs, 120);
-	assert.equal(typeof cfg.description, "string");
+	assert.doesNotThrow(() =>
+		rtkCommandSchema.shape.description.parse(cfg.description)
+	);
 	assert.ok(cfg.description.length > 0);
 });
 
@@ -128,12 +219,69 @@ test("simulate arg resolution: mode+command produce the expected rtk argv", () =
 	assert.deepEqual(resolve("err", "ls -la"), ["err", "ls", "-la"]);
 });
 
+test("local executable fixture receives exact mapped RTK argv without running nested commands", () => {
+	const directory = mkdtempSync(join(tmpdir(), "ryu-rtk-command-fixture-"));
+	try {
+		const fixture = join(directory, "rtk-fixture.cjs");
+		writeFileSync(
+			fixture,
+			"process.stdout.write(JSON.stringify(process.argv.slice(2)));\n"
+		);
+		const config = manifest.runnables[0].config;
+		const modeArg = config.args.find((arg) => arg.from === "mode");
+		const commandArg = config.args.find((arg) => arg.from === "command");
+		assert.equal(commandArg.split, "shell");
+		assert.equal(commandArg.required, true);
+		const cases = [
+			{
+				mode: undefined,
+				command: "git status --short",
+				expected: ["git", "status", "--short"],
+			},
+			{
+				mode: "proxy",
+				command: "rg --version",
+				expected: ["proxy", "rg", "--version"],
+			},
+			{
+				mode: "test",
+				command: "cargo test -p fixture",
+				expected: ["test", "cargo", "test", "-p", "fixture"],
+			},
+			{
+				mode: "err",
+				command: "git status",
+				expected: ["err", "git", "status"],
+			},
+		];
+
+		for (const item of cases) {
+			const flags = modeArg.map[item.mode ?? modeArg.default];
+			const commandTokens = item.command.trim().split(/\s+/);
+			const argv = [...flags, ...commandTokens];
+			assert.deepEqual(argv, item.expected);
+			const result = spawnSync(process.execPath, [fixture, ...argv], {
+				encoding: "utf8",
+				env: { PATH: process.env.PATH ?? "" },
+			});
+			assert.equal(result.status, 0, result.stderr);
+			assert.deepEqual(JSON.parse(result.stdout), item.expected);
+		}
+	} finally {
+		rmSync(directory, { force: true, recursive: true });
+	}
+});
+
 test("permission_grants scope the command tool to the rtk binary", () => {
 	assert.ok(Array.isArray(manifest.permission_grants));
 	assert.ok(manifest.permission_grants.includes("tool:command:rtk"));
 	// No mcp/http grants — this plugin is command-only.
 	for (const grant of manifest.permission_grants) {
-		assert.equal(typeof grant, "string");
+		assert.doesNotThrow(() =>
+			PluginManifestSchema.shape.permission_grants
+				.removeDefault()
+				.element.parse(grant)
+		);
 	}
 });
 
@@ -155,7 +303,7 @@ test("contributes.settings_tabs is well-formed (RTK tab + pref-keyed fields)", (
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "rtk.settings");
-	assert.equal(typeof tab.title, "string");
+	assert.doesNotThrow(() => rtkSettingsTabSchema.shape.title.parse(tab.title));
 	assert.ok(Array.isArray(tab.fields));
 	assert.ok(tab.fields.length >= 1);
 
@@ -166,9 +314,13 @@ test("contributes.settings_tabs is well-formed (RTK tab + pref-keyed fields)", (
 			allowedTypes.has(field.type),
 			`field type "${field.type}" is known`
 		);
-		assert.equal(typeof field.pref_key, "string");
+		assert.doesNotThrow(() =>
+			rtkSettingFieldSchema.shape.pref_key.parse(field.pref_key)
+		);
 		assert.ok(field.pref_key.length > 0);
-		assert.equal(typeof field.label, "string");
+		assert.doesNotThrow(() =>
+			rtkSettingFieldSchema.shape.label.parse(field.label)
+		);
 		assert.ok(field.label.length > 0);
 		// pref keys must be unique within the tab
 		assert.ok(

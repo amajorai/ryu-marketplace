@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/tooling",
   "name": "Tooling",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,25 +19,25 @@
     "bundle:ui-skills:tooling"
   ],
   "includes": [
-    "skill:aashaexo/humanize",
-    "skill:aboudjem/humanizer",
-    "skill:aminblg/simple-english",
-    "skill:antfu/antfu",
-    "skill:antfu/pnpm",
-    "skill:antfu/tsdown",
-    "skill:antfu/turborepo",
-    "skill:antfu/unocss",
-    "skill:antfu/vite",
-    "skill:antfu/vitepress",
-    "skill:antfu/vitest",
-    "skill:antfu/vueuse-functions",
-    "skill:cursor/unslop",
-    "skill:elithrar/anti-slop"
+    "skill:aashaexo/soundshuman/humanize",
+    "skill:aboudjem/humanizer-skill/humanizer",
+    "skill:aminblg/simpleenglish/simple-english",
+    "skill:antfu/skills/antfu",
+    "skill:antfu/skills/pnpm",
+    "skill:antfu/skills/tsdown",
+    "skill:antfu/skills/turborepo",
+    "skill:antfu/skills/unocss",
+    "skill:antfu/skills/vite",
+    "skill:antfu/skills/vitepress",
+    "skill:antfu/skills/vitest",
+    "skill:antfu/skills/vueuse-functions",
+    "skill:cursor/plugins/unslop",
+    "skill:elithrar/dotfiles/anti-slop"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/tooling",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/tooling",
     "ref": "main"
   },
   "security": {

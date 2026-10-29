@@ -158,6 +158,230 @@
         "tasks": [{ "task": "read the file", "tools": ["read_file"] }]
       },
       "expectError": "inline delegates are prompt-only"
+    },
+    {
+      "name": "trims delegate identity and accepts the lower cap bounds",
+      "input": {
+        "tasks": [
+          {
+            "id": " docs ",
+            "task": "  inspect the package  ",
+            "agent_id": " reviewer ",
+            "preset": "research"
+          }
+        ],
+        "max_concurrent": 1,
+        "wall_time_secs": 5,
+        "max_tokens": 1
+      },
+      "host": {
+        "runFanout": [
+          {
+            "ok": true,
+            "results": [{ "id": "docs", "output": "done", "error": null }]
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "host.runFanout",
+          "args": {
+            "delegates": [
+              {
+                "id": "docs",
+                "task": "inspect the package",
+                "preset": "research",
+                "agent_id": "reviewer"
+              }
+            ],
+            "caps": {
+              "max_concurrent": 1,
+              "wall_time_secs": 5,
+              "max_tokens": 1
+            }
+          }
+        }
+      ],
+      "expect": {
+        "ok": true,
+        "count": 1,
+        "results": [{ "id": "docs", "output": "done", "error": null }]
+      }
+    },
+    {
+      "name": "accepts upper cap bounds and forwards a trimmed inline model",
+      "input": {
+        "tasks": [
+          {
+            "task": "draft the report",
+            "system_prompt": "  You are concise.  ",
+            "model": "model-test"
+          }
+        ],
+        "max_concurrent": 5,
+        "wall_time_secs": 600,
+        "max_tokens": 32768
+      },
+      "host": {
+        "runFanout": [
+          {
+            "ok": true,
+            "results": [
+              { "id": "delegate-1", "output": "draft", "error": null }
+            ]
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "host.runFanout",
+          "args": {
+            "delegates": [
+              {
+                "id": "delegate-1",
+                "task": "draft the report",
+                "preset": "code_read",
+                "inline": {
+                  "system_prompt": "You are concise.",
+                  "model": "model-test"
+                }
+              }
+            ],
+            "caps": {
+              "max_concurrent": 5,
+              "wall_time_secs": 600,
+              "max_tokens": 32768
+            }
+          }
+        }
+      ],
+      "expect": {
+        "ok": true,
+        "count": 1,
+        "results": [{ "id": "delegate-1", "output": "draft", "error": null }]
+      }
+    },
+    {
+      "name": "rejects more tasks than the schema allows",
+      "input": {
+        "tasks": [
+          { "task": "task 1" },
+          { "task": "task 2" },
+          { "task": "task 3" },
+          { "task": "task 4" },
+          { "task": "task 5" },
+          { "task": "task 6" },
+          { "task": "task 7" },
+          { "task": "task 8" },
+          { "task": "task 9" },
+          { "task": "task 10" },
+          { "task": "task 11" },
+          { "task": "task 12" },
+          { "task": "task 13" },
+          { "task": "task 14" },
+          { "task": "task 15" },
+          { "task": "task 16" },
+          { "task": "task 17" },
+          { "task": "task 18" },
+          { "task": "task 19" },
+          { "task": "task 20" },
+          { "task": "task 21" }
+        ]
+      },
+      "expectError": "'tasks' must contain"
+    },
+    {
+      "name": "rejects blank delegate tasks before calling the host",
+      "input": { "tasks": [{ "task": "   " }] },
+      "expectError": "requires a non-empty 'task'"
+    },
+    {
+      "name": "rejects max_concurrent below the minimum",
+      "input": { "tasks": [{ "task": "inspect" }], "max_concurrent": 0 },
+      "expectError": "max_concurrent"
+    },
+    {
+      "name": "rejects max_concurrent above the maximum",
+      "input": { "tasks": [{ "task": "inspect" }], "max_concurrent": 6 },
+      "expectError": "max_concurrent"
+    },
+    {
+      "name": "rejects wall_time_secs below the minimum",
+      "input": { "tasks": [{ "task": "inspect" }], "wall_time_secs": 4 },
+      "expectError": "wall_time_secs"
+    },
+    {
+      "name": "rejects wall_time_secs above the maximum",
+      "input": { "tasks": [{ "task": "inspect" }], "wall_time_secs": 601 },
+      "expectError": "wall_time_secs"
+    },
+    {
+      "name": "rejects non-integer token caps",
+      "input": { "tasks": [{ "task": "inspect" }], "max_tokens": 1.5 },
+      "expectError": "max_tokens"
+    },
+    {
+      "name": "rejects a blank inline model before calling the host",
+      "input": {
+        "tasks": [
+          {
+            "task": "inspect",
+            "system_prompt": "Inspect safely",
+            "model": "   "
+          }
+        ]
+      },
+      "expectError": "'model' must be a non-empty string"
+    },
+    {
+      "name": "trims an inline model before the host effect",
+      "input": {
+        "tasks": [
+          {
+            "task": "inspect",
+            "system_prompt": "Inspect safely",
+            "model": "  model-test  "
+          }
+        ]
+      },
+      "host": {
+        "runFanout": [
+          {
+            "ok": true,
+            "results": [{ "id": "delegate-1", "output": "ok", "error": null }]
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "host.runFanout",
+          "args": {
+            "delegates": [
+              {
+                "id": "delegate-1",
+                "task": "inspect",
+                "preset": "code_read",
+                "inline": {
+                  "system_prompt": "Inspect safely",
+                  "model": "model-test"
+                }
+              }
+            ],
+            "caps": {}
+          }
+        }
+      ],
+      "expect": {
+        "ok": true,
+        "count": 1,
+        "results": [{ "id": "delegate-1", "output": "ok", "error": null }]
+      }
+    },
+    {
+      "name": "rejects host responses without a results array",
+      "input": { "tasks": [{ "task": "inspect" }] },
+      "host": { "runFanout": [{ "ok": true, "results": "not-an-array" }] },
+      "expectError": "invalid response"
     }
   ]
 }

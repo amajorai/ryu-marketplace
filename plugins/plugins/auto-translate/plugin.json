@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.auto-translate",
+  "version": "0.1.0",
+  "description": "Translates assistant replies that are not in your language, Telegram-style: the original reply stays in the chat and the translation appears beside it. Target language, a do-not-translate list, and the side model are settings.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/auto-translate",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/auto-translate",
+  "keywords": [
+    "translation",
+    "translate",
+    "language",
+    "chat",
+    "accessibility"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/auto-translate",
+      "displayName": "Auto Translate"
+    }
+  }
+}

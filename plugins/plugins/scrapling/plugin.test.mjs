@@ -1,5 +1,9 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located contract test for the `scrapling` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `scrapling` is an MCP-server-backed plugin and the THIRD provider of the
 // `web.extract` capability. Unlike the declarative HTTP providers it owns no
@@ -30,6 +34,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
 const readme = readFileSync(join(here, "README.md"), "utf8");
 const coreSrc = resolve(here, "../../../apps/core/src");
 
@@ -61,10 +66,6 @@ function hydrateCodeFiles(m) {
 /** The manifest as Core sees it: parsed, with every `code_file` hydrated. */
 const parseManifest = () => hydrateCodeFiles(JSON.parse(raw));
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = parseManifest();
 
 test("unavailable Scrapling copy does not promise provider fallback", () => {
@@ -75,13 +76,16 @@ test("unavailable Scrapling copy does not promise provider fallback", () => {
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/scrapling");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
+	assert.equal(plugin.version, manifest.version);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].id, manifest.id);
+	assert.equal(plugin.extensions["com.ryuhq.ryu"].displayName, manifest.name);
 });
 
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -249,7 +253,7 @@ test("adapter normalizes a real envelope into the canonical result shape", async
 	const [record] = out.results;
 	// The canonical `content` field is a STRING. The declarative mapper has no join,
 	// which is the whole reason this provider needs an adapter.
-	assert.equal(typeof record.content, "string");
+	assert.equal(isNativeText(record.content), true);
 	assert.ok(record.content.includes("Example Domain"));
 	// The empty trailing chunk must not survive as blank padding.
 	assert.equal(record.content.endsWith("\n\n"), false);
@@ -301,6 +305,75 @@ test("adapter tolerates a scalar `content` if upstream ever stops using an array
 		structuredContent: { status: 200, content: "just a string", url: "u" },
 	}));
 	assert.equal(out.results[0].content, "just a string");
+});
+
+test("Toolsmith proves exact extraction requests, normalization, and error pass-through", async () => {
+	const { runCase } = await import("../../../tools/toolsmith/harness.mjs");
+	const page = {
+		status: 200,
+		url: "https://example.test/final",
+		content: ["First passage", "", "Second passage"],
+	};
+	await runCase({
+		kind: "adapter",
+		code: binding.adapter.code,
+		adapterTools: binding.adapter.tools ?? [],
+		testCase: {
+			name: "normalize a local Scrapling envelope",
+			input: { url: "https://example.test/start", format: "text" },
+			provider: {
+				call: [
+					{
+						isError: false,
+						structuredContent: page,
+					},
+				],
+			},
+			expect: {
+				results: [
+					{
+						url: "https://example.test/final",
+						content: "First passage\n\nSecond passage",
+						raw: page,
+					},
+				],
+			},
+			expectCalls: [
+				{
+					path: "callTool",
+					args: {
+						url: "https://example.test/start",
+						extraction_type: "text",
+					},
+				},
+			],
+		},
+	});
+
+	const failure = {
+		isError: true,
+		structuredContent: { status: 503, content: ["not a page"] },
+	};
+	await runCase({
+		kind: "adapter",
+		code: binding.adapter.code,
+		adapterTools: binding.adapter.tools ?? [],
+		testCase: {
+			name: "preserve a local MCP tool error",
+			input: { url: "https://example.test/start" },
+			provider: { call: [failure] },
+			expect: { raw: failure },
+			expectCalls: [
+				{
+					path: "callTool",
+					args: {
+						url: "https://example.test/start",
+						extraction_type: "markdown",
+					},
+				},
+			],
+		},
+	});
 });
 
 // ── Registration seams ────────────────────────────────────────────────────────

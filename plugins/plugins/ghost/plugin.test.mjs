@@ -1,5 +1,5 @@
 // Co-located contract test for the `ghost` plugin (plugins-store/plugins/ghost).
-// Zero-dependency, runnable with:  node --test plugins-store/plugins/ghost/plugin.test.mjs
+// Runner: bun test; uses the production manifest and MCP schemas.
 //
 // ghost is an MCP-SERVER plugin (same shape as agentbrowser): it contributes a
 // single stdio MCP server (`ghost`) that shells out to a locally-installed
@@ -16,14 +16,20 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import {
+	McpServerDeclSchema,
+	PluginManifestSchema,
+} from "../../../packages/sdk/src/manifest.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const rawManifest = readFileSync(manifestPath, "utf8");
+const plugin = JSON.parse(readFileSync(join(here, "plugin.json"), "utf8"));
+const mcpConfig = JSON.parse(readFileSync(join(here, "mcp.json"), "utf8"));
 
 test("manifest.json is valid JSON and parses to an object", () => {
 	const parsed = JSON.parse(rawManifest);
-	assert.equal(typeof parsed, "object");
+	assert.doesNotThrow(() => PluginManifestSchema.parse(parsed));
 	assert.notEqual(parsed, null);
 });
 
@@ -31,11 +37,15 @@ const manifest = JSON.parse(rawManifest);
 
 test("has required top-level id/name/version", () => {
 	assert.equal(manifest.id, "@ryu/ghost");
-	assert.equal(typeof manifest.name, "string");
+	assert.doesNotThrow(() =>
+		PluginManifestSchema.shape.name.parse(manifest.name)
+	);
 	assert.equal(manifest.name, "Ghost");
 	assert.ok(manifest.name.length > 0);
 	// version is present and semver-shaped
-	assert.equal(typeof manifest.version, "string");
+	assert.doesNotThrow(() =>
+		PluginManifestSchema.shape.version.parse(manifest.version)
+	);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
 });
 
@@ -45,7 +55,9 @@ test("runnables is present and empty (all capability ships via the MCP server)",
 });
 
 test("declares exactly one mcp server, keyed `ghost`", () => {
-	assert.equal(typeof manifest.mcp_servers, "object");
+	assert.doesNotThrow(() =>
+		PluginManifestSchema.shape.mcp_servers.unwrap().parse(manifest.mcp_servers)
+	);
 	assert.notEqual(manifest.mcp_servers, null);
 	const keys = Object.keys(manifest.mcp_servers);
 	assert.deepEqual(keys, ["ghost"]);
@@ -53,7 +65,7 @@ test("declares exactly one mcp server, keyed `ghost`", () => {
 
 test("the ghost mcp server spec is well-formed (stdio command + env override + args)", () => {
 	const server = manifest.mcp_servers.ghost;
-	assert.equal(typeof server, "object");
+	assert.doesNotThrow(() => McpServerDeclSchema.parse(server));
 
 	// Launches the `ghost` binary over stdio (no url => stdio transport).
 	assert.equal(server.command, "ghost");
@@ -67,12 +79,28 @@ test("the ghost mcp server spec is well-formed (stdio command + env override + a
 	assert.ok(Array.isArray(server.args));
 	assert.deepEqual(server.args, ["mcp"]);
 	for (const arg of server.args) {
-		assert.equal(typeof arg, "string");
+		assert.doesNotThrow(() =>
+			McpServerDeclSchema.shape.args.removeDefault().element.parse(arg)
+		);
 	}
 
 	// Human-facing description present and non-empty.
-	assert.equal(typeof server.description, "string");
+	assert.doesNotThrow(() =>
+		McpServerDeclSchema.shape.description.unwrap().parse(server.description)
+	);
 	assert.ok(server.description.length > 0);
+});
+
+test("Ryu extension and standalone MCP config mirror the shipped server", () => {
+	const server = manifest.mcp_servers.ghost;
+	const extension = plugin.extensions["com.ryuhq.ryu"];
+	assert.equal(extension.id, manifest.id);
+	assert.equal(extension.displayName, manifest.name);
+	assert.deepEqual(mcpConfig.mcpServers.ghost, {
+		type: "stdio",
+		command: server.command,
+		args: server.args,
+	});
 });
 
 test("permission_grants gate the mcp server and match its id", () => {
@@ -82,7 +110,11 @@ test("permission_grants gate the mcp server and match its id", () => {
 		"must grant mcp:ghost"
 	);
 	for (const grant of manifest.permission_grants) {
-		assert.equal(typeof grant, "string");
+		assert.doesNotThrow(() =>
+			PluginManifestSchema.shape.permission_grants
+				.removeDefault()
+				.element.parse(grant)
+		);
 	}
 	// Every `mcp:<id>` grant must name a declared mcp server, and every declared
 	// server must be covered by a grant — the two sides cannot drift.

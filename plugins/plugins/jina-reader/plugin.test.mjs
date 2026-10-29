@@ -12,7 +12,12 @@ const field = manifest.contributes.settings_tabs[0].fields[0];
 test("Reader uses a fixed direct endpoint and asks for JSON", () => {
 	assert.equal(native.url, "https://r.jina.ai/");
 	assert.equal(native.method, "POST");
-	assert.deepEqual(native.header_params, ["Accept"]);
+	assert.deepEqual(native.header_params, ["Accept", "X-Respond-With"]);
+	assert.deepEqual(native.input_schema.properties["X-Respond-With"].enum, [
+		"markdown",
+		"html",
+		"text",
+	]);
 	assert.equal(native.unwrap_body, true);
 	assert.deepEqual(manifest.permission_grants, [
 		"tool:http-egress:r.jina.ai",

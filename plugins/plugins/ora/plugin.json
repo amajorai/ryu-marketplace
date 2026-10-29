@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.ora",
+  "version": "0.1.0",
+  "description": "Agent-readiness scoring from ora (https://ora.ai): look up or run a 0-100 score and A-F grade for a domain or MCP server, re-run selected checks after a fix, browse the check catalog, discover agent-ready products by intent, and draft a domain's agent discovery files. Read-only and keyless.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ora",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/ora",
+  "keywords": [
+    "agent readiness",
+    "agentic web",
+    "audit",
+    "ora",
+    "MCP"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/ora",
+      "displayName": "ora"
+    }
+  }
+}

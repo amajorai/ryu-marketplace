@@ -51,6 +51,7 @@ The loop is **off by default** and per-conversation:
 
 - `/auto-continue on` — arm it for this chat.
 - `/auto-continue off` — stop it for this chat.
+- An unsupported argument returns the supported commands without changing the switch.
 
 You can also disable or uninstall **Auto Continue** in the Store, the ordinary
 per-feature switch that survives across chats.

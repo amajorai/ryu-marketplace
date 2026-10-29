@@ -61,25 +61,25 @@
     },
     {
       "kind": "skill",
-      "id": "aashaexo/humanize",
+      "id": "aashaexo/soundshuman/humanize",
       "name": "Humanize",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "aminblg/simple-english",
+      "id": "aminblg/simpleenglish/simple-english",
       "name": "Simple English",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/animate",
+      "id": "emilkowalski/skills/animate",
       "name": "Animate",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "remotion-dev/remotion-best-practices",
+      "id": "remotion-dev/skills/remotion-best-practices",
       "name": "Remotion Best Practices",
       "required": false
     }

@@ -1,7 +1,7 @@
-// Tool body for `ego_browser.dispatch`, run in Core's Deno sandbox.
+// Tool body for `ego_browser.dispatch`, run in Core's JS sandbox.
 //
 // This file is the readable authoring source. `build.mjs` seals it into the one
-// inline_deno runnable in manifest.json so the signed wire manifest stays
+// inline_js runnable in manifest.json so the signed wire manifest stays
 // self-contained. The seven canonical browser verbs use tiny code_file adapters
 // that add the immutable operation name and call this dispatcher.
 
@@ -101,18 +101,13 @@ if (operation === "tabs") {
 console.log(${JSON.stringify(RESULT_PREFIX)} + JSON.stringify(result));
 `;
 
-const child = new Deno.Command("ego-browser", {
+// Core starts only programs this manifest's `run` list names (child_process).
+const output = await childProcess.run("ego-browser", {
 	args: ["nodejs"],
-	stdin: "piped",
-	stdout: "piped",
-	stderr: "piped",
-}).spawn();
-const writer = child.stdin.getWriter();
-await writer.write(new TextEncoder().encode(childScript));
-await writer.close();
-const output = await child.output();
-const stdout = new TextDecoder().decode(output.stdout);
-const stderr = new TextDecoder().decode(output.stderr).trim();
+	stdin: childScript,
+});
+const stdout = output.stdout;
+const stderr = output.stderr.trim();
 if (!output.success) {
 	throw new Error(
 		`ego-browser failed: ${(stderr || stdout || "the command exited unsuccessfully").slice(-1000)}`

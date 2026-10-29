@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/motion",
   "name": "Motion",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,23 +19,22 @@
     "bundle:ui-skills:motion"
   ],
   "includes": [
-    "skill:cloudai-x/threejs-animation",
-    "skill:emilkowalski/animate",
-    "skill:emilkowalski/animate-expo",
-    "skill:emilkowalski/animation-vocabulary",
-    "skill:emilkowalski/find-animation-opportunities",
-    "skill:emilkowalski/improve-animations",
-    "skill:emilkowalski/review-animations",
-    "skill:iart-ai/accessible-animation",
-    "skill:iart-ai/micro-interaction",
-    "skill:iart-ai/page-transition-animation",
-    "skill:iart-ai/svg-animation",
-    "skill:jakubantalik/transitions-dev"
+    "skill:cloudai-x/threejs-skills/threejs-animation",
+    "skill:emilkowalski/skills/animate",
+    "skill:emilkowalski/skills/animate-expo",
+    "skill:emilkowalski/skills/animation-vocabulary",
+    "skill:emilkowalski/skills/find-animation-opportunities",
+    "skill:emilkowalski/skills/improve-animations",
+    "skill:emilkowalski/skills/review-animations",
+    "skill:iart-ai/web-animation-skills/accessible-animation",
+    "skill:iart-ai/web-animation-skills/micro-interaction",
+    "skill:iart-ai/web-animation-skills/page-transition-animation",
+    "skill:iart-ai/web-animation-skills/svg-animation"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/motion",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/motion",
     "ref": "main"
   },
   "security": {

@@ -1,0 +1,94 @@
+{
+  "tool": "browser.scroll",
+  "kind": "adapter",
+  "code_file": "adapters/browser.scroll.js",
+  "adapter_tools": [],
+  "cases": [
+    {
+      "name": "pins operation 'scroll' and forwards the canonical args",
+      "input": {
+        "direction": "down",
+        "amount": 2
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true,
+            "operation": "scroll"
+          }
+        ]
+      },
+      "expect": {
+        "ok": true,
+        "operation": "scroll"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "direction": "down",
+            "amount": 2,
+            "operation": "scroll"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a caller-supplied operation cannot change the action",
+      "input": {
+        "direction": "down",
+        "amount": 2,
+        "operation": "navigate"
+      },
+      "provider": {
+        "call": [
+          {
+            "ok": true
+          }
+        ]
+      },
+      "expect": {
+        "ok": true
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "direction": "down",
+            "amount": 2,
+            "operation": "scroll"
+          }
+        }
+      ]
+    },
+    {
+      "name": "an unavailable provider answer is returned unchanged",
+      "input": {
+        "direction": "down",
+        "amount": 2
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false,
+            "error": "ego-browser is not on PATH"
+          }
+        ]
+      },
+      "expect": {
+        "available": false,
+        "error": "ego-browser is not on PATH"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "direction": "down",
+            "amount": 2,
+            "operation": "scroll"
+          }
+        }
+      ]
+    }
+  ]
+}

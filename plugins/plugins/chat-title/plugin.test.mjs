@@ -1,4 +1,8 @@
-// Co-located, zero-dependency test for the `chat-title` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Co-located test for the `chat-title` plugin.
 // Run with:  node --test plugins-store/plugins/chat-title/plugin.test.mjs
 
 import assert from "node:assert/strict";
@@ -9,7 +13,9 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
+const PLUGIN_PATH = join(HERE, "plugin.json");
 const raw = readFileSync(MANIFEST_PATH, "utf8");
+const plugin = JSON.parse(readFileSync(PLUGIN_PATH, "utf8"));
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in real files (`hooks/*.js`, `adapters/*.js`)
@@ -71,7 +77,7 @@ function makeCtx(assistantTurns, overrides = {}) {
 }
 
 function makeHost({ prefs = {}, titleReply = "Centering a div" } = {}) {
-	const calls = { sideModel: [], setTitle: [], getPreference: [] };
+	const calls = { sideModel: [], setTitle: [], getPreference: [], log: [] };
 	return {
 		calls,
 		getPreference: async ({ key }) => {
@@ -86,33 +92,62 @@ function makeHost({ prefs = {}, titleReply = "Centering a div" } = {}) {
 			calls.setTitle.push(args);
 			return { ok: true, applied: true, title: args.title };
 		},
-		log: () => undefined,
+		log: (...args) => calls.log.push(args),
 	};
 }
 
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
 	assert.equal(m.id, "@ryu/chat-title");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
+	assert.equal(plugin.version, m.version);
+	assert.deepEqual(m.activation_events, ["*"]);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: m.id,
+		displayName: m.name,
+	});
+	const hook = m.contributes.turn_hooks[0];
+	assert.equal(hook.id, "chat-title.rename");
+	assert.equal(hook.on, "post_assistant_turn");
+	assert.match(hook.code, /host\.setConversationTitle/);
 });
 
 test("declares required grants and settings", () => {
 	const m = parseManifest();
-	for (const g of [
+	assert.deepEqual(m.permission_grants, [
 		"hook:side-model",
 		"conversation:set-title",
 		"preferences:read",
-	]) {
-		assert.ok(m.permission_grants.includes(g), `missing grant ${g}`);
-	}
+		"hook:run-self",
+	]);
 	const tab = m.contributes.settings_tabs[0];
+	assert.deepEqual([tab.id, tab.title], ["chat-title.settings", "Chat titles"]);
 	assert.equal(tab.scope, "node");
-	const keys = tab.fields.map((f) => f.pref_key);
-	assert.ok(keys.includes("auto-title-enabled"));
-	assert.ok(keys.includes("auto-title-on-first-turn"));
-	assert.ok(keys.includes("auto-title-every-n"));
-	assert.ok(keys.includes("auto-title-model"));
+	assert.deepEqual(
+		tab.fields.map((field) => [field.pref_key, field.label, field.type]),
+		[
+			["auto-title-enabled", "Auto-rename chats", "toggle"],
+			["auto-title-on-first-turn", "Rename after the first reply", "toggle"],
+			["auto-title-every-n", "Rename every N turns", "number"],
+			["auto-title-model", "Title model", "model_picker"],
+		]
+	);
+	const contextItem = m.contributes.context_menu_items[0];
+	assert.equal(contextItem.id, "chat-title.rename-now");
+	assert.equal(contextItem.label, "Rename with AI");
+	assert.equal(contextItem.anchor, "conversation");
+	assert.equal(contextItem.capability, "hooks.run");
+	assert.deepEqual(contextItem.args, {
+		hook_id: "chat-title.rename",
+		event: { force: true },
+	});
+	assert.deepEqual(contextItem.feedback, {
+		loading: "Renaming this chat…",
+		success: "Renamed",
+		error: "Couldn't rename this chat",
+	});
+	assert.equal(contextItem.order, 20);
 });
 
 test("skips when disabled", async () => {
@@ -171,4 +206,73 @@ test("every-n=1 renames every turn", async () => {
 	assert.deepEqual(out, { kind: "none" });
 	assert.equal(host.calls.sideModel.length, 1);
 	assert.equal(host.calls.setTitle.length, 1);
+});
+
+test("Rename with AI bypasses automatic gates and saves a custom title", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost({ prefs: { "auto-title-enabled": "false" } });
+	const ctx = makeCtx(0, {
+		event: { force: true },
+		transcript: [{ role: "user", content: "Explain the whitespace issue" }],
+	});
+	const out = await run(ctx, host);
+
+	assert.deepEqual(out, { kind: "note", text: 'Renamed to "Centering a div"' });
+	assert.equal(host.calls.sideModel.length, 1);
+	assert.equal(host.calls.sideModel[0].model_pref_key, "auto-title-model");
+	assert.match(host.calls.sideModel[0].prompt, /Explain the whitespace issue/);
+	assert.deepEqual(host.calls.setTitle, [
+		{ id: "conv-123", title: "Centering a div", mode: "custom" },
+	]);
+});
+
+test("a failed forced title write stays unclaimed and can succeed on retry", async () => {
+	const run = loadHookRunner(parseManifest());
+	let failTitle = true;
+	const host = makeHost();
+	host.setConversationTitle = async (args) => {
+		host.calls.setTitle.push(args);
+		if (failTitle) {
+			throw new Error("local title store unavailable");
+		}
+		return { ok: true, applied: true, title: args.title };
+	};
+	const ctx = makeCtx(0, {
+		event: { force: true },
+		transcript: [{ role: "user", content: "Explain the whitespace issue" }],
+	});
+
+	assert.deepEqual(await run(ctx, host), { kind: "none" });
+	assert.equal(host.calls.log[0][0], "chat-title: setTitle failed");
+	failTitle = false;
+	assert.deepEqual(await run(ctx, host), {
+		kind: "note",
+		text: 'Renamed to "Centering a div"',
+	});
+	assert.equal(host.calls.sideModel.length, 2);
+	assert.ok(host.calls.setTitle.every((entry) => entry.mode === "custom"));
+});
+
+test("a failed title generation stays unclaimed and retries exactly once", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost();
+	let attempts = 0;
+	host.sideModel = async (args) => {
+		host.calls.sideModel.push(args);
+		attempts += 1;
+		if (attempts === 1) {
+			throw new Error("provider unavailable");
+		}
+		return "Recovered title";
+	};
+	const ctx = makeCtx(1);
+
+	assert.deepEqual(await run(ctx, host), { kind: "none" });
+	assert.equal(host.calls.setTitle.length, 0);
+	assert.equal(host.calls.log[0][0], "chat-title: title generation failed");
+	assert.deepEqual(await run(ctx, host), { kind: "none" });
+	assert.equal(host.calls.sideModel.length, 2);
+	assert.deepEqual(host.calls.setTitle, [
+		{ id: "conv-123", title: "Recovered title", mode: "auto" },
+	]);
 });

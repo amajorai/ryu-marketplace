@@ -17,9 +17,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install gopls: `go install golang.org/x/tools/gopls@latest`, or `brew install gopls`.
-```
+Install gopls with the Go toolchain on any platform: `go install golang.org/x/tools/gopls@latest` (it lands in `$(go env GOPATH)/bin`, which must be on `PATH`), or `brew install gopls` on macOS.
 
 ## More information
 

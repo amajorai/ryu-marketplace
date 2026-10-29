@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/frontend",
   "name": "Frontend",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,19 +19,19 @@
     "bundle:ui-skills:frontend"
   ],
   "includes": [
-    "skill:accesslint/accessibility-diff",
-    "skill:accesslint/accessibility-scan",
-    "skill:accesslint/audit-and-fix",
-    "skill:addyosmani/frontend-ui-engineering",
-    "skill:anthropics/frontend-design",
-    "skill:ibelick/fixing-accessibility",
-    "skill:jakubkrehel/better-interface",
-    "skill:vercel-labs/react-best-practices"
+    "skill:accesslint/skills/accessibility-diff",
+    "skill:accesslint/skills/accessibility-scan",
+    "skill:accesslint/skills/audit-and-fix",
+    "skill:addyosmani/agent-skills/frontend-ui-engineering",
+    "skill:anthropics/skills/frontend-design",
+    "skill:ibelick/ui-skills/fixing-accessibility",
+    "skill:jakubkrehel/skills/better-interface",
+    "skill:vercel-labs/agent-skills/vercel-react-best-practices"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/frontend",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/frontend",
     "ref": "main"
   },
   "security": {

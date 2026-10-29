@@ -33,8 +33,12 @@ the browser.control provider back to **Agent Browser** or disable this plugin.
 
 ## Security and limits
 
-The bridge is one readable dispatcher sealed into the signed manifest, with tiny
-per-verb adapters. It starts only `ego-browser nodejs` with a fixed argument list,
+The bridge shares one readable dispatcher body across immutable native operation
+tools and tiny canonical adapters. Tabs, snapshot and screenshot have read-only
+effect hints; navigation, click, type and scroll are conservatively mutating.
+The legacy mixed dispatcher stays available with mutating hints. Each operation
+tool forces its own action, so caller input cannot turn a snapshot into a click.
+It starts only `ego-browser nodejs` with a fixed argument list,
 passes validated JSON input into the generated helper program, and never invokes a
 shell. Its sandbox grants `child_process` with an explicit `run: ["ego-browser"]`
 allowlist and no direct filesystem or network permission; web traffic and

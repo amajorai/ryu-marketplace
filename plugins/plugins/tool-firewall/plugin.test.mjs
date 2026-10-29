@@ -1,3 +1,7 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import { isNativeText } from "../../../tools/dist/native-primitive-observation.mjs";
+
 // Co-located unit test for the `tool-firewall` plugin.
 //
 // Runner:  node --test plugins-store/plugins/tool-firewall/plugin.test.mjs
@@ -29,6 +33,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { runCase } from "../../../tools/toolsmith/harness.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -119,7 +124,7 @@ test("manifest.json is valid JSON with id/name/version", () => {
 	// JSON.parse above already proved it parses; assert the round-trip is stable.
 	assert.deepEqual(parseManifest(), manifest);
 	assert.equal(manifest.id, "@ryu/tool-firewall");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
 });
@@ -137,7 +142,7 @@ test("contributes.turn_hooks are well-formed", () => {
 	assert.equal(hooks.length, 2);
 	const phases = new Set();
 	for (const h of hooks) {
-		assert.equal(typeof h.id, "string");
+		assert.equal(isNativeText(h.id), true);
 		assert.ok(h.id.length > 0);
 		assert.ok(
 			h.on === "pre_tool_use" || h.on === "post_tool_use",
@@ -145,7 +150,7 @@ test("contributes.turn_hooks are well-formed", () => {
 		);
 		// Firewall matches every tool.
 		assert.deepEqual(h.match, { tools: ["*"] });
-		assert.equal(typeof h.code, "string");
+		assert.equal(isNativeText(h.code), true);
 		assert.ok(h.code.length > 0);
 		phases.add(h.on);
 	}
@@ -168,7 +173,7 @@ test("pre hook DENIES a destructive `rm -rf` command", async () => {
 	};
 	const out = await runHook(hook.code, ctx);
 	assert.equal(out.kind, "deny");
-	assert.equal(typeof out.reason, "string");
+	assert.equal(isNativeText(out.reason), true);
 	// Reason names the tool and the policy.
 	assert.match(out.reason, /shell/);
 	assert.match(out.reason, /tool-firewall/);
@@ -264,6 +269,24 @@ test("post hook handles a missing tool_name (uses '?') and null output", async (
 	assert.match(out.text, /^tool-firewall observed \? -> null/);
 });
 
+test("post hook preserves successful falsey tool outputs", async () => {
+	const hook = getHook("tool-firewall.post");
+	for (const [toolOutput, serialized] of [
+		[false, "false"],
+		[0, "0"],
+		["", '""'],
+	]) {
+		const out = await runHook(hook.code, {
+			tool_name: "fixture.falsey",
+			tool_output: toolOutput,
+		});
+		assert.deepEqual(out, {
+			kind: "note",
+			text: `tool-firewall observed fixture.falsey -> ${serialized}`,
+		});
+	}
+});
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Directive kinds the hooks emit are exactly those Core's HookDirective accepts
 // ─────────────────────────────────────────────────────────────────────────────
@@ -293,4 +316,38 @@ test("every kind the hooks can return is a valid HookDirective kind", async () =
 	for (const d of [denied, allowed, noted]) {
 		assert.ok(valid.has(d.kind), `unexpected directive kind: ${d.kind}`);
 	}
+});
+
+test("Toolsmith asserts deny and allow outcomes before any tool side effect", async () => {
+	const pre = getHook("tool-firewall.pre").code;
+	await runCase({
+		kind: "turn_hook",
+		code: pre,
+		testCase: {
+			name: "deny destructive shell input before execution",
+			ctx: {
+				tool_name: "shell",
+				tool_input: { command: "rm -rf /tmp/fixture" },
+			},
+			expect: {
+				kind: "deny",
+				reason:
+					"Blocked a destructive command (shell) by the tool-firewall policy.",
+			},
+			expectCalls: [],
+		},
+	});
+	await runCase({
+		kind: "turn_hook",
+		code: pre,
+		testCase: {
+			name: "allow safe shell input without host work",
+			ctx: {
+				tool_name: "shell",
+				tool_input: { command: "rm report.txt && npm run test" },
+			},
+			expect: { kind: "none" },
+			expectCalls: [],
+		},
+	});
 });

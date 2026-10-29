@@ -1,0 +1,121 @@
+{
+  "tool": "browser.snapshot",
+  "kind": "adapter",
+  "code_file": "adapters/browser.snapshot.js",
+  "adapter_tools": ["agentbrowser.agent_browser_tab_switch"],
+  "cases": [
+    {
+      "name": "acts on the current tab without switching",
+      "input": {},
+      "provider": {
+        "call": [
+          {
+            "content": [
+              {
+                "type": "text",
+                "text": "ok"
+              }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "content": [
+          {
+            "type": "text",
+            "text": "ok"
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {}
+        }
+      ]
+    },
+    {
+      "name": "switches to the requested tab first",
+      "input": {
+        "tab_id": "2"
+      },
+      "provider": {
+        "call": [
+          {
+            "content": [
+              {
+                "type": "text",
+                "text": "ok"
+              }
+            ]
+          }
+        ],
+        "named": {
+          "agentbrowser.agent_browser_tab_switch": [
+            {
+              "content": []
+            }
+          ]
+        }
+      },
+      "expect": {
+        "content": [
+          {
+            "type": "text",
+            "text": "ok"
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callNamed:agentbrowser.agent_browser_tab_switch",
+          "args": {
+            "tab": "2"
+          }
+        },
+        {
+          "path": "callTool",
+          "args": {}
+        }
+      ]
+    },
+    {
+      "name": "a failed tab switch stops before acting",
+      "input": {
+        "tab_id": "9"
+      },
+      "provider": {
+        "named": {
+          "agentbrowser.agent_browser_tab_switch": [
+            {
+              "isError": true,
+              "content": [
+                {
+                  "type": "text",
+                  "text": "no tab 9"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "expect": {
+        "isError": true,
+        "content": [
+          {
+            "type": "text",
+            "text": "no tab 9"
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callNamed:agentbrowser.agent_browser_tab_switch",
+          "args": {
+            "tab": "9"
+          }
+        }
+      ]
+    }
+  ]
+}

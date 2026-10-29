@@ -17,9 +17,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install the C# language server: `dotnet tool install -g csharp-ls` (or `brew install csharp-ls`).
-```
+Install the C# language server with the .NET SDK on any platform: `dotnet tool install -g csharp-ls` (make sure the .NET tools directory, `~/.dotnet/tools`, is on `PATH`), or `brew install csharp-ls` on macOS.
 
 ## More information
 

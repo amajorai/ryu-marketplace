@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/product-management",
   "name": "Product Management",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -38,13 +38,13 @@
     "skill:anthropics/knowledge-work-plugins/data-visualization",
     "skill:googleworkspace/cli/persona-researcher",
     "skill:cursor/plugins/why",
-    "skill:pbakaus/critique",
+    "skill:pbakaus/impeccable/critique",
     "skill:aminblg/simpleenglish/simple-english"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/product-management",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/product-management",
     "ref": "main"
   },
   "security": {

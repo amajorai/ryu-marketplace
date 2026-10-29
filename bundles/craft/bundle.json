@@ -4,73 +4,73 @@
   "members": [
     {
       "kind": "skill",
-      "id": "aashaexo/humanize",
+      "id": "aashaexo/soundshuman/humanize",
       "name": "Humanize",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "aboudjem/humanizer",
+      "id": "aboudjem/humanizer-skill/humanizer",
       "name": "Humanizer",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/accessibility",
+      "id": "addyosmani/web-quality-skills/accessibility",
       "name": "Accessibility",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/best-practices",
+      "id": "addyosmani/web-quality-skills/best-practices",
       "name": "Best Practices",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "addyosmani/core-web-vitals",
+      "id": "addyosmani/web-quality-skills/core-web-vitals",
       "name": "Core Web Vitals",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "addyosmani/performance",
+      "id": "addyosmani/web-quality-skills/performance",
       "name": "Performance",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "addyosmani/seo",
+      "id": "addyosmani/web-quality-skills/seo",
       "name": "SEO",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "aminblg/simple-english",
+      "id": "aminblg/simpleenglish/simple-english",
       "name": "Simple English",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "antfu/antfu-design",
+      "id": "antfu/skills/antfu-design",
       "name": "Antfu Design",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "cursor/unslop",
+      "id": "cursor/plugins/unslop",
       "name": "Unslop",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/animate",
+      "id": "emilkowalski/skills/animate",
       "name": "Animate",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "pbakaus/polish",
+      "id": "pbakaus/impeccable/polish",
       "name": "Polish",
       "required": true
     }

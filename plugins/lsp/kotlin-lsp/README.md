@@ -18,9 +18,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
 Install the Kotlin LSP CLI: `brew install JetBrains/utils/kotlin-lsp`.
-```
 
 ## More information
 

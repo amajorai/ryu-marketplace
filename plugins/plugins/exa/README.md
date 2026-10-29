@@ -1,4 +1,10 @@
 # Exa Search
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="exa" width="96" />
+  </picture>
+</p>
 
 Neural and keyword web search for Ryu agents, powered by the
 [Exa API](https://exa.ai). Ships as a fully declarative plugin — two `http`
@@ -11,9 +17,10 @@ tool-defs in `manifest.json`, no Core Rust.
 | `exa.search`  | `POST https://api.exa.ai/search`      | `query`      |
 | `exa.find_similar` | `POST https://api.exa.ai/findSimilar` | `url`        |
 
-`search` also accepts `num_results` (1–100, Exa default 10), `use_autoprompt`
-(Exa default true), and `contents` (e.g. `{"text": true}` to include full page
-text). `find_similar` also accepts `num_results`.
+`search` also accepts `numResults` (1–100, default 10) and `contents` (e.g.
+`{"text": true}` to include full page text). `find_similar` also accepts
+`numResults`. Exa's REST body is camelCase: a snake_case `num_results` is not an
+Exa field and is ignored.
 
 ## BYOK auth
 

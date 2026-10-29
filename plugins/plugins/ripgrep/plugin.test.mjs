@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { spawnSync } from "node:child_process";
+import {
+	mkdirSync,
+	mkdtempSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from "node:fs";
+import { dirname, join, relative, sep } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -70,4 +77,102 @@ test("files input is required and returns the visible file listing", () => {
 test("grant is scoped to rg and the plugin declares no MCP server", () => {
 	assert.deepEqual(manifest.permission_grants, ["tool:command:rg"]);
 	assert.deepEqual(manifest.mcp_servers ?? {}, {});
+});
+
+test("the declared commands search and list only a local fixture with exact argv", () => {
+	const directory = mkdtempSync(join(here, ".ripgrep-fixture-"));
+	try {
+		mkdirSync(join(directory, "src"), { recursive: true });
+		writeFileSync(join(directory, ".gitignore"), "ignored.txt\n");
+		writeFileSync(
+			join(directory, "src", "visible.txt"),
+			"first line\n--help\nlast line\n"
+		);
+		writeFileSync(join(directory, "ignored.txt"), "--help\n");
+		writeFileSync(join(directory, ".hidden.txt"), "--help\n");
+		const fixturePath = relative(here, directory).split(sep).join("/");
+		const search = manifest.runnables.find(
+			(runnable) => runnable.config.slug === "ripgrep.search"
+		).config;
+		const searchArgs = search.command_args.map((argument) =>
+			argument.replace("{pattern}", "--help").replace("{path}", fixturePath)
+		);
+		assert.deepEqual(searchArgs, [
+			"--json",
+			"--color",
+			"never",
+			"--",
+			"--help",
+			fixturePath,
+		]);
+		const found = spawnSync(search.bin, searchArgs, {
+			cwd: here,
+			encoding: "utf8",
+		});
+		assert.equal(found.status, 0, found.stderr);
+		const events = found.stdout
+			.trim()
+			.split("\n")
+			.map((line) => JSON.parse(line));
+		const match = events.find((event) => event.type === "match");
+		assert.ok(match, "literal `--help` search returned a match event");
+		assert.ok(match.data.path.text.endsWith("src/visible.txt"));
+		assert.equal(match.data.lines.text.trim(), "--help");
+		assert.equal(
+			events.some(
+				(event) =>
+					event.type === "match" && event.data.path.text.endsWith("ignored.txt")
+			),
+			false,
+			"rg retains the fixture's ignore rule"
+		);
+
+		const noMatchArgs = search.command_args.map((argument) =>
+			argument
+				.replace("{pattern}", "not-present-token")
+				.replace("{path}", fixturePath)
+		);
+		const noMatch = spawnSync(search.bin, noMatchArgs, {
+			cwd: here,
+			encoding: "utf8",
+		});
+		assert.equal(
+			noMatch.status,
+			1,
+			"no match is the documented rg exit status"
+		);
+		const noMatchEvents = noMatch.stdout
+			.trim()
+			.split("\n")
+			.map((line) => JSON.parse(line));
+		assert.equal(
+			noMatchEvents.some((event) => event.type === "match"),
+			false
+		);
+		assert.equal(noMatchEvents.at(-1).type, "summary");
+
+		const files = manifest.runnables.find(
+			(runnable) => runnable.config.slug === "ripgrep.files"
+		).config;
+		const filesArgs = files.command_args.map((argument) =>
+			argument.replace("{path}", fixturePath)
+		);
+		assert.deepEqual(filesArgs, [
+			"--files",
+			"--color",
+			"never",
+			"--",
+			fixturePath,
+		]);
+		const listed = spawnSync(files.bin, filesArgs, {
+			cwd: here,
+			encoding: "utf8",
+		});
+		assert.equal(listed.status, 0, listed.stderr);
+		assert.deepEqual(listed.stdout.trim().split("\n"), [
+			`${fixturePath}/src/visible.txt`,
+		]);
+	} finally {
+		rmSync(directory, { recursive: true, force: true });
+	}
 });

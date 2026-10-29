@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.kev",
+  "version": "0.1.0",
+  "description": "Connect Ryu's Decision Models layer to a running local Kev System One server. Ryu does not download Kev weights or start the model server.",
+  "homepage": "https://github.com/jaredpalmer/kev",
+  "license": "Apache-2.0",
+  "keywords": [
+    "decision models",
+    "classification",
+    "kev",
+    "system one",
+    "local"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/kev",
+      "displayName": "Kev Decision Models"
+    }
+  }
+}

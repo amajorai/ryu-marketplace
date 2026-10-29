@@ -1,4 +1,11 @@
-// Co-located, zero-dependency test for the `auto-continue` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeFunction,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Co-located test for the `auto-continue` plugin.
 // Run with:  node --test plugins-store/plugins/auto-continue/plugin.test.mjs
 //
 // The plugin's whole behaviour is the sandboxed hook body Core runs with an
@@ -75,18 +82,17 @@ function makeCtx(overrides = {}) {
 function makeHost({ verdict = "", seed = null } = {}) {
 	const store = new Map();
 	if (seed !== null) {
-		store.set(
-			"conv-123",
-			typeof seed === "string" ? seed : JSON.stringify(seed)
-		);
+		store.set("conv-123", isNativeText(seed) ? seed : JSON.stringify(seed));
 	}
 	const runAgentCalls = [];
+	const storageCalls = [];
 	return {
 		store,
 		runAgentCalls,
+		storageCalls,
 		runAgent: async (args) => {
 			runAgentCalls.push(args);
-			if (typeof verdict === "function") {
+			if (isNativeFunction(verdict)) {
 				return verdict(args);
 			}
 			if (verdict instanceof Error) {
@@ -96,15 +102,22 @@ function makeHost({ verdict = "", seed = null } = {}) {
 		},
 		storage: {
 			get: async (k) => {
-				const v = store.get(String(k));
+				const key = String(k);
+				storageCalls.push({ method: "get", key });
+				const v = store.get(key);
 				return v === undefined ? null : v;
 			},
 			set: async (k, v) => {
-				store.set(String(k), typeof v === "string" ? v : JSON.stringify(v));
+				const key = String(k);
+				const value = isNativeText(v) ? v : JSON.stringify(v);
+				storageCalls.push({ method: "set", key, value });
+				store.set(key, value);
 				return true;
 			},
 			delete: async (k) => {
-				store.delete(String(k));
+				const key = String(k);
+				storageCalls.push({ method: "delete", key });
+				store.delete(key);
 				return true;
 			},
 		},
@@ -118,7 +131,7 @@ const armed = { status: "active" };
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
 	assert.equal(m.id, "@ryu/auto-continue");
-	assert.ok(typeof m.name === "string" && m.name.length > 0);
+	assert.ok(isNativeText(m.name) && m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });
 
@@ -131,7 +144,7 @@ test("declared contributes fields are well-formed", () => {
 
 	const cmd = m.contributes.slash_commands[0];
 	assert.equal(cmd.command, "/auto-continue");
-	assert.equal(typeof cmd.description, "string");
+	assert.equal(isNativeText(cmd.description), true);
 
 	const hook = m.contributes.turn_hooks[0];
 	assert.equal(hook.on, "post_assistant_turn");
@@ -140,7 +153,7 @@ test("declared contributes fields are well-formed", () => {
 	// unarmed conversation costs one KV read in the Rust pre-gate, never a
 	// sandbox spawn, and the switch is off by default.
 	assert.equal(hook.match.stateful, true);
-	assert.equal(typeof hook.code, "string");
+	assert.equal(isNativeText(hook.code), true);
 	assert.ok(hook.code.includes(MARKER), "hook stamps the auto-continue marker");
 });
 
@@ -229,6 +242,9 @@ test("'/auto-continue on' arms and reports it", async () => {
 	assert.equal(directive.kind, "note");
 	assert.ok(directive.text.includes("on"));
 	assert.deepEqual(JSON.parse(host.store.get("conv-123")), armed);
+	assert.deepEqual(host.storageCalls, [
+		{ method: "set", key: "conv-123", value: JSON.stringify(armed) },
+	]);
 });
 
 test("'/auto-continue off' disarms and reports it", async () => {
@@ -241,6 +257,42 @@ test("'/auto-continue off' disarms and reports it", async () => {
 	assert.equal(directive.kind, "note");
 	assert.ok(directive.text.includes("off"));
 	assert.equal(host.store.has("conv-123"), false);
+	assert.deepEqual(host.storageCalls, [{ method: "delete", key: "conv-123" }]);
+});
+
+test("an invalid command reports usage without spending a scanner call and can be corrected", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost({
+		seed: armed,
+		verdict: "VERDICT: CONTINUE - the scanner must not run for a command error",
+	});
+
+	const invalid = await run(
+		makeCtx({
+			transcript: [{ role: "user", content: "/auto-continue maybe" }],
+		}),
+		host
+	);
+	assert.equal(invalid.kind, "note");
+	assert.equal(
+		invalid.text,
+		"Use '/auto-continue on' to arm Auto Continue or '/auto-continue off' to stop it."
+	);
+	assert.deepEqual(JSON.parse(host.store.get("conv-123")), armed);
+	assert.deepEqual(host.storageCalls, []);
+	assert.equal(host.runAgentCalls.length, 0);
+
+	const stopped = await run(
+		makeCtx({
+			transcript: [{ role: "user", content: "/auto-continue off" }],
+		}),
+		host
+	);
+	assert.equal(stopped.kind, "note");
+	assert.match(stopped.text, /Auto-continue is off/);
+	assert.equal(host.store.has("conv-123"), false);
+	assert.deepEqual(host.storageCalls, [{ method: "delete", key: "conv-123" }]);
+	assert.equal(host.runAgentCalls.length, 0);
 });
 
 test("armed + scanner DONE → none", async () => {
@@ -299,6 +351,29 @@ test("scanner throw → none, and the hook logs it", async () => {
 	host.log = (...a) => logs.push(a.join(" "));
 	assert.deepEqual(await run(makeCtx(), host), { kind: "none" });
 	assert.ok(logs.length > 0, "the failure is logged");
+});
+
+test("a scanner failure is retryable on the next completed turn", async () => {
+	const run = loadHookRunner(parseManifest());
+	let attempts = 0;
+	const host = makeHost({
+		seed: armed,
+		verdict: () => {
+			attempts += 1;
+			if (attempts === 1) {
+				throw new Error("temporary scanner outage");
+			}
+			return "VERDICT: CONTINUE - the focused regression is still missing";
+		},
+	});
+	host.log = () => {};
+
+	assert.deepEqual(await run(makeCtx(), host), { kind: "none" });
+	assert.deepEqual(JSON.parse(host.store.get("conv-123")), armed);
+	const retried = await run(makeCtx(), host);
+	assert.equal(retried.kind, "continue");
+	assert.match(retried.text, /focused regression is still missing/);
+	assert.equal(attempts, 2, "one later hook dispatch performs one exact retry");
 });
 
 test("the scanner task carries the transcript and asks for the exact verdict lines", async () => {

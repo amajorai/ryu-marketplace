@@ -11,6 +11,11 @@ tools. The canonical browser facade intentionally exposes only the operations wh
 quick-action contract has a stable URL input; click, type, scroll, and tab-list
 operations stay native until a session-backed adapter can preserve their semantics.
 
+Navigate and snapshot return page `content`, the caller-selected `url`/`tab_id`,
+and the complete provider response in `raw`. Provider-specific snapshot fields
+stay in `raw`; a snapshot without a `content` field remains opaque under `content`.
+Non-string or blank URL handles are rejected before calling the provider.
+
 Install from Marketplace, complete the Cloudflare OAuth connection, then select
 **Cloudflare Browser Run** in the Browser provider picker. The provider is marked
 external because its browser runs on Cloudflare's edge rather than on the local

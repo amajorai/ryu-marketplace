@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/debugging",
   "name": "Debugging",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,15 +19,14 @@
     "bundle:ui-skills:debugging"
   ],
   "includes": [
-    "skill:mattpocock/diagnosing-bugs",
-    "skill:mattpocock/engineering",
-    "skill:cursor/thermo-nuclear-code-quality-review",
-    "skill:ibelick/improve-ui"
+    "skill:mattpocock/skills/diagnosing-bugs",
+    "skill:cursor/plugins/thermo-nuclear-code-quality-review",
+    "skill:ibelick/ui-skills/improve-ui"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/debugging",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/debugging",
     "ref": "main"
   },
   "security": {

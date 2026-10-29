@@ -1,0 +1,98 @@
+{
+  "tool": "agents.react",
+  "kind": "inline_tool",
+  "code_file": "tools/agents.react.js",
+  "cases": [
+    {
+      "name": "an omitted message id acknowledges the user's latest message",
+      "input": { "emoji": " 👍 " },
+      "caller": { "agent_id": "ryu", "conversation_id": "conv-42" },
+      "host": {
+        "reactionsAdd": [
+          {
+            "ok": true,
+            "conversation_id": "conv-42",
+            "message_id": "latest-user",
+            "emoji": "👍",
+            "from": "ryu"
+          }
+        ]
+      },
+      "expect": {
+        "ok": true,
+        "conversation_id": "conv-42",
+        "message_id": "latest-user",
+        "emoji": "👍",
+        "from": "ryu"
+      },
+      "expectCalls": [
+        { "path": "host.reactions.add", "args": { "emoji": "👍" } }
+      ]
+    },
+    {
+      "name": "a named message id is forwarded exactly, with no actor or conversation",
+      "input": {
+        "message_id": " message-42 ",
+        "emoji": "✅",
+        "agent_id": "forged-agent",
+        "conversation_id": "other-conversation"
+      },
+      "caller": { "agent_id": "reviewer", "conversation_id": "conv-42" },
+      "host": {
+        "reactionsAdd": [
+          {
+            "ok": true,
+            "conversation_id": "conv-42",
+            "message_id": "message-42",
+            "emoji": "✅",
+            "from": "reviewer"
+          }
+        ]
+      },
+      "expect": {
+        "ok": true,
+        "conversation_id": "conv-42",
+        "message_id": "message-42",
+        "emoji": "✅",
+        "from": "reviewer"
+      },
+      "expectCalls": [
+        {
+          "path": "host.reactions.add",
+          "args": { "message_id": "message-42", "emoji": "✅" }
+        }
+      ]
+    },
+    {
+      "name": "a blank emoji is refused before any write",
+      "input": { "emoji": "  " },
+      "caller": { "agent_id": "ryu", "conversation_id": "conv-42" },
+      "expectError": "'emoji' is required",
+      "expectCalls": []
+    },
+    {
+      "name": "an oversized message id is refused",
+      "input": {
+        "message_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "emoji": "👍"
+      },
+      "caller": { "agent_id": "ryu", "conversation_id": "conv-42" },
+      "expectError": "'message_id' must be at most 200 bytes",
+      "expectCalls": []
+    },
+    {
+      "name": "a call without a current conversation is refused",
+      "input": { "emoji": "👍" },
+      "caller": { "agent_id": "ryu" },
+      "expectError": "current conversation is required",
+      "expectCalls": []
+    },
+    {
+      "name": "a call without a verified calling agent is refused",
+      "input": { "emoji": "👀" },
+      "caller": { "conversation_id": "conv-42" },
+      "expectError": "calling agent could not be identified",
+      "expectCalls": []
+    }
+  ]
+}

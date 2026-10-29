@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.polite-prompts",
+  "version": "0.1.14",
+  "description": "Notices when a message is written in anger (insults, profanity aimed at the agent, shouting) and has a side model rewrite it into a calm, respectful prompt before it is sent. Every technical detail, constraint, code block and the urgency of the request are kept; only the abuse is dropped. Messages that read as ordinary are sent untouched without a model call, and `/polite` rewrites one message on demand.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/polite-prompts",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/polite-prompts",
+  "keywords": [
+    "prompt",
+    "tone",
+    "rewrite",
+    "composer"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/polite-prompts",
+      "displayName": "Polite Prompts"
+    }
+  }
+}

@@ -1,5 +1,17 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
 // Co-located contract test for the `mem0` plugin.
-// Runner: `node --test` (zero dependencies).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // `mem0` is a declarative HTTP-tool plugin AND the second provider of the `memory`
 // capability — the one that makes that layer swappable at all, and the one that makes
@@ -27,21 +39,34 @@ const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = join(here, "manifest.json");
 const raw = readFileSync(manifestPath, "utf8");
 
-test("manifest.json is valid parseable JSON", () => {
-	assert.doesNotThrow(() => JSON.parse(raw));
-});
-
 const manifest = JSON.parse(raw);
 
 test("has required top-level identity fields", () => {
 	assert.equal(manifest.id, "@ryu/mem0");
-	assert.equal(typeof manifest.name, "string");
+	assert.equal(isNativeText(manifest.name), true);
 	assert.ok(manifest.name.length > 0);
 	assert.match(manifest.version, /^\d+\.\d+\.\d+/);
 });
 
+test("Agent Plugins projection stays synchronized with the native manifest", () => {
+	const projection = JSON.parse(
+		readFileSync(join(here, "plugin.json"), "utf8")
+	);
+	assert.equal(projection.name, "ryu.mem0");
+	assert.equal(projection.version, manifest.version);
+	assert.equal(projection.description, manifest.description);
+	assert.deepEqual(projection.author, manifest.author);
+	assert.equal(projection.repository, manifest.repository);
+	assert.equal(projection.homepage, manifest.homepage);
+	assert.deepEqual(projection.keywords, manifest.keywords);
+	assert.deepEqual(projection.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
+});
+
 test("declares an engines.ryu constraint", () => {
-	assert.equal(typeof manifest.engines?.ryu, "string");
+	assert.equal(isNativeText(manifest.engines?.ryu), true);
 	assert.match(manifest.engines.ryu, /^>=/);
 });
 
@@ -531,7 +556,7 @@ test("contributes exactly one settings tab, declarative and node-scoped", () => 
 	assert.equal(tabs.length, 1);
 	const [tab] = tabs;
 	assert.equal(tab.id, "mem0.settings");
-	assert.equal(typeof tab.title, "string");
+	assert.equal(isNativeText(tab.title), true);
 	assert.ok(tab.title.length > 0);
 	// The secret-header resolver runs in Core ON THE NODE, so it can only read a
 	// node-scoped preference. A `user` (client-local) scope would be invisible to it
@@ -567,7 +592,7 @@ test("the secret field carries a real label and a sourcing description", () => {
 	const field = manifest.contributes.settings_tabs[0].fields.find(
 		(f) => f.type === "secret"
 	);
-	assert.equal(typeof field.label, "string");
+	assert.equal(isNativeText(field.label), true);
 	assert.ok(field.label.length > 0);
 	assert.ok(
 		field.description?.includes("https://"),
@@ -663,13 +688,13 @@ test("every pref: token in every binding has a settings field that writes it", (
 function prefTokens(tools) {
 	const found = [];
 	const walk = (node) => {
-		if (typeof node === "string") {
+		if (isNativeText(node)) {
 			if (node.startsWith("pref:")) {
 				found.push(node);
 			}
 			return;
 		}
-		if (node && typeof node === "object") {
+		if (node && isObjectRepresentation(node)) {
 			for (const value of Object.values(node)) {
 				walk(value);
 			}

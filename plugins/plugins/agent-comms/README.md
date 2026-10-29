@@ -18,20 +18,15 @@ the gateway plane's tool loop.
 | `agents.directory` | The other agents on this node: id, name, what each is for. Auto-discovery — call it when the user names an agent loosely, or to find out who is better placed to answer. |
 | `agents.send` | Leave a message in another agent's inbox and carry on. Delivered at the start of the recipient's next turn. |
 | `agents.thread` | What you and another agent have already said to each other, or the list of agents you have a thread with. |
-| `agents.react` | Add an emoji reaction to an exact persisted message in the current conversation, including a message authored by another agent. |
 
 Messages are deliberately asynchronous. `send` leaves a bounded handover in the
 recipient's inbox and costs nothing but a KV write; the recipient reads it at the
 start of its next turn. There is no tool in this plugin that starts another
 agent run or waits on another agent.
 
-`agents.react` is the lightweight reply form: it writes through Core's existing
-Message Reactions store and returns after the reaction is accepted. It takes the
-exact persisted `message_id` plus an `emoji`; the current conversation and the
-`agent:<id>` reaction actor come from Core's dispatch context. A message id from
-another conversation, a still-streaming client id, or a call without a current
-conversation is refused. The message author is not restricted, so agent-to-agent
-replies work in shared transcripts too.
+Reacting to a message (`agents.react`) is not part of this plugin: it ships with
+the pre-installed Message Reactions plugin (`plugins-store/plugins/reactions`), so
+every agent can react without enabling this mailbox.
 
 ## How a message is delivered
 
@@ -57,8 +52,8 @@ stops:
 
 1. **Hop limit (2).** Hop 1 is a user-initiated message; hop 2 is the one relay it
    may cause. The count travels on the message and is re-read from the
-   conversation that received it (or, inside a delegated run, from an
-   agent-scoped key, because a delegated peer has no conversation of its own).
+   conversation that received it, for the user turn that delivered it only: a
+   later turn that delivers no mail starts a fresh chain at hop 1.
 2. **No synchronous delegation.** This plugin only queues a bounded mailbox
    message. It cannot start another agent run, wait on another model, or spend a
    peer's tool budget.
@@ -78,9 +73,10 @@ model can act on, not an error it has to interpret.
   message sits until that agent runs again.
 - **The inbox is per-agent, not per-conversation.** An agent with several open
   chats reads its mail in whichever one runs next.
-- **The delivery hook has no `match` pre-gate**, so it costs one KV read and a
-  sandbox spawn per turn. That is why the plugin is install-on-demand and **off** by
-  default; install and enable it from the Store.
+- **The delivery hook has no `match` pre-gate**, so it costs two KV reads (the
+  inbox and the conversation's hop context) and a sandbox spawn per turn. That is
+  why the plugin is install-on-demand and **off** by default; install and enable
+  it from the Store.
 - **A message to an agent id that does not exist looks like a success.** The
   sandbox cannot check the roster (the tools have no network), so `agents.send`
   returns `ok:true` and the message waits in an inbox nobody reads. Pair `send`
@@ -111,8 +107,8 @@ controls apply to both bot threads and group-chat threads.
 
 | Path | What |
 | --- | --- |
-| `manifest.json` | The four tools, the two hooks, and the grants (`tool:execute`, `storage:kv`, `conversation:reactions`, `tool:http-egress:127.0.0.1`). |
-| `tools/*.js` | The `inline_deno` tool bodies — the SOURCE form. Sealed into the manifest's `code` strings. |
+| `manifest.json` | The three tools, the two hooks, and the grants (`tool:execute`, `storage:kv`, `tool:http-egress:127.0.0.1`). |
+| `tools/*.js` | The `inline_js` tool bodies — the SOURCE form. Sealed into the manifest's `code` strings. |
 | `hooks/deliver.js` | `pre_user_turn` — delivers the inbox. |
 | `hooks/directory.js` | `tool_result` — projects `agents.directory` down to id/name/description, so no other agent's `system_prompt` ever reaches the transcript. |
 | `seal.mjs` | Seals `tools/*.js` into the manifest (`--check` verifies). |

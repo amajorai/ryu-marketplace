@@ -25,9 +25,28 @@ from the previous session have no completion record … they have been marked st
 so the agent re-verifies (is the port still bound?) instead of assuming its server is
 still up. This mirrors Claude Code's background-task restart warning.
 
+The ledger is owner-only (`0600`) and keeps a credential-redacted preview of each
+command, capped at 400 characters, not the exact command line: inline `*_KEY=`/`*_TOKEN=`
+assignments, `Authorization:`/`x-api-key:` headers, `Bearer` values, URL user-info,
+`--token`/`--password` style flags and `-u user:pass` become `[redacted]`. The redaction
+is pattern-based, so a secret in an unusual shape can still slip through; it is not
+encryption. Older ledgers are redacted and tightened the next time the extension writes
+them.
+
 The TypeScript is loaded by the Pi process itself, unsandboxed, so Core gates the
 contribution: Core-tier is auto-allowed, anything else needs the operator-only
 `pi:extension` grant. The file reaches the agent through
 `pi_config::app_extensions`, which writes it into `~/.ryu/pi-agent/extensions/` and
 deletes it again when the plugin is disabled. **Toggling takes effect in a new chat** —
 Pi reads its extensions at process start.
+
+### Invalid background-state inputs
+
+Core background-control responses are validated before stop requests are applied.
+A response that omits the stop list or includes a stop with a non-string process
+ID or reason is ignored as a failed bridge response; valid Core responses retain
+the existing stop behavior. Persisted shell ledgers are checked against the
+shipping record fields before orphan recovery. Invalid records make the advisory
+ledger follow the logged empty-ledger fallback; they are not used to signal a
+process. This also applies to older hand-written records that omit required
+command, working directory, owning process ID, timestamp, or status fields.

@@ -47,25 +47,25 @@
     },
     {
       "kind": "skill",
-      "id": "aashaexo/humanize",
+      "id": "aashaexo/soundshuman/humanize",
       "name": "Humanize",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "aminblg/simple-english",
+      "id": "aminblg/simpleenglish/simple-english",
       "name": "Simple English",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "elithrar/anti-slop",
+      "id": "elithrar/dotfiles/anti-slop",
       "name": "Anti-Slop",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "pbakaus/critique",
+      "id": "pbakaus/impeccable/critique",
       "name": "Critique",
       "required": false
     }

@@ -4,25 +4,19 @@
   "members": [
     {
       "kind": "skill",
-      "id": "mattpocock/diagnosing-bugs",
+      "id": "mattpocock/skills/diagnosing-bugs",
       "name": "Diagnosing Bugs",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "mattpocock/engineering",
-      "name": "Engineering",
-      "required": false
-    },
-    {
-      "kind": "skill",
-      "id": "cursor/thermo-nuclear-code-quality-review",
+      "id": "cursor/plugins/thermo-nuclear-code-quality-review",
       "name": "Thermo Nuclear Code Quality Review",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "ibelick/improve-ui",
+      "id": "ibelick/ui-skills/improve-ui",
       "name": "Improve UI",
       "required": false
     }

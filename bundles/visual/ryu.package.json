@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/visual",
   "name": "Visual",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,20 +19,20 @@
     "bundle:ui-skills:visual"
   ],
   "includes": [
-    "skill:0xdesign/design-lab",
-    "skill:antfu/antfu-design",
-    "skill:anthropics/canvas-design",
-    "skill:anthropics/frontend-design",
-    "skill:calicastle/signal-geometry",
-    "skill:dammyjay93/interface-design",
-    "skill:ibelick/improve-ui",
-    "skill:pbakaus/impeccable",
-    "skill:pbakaus/polish"
+    "skill:0xdesign/design-plugin/design-lab",
+    "skill:antfu/skills/antfu-design",
+    "skill:anthropics/skills/canvas-design",
+    "skill:anthropics/skills/frontend-design",
+    "skill:calicastle/skills/signal-geometry",
+    "skill:dammyjay93/interface-design/interface-design",
+    "skill:ibelick/ui-skills/improve-ui",
+    "skill:pbakaus/impeccable/impeccable",
+    "skill:pbakaus/impeccable/polish"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/visual",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/visual",
     "ref": "main"
   },
   "security": {

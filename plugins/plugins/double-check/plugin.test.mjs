@@ -1,4 +1,17 @@
-// Co-located, zero-dependency test for the `double-check` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeFunction,
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
+// Co-located test for the `double-check` plugin.
 // Run with:  node --test plugins-store/plugins/double-check/plugin.test.mjs
 //
 // `double-check` is an INLINE-HOOK plugin: its behaviour lives entirely in the
@@ -83,16 +96,16 @@ function makeHost(reply) {
 		calls,
 		sideModel: async (args) => {
 			calls.push(args);
-			return typeof reply === "function" ? reply(args) : reply;
+			return isNativeFunction(reply) ? reply(args) : reply;
 		},
 	};
 }
 
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
-	assert.equal(typeof m, "object");
+	assert.equal(isObjectRepresentation(m), true);
 	assert.equal(m.id, "@ryu/double-check");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });
@@ -121,7 +134,7 @@ test("declared contributes fields are well-formed", () => {
 	const hook = m.contributes.turn_hooks[0];
 	assert.equal(hook.on, "post_assistant_turn");
 	assert.equal(hook.match.flag, FLAG);
-	assert.equal(typeof hook.code, "string");
+	assert.equal(isNativeText(hook.code), true);
 	assert.ok(hook.code.includes("host.sideModel"));
 });
 
@@ -206,7 +219,7 @@ test("hook calls sideModel with the right args and returns a note", async () => 
 	);
 });
 
-test("hook uses the newest assistant + user turns (reverse scan)", async () => {
+test("hook uses the newest completed user and assistant exchange", async () => {
 	const run = loadHookRunner(parseManifest());
 	const host = makeHost("note");
 	const ctx = makeCtx({
@@ -222,6 +235,78 @@ test("hook uses the newest assistant + user turns (reverse scan)", async () => {
 	assert.ok(prompt.includes("NEW question"), "picks newest user turn");
 	assert.ok(prompt.includes("NEW answer"), "picks newest assistant turn");
 	assert.ok(!prompt.includes("OLD"), "ignores older turns");
+});
+
+test("hook pairs the newest assistant with the user turn that preceded it", async () => {
+	const run = loadHookRunner(parseManifest());
+	const host = makeHost("note");
+	const ctx = makeCtx({
+		transcript: [
+			{ role: "user", content: "Question being answered" },
+			{ role: "assistant", content: "Answer under review" },
+			{ role: "user", content: "Queued follow-up, not yet answered" },
+		],
+	});
+
+	await run(ctx, host);
+	const { prompt } = host.calls[0];
+	assert.ok(prompt.includes("Question being answered"));
+	assert.ok(prompt.includes("Answer under review"));
+	assert.ok(!prompt.includes("Queued follow-up"));
+});
+
+test("concurrent reviews keep their prompts and results isolated", async () => {
+	const run = loadHookRunner(parseManifest());
+	const releases = new Map();
+	const host = makeHost(
+		({ prompt }) =>
+			new Promise((resolve) => {
+				releases.set(prompt, resolve);
+			})
+	);
+	const first = run(
+		makeCtx({
+			transcript: [
+				{ role: "user", content: "first question" },
+				{ role: "assistant", content: "first answer" },
+			],
+		}),
+		host
+	);
+	const second = run(
+		makeCtx({
+			transcript: [
+				{ role: "user", content: "second question" },
+				{ role: "assistant", content: "second answer" },
+			],
+		}),
+		host
+	);
+
+	assert.equal(host.calls.length, 2);
+	const firstPrompt = host.calls.find(({ prompt }) =>
+		prompt.includes("first question")
+	).prompt;
+	const secondPrompt = host.calls.find(({ prompt }) =>
+		prompt.includes("second question")
+	).prompt;
+	releases.get(secondPrompt)("second review");
+	assert.deepEqual(await second, { kind: "note", text: "second review" });
+	releases.get(firstPrompt)("first review");
+	assert.deepEqual(await first, { kind: "note", text: "first review" });
+});
+
+test("side-model refusal is surfaced to the host without an automatic retry", async () => {
+	const run = loadHookRunner(parseManifest());
+	let calls = 0;
+	const refusal = new Error("review denied");
+	const host = makeHost(() => {
+		calls += 1;
+		throw refusal;
+	});
+
+	await assert.rejects(run(makeCtx(), host), (error) => error === refusal);
+	assert.equal(calls, 1, "the hook must not duplicate a model request");
 });
 
 test("empty / whitespace-only review degrades to {kind:'none'}", async () => {

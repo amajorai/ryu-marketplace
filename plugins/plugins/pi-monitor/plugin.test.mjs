@@ -7,14 +7,16 @@
 // test pins the things that would otherwise fail SILENTLY at runtime — the
 // declared file missing from disk, a tool name that collides with a Pi built-in,
 // an import outside the closed module set, and a slash command that would
-// deadlock the turn. It never edits manifest.json.
+// deadlock the turn. runtime.behavior.test.mjs also calls the production tools
+// against deterministic local command and WebSocket fixtures.
 
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -81,7 +83,7 @@ test("imports only the closed module set", () => {
 	const allowed = /^(node:\S+|\w+|@[a-z0-9-]+\/[a-z0-9-]+)$/;
 	for (const specifier of imports) {
 		assert.ok(
-			allowed.test(specifier),
+			specifier === "typebox/value" || allowed.test(specifier),
 			`import "${specifier}" is outside the closed module set (node: built-ins and the pi packages only)`
 		);
 	}
@@ -110,13 +112,19 @@ test("never registers a slash command", () => {
 
 test("rejects catastrophic regexes and bounds a no-newline megabyte line", () => {
 	const modulePath = join(HERE, manifest.contributes.pi_extensions[0].file);
+	const piRequire = createRequire(
+		import.meta.resolve("@earendil-works/pi-coding-agent")
+	);
+	const nativeTypeboxURL = pathToFileURL(piRequire.resolve("typebox")).href;
+	const nativeValueURL = pathToFileURL(piRequire.resolve("typebox/value")).href;
 	const script = `
 		import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 		import { join } from "node:path";
 		const source = readFileSync(${JSON.stringify(modulePath)}, "utf8")
 			.replace(/\\r\\n?/g, "\\n")
 			.replace(/^import type .*?;\\n/m, "")
-			.replace(/^import \\{ Type \\} from "typebox";\\n/m, "")
+			.replaceAll('from "typebox"', ${JSON.stringify(`from "${nativeTypeboxURL}"`)})
+			.replaceAll('from "typebox/value"', ${JSON.stringify(`from "${nativeValueURL}"`)})
 			.replace("export default function", "function")
 			.replace("function (pi: ExtensionAPI)", "function extension(pi)")
 			.replace("export { compileUntil, makeLineSink };", "");

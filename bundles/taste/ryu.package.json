@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-closed/main/tools/marketplace-overlay/schema/ryu.package.schema.json",
+  "$schema": "https://raw.githubusercontent.com/amajorai/ryu-marketplace/HEAD/schema/ryu.package.schema.json",
   "schemaVersion": 1,
   "id": "ryu/bundle/taste",
   "name": "Taste",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"
@@ -19,31 +19,26 @@
     "bundle:ui-skills:taste"
   ],
   "includes": [
-    "skill:aashaexo/humanize",
-    "skill:aboudjem/humanizer",
-    "skill:blader/humanizer",
-    "skill:cursor/unslop",
-    "skill:ehmo/slopbeth",
-    "skill:elithrar/anti-slop",
-    "skill:emilkowalski/emil-design-eng",
-    "skill:ericzakariasson/scandinavian-design",
-    "skill:hardikpandya/stop-slop",
-    "skill:jalaalrd/anti-ai-slop-writing",
-    "skill:leonxlnx/brutalist-skill",
-    "skill:leonxlnx/minimalist-skill",
-    "skill:leonxlnx/soft-skill",
-    "skill:leonxlnx/stitch-skill",
-    "skill:leonxlnx/taste-skill",
-    "skill:pbakaus/bolder",
-    "skill:pbakaus/critique",
-    "skill:pbakaus/delight",
-    "skill:petergyang/no-ai-slop",
-    "skill:stephenturner/deslop"
+    "skill:aashaexo/soundshuman/humanize",
+    "skill:aboudjem/humanizer-skill/humanizer",
+    "skill:blader/humanizer/humanizer",
+    "skill:cursor/plugins/unslop",
+    "skill:ehmo/slopkit/slopbeth",
+    "skill:elithrar/dotfiles/anti-slop",
+    "skill:emilkowalski/skills/emil-design-eng",
+    "skill:ericzakariasson/scandinavian-design/scandinavian-design",
+    "skill:hardikpandya/stop-slop/stop-slop",
+    "skill:jalaalrd/anti-ai-slop-writing/anti-ai-slop-writing",
+    "skill:leonxlnx/taste-skill/taste-skill",
+    "skill:pbakaus/impeccable/bolder",
+    "skill:pbakaus/impeccable/critique",
+    "skill:pbakaus/impeccable/delight",
+    "skill:petergyang/no-ai-slop/no-ai-slop"
   ],
   "source": {
     "type": "github",
-    "repository": "amajorai/ryu-closed",
-    "path": "marketplace-store/bundles/taste",
+    "repository": "amajorai/ryu-marketplace",
+    "path": "bundles/taste",
     "ref": "main"
   },
   "security": {

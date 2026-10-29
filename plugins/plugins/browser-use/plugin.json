@@ -1,0 +1,30 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.browser-use",
+  "version": "0.1.0",
+  "description": "Preview of Browser Use's open-source local browser as a provider for Ryu's swappable browser.control layer, over its official MCP server (`browser-use --mcp`). Not usable as the Browser layer yet: Ryu starts a fresh browser-use process for every tool call, and browser-use keeps its browser inside that process, so a tab opened by one call is gone by the next. It is hidden from the store while that is the case. The browseruse.* tools stay callable directly, but only a task that finishes within one call, such as retry_with_browser_use_agent, works that way. Launched from the pinned browser-use 0.13.11 package with uvx, with anonymous telemetry and cloud sync off; needs uv on PATH.",
+  "author": {
+    "name": "Browser Use",
+    "url": "https://browser-use.com"
+  },
+  "homepage": "https://browser-use.com",
+  "repository": "https://github.com/browser-use/browser-use",
+  "license": "MIT",
+  "keywords": [
+    "browser",
+    "automation",
+    "browser-use",
+    "web"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/browser-use",
+      "displayName": "Browser Use",
+      "mcp": {
+        "browseruse": {
+          "description": "Browser Use MCP server, launched via `uvx browser-use@0.13.11 --mcp` with anonymous telemetry and cloud sync off. Tools include browser_navigate, browser_click, browser_type, browser_get_state, browser_extract_content, browser_get_html, browser_screenshot, browser_scroll, tab management, session management, and retry_with_browser_use_agent. Unavailable until uv is installed and the pinned package can be fetched."
+        }
+      }
+    }
+  }
+}

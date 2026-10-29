@@ -1,12 +1,9 @@
 // Co-located, zero-dependency test for the `pi-shell` plugin.
 // Run with:  node --test plugins-store/plugins/pi-shell/plugin.test.mjs
 //
-// `pi-shell` is a PI-EXTENSION plugin: it carries no sandboxed hook JS at all, only
-// a `contributes.pi_extensions` row naming a TypeScript file the managed Pi agent
-// loads at process start. There is no hook body to execute here, so this test pins
-// the two things that would otherwise fail SILENTLY at runtime — the declared file
-// missing from disk, and the tool-name rule the extension's whole design rests on.
-// It never edits manifest.json.
+// `pi-shell` is a Pi extension, so the companion runtime.behavior.test.mjs loads
+// its production TypeScript body through Node with local Pi/TypeBox fixtures.
+// This file pins package wiring and privilege boundaries.
 
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";

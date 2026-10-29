@@ -4,31 +4,25 @@
   "members": [
     {
       "kind": "skill",
-      "id": "danilaa1/compact-landing",
-      "name": "Compact Landing",
-      "required": false
-    },
-    {
-      "kind": "skill",
-      "id": "ericzakariasson/scandinavian-design",
+      "id": "ericzakariasson/scandinavian-design/scandinavian-design",
       "name": "Scandinavian Design",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-typography",
+      "id": "jakubkrehel/skills/better-typography",
       "name": "Better Typography",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "pbakaus/typeset",
+      "id": "pbakaus/impeccable/typeset",
       "name": "Typeset",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "aminblg/simple-english",
+      "id": "aminblg/simpleenglish/simple-english",
       "name": "Simple English",
       "required": true
     }

@@ -8,7 +8,7 @@
   "license": "Apache-2.0",
   "id": "@ryu/zvec-grep",
   "name": "zvec-grep",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "stability": "experimental",
   "description": "Local-first hybrid workspace search through zvec-grep's `zg` MCP bridge. Use semantic and ranked retrieval over an explicitly indexed workspace, with local models by default and source-linked results. Requires Node.js 22+; no Ryu API key.",
   "icon": "book-search",

@@ -17,9 +17,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install lua-language-server (Homebrew: `brew install lua-language-server`, or from the GitHub releases).
-```
+Install lua-language-server: on macOS, `brew install lua-language-server`; on Arch Linux, `sudo pacman -S lua-language-server`; on Windows, `scoop install lua-language-server`; or download a build for any platform from the project's GitHub releases.
 
 ## More information
 

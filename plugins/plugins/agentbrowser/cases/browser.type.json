@@ -1,0 +1,135 @@
+{
+  "tool": "browser.type",
+  "kind": "adapter",
+  "code_file": "adapters/browser.type.js",
+  "adapter_tools": [
+    "agentbrowser.agent_browser_tab_switch",
+    "agentbrowser.agent_browser_press"
+  ],
+  "cases": [
+    {
+      "name": "types without submitting",
+      "input": {
+        "ref": "@e2",
+        "text": "hello"
+      },
+      "provider": {
+        "call": [
+          {
+            "content": []
+          }
+        ]
+      },
+      "expect": {
+        "ok": true,
+        "ref": "@e2",
+        "submitted": false,
+        "raw": {
+          "content": []
+        }
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "selector": "@e2",
+            "text": "hello",
+            "clear": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "replaces and submits with Enter",
+      "input": {
+        "ref": "@e2",
+        "text": "hello",
+        "replace": true,
+        "submit": true
+      },
+      "provider": {
+        "call": [
+          {
+            "content": []
+          }
+        ],
+        "named": {
+          "agentbrowser.agent_browser_press": [
+            {
+              "content": []
+            }
+          ]
+        }
+      },
+      "expect": {
+        "ok": true,
+        "ref": "@e2",
+        "submitted": true,
+        "raw": {
+          "typed": {
+            "content": []
+          },
+          "pressed": {
+            "content": []
+          }
+        }
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "selector": "@e2",
+            "text": "hello",
+            "clear": true
+          }
+        },
+        {
+          "path": "callNamed:agentbrowser.agent_browser_press",
+          "args": {
+            "key": "Enter"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a typing error is returned before any key press",
+      "input": {
+        "ref": "@e2",
+        "text": "x",
+        "submit": true
+      },
+      "provider": {
+        "call": [
+          {
+            "isError": true,
+            "content": [
+              {
+                "type": "text",
+                "text": "no element"
+              }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "isError": true,
+        "content": [
+          {
+            "type": "text",
+            "text": "no element"
+          }
+        ]
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "selector": "@e2",
+            "text": "x",
+            "clear": false
+          }
+        }
+      ]
+    }
+  ]
+}

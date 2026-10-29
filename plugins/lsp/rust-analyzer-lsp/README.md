@@ -17,9 +17,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
-Install rust-analyzer: `rustup component add rust-analyzer`, or `brew install rust-analyzer`.
-```
+Install rust-analyzer with rustup on any platform: `rustup component add rust-analyzer`, or `brew install rust-analyzer` on macOS.
 
 ## More information
 

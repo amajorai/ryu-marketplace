@@ -1,7 +1,7 @@
 {
   "id": "@ryu/kill-switch",
   "name": "Kill Switch",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "stability": "experimental",
   "description": "Stop running chats and bots on the selected node and pause new work until you resume execution.",
   "tagline": "Stop chats and bots immediately",
@@ -10,6 +10,7 @@
   "tags": ["chat", "bots", "safety", "control"],
   "keywords": ["kill switch", "stop", "pause", "cancel", "bots"],
   "icon": "stop-circle",
+  "iconDither": { "from": 198, "to": "transparent", "direction": "down" },
   "engines": { "ryu": ">=0.4.0" },
   "surfaces": {
     "core": { "support": "full" },

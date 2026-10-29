@@ -1,4 +1,17 @@
-// Co-located, zero-dependency test for the `no-ai-slop` plugin.
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeFunction,
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
+// Co-located test for the `no-ai-slop` plugin.
 // Run with:  node --test plugins-store/plugins/no-ai-slop/plugin.test.mjs
 //
 // The plugin's behaviour lives entirely in `hooks/review.js`, which Core hydrates
@@ -17,6 +30,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { runOnce } from "../../../tools/toolsmith/harness.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -24,6 +38,7 @@ const FLAG = "io.ryu.no-ai-slop";
 const MARKER = "No-AI-slop review (pass";
 
 const raw = readFileSync(MANIFEST_PATH, "utf8");
+const plugin = JSON.parse(readFileSync(join(HERE, "plugin.json"), "utf8"));
 
 // ── code_file hydration ───────────────────────────────────────────────────────
 // This plugin keeps its sandboxed JS in a real file (`hooks/review.js`) and
@@ -92,7 +107,7 @@ function makeHost(reply, prefs = {}) {
 			Object.hasOwn(prefs, key) ? prefs[key] : null,
 		runAgent: async (args) => {
 			calls.push(args);
-			return typeof reply === "function" ? reply(args) : reply;
+			return isNativeFunction(reply) ? reply(args) : reply;
 		},
 		log: () => {},
 	};
@@ -102,15 +117,22 @@ const FOUND = 'SLOP: found\n- "paradigm shift" — banned word. Cut it.';
 
 test("manifest.json is valid JSON with id/name/version", () => {
 	const m = parseManifest();
-	assert.equal(typeof m, "object");
+	assert.equal(isObjectRepresentation(m), true);
 	assert.equal(m.id, "@ryu/no-ai-slop");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.ok(m.name.length > 0);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/);
 });
 
 test("declared contributes fields are well-formed", () => {
 	const m = parseManifest();
+	assert.deepEqual(m.activation_events, ["*"]);
+	assert.deepEqual(plugin.extensions["com.ryuhq.ryu"], {
+		id: m.id,
+		displayName: m.name,
+	});
+	assert.equal(plugin.version, m.version);
+	assert.deepEqual(m.permission_grants, ["hook:run-agent", "preferences:read"]);
 
 	// grants required to reach host.runAgent and host.getPreference
 	assert.ok(
@@ -124,10 +146,24 @@ test("declared contributes fields are well-formed", () => {
 	// plugin_flags is HashMap<String, bool> in Core, so a `select` control's
 	// string value could never reach ctx.flags.
 	const toggle = m.contributes.composer_controls[0];
+	assert.equal(toggle.id, "no-ai-slop.toggle");
 	assert.equal(toggle.type, "toggle");
 	assert.equal(toggle.flag, FLAG);
+	assert.equal(toggle.label, "No AI slop");
 
-	const fields = m.contributes.settings_tabs[0].fields;
+	const settingsTab = m.contributes.settings_tabs[0];
+	assert.deepEqual(
+		[settingsTab.id, settingsTab.title],
+		["no-ai-slop.settings", "No AI slop"]
+	);
+	const fields = settingsTab.fields;
+	assert.deepEqual(
+		fields.map((field) => [field.pref_key, field.label, field.type]),
+		[
+			["no-ai-slop-passes", "Automatic review passes", "number"],
+			["no-ai-slop-mode", "What a review does", "select"],
+		]
+	);
 	const passes = fields.find((f) => f.pref_key === "no-ai-slop-passes");
 	assert.equal(passes.type, "number");
 	assert.equal(passes.default, 1);
@@ -148,7 +184,7 @@ test("declared contributes fields are well-formed", () => {
 	const hook = m.contributes.turn_hooks[0];
 	assert.equal(hook.on, "post_assistant_turn");
 	assert.ok(!("match" in hook), "no match gate: it must see every turn");
-	assert.equal(typeof hook.code, "string");
+	assert.equal(isNativeText(hook.code), true);
 	assert.ok(hook.code.includes("host.runAgent"));
 });
 
@@ -164,6 +200,33 @@ test("the skill is bundled in the hook body, not read from disk", () => {
 		!existsSync(join(HERE, "SKILL.md")),
 		"a second copy of the rules would drift from the one the sandbox runs"
 	);
+});
+
+test("Toolsmith executes the hydrated hook with a deterministic local reviewer", async () => {
+	const hook = parseManifest().contributes.turn_hooks[0];
+	const testCase = {
+		ctx: makeCtx(),
+		host: { runAgent: ["SLOP: none"] },
+	};
+	const first = await runOnce({ kind: "turn_hook", code: hook.code, testCase });
+	const second = await runOnce({
+		kind: "turn_hook",
+		code: hook.code,
+		testCase,
+	});
+
+	assert.deepEqual(
+		second,
+		first,
+		"the real hook must be deterministic for this fixture"
+	);
+	assert.deepEqual(first.value, { kind: "none" });
+	assert.equal(first.calls.length, 1);
+	assert.equal(first.calls[0].path, "host.runAgent");
+	assert.equal(first.calls[0].args.agent_id, "ryu");
+	assert.equal(first.calls[0].args.preset, "summarise");
+	assert.match(first.calls[0].args.task, /paradigm shift/);
+	assert.doesNotMatch(first.calls[0].args.task, /Summarise the refactor\./);
 });
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
@@ -398,4 +461,79 @@ test("JSON-quoted preference values are parsed", async () => {
 		"no-ai-slop-mode": '"report"',
 	});
 	assert.deepEqual(await run(makeCtx(), host), { kind: "note", text: FOUND });
+});
+
+test("a missing or malformed transcript is refused without reviewer spend", async () => {
+	const run = loadHookRunner(parseManifest());
+	for (const transcript of [undefined, null, "not-a-transcript", {}]) {
+		const host = makeHost(FOUND);
+		assert.deepEqual(await run(makeCtx({ transcript }), host), {
+			kind: "none",
+		});
+		assert.equal(host.calls.length, 0);
+	}
+});
+
+test("only an exact clean verdict suppresses reported findings", async () => {
+	const run = loadHookRunner(parseManifest());
+	const ambiguous = "SLOP: none\nSLOP: found\n- a contradictory finding";
+	const directive = await run(makeCtx(), makeHost(ambiguous));
+	assert.equal(directive.kind, "continue");
+	assert.match(directive.text, /contradictory finding/);
+});
+
+test("reviewer failure propagates and one explicit retry performs one new call", async () => {
+	const run = loadHookRunner(parseManifest());
+	let attempts = 0;
+	const failure = new Error("reviewer unavailable");
+	const host = makeHost(() => {
+		attempts += 1;
+		if (attempts === 1) {
+			throw failure;
+		}
+		return FOUND;
+	});
+
+	await assert.rejects(run(makeCtx(), host), (error) => error === failure);
+	assert.equal(
+		attempts,
+		1,
+		"the hook must not retry a failed effect implicitly"
+	);
+	const directive = await run(makeCtx(), host);
+	assert.equal(directive.kind, "continue");
+	assert.equal(
+		attempts,
+		2,
+		"the caller's retry performs exactly one new review"
+	);
+});
+
+test("cancellation propagates without fabricating a clean result", async () => {
+	const run = loadHookRunner(parseManifest());
+	const cancellation = new Error("operation canceled");
+	cancellation.name = "AbortError";
+	const host = makeHost(() => {
+		throw cancellation;
+	});
+
+	await assert.rejects(run(makeCtx(), host), (error) => error === cancellation);
+	assert.equal(host.calls.length, 1);
+});
+
+test("concurrent reviews keep their agent identity and findings isolated", async () => {
+	const run = loadHookRunner(parseManifest());
+	const alphaHost = makeHost("SLOP: found\n- alpha finding");
+	const betaHost = makeHost("SLOP: found\n- beta finding");
+	const [alpha, beta] = await Promise.all([
+		run(makeCtx({ agent_id: "alpha" }), alphaHost),
+		run(makeCtx({ agent_id: "beta" }), betaHost),
+	]);
+
+	assert.match(alpha.text, /alpha finding/);
+	assert.doesNotMatch(alpha.text, /beta finding/);
+	assert.match(beta.text, /beta finding/);
+	assert.doesNotMatch(beta.text, /alpha finding/);
+	assert.equal(alphaHost.calls[0].agent_id, "alpha");
+	assert.equal(betaHost.calls[0].agent_id, "beta");
 });

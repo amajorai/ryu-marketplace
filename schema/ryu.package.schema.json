@@ -62,10 +62,27 @@
     "includes": { "type": "array", "items": { "type": "string" } },
     "source": { "$ref": "#/definitions/source" },
     "security": { "$ref": "#/definitions/security" },
+    "allowRemix": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether others may remix this package: copy it into an editable item of their own and publish it with a remixedFrom credit. Absent means allowed; set false to opt out."
+    },
+    "remixedFrom": { "$ref": "#/definitions/remixedFrom" },
     "metadata": { "type": "object", "additionalProperties": true }
   },
   "additionalProperties": true,
   "definitions": {
+    "remixedFrom": {
+      "type": "object",
+      "description": "The marketplace listing this package was remixed from.",
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
     "source": {
       "type": "object",
       "required": ["type"],

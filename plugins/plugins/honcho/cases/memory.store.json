@@ -1,0 +1,173 @@
+{
+  "tool": "memory.store",
+  "kind": "adapter",
+  "code_file": "adapters/memory.store.js",
+  "adapter_tools": ["honcho.peer_upsert", "honcho.session_upsert"],
+  "cases": [
+    {
+      "name": "stores a fact with its Ryu metadata",
+      "input": {
+        "content": "  likes tea  ",
+        "scope": "user",
+        "category": "preference"
+      },
+      "defaults": {
+        "workspace_id": "ws",
+        "peer_id": "me",
+        "session_id": "s1"
+      },
+      "provider": {
+        "call": [
+          [
+            {
+              "id": "m1"
+            }
+          ]
+        ]
+      },
+      "expect": {
+        "stored": true,
+        "count": 1,
+        "peer": "me",
+        "session": "s1"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "workspace_id": "ws",
+            "session_id": "s1",
+            "messages": [
+              {
+                "content": "likes tea",
+                "peer_id": "me",
+                "metadata": {
+                  "ryu_kind": "fact",
+                  "ryu_scope": "user",
+                  "ryu_category": "preference"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "creates the peer and session on 404, then retries once",
+      "input": {
+        "content": "likes tea"
+      },
+      "defaults": {
+        "workspace_id": "ws",
+        "peer_id": "me"
+      },
+      "provider": {
+        "call": [
+          {
+            "status": 404
+          },
+          [
+            {
+              "id": "m1"
+            }
+          ]
+        ],
+        "named": {
+          "honcho.peer_upsert": [
+            {
+              "id": "me"
+            }
+          ],
+          "honcho.session_upsert": [
+            {
+              "id": "ryu"
+            }
+          ]
+        }
+      },
+      "expect": {
+        "stored": true,
+        "count": 1,
+        "peer": "me",
+        "session": "ryu"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "workspace_id": "ws",
+            "session_id": "ryu",
+            "messages": [
+              {
+                "content": "likes tea",
+                "peer_id": "me",
+                "metadata": {
+                  "ryu_kind": "fact"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "callNamed:honcho.peer_upsert",
+          "args": {
+            "workspace_id": "ws",
+            "id": "me"
+          }
+        },
+        {
+          "path": "callNamed:honcho.session_upsert",
+          "args": {
+            "workspace_id": "ws",
+            "id": "ryu"
+          }
+        },
+        {
+          "path": "callTool",
+          "args": {
+            "workspace_id": "ws",
+            "session_id": "ryu",
+            "messages": [
+              {
+                "content": "likes tea",
+                "peer_id": "me",
+                "metadata": {
+                  "ryu_kind": "fact"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "refuses without workspace and peer settings, calling nothing",
+      "input": {
+        "content": "x"
+      },
+      "defaults": {},
+      "provider": {},
+      "expect": {
+        "stored": false,
+        "error": "honcho: set the workspace id and peer id in the Honcho settings tab"
+      },
+      "expectCalls": []
+    },
+    {
+      "name": "refuses empty content",
+      "input": {
+        "content": "   "
+      },
+      "defaults": {
+        "workspace_id": "ws",
+        "peer_id": "me"
+      },
+      "provider": {},
+      "expect": {
+        "stored": false,
+        "error": "honcho: nothing to store"
+      },
+      "expectCalls": []
+    }
+  ]
+}

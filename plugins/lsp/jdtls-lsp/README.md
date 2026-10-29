@@ -17,9 +17,7 @@ graceful skip with a visible reason, never a hard failure.
 
 ## Install the server
 
-```bash
 Install jdtls (Homebrew: `brew install jdtls`), or download the JDT.LS snapshot and put a `jdtls` wrapper on PATH. Requires a JDK (17 or later), not just a JRE.
-```
 
 ## More information
 

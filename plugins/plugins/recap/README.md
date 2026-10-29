@@ -68,7 +68,7 @@ describes what the agent *said* it did. There is no tool ledger, on purpose:
 - It fires from Core's MCP registry dispatch, which an ACP agent's own tools never reach —
   Claude and Codex run `Read`/`Edit`/`Bash` in their own process. The ledger would be
   empty for exactly the agents most people run.
-- It is detached and per-call, so observing it means one Deno sandbox spawn per tool call.
+- It is detached and per-call, so observing it means one JS sandbox spawn per tool call.
 
 If those change, a third hook can be added without touching anything else here.
 

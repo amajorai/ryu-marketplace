@@ -101,7 +101,7 @@ def _load_model() -> tuple[Any, Any]:
                 local_files_only=True,
                 trust_remote_code=False,
                 use_safetensors=True,
-                torch_dtype=torch.float32,
+                dtype=torch.float32,
             )
             model.eval()
             _processor = processor

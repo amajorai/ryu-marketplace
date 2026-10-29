@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ryu.reactions",
-  "version": "0.1.0",
-  "description": "Adds emoji reactions to persisted chat messages through the shared message-action contribution surface.",
+  "version": "0.2.0",
+  "description": "Emoji reactions on chat messages. People react from the message toolbar or right-click menu, and agents react with the agents.react tool, for example a 👍 on a quick instruction instead of a \"Got it\" reply. On a channel bot, the agent's reaction is mirrored onto the message it answered on platforms that support bot reactions.",
   "author": {
     "name": "Ryu",
     "url": "https://ryuhq.com"

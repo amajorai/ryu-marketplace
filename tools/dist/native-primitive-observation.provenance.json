@@ -1,0 +1,20 @@
+{
+  "canonicalSource": "packages/ui/src/lib/native-primitive-observation.ts",
+  "canonicalSourceSha256": "8122147d738f2fc5b7d0eb4fcef3e8860ca8a637d691f52a64b33a372b9e05b7",
+  "canonicalSourceLicenseSha256": "70b45e9c55a5d8f61ab1d7baf1791ac00461b8ee327034dc8a0c85023b5f869f",
+  "dependencyLockSha256": "f8a1f11883a9c241fcb53e9f28023b0f3b2fab3906cf964a63cde80616a242da",
+  "bundleSha256": "55706df4f005638c52fb668f47512396591284710eeac184bcb4caa5246c143c",
+  "bundler": "Bun 1.4.4",
+  "bytes": 84027,
+  "dependencies": {
+    "zod": {
+      "packageMetadataSha256": "c2d190d9ee4e0bdb60332aaa2130a6a98d65ddb903fe1d29248b15de57832c45",
+      "licenseSha256": "3f1189b28e3866e0d979968d466b78f813f76827cfdca1fbb124cc0a5c8841f8"
+    },
+    "lodash": {
+      "packageMetadataSha256": "5ef0a453b679125b155af19e1477f93b577ea826a57e1545f77608d326966e6a",
+      "licenseSha256": "f71e8ed126b46346494aad5486874cd8f0aafe95092ed67d2e3cb6110f939abc"
+    }
+  },
+  "externalImports": []
+}

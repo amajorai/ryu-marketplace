@@ -4,43 +4,43 @@
   "members": [
     {
       "kind": "skill",
-      "id": "antfu/turborepo",
+      "id": "antfu/skills/turborepo",
       "name": "Turborepo",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "cursor/thermo-nuclear-code-quality-review",
+      "id": "cursor/plugins/thermo-nuclear-code-quality-review",
       "name": "Thermo Nuclear Code Quality Review",
       "required": true
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/pick-ui-library",
+      "id": "emilkowalski/skills/pick-ui-library",
       "name": "Pick UI Library",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "emilkowalski/write-swift",
+      "id": "emilkowalski/skills/write-swift",
       "name": "Write Swift",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-interface",
+      "id": "jakubkrehel/skills/better-interface",
       "name": "Better Interface",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "jakubkrehel/better-layout",
+      "id": "jakubkrehel/skills/better-layout",
       "name": "Better Layout",
       "required": false
     },
     {
       "kind": "skill",
-      "id": "mattpocock/codebase-design",
+      "id": "mattpocock/skills/codebase-design",
       "name": "Codebase Design",
       "required": true
     }

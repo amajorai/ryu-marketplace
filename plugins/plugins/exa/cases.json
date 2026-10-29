@@ -1,0 +1,198 @@
+{
+  "tool": "web.search",
+  "kind": "adapter",
+  "code_file": "adapters/web.search.js",
+  "adapter_tools": ["exa.free_search"],
+  "cases": [
+    {
+      "name": "maps keyed API results onto canonical search hits",
+      "input": {
+        "query": "rust ownership",
+        "limit": 2
+      },
+      "provider": {
+        "call": [
+          {
+            "results": [
+              {
+                "title": "Ownership",
+                "url": "https://doc.rust-lang.org/book/ch04-01.html",
+                "text": "Each value has an owner.",
+                "publishedDate": "2024-01-02",
+                "author": "Rust",
+                "score": 0.9
+              }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "results": [
+          {
+            "title": "Ownership",
+            "url": "https://doc.rust-lang.org/book/ch04-01.html",
+            "snippet": "Each value has an owner.",
+            "published": "2024-01-02",
+            "author": "Rust",
+            "score": 0.9,
+            "raw": {
+              "title": "Ownership",
+              "url": "https://doc.rust-lang.org/book/ch04-01.html",
+              "text": "Each value has an owner.",
+              "publishedDate": "2024-01-02",
+              "author": "Rust",
+              "score": 0.9
+            }
+          }
+        ],
+        "via": "api.exa.ai"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "query": "rust ownership",
+            "numResults": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "falls back to the free MCP tier when no key is configured",
+      "input": {
+        "query": "rust ownership",
+        "limit": 2
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false
+          }
+        ],
+        "named": {
+          "exa.free_search": [
+            "event: message\ndata: {\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"Title: Rust ownership\\nURL: https://doc.rust-lang.org/book/ch04-01.html\\nPublished: 2024-01-02\\nAuthor: N/A\\nHighlights:\\nEach value has an owner.\\n---\\nTitle: Borrowing\\nURL: https://example.com/borrow\\nHighlights:\\nReferences borrow.\"}]}}\n\n"
+          ]
+        }
+      },
+      "expect": {
+        "results": [
+          {
+            "title": "Rust ownership",
+            "url": "https://doc.rust-lang.org/book/ch04-01.html",
+            "snippet": "Each value has an owner.",
+            "published": "2024-01-02",
+            "raw": "Title: Rust ownership\nURL: https://doc.rust-lang.org/book/ch04-01.html\nPublished: 2024-01-02\nAuthor: N/A\nHighlights:\nEach value has an owner."
+          },
+          {
+            "title": "Borrowing",
+            "url": "https://example.com/borrow",
+            "snippet": "References borrow.",
+            "raw": "Title: Borrowing\nURL: https://example.com/borrow\nHighlights:\nReferences borrow."
+          }
+        ],
+        "via": "mcp.exa.ai (free tier, no key)"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "query": "rust ownership",
+            "numResults": 2
+          }
+        },
+        {
+          "path": "callNamed:exa.free_search",
+          "args": {
+            "Accept": "application/json, text/event-stream",
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "web_search_exa",
+              "arguments": {
+                "query": "rust ownership",
+                "numResults": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "a free-tier JSON-RPC error is surfaced raw",
+      "input": {
+        "query": "q",
+        "limit": 1
+      },
+      "provider": {
+        "call": [
+          {
+            "available": false
+          }
+        ],
+        "named": {
+          "exa.free_search": [
+            "event: message\ndata: {\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"rate limited\"}}\n\n"
+          ]
+        }
+      },
+      "expect": {
+        "raw": "event: message\ndata: {\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"rate limited\"}}\n\n"
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "query": "q",
+            "numResults": 1
+          }
+        },
+        {
+          "path": "callNamed:exa.free_search",
+          "args": {
+            "Accept": "application/json, text/event-stream",
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "web_search_exa",
+              "arguments": {
+                "query": "q",
+                "numResults": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "a keyed error that is not 'unavailable' does not fall back",
+      "input": {
+        "query": "q",
+        "limit": 1
+      },
+      "provider": {
+        "call": [
+          {
+            "error": "401 Unauthorized"
+          }
+        ]
+      },
+      "expect": {
+        "raw": {
+          "error": "401 Unauthorized"
+        }
+      },
+      "expectCalls": [
+        {
+          "path": "callTool",
+          "args": {
+            "query": "q",
+            "numResults": 1
+          }
+        }
+      ]
+    }
+  ]
+}

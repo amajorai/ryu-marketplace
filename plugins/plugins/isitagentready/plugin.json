@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.isitagentready",
+  "version": "0.1.0",
+  "description": "Scan a public website with Is Your Site Agent-Ready? (https://isitagentready.com): a live check of robots.txt and AI bot rules, sitemaps, Link headers, Markdown negotiation, MCP and A2A cards, Agent Skills, WebMCP, OAuth discovery and agent commerce protocols, scored as a readiness level from 0 (Not Ready) to 5 (Agent-Native). Keyless.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/isitagentready",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/isitagentready",
+  "keywords": [
+    "agent readiness",
+    "agentic web",
+    "audit",
+    "robots.txt",
+    "MCP"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/isitagentready",
+      "displayName": "Is It Agent Ready?"
+    }
+  }
+}

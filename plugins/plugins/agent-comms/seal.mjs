@@ -6,14 +6,14 @@
 // WHY THIS EXISTS
 // ---------------
 // `ToolConfig` (crates/core/kernel-contracts/src/schema.rs) has no `code_file`
-// field, so an `inline_deno` tool's only loadable form is a JSON string in the
+// field, so an `inline_js` tool's only loadable form is a JSON string in the
 // manifest — while AGENTS.md bans authoring sandboxed JS as an escaped blob, for
 // the reason that applies here identically: nobody audits a `\n`-escaped string,
 // and that is where malicious code hides. So the `.js` file is the SOURCE form
 // and the manifest string is the WIRE form, sealed from it here.
 //
 // `tools/toolsmith` does exactly this (`sync`) for a package with ONE tool; its
-// `cases.json` names a single body, and this plugin ships three. When toolsmith
+// `cases.json` names a single body, and this plugin ships two. When toolsmith
 // grows multi-tool packages — or `ToolConfig` gains `code_file`, which deletes
 // both — this file goes away. Until then plugin.test.mjs runs the same check, so
 // an edited body that was never resealed fails the suite instead of shipping.
@@ -27,10 +27,10 @@ const MANIFEST_PATH = join(HERE, "manifest.json");
 
 const normalizeLineEndings = (value) => value.replace(/\r\n?/g, "\n");
 
-/** Every `inline_deno` runnable, paired with the source file it is sealed from. */
+/** Every `inline_js` runnable, paired with the source file it is sealed from. */
 export function inlineToolSources(manifest) {
 	return (manifest.runnables ?? [])
-		.filter((r) => r.config?.backend === "inline_deno")
+		.filter((r) => r.config?.backend === "inline_js")
 		.map((r) => ({ slug: r.config.slug, file: `tools/${r.config.slug}.js` }));
 }
 

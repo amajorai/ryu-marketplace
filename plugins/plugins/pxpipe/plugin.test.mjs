@@ -1,6 +1,19 @@
+// Uses the shared, closed Node observer artifact generated from the canonical
+// source. Marketplace carries that artifact; no npm installation is required.
+import {
+	isNativeNumber,
+	isNativeObjectLike,
+	isNativeText,
+} from "../../../tools/dist/native-primitive-observation.mjs";
+
+// Preserve the original object representation assertion, including null.
+function isObjectRepresentation(value) {
+	return value === null || isNativeObjectLike(value);
+}
+
 // Co-located unit test for the `pxpipe` plugin manifest.
 //
-// Runner: `node --test` (zero external deps).
+// Runner: `node --test` (no external runtime dependencies).
 //
 // Shape note: `pxpipe` is a *sidecar-only* plugin. It declares NO
 // `contributes.turn_hooks`, NO `mcp_servers`, NO `provides`, NO runnables and NO
@@ -33,19 +46,37 @@ const RAW = readFileSync(MANIFEST_PATH, "utf8");
 test("manifest.json is valid, parseable JSON", () => {
 	assert.doesNotThrow(() => JSON.parse(RAW));
 	const m = JSON.parse(RAW);
-	assert.equal(typeof m, "object");
+	assert.equal(isObjectRepresentation(m), true);
 	assert.ok(m !== null && !Array.isArray(m), "manifest is a JSON object");
 });
 
 test("manifest carries required identity fields", () => {
 	const m = JSON.parse(RAW);
 	assert.equal(m.id, "@ryu/pxpipe");
-	assert.equal(typeof m.name, "string");
+	assert.equal(isNativeText(m.name), true);
 	assert.ok(m.name.length > 0, "name is non-empty");
-	assert.equal(typeof m.version, "string");
+	assert.equal(isNativeText(m.version), true);
 	assert.match(m.version, /^\d+\.\d+\.\d+$/, "version is semver");
-	assert.equal(typeof m.description, "string");
+	assert.equal(isNativeText(m.description), true);
 	assert.ok(m.description.length > 0, "description is non-empty");
+});
+
+test("Agent Plugins projection stays synchronized with the native manifest", () => {
+	const manifest = JSON.parse(RAW);
+	const projection = JSON.parse(
+		readFileSync(join(HERE, "plugin.json"), "utf8")
+	);
+	assert.equal(projection.name, "ryu.pxpipe");
+	assert.equal(projection.version, manifest.version);
+	assert.equal(projection.description, manifest.description);
+	assert.deepEqual(projection.author, manifest.author);
+	assert.equal(projection.repository, manifest.repository);
+	assert.equal(projection.homepage, manifest.homepage);
+	assert.deepEqual(projection.keywords, manifest.keywords);
+	assert.deepEqual(projection.extensions["com.ryuhq.ryu"], {
+		id: manifest.id,
+		displayName: manifest.name,
+	});
 });
 
 test("manifest declares no hook/mcp/tool/secret surfaces (sidecar-only shape)", () => {
@@ -78,9 +109,9 @@ test("sidecar is well-formed (local npx command, pinned version, port_env)", () 
 	assert.doesNotMatch(s.name, /[/\\]|\.\./, "name is a safe path segment");
 
 	const p = s.process;
-	assert.ok(p && typeof p === "object", "process object present");
+	assert.ok(p && isObjectRepresentation(p), "process object present");
 	assert.equal(p.kind, "local");
-	assert.equal(typeof p.command, "string");
+	assert.equal(isNativeText(p.command), true);
 	assert.ok(p.command.length > 0, "command non-empty");
 	assert.equal(p.command, "npx");
 
@@ -107,7 +138,7 @@ test("sidecar port and health path match what pxpipe actually serves", () => {
 	const m = JSON.parse(RAW);
 	const s = m.sidecars[0];
 
-	assert.equal(typeof s.port, "number");
+	assert.equal(isNativeNumber(s.port), true);
 	assert.ok(
 		Number.isInteger(s.port) && s.port > 0 && s.port < 65_536,
 		"port in valid range"
@@ -117,7 +148,7 @@ test("sidecar port and health path match what pxpipe actually serves", () => {
 	// Core: health_path must start with '/'. `/proxy-stats` returns 200 on a cold
 	// instance with zero traffic; `/api/stats.json` is dashboard-only and 404s in
 	// this build, which would leave the sidecar permanently unhealthy.
-	assert.equal(typeof s.health_path, "string");
+	assert.equal(isNativeText(s.health_path), true);
 	assert.ok(s.health_path.startsWith("/"), "health_path starts with '/'");
 	assert.equal(s.health_path, "/proxy-stats");
 	assert.notEqual(s.health_path, "/api/stats.json");
@@ -149,7 +180,7 @@ test("sidecar does not register itself as a model provider", () => {
 test("proxied routes are declared, loopback-safe, and all served by pxpipe", () => {
 	const m = JSON.parse(RAW);
 	const http = m.sidecars[0].http;
-	assert.ok(http && typeof http === "object", "http proxy block present");
+	assert.ok(http && isObjectRepresentation(http), "http proxy block present");
 	assert.ok(Array.isArray(http.routes), "routes is an array");
 	assert.ok(http.routes.length > 0, "at least one route");
 
@@ -169,8 +200,18 @@ test("proxied routes are declared, loopback-safe, and all served by pxpipe", () 
 		"/api/image-source",
 		"/fragments/*rest",
 	]);
+	assert.deepEqual(
+		new Set(http.routes.map((route) => route.path)),
+		SERVED,
+		"every shipped dashboard/readback/control route is mounted exactly once"
+	);
+	assert.equal(
+		new Set(http.routes.map((route) => route.path)).size,
+		http.routes.length,
+		"duplicate declarations cannot shadow a dashboard route"
+	);
 	for (const r of http.routes) {
-		assert.equal(typeof r.path, "string");
+		assert.equal(isNativeText(r.path), true);
 		assert.ok(r.path.startsWith("/"), `route ${r.path} starts with '/'`);
 		assert.ok(SERVED.has(r.path), `route ${r.path} is served by pxpipe`);
 		// Secure by default: no route here is reachable by a caller with no
@@ -190,8 +231,11 @@ test("proxied routes are declared, loopback-safe, and all served by pxpipe", () 
 	}
 
 	assert.equal(http.mount, undefined, "sub-path forwarded verbatim");
-	assert.equal(typeof http.max_body_bytes, "number");
-	assert.ok(http.max_body_bytes > 0, "max_body_bytes caps proxy memory");
+	assert.equal(
+		http.max_body_bytes,
+		4 * 1024 * 1024,
+		"kill-switch request buffering stays capped at the reviewed 4 MiB bound"
+	);
 });
 
 test("manifest is the only copy and Core compiles it in (registration seam)", () => {
