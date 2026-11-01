@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/polite-prompts",
   "name": "Polite Prompts",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Notices when a message is written in anger (insults, profanity aimed at the agent, shouting) and has a side model rewrite it into a calm, respectful prompt before it is sent. Every technical detail, constraint, code block and the urgency of the request are kept; only the abuse is dropped. Messages that read as ordinary are sent untouched without a model call, and `/polite` rewrites one message on demand.",
   "tagline": "Vent freely, send something kind",

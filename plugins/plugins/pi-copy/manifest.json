@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/pi-copy",
   "name": "Copy & Paste",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "category": "Developer Tools",
   "description": "Adds the copy_paste tool to the managed Pi agent, so it can copy or move a block of text between or within files byte-for-byte instead of retyping it.",

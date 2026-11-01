@@ -1,4 +1,10 @@
 # Bitwarden Secrets Manager
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="bitwarden" width="96" />
+  </picture>
+</p>
 
 Pull API keys from [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/)
 on demand instead of storing them in plaintext in config or env. One bootstrap

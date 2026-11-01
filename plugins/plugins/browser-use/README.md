@@ -1,4 +1,10 @@
 # Browser Use
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="browser-use" width="96" />
+  </picture>
+</p>
 
 Browser Use is a preview provider for Ryu's swappable `browser.control` layer. It runs
 the open-source [browser-use](https://github.com/browser-use/browser-use) MCP server

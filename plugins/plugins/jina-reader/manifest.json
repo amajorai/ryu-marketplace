@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/jina-reader",
   "name": "Jina Reader",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Direct page extraction through Jina Reader. Provides the swappable web.extract layer and works with or without a Jina API key; a key raises the upstream rate limit.",
   "icon": "book-search",

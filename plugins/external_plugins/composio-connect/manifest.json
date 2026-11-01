@@ -5,7 +5,7 @@
   "homepage": "https://composio.dev/for-you",
   "id": "@ryu/composio-connect",
   "name": "Composio Connect",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "stable",
   "external": true,
   "description": "Connect Ryu to Composio's hosted For You MCP server with OAuth. The connection exposes Composio's connected-app tools without requiring a Composio API key; Ryu still applies its own tool allowlists and approval policy.",

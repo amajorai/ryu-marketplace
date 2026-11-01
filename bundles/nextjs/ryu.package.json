@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/bundle/nextjs",
   "name": "Next.js",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "kind": "bundle",
   "artifacts": [
     "bundle.json"

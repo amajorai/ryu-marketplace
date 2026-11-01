@@ -1,4 +1,10 @@
 # Auto Translate
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="auto-translate" width="96" />
+  </picture>
+</p>
 
 Telegram-style automatic translation for chat replies. When an assistant reply is not
 in your language, a side model translates it and the translation appears beside the

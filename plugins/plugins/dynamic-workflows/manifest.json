@@ -11,7 +11,7 @@
   "id": "@ryu/dynamic-workflows",
   "name": "dynamic-workflows",
   "stability": "experimental",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Run bounded delegate fan-outs and durable workflow scripts that orchestrate sub-agents in code.",
   "icon": "workflow-circle-06",
   "iconDither": {

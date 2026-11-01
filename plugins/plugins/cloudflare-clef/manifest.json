@@ -1,7 +1,7 @@
 {
   "id": "@ryu/cloudflare-clef",
   "name": "Cloudflare Clef Decisions",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Use Cloudflare Workers AI Clef and Clef Flash as a swappable typed-decision provider. State, questions, and optional embedded images are sent to Cloudflare Workers AI from the selected Ryu node.",
   "tagline": "Hosted multimodal typed decisions",

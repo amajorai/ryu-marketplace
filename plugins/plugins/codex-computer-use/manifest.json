@@ -8,7 +8,7 @@
   "license": "MIT",
   "id": "@ryu/codex-computer-use",
   "name": "Codex Computer Use",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Drives OpenAI's signed Codex Computer Use engine, the one the ChatGPT macOS app installs, as an optional provider for Ryu's swappable computer.control layer. Actions go to one target app in the background, through its accessibility tree and screenshots, without moving your cursor. Launched from the pinned, unofficial `codex-computer-use-mcp@0.5.2` stdio bridge. Requires macOS, Node.js 22+, and the ChatGPT app with Computer Use set up; Ryu does not install ChatGPT. Unofficial: a ChatGPT update can break it.",
   "icon": "cursor-01",

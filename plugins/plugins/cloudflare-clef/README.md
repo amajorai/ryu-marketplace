@@ -1,4 +1,10 @@
 # Cloudflare Clef Decisions
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="cloudflare-clef" width="96" />
+  </picture>
+</p>
 
 This plugin adds Cloudflare Workers AI Clef and Clef Flash to Ryu's **Decision Models** layer.
 Agents call the stable `decision.predict` verb for text and JSON. When Cloudflare Clef is selected,

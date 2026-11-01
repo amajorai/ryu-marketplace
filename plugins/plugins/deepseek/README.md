@@ -1,4 +1,10 @@
 # DeepSeek Search
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="deepseek" width="96" />
+  </picture>
+</p>
 
 Web search and single-page fetch for Ryu, powered by the
 [DeepSeek Search / Fetch API](https://api-docs.deepseek.com/guides/search) and

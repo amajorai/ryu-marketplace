@@ -2,7 +2,7 @@
   "tags": ["browser", "automation", "steel", "remote", "web"],
   "id": "@ryu/steel",
   "name": "Steel",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "hidden": true,
   "external": true,

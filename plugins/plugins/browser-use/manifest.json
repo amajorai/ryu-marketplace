@@ -8,7 +8,7 @@
   "license": "MIT",
   "id": "@ryu/browser-use",
   "name": "Browser Use",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "hidden": true,
   "description": "Preview of Browser Use's open-source local browser as a provider for Ryu's swappable browser.control layer, over its official MCP server (`browser-use --mcp`). Not usable as the Browser layer yet: Ryu starts a fresh browser-use process for every tool call, and browser-use keeps its browser inside that process, so a tab opened by one call is gone by the next. It is hidden from the store while that is the case. The browseruse.* tools stay callable directly, but only a task that finishes within one call, such as retry_with_browser_use_agent, works that way. Launched from the pinned browser-use 0.13.11 package with uvx, with anonymous telemetry and cloud sync off; needs uv on PATH.",

@@ -1,4 +1,10 @@
 # Codex Computer Use
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="codex-computer-use" width="96" />
+  </picture>
+</p>
 
 An optional provider for Ryu's swappable `computer.control` layer. It drives the
 signed Codex Computer Use engine that the ChatGPT macOS app installs. It talks to

@@ -179,8 +179,14 @@ let exitCode = result.status ?? 1;
 const PYTHON_SUITES = [
 	{ name: "laya", dependencies: [] },
 	{ name: "cloudflare-clef", dependencies: [] },
-	{ name: "functiongemma", dependencies: ["fastapi==0.115.12"] },
-	{ name: "needle3", dependencies: ["fastapi==0.115.12"] },
+	{
+		name: "functiongemma",
+		dependencies: ["fastapi==0.142.2", "starlette==1.7.0"],
+	},
+	{
+		name: "needle3",
+		dependencies: ["fastapi==0.142.2", "starlette==1.7.0"],
+	},
 ];
 // uv needs package-index reachability; credential variables stay excluded.
 const PACKAGE_INDEX_ENVIRONMENT =

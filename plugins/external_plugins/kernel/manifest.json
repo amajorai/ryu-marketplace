@@ -2,7 +2,7 @@
   "tags": ["browser", "automation", "kernel", "remote", "web"],
   "id": "@ryu/kernel",
   "name": "Kernel",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "external": true,
   "description": "Kernel cloud browsers for Ryu's swappable browser.control layer, over Kernel's hosted OAuth MCP server. A Kernel browser session is the browser.* tab id: each navigate creates a new session on the URL, tabs lists live sessions, and screenshot, click_at, key, scroll, and drag drive it by viewport coordinates. Element-reference verbs stay unbound because Kernel controls the browser by pixels; the full Kernel tool set (Playwright execution, browser REPL, profiles, replays, files) remains available under kernel.*.",

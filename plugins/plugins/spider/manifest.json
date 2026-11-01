@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/spider",
   "name": "Spider",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Web crawling and content extraction via the local Spider CLI (https://spider.cloud), declared as a command tool with no API key. Core runs the CLI behind a per-call loopback egress proxy that screens and IP-pins every connection the crawler opens, refusing private, loopback, link-local and cloud-metadata targets and ports other than 80 and 443.",
   "iconUrl": "https://avatars.githubusercontent.com/u/112983871?v=4",

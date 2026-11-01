@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/auto-translate",
   "name": "Auto Translate",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Translates assistant replies that are not in your language, Telegram-style: the original reply stays in the chat and the translation appears beside it. Target language, a do-not-translate list, and the side model are settings.",
   "tagline": "Read every reply in your own language",

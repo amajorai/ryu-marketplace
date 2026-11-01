@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/ora",
   "name": "ora",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Agent-readiness scoring from ora (https://ora.ai): look up or run a 0-100 score and A-F grade for a domain or MCP server, re-run selected checks after a fix, browse the check catalog, discover agent-ready products by intent, and draft a domain's agent discovery files. Read-only and keyless.",
   "icon": "dashboard-speed-01",

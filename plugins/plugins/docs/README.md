@@ -1,4 +1,10 @@
 # Ryu Docs
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="docs" width="96" />
+  </picture>
+</p>
 
 Read-only [Model Context Protocol](https://modelcontextprotocol.io) access to the
 Ryu documentation, served by the docs site itself at

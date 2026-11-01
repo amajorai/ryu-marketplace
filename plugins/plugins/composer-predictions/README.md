@@ -1,4 +1,10 @@
 # Composer Predictions
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="composer-predictions" width="96" />
+  </picture>
+</p>
 
 Composer Predictions is the installable plugin for Core's next-message predictor.
 After an assistant turn, the desktop asks Core through `/api/chat/prediction`.

@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/llm-wiki",
   "name": "LLM Wiki",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "category": "Knowledge & Memory",
   "description": "Build and maintain an interlinked research wiki in a user-owned Ryu Space. The bundled skill orients from existing documents, captures source provenance, preserves contradictions, and files durable syntheses without using a private filesystem wiki.",

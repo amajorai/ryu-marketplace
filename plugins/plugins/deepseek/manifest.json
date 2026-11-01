@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/deepseek",
   "name": "DeepSeek Search",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Web search and page fetch via the DeepSeek Search / Fetch API (https://api-docs.deepseek.com/guides/search), powered by DeepSeek's in-house search engine and exposed as two declarative HTTP tools. Provides the swappable `web.search` and `web.extract` layers, so selecting it in the layer picker re-points the stable `web.search` / `web.extract` tools at DeepSeek without changing what agents call. Billed per successful request; requires a BYOK DeepSeek API key.",
   "icon": "radar-01",

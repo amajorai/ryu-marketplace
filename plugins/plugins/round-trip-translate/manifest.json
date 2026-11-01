@@ -10,7 +10,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/round-trip-translate",
   "name": "Round-Trip Translate",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "category": "Productivity",
   "description": "Rewrite text by translating it through a pivot language and back with Google Cloud Translation, after removing invisible Unicode characters. Requires your own Google Cloud Translation API key; the result can change meaning and should be reviewed.",

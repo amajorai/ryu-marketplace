@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/is-agentic",
   "name": "Is Agentic",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Read the latest completed Is Agentic (https://is-agentic.com) agent-readiness report for a public website: a 0-100 score split into essential, recommended and bonus checks, plus every failing check with its evidence and recommended fix. Read-only, keyless, and never starts a scan.",
   "icon": "checkmark-badge-01",

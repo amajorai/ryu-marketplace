@@ -1,7 +1,7 @@
 {
   "id": "@ryu/kev",
   "name": "Kev Decision Models",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Connect Ryu's Decision Models layer to a running local Kev System One server. Ryu does not download Kev weights or start the model server.",
   "tagline": "Local typed decisions with Kev",

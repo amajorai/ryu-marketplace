@@ -1,7 +1,7 @@
 {
   "id": "@ryu/functiongemma",
   "name": "FunctionGemma Local Planner",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Run Google's license-gated FunctionGemma 270M model locally as a selectable Shadow computer-use planner. Ryu downloads a pinned Hugging Face snapshot using the user's Hugging Face token; the user must first accept Google's Gemma terms.",
   "tagline": "Local function-calling for Shadow",

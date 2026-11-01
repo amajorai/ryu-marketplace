@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "ryu/workflow/classify-and-act",
   "name": "Classify & Act",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "kind": "workflow",
   "artifacts": [
     "workflow.json"

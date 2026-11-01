@@ -1,4 +1,10 @@
 # FunctionGemma Local Planner
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
+    <img src="./icon-light.png" alt="functiongemma" width="96" />
+  </picture>
+</p>
 
 This plugin provisions a pinned [Google FunctionGemma 270M](https://huggingface.co/google/functiongemma-270m-it) snapshot into Ryu's private plugin runtime. Enable the model in Hugging Face first by accepting Google's Gemma terms, then save a Hugging Face token in Ryu Settings → Integrations before enabling this plugin. Ryu uses its existing Hugging Face token path for both gated snapshot discovery and file downloads; the token is never sent to the model sidecar.
 

@@ -10,7 +10,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/reactions",
   "name": "Message Reactions",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "category": "Productivity",
   "description": "Emoji reactions on chat messages. People react from the message toolbar or right-click menu, and agents react with the agents.react tool, for example a 👍 on a quick instruction instead of a \"Got it\" reply. On a channel bot, the agent's reaction is mirrored onto the message it answered on platforms that support bot reactions.",

@@ -7,7 +7,7 @@
   "termsOfServiceUrl": "https://ryuhq.com/terms",
   "id": "@ryu/headroom",
   "name": "Headroom Compression",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "category": "Developer Tools",
   "description": "Context compression using chopratejas/headroom for Gateway-routed requests. Token savings and answer quality depend on the workload and configuration. Requires headroom-ai[mcp].",

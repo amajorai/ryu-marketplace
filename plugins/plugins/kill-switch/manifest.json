@@ -1,7 +1,7 @@
 {
   "id": "@ryu/kill-switch",
   "name": "Kill Switch",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Stop running chats and bots on the selected node and pause new work until you resume execution.",
   "tagline": "Stop chats and bots immediately",

@@ -1,7 +1,7 @@
 {
   "id": "@ryu/needle3",
   "name": "Needle 3 Local Planner",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Run Cactus Compute's Apache-2.0 Needle 3 tool-calling model locally as a selectable Shadow computer-use planner. The model weights are pinned and installed into the plugin runtime; the small cactus-needle runtime is installed separately.",
   "tagline": "Tiny on-device tool-calling for Shadow",

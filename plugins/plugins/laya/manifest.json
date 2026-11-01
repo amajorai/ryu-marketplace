@@ -13,7 +13,7 @@
   "license": "Apache-2.0",
   "id": "@ryu/laya",
   "name": "Laya Local Decisions",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "Run Convai Innovations' Apache-2.0 Laya decision models locally through authenticated Ryu tools and as a selectable Shadow computer-use planner. Laya classifies text, email, tickets, and JSON into typed choice, score, and boolean answers; it does not generate text. The plugin provisions its Python sidecar and all three pinned Hugging Face checkpoints (about 2.37 GB / 2.21 GiB) inside the plugin runtime.",
   "tagline": "Fast local typed decisions for routing and guardrails",

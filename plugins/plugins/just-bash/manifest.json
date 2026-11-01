@@ -8,7 +8,7 @@
   "license": "Apache-2.0",
   "id": "@ryu/just-bash",
   "name": "just-bash",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "stability": "experimental",
   "description": "A simulated bash shell for agents, powered by Vercel Labs' just-bash CLI and exposed as a Ryu command tool. Scripts run against a read-only view of a workspace folder: pipes, grep, sed, awk, jq, find and other common commands work, writes stay in memory and are discarded after the call, and there is no network access. No Docker or container runtime needed. BYO install; no API key.",
   "icon": "computer-terminal-01",
