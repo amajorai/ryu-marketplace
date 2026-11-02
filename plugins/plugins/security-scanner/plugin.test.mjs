@@ -65,7 +65,9 @@ function makeHost(overrides = {}) {
 					ok: true,
 					results: delegates.map((delegate) => ({
 						id: delegate.id,
-						output: `Evidence for ${delegate.id} at src/example.ts:12.`,
+						// Completed delegates end with the COVERAGE/RESULT trailer;
+						// a reply without it counts as incomplete coverage.
+						output: `Evidence for ${delegate.id} at src/example.ts:12.\nCOVERAGE: src/example.ts\nRESULT: findings`,
 					})),
 				};
 			},
@@ -75,7 +77,8 @@ function makeHost(overrides = {}) {
 				if (overrides.sideModel) {
 					return overrides.sideModel(args);
 				}
-				return "No verified vulnerability was established from the supplied evidence.";
+				// A complete synthesis reaches its final Remediation plan section.
+				return "No verified vulnerability was established from the supplied evidence.\n\n## Remediation plan\nNone required.";
 			},
 			runAgent: async (args) => {
 				calls.push(["runAgent"]);
@@ -254,7 +257,8 @@ test("incomplete delegate coverage is saved as partial and never reported clean"
 			results: [
 				{
 					id: delegates[0].id,
-					output: "One source-backed finding remains to validate.",
+					output:
+						"One source-backed finding remains to validate.\nCOVERAGE: src/auth\nRESULT: findings",
 				},
 				{ id: delegates[1].id, error: "worker did not start" },
 			],
@@ -263,7 +267,12 @@ test("incomplete delegate coverage is saved as partial and never reported clean"
 	const result = await run(context("/security-scan quick auth"), host);
 	assert.equal(result.kind, "handled");
 	assert.match(result.text, /Status: partial/);
-	assert.match(result.text, /Delegate coverage: 2\/3/);
+	// Coverage counts only completed delegates, never errored or missing ones.
+	assert.match(result.text, /Delegate coverage: 1\/3/);
+	assert.match(
+		result.text,
+		/Incomplete delegates: scan-hunt \(error\), 1 returned nothing/
+	);
 	assert.doesNotMatch(result.text, /Status: complete/);
 	const synthesis = requests.find(
 		(request) => request.path === "host.sideModel"

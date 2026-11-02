@@ -31,7 +31,11 @@ vendor-owned model.
 Every report uses a stable finding shape: severity, confidence, affected
 location, source-to-sink or attacker path, impact, evidence, counterevidence,
 remediation, and verification status. Reports also state what was covered and
-what was not completed, so an incomplete scan cannot look clean.
+what was not completed, so an incomplete scan cannot look clean. Each worker
+must end with a COVERAGE/RESULT trailer; a worker that errors, refuses, returns
+nothing, or stops before its trailer is listed as incomplete and does not count
+toward coverage. A refused or truncated report synthesis keeps the status
+partial, and the automatic review says when its model review did not complete.
 
 ## Model routing
 

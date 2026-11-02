@@ -14,8 +14,8 @@ import { isNativeText } from "../../../tools/dist/native-primitive-observation.m
 // (apps/core/src/plugin_host/mod.rs): the hook body is injected after a global
 // `const ctx = {...}` and a `host` facade, and runs inside an async IIFE so a
 // bare `return` reports the directive as the program's final value. We reproduce
-// that with `new Function('ctx', 'host', code)` — none of these hooks use
-// `await`, so a plain function call is faithful. A stub `host.sideModel` is
+// that with an AsyncFunction over `(ctx, host)`, since the bodies `await
+// host.t(...)` for their notes. A stub `host.sideModel` is
 // provided (unused by these three observers, but wired to match the real ctx).
 
 import assert from "node:assert/strict";
@@ -24,6 +24,9 @@ import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { runCase } from "../../../tools/toolsmith/harness.mjs";
+
+// The constructor Core's async IIFE is equivalent to.
+const AsyncFunction = Object.getPrototypeOf(async () => undefined).constructor;
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MANIFEST_PATH = join(HERE, "manifest.json");
@@ -125,7 +128,7 @@ test("manifest declares contributes.turn_hooks (well-formed)", () => {
 		// Each body must compile as a function body.
 		assert.doesNotThrow(
 			// eslint-disable-next-line no-new-func
-			() => new Function("ctx", "host", hook.code),
+			() => new AsyncFunction("ctx", "host", hook.code),
 			`hook ${hook.id} body must be syntactically valid`
 		);
 	}
@@ -165,7 +168,7 @@ function hookById(id) {
 	return hook;
 }
 
-function runHook(id, ctx) {
+async function runHook(id, ctx) {
 	const hook = hookById(id);
 	const host = {
 		// Canned side-model stub — matches the real host facade shape even though
@@ -174,14 +177,14 @@ function runHook(id, ctx) {
 		log: () => {},
 	};
 	// eslint-disable-next-line no-new-func
-	const fn = new Function("ctx", "host", hook.code);
+	const fn = new AsyncFunction("ctx", "host", hook.code);
 	return fn(ctx, host);
 }
 
 // ── observers.subagent-stop ──────────────────────────────────────────────────
 
-test("subagent-stop notes the finished sub-agent id and output", () => {
-	const out = runHook("observers.subagent-stop", {
+test("subagent-stop notes the finished sub-agent id and output", async () => {
+	const out = await runHook("observers.subagent-stop", {
 		event: { id: "researcher-7" },
 		output: "Compiled a summary of the three sources into a final report.",
 	});
@@ -196,15 +199,15 @@ test("subagent-stop notes the finished sub-agent id and output", () => {
 	assert.ok(finished.length <= 60);
 });
 
-test('subagent-stop falls back to "?" for missing id and empty output', () => {
-	const out = runHook("observers.subagent-stop", {});
+test('subagent-stop falls back to "?" for missing id and empty output', async () => {
+	const out = await runHook("observers.subagent-stop", {});
 	assert.equal(out.kind, "note");
 	assert.equal(out.text, "subagent ? finished: ");
 });
 
-test("subagent-stop truncates a long output to 60 chars", () => {
+test("subagent-stop truncates a long output to 60 chars", async () => {
 	const longOutput = "x".repeat(200);
-	const out = runHook("observers.subagent-stop", {
+	const out = await runHook("observers.subagent-stop", {
 		event: { id: "a" },
 		output: longOutput,
 	});
@@ -215,13 +218,13 @@ test("subagent-stop truncates a long output to 60 chars", () => {
 
 // ── observers.session-end ────────────────────────────────────────────────────
 
-test("session-end note contains the conversation id and message count", () => {
+test("session-end note contains the conversation id and message count", async () => {
 	const transcript = [
 		{ role: "user", content: "hi" },
 		{ role: "assistant", content: "hello" },
 		{ role: "user", content: "bye" },
 	];
-	const out = runHook("observers.session-end", {
+	const out = await runHook("observers.session-end", {
 		conversation_id: "conv-abc",
 		transcript,
 	});
@@ -231,14 +234,14 @@ test("session-end note contains the conversation id and message count", () => {
 	assert.ok(out.text.includes(`${transcript.length} messages`));
 });
 
-test("session-end handles a missing transcript (0 messages) and missing id", () => {
-	const out = runHook("observers.session-end", {});
+test("session-end handles a missing transcript (0 messages) and missing id", async () => {
+	const out = await runHook("observers.session-end", {});
 	assert.equal(out.kind, "note");
 	assert.equal(out.text, "session ? ended with 0 messages");
 });
 
-test("session-end counts an empty transcript as 0 messages", () => {
-	const out = runHook("observers.session-end", {
+test("session-end counts an empty transcript as 0 messages", async () => {
+	const out = await runHook("observers.session-end", {
 		conversation_id: "c1",
 		transcript: [],
 	});
@@ -247,29 +250,29 @@ test("session-end counts an empty transcript as 0 messages", () => {
 
 // ── observers.notification ───────────────────────────────────────────────────
 
-test("notification note surfaces the event title", () => {
-	const out = runHook("observers.notification", {
+test("notification note surfaces the event title", async () => {
+	const out = await runHook("observers.notification", {
 		event: { title: "Build finished" },
 	});
 	assert.equal(out.kind, "note");
 	assert.equal(out.text, "notification: Build finished");
 });
 
-test('notification falls back to "?" for a missing event title', () => {
-	const out = runHook("observers.notification", {});
+test('notification falls back to "?" for a missing event title', async () => {
+	const out = await runHook("observers.notification", {});
 	assert.equal(out.kind, "note");
 	assert.equal(out.text, "notification: ?");
 });
 
-test("workflow failure and meeting end report their local event context", () => {
+test("workflow failure and meeting end report their local event context", async () => {
 	assert.deepEqual(
-		runHook("observers.workflow-run-failed", {
+		await runHook("observers.workflow-run-failed", {
 			event: { workflow_name: "Local export", error: "fixture failure" },
 		}),
 		{ kind: "note", text: "workflow failed: Local export — fixture failure" }
 	);
 	assert.deepEqual(
-		runHook("observers.meeting-ended", {
+		await runHook("observers.meeting-ended", {
 			event: { title: "Fixture meeting" },
 		}),
 		{ kind: "note", text: "meeting ended: Fixture meeting" }
@@ -332,7 +335,7 @@ test("Toolsmith runs every hydrated observer body with exact local outputs", asy
 
 // ── Cross-cutting invariant ──────────────────────────────────────────────────
 
-test("every observer hook returns a well-formed note directive", () => {
+test("every observer hook returns a well-formed note directive", async () => {
 	const ctx = {
 		conversation_id: "c",
 		transcript: [{ role: "user" }],
@@ -340,7 +343,7 @@ test("every observer hook returns a well-formed note directive", () => {
 		output: "o",
 	};
 	for (const hook of manifest.contributes.turn_hooks) {
-		const out = runHook(hook.id, ctx);
+		const out = await runHook(hook.id, ctx);
 		assert.equal(out.kind, "note", `${hook.id} must return kind:note`);
 		assert.equal(isNativeText(out.text), true);
 		assert.ok(out.text.length > 0, `${hook.id} text must be non-empty`);

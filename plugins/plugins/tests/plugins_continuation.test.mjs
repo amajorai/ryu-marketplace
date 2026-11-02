@@ -262,3 +262,39 @@ test("plan-continue injects only while plan mode is active and stops at its stre
 	assert.equal(capped.value.kind, "note");
 	assert.match(capped.value.text, /stopped after 3 nudges/);
 });
+
+test("user-visible notes render through the host's catalog translator", async () => {
+	const AsyncFunction = Object.getPrototypeOf(
+		async () => undefined
+	).constructor;
+	const rendered = [];
+	const host = {
+		storage: { delete: async () => null, set: async () => null },
+		// Core's `host.t` renders the English ICU source in the node language;
+		// this stub marks the rendering so the test can see it was used.
+		t: async (source, values = {}) => {
+			rendered.push({ source, values });
+			return `[ja] ${source}`;
+		},
+	};
+	for (const [packageName, command] of [
+		["auto-continue", "/auto-continue off"],
+		["plan-continue", "/plan-continue off"],
+	]) {
+		const body = new AsyncFunction(
+			"ctx",
+			"host",
+			`"use strict";\n${packageSource(packageName).code}`
+		);
+		const value = await body(
+			context(packageName, {
+				transcript: [{ role: "user", content: command }],
+			}),
+			host
+		);
+		assert.equal(value.kind, "note");
+		assert.match(value.text, /^\[ja\] Auto-continue is off for this chat\./);
+	}
+	assert.equal(rendered.length, 2);
+	assert.equal(typeof host.t, "function");
+});

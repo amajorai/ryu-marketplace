@@ -11,6 +11,8 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
 const CONVERSATION = "security-scanner-behaviour";
+// The trailer a completed delegate ends with; without it a reply is incomplete.
+const TRAILER = "COVERAGE: src/example.ts\nRESULT: findings";
 
 function loadHook(id) {
 	const value = JSON.parse(readFileSync(join(HERE, "manifest.json"), "utf8"));
@@ -54,7 +56,7 @@ function makeHost(overrides = {}) {
 			return {
 				results: args.delegates.map((entry) => ({
 					id: entry.id,
-					output: `Evidence for ${entry.id} at src/example.ts:12.`,
+					output: `Evidence for ${entry.id} at src/example.ts:12.\n${TRAILER}`,
 				})),
 			};
 		},
@@ -63,7 +65,7 @@ function makeHost(overrides = {}) {
 			if (overrides.sideModel) {
 				return overrides.sideModel(args);
 			}
-			return "F1 high: command injection in src/example.ts:12.";
+			return "F1 high: command injection in src/example.ts:12.\n\n## Remediation plan\nUse execFile.";
 		},
 		runAgent: async (args) => {
 			record("host.runAgent", structuredClone(args));
@@ -173,7 +175,7 @@ test("auto-review: a non-clean model reply is reported and clipped to 10000 char
 	assert.match(call.args.prompt, /export function add/);
 });
 
-test("auto-review: side-model failure is logged and falls back to static hits", async () => {
+test("auto-review: side-model failure is logged, keeps static hits, and is never silent", async () => {
 	const failing = () => {
 		throw new Error("model offline");
 	};
@@ -187,9 +189,15 @@ test("auto-review: side-model failure is logged and falls back to static hits", 
 		[["security-scanner: automatic review failed"]]
 	);
 
+	assert.match(withHits.text, /Model review did not complete \(failed\)/);
+
+	// With no static hit a failed review used to return none, which looked
+	// exactly like a clean review. It now says the review is incomplete.
 	const clean = makeHost({ sideModel: failing });
 	const withoutHits = await runReview(reviewContext(CLEAN_CODE), clean.host);
-	assert.deepEqual(withoutHits, { kind: "none" });
+	assert.equal(withoutHits.kind, "note");
+	assert.match(withoutHits.text, /Model review did not complete \(failed\)/);
+	assert.match(withoutHits.text, /this is not a clean result/);
 	assert.equal(pathsOf(clean.requests, "host.log").length, 1);
 });
 
@@ -305,7 +313,7 @@ test("verify: a fan-out failure leaves the stored report unchanged", async () =>
 			return {
 				results: args.delegates.map((entry) => ({
 					id: entry.id,
-					output: "ok",
+					output: `ok\n${TRAILER}`,
 				})),
 			};
 		},
@@ -334,7 +342,7 @@ test("verify: no usable verifier output leaves the stored report unchanged", asy
 					: {
 							results: args.delegates.map((entry) => ({
 								id: entry.id,
-								output: "ok",
+								output: `ok\n${TRAILER}`,
 							})),
 						},
 		});
