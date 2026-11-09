@@ -275,7 +275,7 @@ test("hook: /advisor on-demand → kind:continue that injects the advice as guid
 	assert.equal(out.kind, "continue");
 	assert.match(out.text, /expert advisor reviewed the whole conversation/i);
 	assert.ok(
-		out.text.endsWith(ADVICE),
+		out.text.endsWith(`<advisor-advice>\n${ADVICE}\n</advisor-advice>`),
 		"advice appended to the continue directive"
 	);
 	assert.equal(calls.length, 1);

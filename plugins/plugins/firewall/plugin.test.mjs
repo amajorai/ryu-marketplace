@@ -230,11 +230,14 @@ test("Core runtime proof covers the live Gateway config transaction", () => {
 	assert.ok(runtimeTest.includes("fixture PUT unavailable"));
 
 	const serverSource = readFileSync(
-		join(HERE, "../../../apps/core/src/server/mod.rs"),
+		join(
+			HERE,
+			"../../../apps/core/src/server/tests/gateway_policy_patch_tests.rs"
+		),
 		"utf8"
 	);
 	assert.ok(
-		/#\[path\s*=\s*"firewall_policy_runtime_test\.rs"\]\s*mod\s+firewall_policy_runtime\s*;/.test(
+		/#\[path\s*=\s*"(?:\.\.\/gateway_policy_patch_tests\/)?firewall_policy_runtime_test\.rs"\]\s*mod\s+firewall_policy_runtime\s*;/.test(
 			serverSource
 		),
 		"Core's server test module must register the package's runtime proof"

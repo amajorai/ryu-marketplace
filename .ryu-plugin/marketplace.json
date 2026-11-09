@@ -1204,7 +1204,9 @@
             "browser.hover",
             "browser.click_at",
             "browser.key",
-            "browser.drag"
+            "browser.drag",
+            "browser.fill_credential",
+            "browser.list_credentials"
           ]
         }
       ],
@@ -5385,7 +5387,7 @@
         }
       ],
       "tagline": "Record, transcribe, and write up your meetings",
-      "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable.",
+      "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable. Also hosts Recaps: user-started, owner-only conversation recaps uploaded from a phone or watch.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -9755,6 +9757,59 @@
       "surfaces": [
         "core",
         "desktop",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "tokeneconomizer",
+      "displayName": "TokenEconomizer",
+      "version": "0.5.1",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "allowRemix": true,
+      "developer": "Ryu",
+      "tagline": "Learn from past sessions to cut repeat agent cost",
+      "description": "Runs your own TokenEconomizer install inside the managed Pi agent: it learns from earlier sessions in a repository, adds the facts it has confirmed at session start, and redirects a turn that keeps hitting the same failures. BYO: needs a TokenEconomizer clone and Python 3.10+.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokeneconomizer",
+      "category": "Developer Tools",
+      "keywords": [
+        "tokens",
+        "cost",
+        "developer",
+        "pi"
+      ],
+      "tags": [
+        "tokens",
+        "cost",
+        "developer",
+        "pi"
+      ],
+      "icon": "money-03",
+      "iconDither": {
+        "from": 150,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokeneconomizer",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
         "web",
         "cli"
       ],
@@ -16373,7 +16428,9 @@
             "browser.hover",
             "browser.click_at",
             "browser.key",
-            "browser.drag"
+            "browser.drag",
+            "browser.fill_credential",
+            "browser.list_credentials"
           ]
         }
       ],
@@ -22226,7 +22283,7 @@
         }
       ],
       "tagline": "Record, transcribe, and write up your meetings",
-      "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable.",
+      "description": "Meeting notes: record → live transcript → AI notes, auto-saved into the Meetings Space so they stay editable and RAG-searchable. Also hosts Recaps: user-started, owner-only conversation recaps uploaded from a phone or watch.",
       "author": {
         "name": "Ryu",
         "url": "https://ryuhq.com"
@@ -28156,6 +28213,59 @@
       "surfaces": [
         "core",
         "desktop",
+        "web",
+        "cli"
+      ],
+      "stability": "experimental",
+      "engines": {
+        "ryu": ">=0.1.0"
+      }
+    },
+    {
+      "name": "tokeneconomizer",
+      "displayName": "TokenEconomizer",
+      "version": "0.5.1",
+      "type": "plugin",
+      "source": "builtin",
+      "official": true,
+      "system": false,
+      "allowRemix": true,
+      "developer": "Ryu",
+      "tagline": "Learn from past sessions to cut repeat agent cost",
+      "description": "Runs your own TokenEconomizer install inside the managed Pi agent: it learns from earlier sessions in a repository, adds the facts it has confirmed at session start, and redirects a turn that keeps hitting the same failures. BYO: needs a TokenEconomizer clone and Python 3.10+.",
+      "author": {
+        "name": "Ryu",
+        "url": "https://ryuhq.com"
+      },
+      "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokeneconomizer",
+      "category": "Developer Tools",
+      "keywords": [
+        "tokens",
+        "cost",
+        "developer",
+        "pi"
+      ],
+      "tags": [
+        "tokens",
+        "cost",
+        "developer",
+        "pi"
+      ],
+      "icon": "money-03",
+      "iconDither": {
+        "from": 150,
+        "to": "transparent",
+        "direction": "down"
+      },
+      "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokeneconomizer",
+      "privacyPolicyUrl": "https://ryuhq.com/privacy",
+      "termsOfServiceUrl": "https://ryuhq.com/terms",
+      "surfaces": [
+        "core",
+        "desktop",
+        "island",
+        "mobile",
+        "extension",
         "web",
         "cli"
       ],

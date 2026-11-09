@@ -257,11 +257,14 @@ const CLEAN_CODE = `\`\`\`ts\n${"export function add(a: number, b: number) { ret
 
 test("auto-review: empty, refused, and unterminated replies are reported as incomplete", async () => {
 	const cases = [
-		["", /did not complete \(empty\)/],
-		["I'm sorry, I can't review this.", /did not complete \(refused\)/],
+		["", /did not complete because the reviewer returned no answer/],
+		[
+			"I'm sorry, I can't review this.",
+			/did not complete because the reviewer refused or declined/,
+		],
 		[
 			"F1: possible injection on line",
-			/no closing RESULT line, possibly truncated/,
+			/stopped before its closing RESULT line and may be truncated/,
 		],
 	];
 	for (const [reply, expected] of cases) {

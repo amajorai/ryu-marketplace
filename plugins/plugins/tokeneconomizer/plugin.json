@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.tokeneconomizer",
+  "version": "0.1.14",
+  "description": "Runs your own TokenEconomizer install inside the managed Pi agent: it learns from earlier sessions in a repository, adds the facts it has confirmed at session start, and redirects a turn that keeps hitting the same failures. BYO: needs a TokenEconomizer clone and Python 3.10+.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokeneconomizer",
+  "repository": "https://github.com/amajorai/ryu-marketplace/tree/main/plugins/plugins/tokeneconomizer",
+  "keywords": [
+    "tokens",
+    "cost",
+    "developer",
+    "pi"
+  ],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/tokeneconomizer",
+      "displayName": "TokenEconomizer"
+    }
+  }
+}

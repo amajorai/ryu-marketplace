@@ -79,6 +79,7 @@ plugins	search-and-retrieval	spider	mapped	/root/gateway_ops_settings
 plugins	search-and-retrieval	spidercloud	mapped	/root/gateway_ops_settings
 plugins	chat-surface	stats	mapped	/root/gateway_ops_settings
 plugins	search-and-retrieval	tavily	mapped	/root/gateway_ops_settings
+plugins	pi-extensions	tokeneconomizer	mapped	/root/plugins_store_unclaimed
 plugins	review-and-quality	tokenmaxxing	mapped	/root/gateway_ops_settings
 plugins	security-and-policy	tool-firewall	mapped	/root/gateway_ops_settings
 plugins	examples-and-reference	toolsmith-example	mapped	/root/plugins_store_unclaimed

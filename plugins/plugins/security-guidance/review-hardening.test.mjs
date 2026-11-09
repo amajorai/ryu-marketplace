@@ -90,7 +90,7 @@ test("an empty or non-text reviewer reply is reported as incomplete, not clean",
 		assert.equal(out.kind, "note", String(reply));
 		assert.match(
 			out.text,
-			/did not complete \(the reviewer returned no answer\)/
+			/did not complete because the reviewer returned no answer; this is not a clean result\./
 		);
 	}
 });
@@ -107,7 +107,7 @@ test("a refusal (for example triggered by bait strings in the code) is incomplet
 		assert.equal(out.kind, "note", reply);
 		assert.match(
 			out.text,
-			/did not complete \(the reviewer refused or declined\)/
+			/did not complete because the reviewer refused or declined; this is not a clean result\./
 		);
 		assert.doesNotMatch(out.text, /LLM security review:/);
 	}
@@ -117,7 +117,7 @@ test("a review that stops before its RESULT line is shown and flagged as possibl
 	const { host } = hostFor("SQL injection on line 1: use a parameterized");
 	const out = await run(ctxFor(NO_PATTERN_CODE), host);
 	assert.match(out.text, /LLM security review:\nSQL injection on line 1/);
-	assert.match(out.text, /may be truncated\); this is not a clean result/);
+	assert.match(out.text, /may be truncated; this is not a clean result/);
 });
 
 test("a complete review ends with RESULT: findings, which is stripped from the note", async () => {

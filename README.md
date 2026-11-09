@@ -185,7 +185,7 @@ becomes discoverable in the Ryu marketplace (desktop + web).
 > your own discretion — read the manifest, check what permission grants
 > it requests, and prefer repos you can audit.
 
-## First-party plugins (102)
+## First-party plugins (103)
 
 Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 
@@ -233,6 +233,7 @@ Declarative `@ryu/*` plugins, grouped by their manifest `category`.
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/rules/icon-dark.png" /><img src="./plugins/plugins/rules/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/rules/">Rules</a></div> | ✓ | ✓ | – | ✓ | experimental | – | – | 0.5.1 | Discover Cursor- and Claude-style project rules and apply them to agent context, with per-agent… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/sample/icon-dark.png" /><img src="./plugins/plugins/sample/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/sample/">Research Assistant</a></div> | ✓ | – | – | – | experimental | ✓ | – | 0.5.1 | The reference plugin: a minimal example that declares one of each runnable kind — an agent, a… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/sample-widget/icon-dark.png" /><img src="./plugins/plugins/sample-widget/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/sample-widget/">Sample Widget</a></div> | ✓ | ✓ | – | – | experimental | ✓ | – | 0.5.1 | Reference third-party MCP widget plugin. A tiny local Node MCP server (server.mjs) exposes one… |
+| <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/tokeneconomizer/icon-dark.png" /><img src="./plugins/plugins/tokeneconomizer/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/tokeneconomizer/">TokenEconomizer</a></div> | ✓ | ✓ | – | – | experimental | – | – | 0.5.1 | Runs your own TokenEconomizer install inside the managed Pi agent: it learns from earlier… |
 | <div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./plugins/plugins/toolsmith-example/icon-dark.png" /><img src="./plugins/plugins/toolsmith-example/icon-light.png" width="32" alt="" /></picture><br /><a href="./plugins/plugins/toolsmith-example/">toolsmith-example</a></div> | ✓ | – | – | – | experimental | ✓ | – | 0.5.1 | Worked example for tools/toolsmith — a real, verified inline_js tool. Not registered with Core… |
 
 ### Knowledge & Memory

@@ -2,13 +2,13 @@
   "canonicalSource": "packages/ui/src/lib/native-primitive-observation.ts",
   "canonicalSourceSha256": "8122147d738f2fc5b7d0eb4fcef3e8860ca8a637d691f52a64b33a372b9e05b7",
   "canonicalSourceLicenseSha256": "70b45e9c55a5d8f61ab1d7baf1791ac00461b8ee327034dc8a0c85023b5f869f",
-  "dependencyLockSha256": "1b1704393af2a99097137b282db3560e8fa9dc62671edf911933dead088b7df9",
-  "bundleSha256": "7863451ad3b4ae10bc3dcdc55da52f63ff4ccc743500578e0cc660d4268c29cd",
+  "dependencyLockSha256": "98bef71da2f1e21a9d56d35cad02150ff32fe3a9a8b6cc82686b68200e27de70",
+  "bundleSha256": "55706df4f005638c52fb668f47512396591284710eeac184bcb4caa5246c143c",
   "bundler": "Bun 1.4.4",
-  "bytes": 65005,
+  "bytes": 84027,
   "dependencies": {
     "zod": {
-      "packageMetadataSha256": "c630bd10b52dcf71c112a2bf78dbf2734b9db58d62de663b8d86c2ec2c8cda2e",
+      "packageMetadataSha256": "c2d190d9ee4e0bdb60332aaa2130a6a98d65ddb903fe1d29248b15de57832c45",
       "licenseSha256": "3f1189b28e3866e0d979968d466b78f813f76827cfdca1fbb124cc0a5c8841f8"
     },
     "lodash": {

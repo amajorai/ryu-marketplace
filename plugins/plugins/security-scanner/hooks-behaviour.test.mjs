@@ -189,14 +189,20 @@ test("auto-review: side-model failure is logged, keeps static hits, and is never
 		[["security-scanner: automatic review failed"]]
 	);
 
-	assert.match(withHits.text, /Model review did not complete \(failed\)/);
+	assert.match(
+		withHits.text,
+		/Model review did not complete because the reviewer could not be reached/
+	);
 
 	// With no static hit a failed review used to return none, which looked
 	// exactly like a clean review. It now says the review is incomplete.
 	const clean = makeHost({ sideModel: failing });
 	const withoutHits = await runReview(reviewContext(CLEAN_CODE), clean.host);
 	assert.equal(withoutHits.kind, "note");
-	assert.match(withoutHits.text, /Model review did not complete \(failed\)/);
+	assert.match(
+		withoutHits.text,
+		/Model review did not complete because the reviewer could not be reached/
+	);
 	assert.match(withoutHits.text, /this is not a clean result/);
 	assert.equal(pathsOf(clean.requests, "host.log").length, 1);
 });
