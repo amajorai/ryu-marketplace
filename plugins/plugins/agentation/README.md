@@ -1,10 +1,4 @@
 # Agentation
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="agentation" width="96" />
-  </picture>
-</p>
 
 [Agentation](https://www.agentation.com/) turns UI annotations into structured
 feedback an agent can act on. Its toolbar records the selected element, source

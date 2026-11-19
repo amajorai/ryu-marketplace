@@ -1,10 +1,4 @@
 # zvec-grep
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="zvec-grep" width="96" />
-  </picture>
-</p>
 
 Semantic and ranked workspace search for Ryu agents, powered by
 [zvec-grep](https://github.com/zvec-ai/zvec-grep)'s `zg` CLI. This is a

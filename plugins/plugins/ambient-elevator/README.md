@@ -1,10 +1,4 @@
 # Ambient Elevator
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="ambient-elevator" width="96" />
-  </picture>
-</p>
 
 Ambient Elevator is a desktop-only Ryu plugin. It contributes a user-scoped
 on/off setting and volume control, then lets the desktop shell play one shared

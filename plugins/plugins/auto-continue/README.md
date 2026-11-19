@@ -1,10 +1,4 @@
 # Auto Continue
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="auto-continue" width="96" />
-  </picture>
-</p>
 
 After each turn while armed, a **local sub-agent** scans the reply and the real
 workspace and judges whether the work is genuinely finished — or whether there is

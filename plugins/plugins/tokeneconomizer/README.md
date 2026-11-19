@@ -1,10 +1,4 @@
 # TokenEconomizer
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="tokeneconomizer" width="96" />
-  </picture>
-</p>
 
 Runs your own [TokenEconomizer](https://github.com/microsoft/TokenEconomizer) install inside
 Ryu's managed Pi agent (the flagship `ryu` agent). TokenEconomizer is a research plugin from

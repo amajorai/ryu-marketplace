@@ -1,10 +1,4 @@
 # ripgrep
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="ripgrep" width="96" />
-  </picture>
-</p>
 
 Fast local code and text search for Ryu agents, powered by
 [ripgrep](https://github.com/BurntSushi/ripgrep)'s `rg` binary. This is a fully

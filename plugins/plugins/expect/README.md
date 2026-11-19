@@ -1,10 +1,4 @@
 # Expect
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="expect" width="96" />
-  </picture>
-</p>
 
 [Expect](https://www.expect.dev/) is a browser QA MCP server for agent code. It
 reads the current changes, creates a test plan, and runs that plan in a real

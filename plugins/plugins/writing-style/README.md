@@ -1,10 +1,4 @@
 # Writing Style (`@ryu/writing-style`)
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="writing-style" width="96" />
-  </picture>
-</p>
 
 Writing Style turns a small, user-approved sample of writing from the connected apps
 already available to an agent into a reviewable Markdown voice guide.

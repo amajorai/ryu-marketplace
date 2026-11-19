@@ -1,10 +1,4 @@
 # Jina Reader
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="jina-reader" width="96" />
-  </picture>
-</p>
 
 Jina Reader provides a direct `web.extract` backend for Ryu. The native
 `jina_reader.fetch` HTTP tool sends one URL to `https://r.jina.ai/` and requests

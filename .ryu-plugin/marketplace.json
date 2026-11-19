@@ -1206,7 +1206,9 @@
             "browser.key",
             "browser.drag",
             "browser.fill_credential",
-            "browser.list_credentials"
+            "browser.list_credentials",
+            "browser.list_webmcp_tools",
+            "browser.execute_webmcp_tool"
           ]
         }
       ],
@@ -16430,7 +16432,9 @@
             "browser.key",
             "browser.drag",
             "browser.fill_credential",
-            "browser.list_credentials"
+            "browser.list_credentials",
+            "browser.list_webmcp_tools",
+            "browser.execute_webmcp_tool"
           ]
         }
       ],

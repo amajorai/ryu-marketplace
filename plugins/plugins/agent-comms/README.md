@@ -1,10 +1,4 @@
 # Switchboard (`@ryu/agent-comms`)
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./icon-dark.png" />
-    <img src="./icon-light.png" alt="agent-comms" width="96" />
-  </picture>
-</p>
 
 The agents on this node can message each other.
 
