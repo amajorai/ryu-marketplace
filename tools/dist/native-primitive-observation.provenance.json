@@ -2,9 +2,9 @@
   "canonicalSource": "packages/ui/src/lib/native-primitive-observation.ts",
   "canonicalSourceSha256": "8122147d738f2fc5b7d0eb4fcef3e8860ca8a637d691f52a64b33a372b9e05b7",
   "canonicalSourceLicenseSha256": "70b45e9c55a5d8f61ab1d7baf1791ac00461b8ee327034dc8a0c85023b5f869f",
-  "dependencyLockSha256": "4562829ea7b5f20d6387a2d590799044c12683f95512bd42c22b8ca062aff961",
+  "dependencyLockSha256": "a5d22daa4477a66ef0ef49c2ff36f14219bc2fa10f002d310410cb14e5a4d6af",
   "bundleSha256": "55706df4f005638c52fb668f47512396591284710eeac184bcb4caa5246c143c",
-  "bundler": "Bun 1.4.4",
+  "bundler": "Bun 1.4.5",
   "bytes": 84027,
   "dependencies": {
     "zod": {

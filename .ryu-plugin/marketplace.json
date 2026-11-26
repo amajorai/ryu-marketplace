@@ -9571,6 +9571,13 @@
           "toolkit": false,
           "selectable": false,
           "verbs": []
+        },
+        {
+          "capability": "teams.thread",
+          "title": "Group thread owner and state",
+          "toolkit": false,
+          "selectable": false,
+          "verbs": []
         }
       ],
       "tagline": "Address a group of agents as one",
@@ -27905,6 +27912,13 @@
         {
           "capability": "teams.create",
           "title": "Agent team creation",
+          "toolkit": false,
+          "selectable": false,
+          "verbs": []
+        },
+        {
+          "capability": "teams.thread",
+          "title": "Group thread owner and state",
           "toolkit": false,
           "selectable": false,
           "verbs": []
